@@ -43,9 +43,12 @@ def test_import_default_decks_seeds_and_is_idempotent():
     col = _empty_col()
     imported = pgre.import_default_decks(col, DECK_DIR)
 
-    assert len(imported) == 9
+    # The 9 subject decks plus the bundled Speed Recall formula deck.
+    assert len(imported) == 10
     for subject in pgre.SUBJECTS:
         assert col.decks.by_name(subject.deck_name) is not None
+    assert pgre.SPEED_RECALL_DECK in imported
+    assert col.decks.by_name(pgre.SPEED_RECALL_DECK) is not None
     assert col.get_config(pgre.DECKS_IMPORTED_KEY, False) is True
 
     # A second call must not duplicate anything.
@@ -65,10 +68,16 @@ def test_manifold_html_links_each_imported_deck():
     pgre.import_default_decks(col, DECK_DIR)
     rendered = pgre.build_manifold_html(col)
 
-    # The manifold image, classic-list link, and the "More decks" spike are
-    # present. Exactly 9 decks fit on one page, so depth 0 shows them all.
-    assert pgre.CALABI_YAU_IMG in rendered
+    # The equation-drawn manifold SVG, classic-list link, and the "More decks"
+    # spike are present. Exactly 9 decks fit on one page, so depth 0 shows them.
+    assert 'id="cy-svg"' in rendered
+    assert "<polygon" in rendered
     assert "pycmd('classic')" in rendered
+    # Drag-to-rotate wiring: the spin script and per-button base coordinates it
+    # orbits so buttons follow the manifold. No on-screen rotation controls.
+    assert "<script>" in rendered
+    assert "data-cx=" in rendered
+    assert "cy-controls" not in rendered
     assert "More decks" in rendered
     assert "pycmd('more')" in rendered
     assert pgre.page_count(col) == 1
@@ -87,8 +96,8 @@ def test_manifold_html_empty_when_no_decks():
     rendered = pgre.build_manifold_html(col)
 
     # No decks to show: deck spikes are left empty (no open commands), but the
-    # image, the "More decks" spike, and the classic link still render.
-    assert pgre.CALABI_YAU_IMG in rendered
+    # manifold SVG, the "More decks" spike, and the classic link still render.
+    assert 'id="cy-svg"' in rendered
     assert "pycmd('open:" not in rendered
     assert "More decks" in rendered
     assert "pycmd('classic')" in rendered

@@ -40,3 +40,23 @@ test("handles an empty collection", () => {
     expect(toMasteryRows([])).toStrictEqual([]);
     expect(masteryTotals([])).toStrictEqual({ total: 0, mastered: 0, masteredPct: 0 });
 });
+
+test("excludes Speed Recall decks (FSRS-independent drill mode)", () => {
+    const withSpeedRecall: DeckStat[] = [
+        ...decks,
+        { deckName: "Speed Recall", totalCards: 5, cardsWithState: 0, mastered: 0, meanRetrievability: 0 },
+        {
+            deckName: "Speed Recall::Classical Mechanics",
+            totalCards: 7,
+            cardsWithState: 0,
+            mastered: 0,
+            meanRetrievability: 0,
+        },
+        // Not a Speed Recall deck despite the prefix — must be kept.
+        { deckName: "Speed Reading", totalCards: 3, cardsWithState: 2, mastered: 1, meanRetrievability: 0.5 },
+    ];
+    const rows = toMasteryRows(withSpeedRecall);
+    expect(rows.map((r) => r.deckName)).toStrictEqual(["Alpha", "Beta", "Speed Reading"]);
+    // Totals ignore the excluded decks' cards.
+    expect(masteryTotals(rows)).toStrictEqual({ total: 17, mastered: 7, masteredPct: 41 }); // 7/17 ≈ 41%
+});

@@ -85,6 +85,7 @@ install_pylib_legacy()
 MainWindowState = Literal[
     "startup",
     "manifold",
+    "speedRecall",
     "deckBrowser",
     "overview",
     "review",
@@ -247,6 +248,7 @@ class AnkiQt(QMainWindow):
         # screens
         self.setupDeckBrowser()
         self.setupManifold()
+        self.setupSpeedRecall()
         self.setupOverview()
         self.setupReviewer()
 
@@ -796,6 +798,9 @@ class AnkiQt(QMainWindow):
     def _manifoldState(self, oldState: MainWindowState) -> None:
         self.manifold.show()
 
+    def _speedRecallState(self, oldState: MainWindowState) -> None:
+        self.speedRecall.show()
+
     def _selectedDeck(self) -> DeckDict | None:
         did = self.col.decks.selected()
         if not self.col.decks.name_if_exists(did):
@@ -874,6 +879,8 @@ class AnkiQt(QMainWindow):
             dirty = self.deckBrowser.op_executed(changes, handler, focused)
         elif self.state == "manifold":
             dirty = self.manifold.op_executed(changes, handler, focused)
+        elif self.state == "speedRecall":
+            dirty = self.speedRecall.op_executed(changes, handler, focused)
         else:
             dirty = False
 
@@ -1094,6 +1101,11 @@ title="{}" {}>{}</button>""".format(
         from aqt.manifold import Manifold
 
         self.manifold = Manifold(self)
+
+    def setupSpeedRecall(self) -> None:
+        from aqt.speedrecall import SpeedRecall
+
+        self.speedRecall = SpeedRecall(self)
 
     def setupOverview(self) -> None:
         from aqt.overview import Overview

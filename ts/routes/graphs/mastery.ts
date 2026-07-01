@@ -29,18 +29,33 @@ function pct(numerator: number, denominator: number): number {
 }
 
 /**
+ * Root of the Speed Recall formula decks (mirrors `SR_ROOT` in
+ * `aqt/speedrecall.py`). These are drilled in a latency-driven mode that keeps
+ * its own schedule and never touches FSRS state, so a "mastered (current recall)"
+ * figure is meaningless for them — they're excluded from the Mastered card.
+ */
+const SPEED_RECALL_ROOT = "Speed Recall";
+
+function isSpeedRecallDeck(deckName: string): boolean {
+    return deckName === SPEED_RECALL_ROOT || deckName.startsWith(`${SPEED_RECALL_ROOT}::`);
+}
+
+/**
  * Map the backend per-deck stats to display rows. The backend already returns
- * decks sorted by name; we preserve that order.
+ * decks sorted by name; we preserve that order. Speed Recall decks are omitted
+ * (see {@link isSpeedRecallDeck}).
  */
 export function toMasteryRows(decks: readonly DeckStat[]): MasteryRow[] {
-    return decks.map((d) => ({
-        deckName: d.deckName,
-        total: d.totalCards,
-        withState: d.cardsWithState,
-        mastered: d.mastered,
-        masteredPct: pct(d.mastered, d.totalCards),
-        meanRPct: Math.round(100 * d.meanRetrievability),
-    }));
+    return decks
+        .filter((d) => !isSpeedRecallDeck(d.deckName))
+        .map((d) => ({
+            deckName: d.deckName,
+            total: d.totalCards,
+            withState: d.cardsWithState,
+            mastered: d.mastered,
+            masteredPct: pct(d.mastered, d.totalCards),
+            meanRPct: Math.round(100 * d.meanRetrievability),
+        }));
 }
 
 /** Collection-wide totals for a summary row. */

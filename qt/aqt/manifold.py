@@ -97,6 +97,8 @@ class Manifold:
             self._on_create()
         elif cmd == "import":
             self.mw.onImport()
+        elif cmd == "speedrecall":
+            self.mw.moveToState("speedRecall")
         return False
 
     def _open_deck(self, deck_id: DeckId) -> None:
@@ -123,6 +125,7 @@ class Manifold:
         ["", "shared", tr.decks_get_shared()],
         ["", "create", tr.decks_create_deck()],
         ["Ctrl+Shift+I", "import", tr.decks_import_file()],
+        ["Ctrl+Shift+R", "speedrecall", "⚡ Speed Recall"],
     ]
 
     def _draw_buttons(self) -> None:

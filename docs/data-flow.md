@@ -144,11 +144,14 @@ enum; the fork adds a `"manifold"` member with `setupManifold()` /
 instead of landing on the deck list. The state is served by the
 `Manifold` webview ([qt/aqt/manifold.py](../qt/aqt/manifold.py)), a home screen
 modeled on [qt/aqt/deckbrowser.py](../qt/aqt/deckbrowser.py) whose HTML is built
-by `build_manifold_html(col, depth)` in [qt/aqt/pgre.py](../qt/aqt/pgre.py). It
-renders the transparent Calabi-Yau manifold PNG
-(`qt/aqt/data/web/imgs/calabi-yau.png`, served at `/_anki/imgs/calabi-yau.png`)
-with a button hand-placed on each of the 10 outer spikes (positions in
-`_SPIKE_POSITIONS`, tuned to the artwork). Decks are shown 9-per-page and paged
+by `build_manifold_html(col, depth)` in [qt/aqt/pgre.py](../qt/aqt/pgre.py). The
+manifold is drawn from its actual equations rather than an image: `pgre` meshes
+the Fermat-quintic Calabi-Yau cross-section (`z1^n + z2^n = 1`, Hanson's
+parametrization, `n = 5`), projects and Lambert-shades it, and emits inline SVG
+polygons (`_manifold_geometry`, computed once and cached since it's
+collection-independent). The 10 button positions are the spike tips _detected
+from the projected geometry itself_ (`_detect_tips`), so a button always lands on
+a spike. Decks are shown 9-per-page and paged
 through by "depth": depth `n` shows decks `9n..9n+8` on the deck spikes and
 leaves any leftover spikes empty; the 10th spike is always a "More decks" button
 (`pycmd('more')`) that advances to the next depth, wrapping back to depth 0 past

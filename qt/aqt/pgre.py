@@ -17,11 +17,22 @@ running Qt app (see ``qt/tests/test_pgre.py``).
 
 from __future__ import annotations
 
+import cmath
+import colorsys
+import functools
 import math
 import os
+from collections.abc import Callable
 from dataclasses import dataclass
 
 from anki.collection import Collection
+
+#: A 3D point and a meshed quad (four corners + its base rgb), used by the
+#: Calabi-Yau renderer below.
+_Vec3 = tuple[float, float, float]
+_Quad = tuple[list[_Vec3], _Vec3]
+#: A depth-keyed, projected, shaded face: ``(depth, 2D polygon, "#rrggbb")``.
+_Face = tuple[float, list[tuple[float, float]], str]
 
 #: Collection config flag: True once the bundled decks have been seeded, so we
 #: never re-import (and never fight a user who deletes a seeded deck).
@@ -66,6 +77,11 @@ SUBJECTS: list[Subject] = [
     Subject("Laboratory Methods", "09_Laboratory_Methods.apkg", "Laboratory Methods"),
 ]
 
+#: Bundled Speed Recall formula deck (built from the Conquering the Physics GRE
+#: equation index): filename under the data/decks folder + its top-level deck name.
+SPEED_RECALL_APKG = "Speed_Recall_Formulas.apkg"
+SPEED_RECALL_DECK = "Speed Recall"
+
 #: Total outer points (spikes) on the manifold. The first 9 map to subjects; the
 #: last one is always the "add more decks" spike.
 MANIFOLD_POINTS = 10
@@ -104,6 +120,14 @@ def import_default_decks(col: Collection, deck_dir: str | None = None) -> list[s
         col.import_anki_package(ImportAnkiPackageRequest(package_path=path))
         imported.append(subject.deck_name)
 
+    # The dedicated Speed Recall formula deck (Conquering the Physics GRE
+    # equation index). Shipped with the app so every user gets it regardless of
+    # account/progress; imported once, skipped if already present.
+    sr_path = os.path.join(deck_dir, SPEED_RECALL_APKG)
+    if col.decks.by_name(SPEED_RECALL_DECK) is None and os.path.exists(sr_path):
+        col.import_anki_package(ImportAnkiPackageRequest(package_path=sr_path))
+        imported.append(SPEED_RECALL_DECK)
+
     col.set_config(DECKS_IMPORTED_KEY, True)
     return imported
 
@@ -118,48 +142,206 @@ def maybe_import_default_decks(col: Collection) -> list[str]:
 # Calabi-Yau manifold home screen
 ######################################################################
 #
-# The manifold is the transparent Calabi-Yau PNG (served from the imgs folder).
-# A point-button sits on each of its outer spikes. The image's spikes are not
-# evenly spaced (it's a 3D projection), so the button positions below are hand-
-# placed on the actual spike tips rather than computed from a circle.
+# The manifold is drawn from its actual equations, not a picture. We mesh the
+# standard cross-section of the Fermat quintic Calabi-Yau ``z1^n + z2^n = 1``
+# (Hanson's parametrization): for each of the n*n branch patches (k1, k2),
+#
+#     z1 = e^{2πi·k1/n} · (cos w)^{2/n},   z2 = e^{2πi·k2/n} · (sin w)^{2/n}
+#
+# over the complex parameter ``w = a + i·b`` with ``a ∈ [0, π/2]``,
+# ``b ∈ [-π/2, π/2]``. The 4D surface is projected to 3D via
+# ``(Re z1, Re z2, Im z1·cosα + Im z2·sinα)``, rotated to a fixed view, and
+# orthographically flattened to the 2D stage. Faces are depth-sorted (painter's
+# algorithm) and Lambert-shaded, then emitted as inline SVG polygons.
+#
+# ``n = 5`` yields ten outer spikes; the button positions are the spike tips
+# *detected from the projected geometry itself*, so a button always lands on a
+# spike. The whole thing is collection-independent, so it's computed once and
+# cached (``_manifold_geometry``).
 #
 # Decks are shown 9-per-page and paged through by "depth": depth 0 is the first
 # 9 decks, depth 1 the next 9, and so on. The 10th spike is a "More decks"
 # button that advances to the next depth (see ``Manifold`` in ``manifold.py``).
 
-CALABI_YAU_IMG = "/_anki/imgs/calabi-yau.png"
-
 #: Decks shown per manifold page (the 9 deck spikes; the 10th is "More decks").
 DECKS_PER_PAGE = 9
 
-#: (left%, top%) of each spike tip in ``calabi-yau.png``, as a percentage of the
-#: (square) stage. Clockwise from the top; indices 0..8 hold decks and index 9 is
-#: the "More decks" spike. Detected from the image's silhouette (the farthest
-#: opaque pixel per angle) — regenerate these if the artwork is replaced.
-_SPIKE_POSITIONS: list[tuple[float, float]] = [
-    (51.6, 10.8),  # top
-    (75.5, 20.7),  # upper-right
-    (86.2, 38.8),  # right
-    (84.0, 65.7),  # lower-right
-    (70.5, 81.4),  # bottom-right
-    (42.8, 87.6),  # bottom
-    (25.3, 79.5),  # bottom-left
-    (11.9, 55.3),  # left
-    (13.5, 34.3),  # upper-left
-    (29.8, 16.3),  # top-left (More decks)
-]
+#: Calabi-Yau render parameters.
+_CY_DEGREE = 5  # n: the quintic; gives MANIFOLD_POINTS (=10) outer spikes
+_CY_RES = 16  # grid subdivisions per patch, per axis (higher = smoother)
+_CY_ALPHA = math.pi / 4  # imaginary-part projection mix angle
+_CY_ROT = (-1.05, 0.6)  # fixed view rotation (about x, then y), radians
+_CY_PAD = 0.09  # fraction of the stage left as margin around the figure
+#: Direction light arrives from, in the rotated view (x right, y up, z toward us).
+_CY_LIGHT = (-0.35, -0.45, 0.82)
 
 #: How far to pull each button in from its spike tip toward the centre (1.0 =
 #: sit exactly on the tip). A slight pull keeps the tip poking out past the label.
 _INWARD = 0.97
 
 
-def _point_positions() -> list[tuple[float, float]]:
-    """(left%, top%) for each of the ``MANIFOLD_POINTS`` spike buttons."""
-    return [
-        (50.0 + (left - 50.0) * _INWARD, 50.0 + (top - 50.0) * _INWARD)
-        for left, top in _SPIKE_POSITIONS
+def _cy_rotate(p: _Vec3) -> _Vec3:
+    """Rotate a 3D point into the fixed viewing orientation."""
+    x, y, z = p
+    rx, ry = _CY_ROT
+    cx, sx = math.cos(rx), math.sin(rx)
+    cy, sy = math.cos(ry), math.sin(ry)
+    y, z = y * cx - z * sx, y * sx + z * cx
+    x, z = x * cy + z * sy, -x * sy + z * cy
+    return (x, y, z)
+
+
+def _cy_surface(k1: int, k2: int, a: float, b: float) -> _Vec3:
+    """A point on the (k1, k2) branch of the Calabi-Yau cross-section."""
+    n = _CY_DEGREE
+    w = complex(a, b)
+    z1 = cmath.exp(2j * math.pi * k1 / n) * (cmath.cos(w)) ** (2.0 / n)
+    z2 = cmath.exp(2j * math.pi * k2 / n) * (cmath.sin(w)) ** (2.0 / n)
+    z = z1.imag * math.cos(_CY_ALPHA) + z2.imag * math.sin(_CY_ALPHA)
+    return _cy_rotate((z1.real, z2.real, z))
+
+
+def _cy_quads() -> list[_Quad]:
+    """Mesh every branch patch into quads: ``(4 rotated 3D corners, base rgb)``."""
+    n, res = _CY_DEGREE, _CY_RES
+    quads: list[_Quad] = []
+    for k1 in range(n):
+        for k2 in range(n):
+            base = colorsys.hsv_to_rgb((k1 * n + k2) / (n * n), 0.70, 1.0)
+            for i in range(res):
+                a0 = i / res * (math.pi / 2)
+                a1 = (i + 1) / res * (math.pi / 2)
+                for j in range(res):
+                    b0 = -math.pi / 2 + j / res * math.pi
+                    b1 = -math.pi / 2 + (j + 1) / res * math.pi
+                    quads.append(
+                        (
+                            [
+                                _cy_surface(k1, k2, a0, b0),
+                                _cy_surface(k1, k2, a1, b0),
+                                _cy_surface(k1, k2, a1, b1),
+                                _cy_surface(k1, k2, a0, b1),
+                            ],
+                            base,
+                        )
+                    )
+    return quads
+
+
+def _cy_projector(quads: list[_Quad]) -> Callable[[_Vec3], tuple[float, float]]:
+    """Return a fn mapping a rotated 3D point to (x%, y%) filling the stage."""
+    xs = [p[0] for q, _ in quads for p in q]
+    ys = [p[1] for q, _ in quads for p in q]
+    minx, maxx, miny, maxy = min(xs), max(xs), min(ys), max(ys)
+    span = max(maxx - minx, maxy - miny) or 1.0
+
+    def project(p: _Vec3) -> tuple[float, float]:
+        nx = (p[0] - (minx + maxx) / 2) / span + 0.5
+        ny = (p[1] - (miny + maxy) / 2) / span + 0.5
+        x = 100.0 * (_CY_PAD + (1 - 2 * _CY_PAD) * nx)
+        y = 100.0 * (_CY_PAD + (1 - 2 * _CY_PAD) * (1 - ny))  # SVG y grows down
+        return (x, y)
+
+    return project
+
+
+def _cy_shade(base: _Vec3, normal: _Vec3) -> str:
+    """Lambert-shade ``base`` by a face ``normal`` and return ``#rrggbb``."""
+    lx, ly, lz = _CY_LIGHT
+    ln = math.sqrt(lx * lx + ly * ly + lz * lz) or 1.0
+    diffuse = max(0.0, (normal[0] * lx + normal[1] * ly + normal[2] * lz) / ln)
+    inten = min(1.15, 0.30 + 0.75 * diffuse)
+    return "#" + "".join(f"{min(255, int(255 * c * inten)):02x}" for c in base)
+
+
+def _detect_tips(faces: list[_Face], count: int) -> list[tuple[float, float]]:
+    """Find the ``count`` outermost spike tips of the projected figure.
+
+    Bins vertices by angle about the centroid, keeps the farthest per angle,
+    takes radial local maxima, then the ``count`` strongest, well-separated ones,
+    ordered clockwise from the top.
+    """
+    pts = [p for _, poly, _ in faces for p in poly]
+    cx = sum(x for x, _ in pts) / len(pts)
+    cy = sum(y for _, y in pts) / len(pts)
+    bins = 720
+    best: dict[int, tuple[float, float, float]] = {}
+    for x, y in pts:
+        ang = math.atan2(y - cy, x - cx)
+        r = math.hypot(x - cx, y - cy)
+        bi = int((ang + math.pi) / (2 * math.pi) * bins) % bins
+        if bi not in best or r > best[bi][0]:
+            best[bi] = (r, x, y)
+    arr = [best.get(i, (0.0, cx, cy)) for i in range(bins)]
+    win = int(bins * 0.03)
+    maxima = [
+        arr[i]
+        for i in range(bins)
+        if arr[i][0] >= 30.0
+        and all(arr[i][0] >= arr[(i + d) % bins][0] for d in range(-win, win + 1))
     ]
+    maxima.sort(key=lambda t: -t[0])
+    picked: list[tuple[float, float, float]] = []
+    for r, x, y in maxima:
+        if all(math.hypot(x - px, y - py) > 10.0 for _, px, py in picked):
+            picked.append((r, x, y))
+        if len(picked) >= count:
+            break
+    # Defensive: if the geometry yielded fewer clear tips, pad on a circle.
+    for i in range(len(picked), count):
+        ang = math.radians(-90 + i * 360.0 / count)
+        picked.append((0.0, cx + 40 * math.cos(ang), cy + 40 * math.sin(ang)))
+    picked.sort(
+        key=lambda t: (math.atan2(t[2] - cy, t[1] - cx) + math.pi / 2) % (2 * math.pi)
+    )
+    return [(x, y) for _, x, y in picked]
+
+
+@functools.lru_cache(maxsize=1)
+def _manifold_geometry() -> tuple[str, tuple[tuple[float, float], ...]]:
+    """Build the manifold once: return ``(svg_markup, spike_tip_positions)``.
+
+    Collection-independent, so cached. Tips are in stage-percent coordinates,
+    matching the SVG's ``0..100`` viewBox.
+    """
+    quads = _cy_quads()
+    project = _cy_projector(quads)
+    faces: list[_Face] = []
+    for corners, base in quads:
+        (ax, ay, az), (bx, by, bz), (cx, cy, cz), _ = corners
+        ux, uy, uz = bx - ax, by - ay, bz - az
+        vx, vy, vz = cx - ax, cy - ay, cz - az
+        nx, ny, nz = uy * vz - uz * vy, uz * vx - ux * vz, ux * vy - uy * vx
+        nl = math.sqrt(nx * nx + ny * ny + nz * nz) or 1.0
+        nx, ny, nz = nx / nl, ny / nl, nz / nl
+        if nz < 0:  # face the normal toward the viewer for consistent shading
+            nx, ny, nz = -nx, -ny, -nz
+        depth = sum(p[2] for p in corners) / 4
+        faces.append(
+            (depth, [project(p) for p in corners], _cy_shade(base, (nx, ny, nz)))
+        )
+    faces.sort(key=lambda f: f[0])  # painter's algorithm: far faces first
+
+    polys = [
+        '<polygon points="{}" fill="{}" stroke="{}" stroke-width="0.35"/>'.format(
+            " ".join(f"{x:.2f},{y:.2f}" for x, y in poly), color, color
+        )
+        for _, poly, color in faces
+    ]
+    svg = (
+        '<svg id="cy-svg" viewBox="0 0 100 100" '
+        'xmlns="http://www.w3.org/2000/svg" aria-hidden="true">'
+        + "".join(polys)
+        + "</svg>"
+    )
+    tips = tuple(_detect_tips(faces, MANIFOLD_POINTS))
+    return svg, tips
+
+
+def _point_positions() -> list[tuple[float, float]]:
+    """(left%, top%) for each spike button, on the manifold's actual spike tips."""
+    _, tips = _manifold_geometry()
+    return [(50.0 + (x - 50.0) * _INWARD, 50.0 + (y - 50.0) * _INWARD) for x, y in tips]
 
 
 def _display_decks(col: Collection) -> list[tuple[int, str]]:
@@ -182,6 +364,11 @@ def _display_decks(col: Collection) -> list[tuple[int, str]]:
         skip_empty_default=True, include_filtered=False
     ):
         did = int(item.id)
+        name = item.name.replace("\x1f", "::")
+        # The Speed Recall formula deck (and its subject subdecks) has its own
+        # entry point (the ⚡ bottom-bar button), so it isn't a manifold spike.
+        if name == SPEED_RECALL_DECK or name.startswith(f"{SPEED_RECALL_DECK}::"):
+            continue
         if did in seen or item.name == PGRE_PARENT:
             continue
         entries.append((did, item.name.split("::")[-1]))
@@ -195,7 +382,7 @@ def page_count(col: Collection) -> int:
 
 
 def build_manifold_html(col: Collection, depth: int = 0) -> str:
-    """Return the home-screen HTML: the manifold image + 10 spike-buttons.
+    """Return the home-screen HTML: the manifold SVG + 10 spike-buttons.
 
     ``depth`` selects which 9 decks are shown: depth ``n`` shows decks
     ``n*9 .. n*9+8`` on the deck spikes (indices 0..8). It wraps modulo the
@@ -214,11 +401,16 @@ def build_manifold_html(col: Collection, depth: int = 0) -> str:
     positions = _point_positions()
     buttons: list[str] = []
     for index, (left, top) in enumerate(positions):
-        style = f"left:{left:.2f}%;top:{top:.2f}%"
+        # ``data-cx``/``data-cy`` record the spike's base position; dragging the
+        # manifold orbits each button about the centre to keep it on its spike.
+        pos = (
+            f"style='left:{left:.2f}%;top:{top:.2f}%' "
+            f"data-cx='{left:.2f}' data-cy='{top:.2f}'"
+        )
         if index >= DECKS_PER_PAGE:
             # The final spike advances to the next page of decks.
             buttons.append(
-                f"<button class='cy-point cy-more' style='{style}' "
+                f"<button class='cy-point cy-more' {pos} "
                 f"title='Show more decks' onclick=\"pycmd('more')\">"
                 f"<span class='cy-num'>&raquo;</span>More decks</button>"
             )
@@ -229,7 +421,7 @@ def build_manifold_html(col: Collection, depth: int = 0) -> str:
         did, raw_label = page[index]
         label = html.escape(raw_label)
         buttons.append(
-            f"<button class='cy-point' style='{style}' "
+            f"<button class='cy-point' {pos} "
             f"onclick=\"pycmd('open:{did}')\">"
             f"<span class='cy-num'>{start + index + 1}</span>{label}</button>"
         )
@@ -241,10 +433,14 @@ def build_manifold_html(col: Collection, depth: int = 0) -> str:
     else:
         page_info = ""
 
-    return _MANIFOLD_BODY.format(
-        img=CALABI_YAU_IMG,
-        buttons="\n".join(buttons),
-        page_info=html.escape(page_info),
+    svg, _ = _manifold_geometry()
+    return (
+        _MANIFOLD_BODY.format(
+            svg=svg,
+            buttons="\n".join(buttons),
+            page_info=html.escape(page_info),
+        )
+        + _MANIFOLD_SCRIPT
     )
 
 
@@ -262,15 +458,18 @@ _MANIFOLD_BODY = """
     aspect-ratio: 1 / 1;
     margin: 0 auto;
     overflow: visible;
+    cursor: grab;
+    touch-action: none;
   }}
-  #cy-stage > img {{
+  #cy-stage.cy-drag {{ cursor: grabbing; }}
+  #cy-svg {{
     width: 100%;
     height: 100%;
-    object-fit: contain;
     position: absolute;
     inset: 0;
+    overflow: visible;
+    transform-origin: 50% 50%;
     user-select: none;
-    -webkit-user-drag: none;
     pointer-events: none;
   }}
   .cy-point {{
@@ -314,11 +513,67 @@ _MANIFOLD_BODY = """
   <div id="cy-sub">the best app to prepare for the Physics GRE</div>
   <div id="cy-page">{page_info}</div>
   <div id="cy-stage">
-    <img src="{img}" alt="Calabi-Yau manifold">
+    {svg}
     {buttons}
   </div>
   <div id="cy-classic">
     <a onclick="pycmd('classic')">Classic deck list</a>
   </div>
 </div>
+"""
+
+#: Drag-to-rotate behaviour for the manifold. Appended verbatim (not
+#: ``format``-ed, so its braces need no escaping). Spinning is a pure in-plane
+#: rotation: the SVG is rotated with a CSS transform and every button is orbited
+#: about the centre by the same angle, so each button stays on its spike (and
+#: stays upright). Grab anywhere on the manifold background to spin it; clicks on
+#: the deck buttons still fall through to open the deck.
+_MANIFOLD_SCRIPT = """
+<script>
+(function () {
+  var stage = document.getElementById("cy-stage");
+  var svg = document.getElementById("cy-svg");
+  if (!stage || !svg) { return; }
+  var rot = 0;
+
+  function place() {
+    svg.style.transform = "rotate(" + rot + "deg)";
+    var a = rot * Math.PI / 180, ca = Math.cos(a), sa = Math.sin(a);
+    var pts = stage.querySelectorAll(".cy-point");
+    for (var i = 0; i < pts.length; i++) {
+      var el = pts[i];
+      var dx = parseFloat(el.getAttribute("data-cx")) - 50;
+      var dy = parseFloat(el.getAttribute("data-cy")) - 50;
+      el.style.left = (50 + dx * ca - dy * sa).toFixed(2) + "%";
+      el.style.top = (50 + dx * sa + dy * ca).toFixed(2) + "%";
+    }
+  }
+  place();
+
+  var dragging = false, lastAng = 0;
+  function angleFrom(e) {
+    var r = stage.getBoundingClientRect();
+    return Math.atan2(e.clientY - (r.top + r.height / 2),
+                      e.clientX - (r.left + r.width / 2));
+  }
+  stage.addEventListener("pointerdown", function (e) {
+    if (e.target.closest && e.target.closest(".cy-point")) { return; }
+    dragging = true;
+    lastAng = angleFrom(e);
+    stage.classList.add("cy-drag");
+    try { stage.setPointerCapture(e.pointerId); } catch (err) {}
+    e.preventDefault();
+  });
+  stage.addEventListener("pointermove", function (e) {
+    if (!dragging) { return; }
+    var a = angleFrom(e);
+    rot += (a - lastAng) * 180 / Math.PI;
+    lastAng = a;
+    place();
+  });
+  function endDrag() { dragging = false; stage.classList.remove("cy-drag"); }
+  stage.addEventListener("pointerup", endDrag);
+  stage.addEventListener("pointercancel", endDrag);
+})();
+</script>
 """
