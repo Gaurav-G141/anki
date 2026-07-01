@@ -24,3 +24,6 @@ ts/.svelte-kit
 docs/_build/
 docs/autoapi/
 .complexipy_cache
+
+# Speedrun: iOS xcframework is a build artifact (regenerate via mobile/build-xcframework.sh)
+mobile/AnkiCore.xcframework/
