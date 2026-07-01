@@ -339,7 +339,9 @@ def _detect_tips(faces: list[_Face], count: int) -> list[tuple[float, float]]:
 
 
 @functools.lru_cache(maxsize=1)
-def _manifold_geometry() -> tuple[tuple[_ShadedFace, ...], tuple[tuple[float, float], ...]]:
+def _manifold_geometry() -> tuple[
+    tuple[_ShadedFace, ...], tuple[tuple[float, float], ...]
+]:
     """Build the manifold once: return ``(shaded_faces, spike_tip_positions)``.
 
     Collection-independent, so cached. Each face carries its 2D polygon, its
@@ -361,7 +363,9 @@ def _manifold_geometry() -> tuple[tuple[_ShadedFace, ...], tuple[tuple[float, fl
         if nz < 0:  # face the normal toward the viewer for consistent shading
             nx, ny, nz = -nx, -ny, -nz
         depth = sum(p[2] for p in corners) / 4
-        shaded.append((depth, [project(p) for p in corners], _face_intensity((nx, ny, nz))))
+        shaded.append(
+            (depth, [project(p) for p in corners], _face_intensity((nx, ny, nz)))
+        )
     shaded.sort(key=lambda f: f[0])  # painter's algorithm: far faces first
 
     tips = tuple(
