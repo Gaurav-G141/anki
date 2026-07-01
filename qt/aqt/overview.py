@@ -188,7 +188,11 @@ class Overview:
             shareLink = '<a class=smallLink href="review">Reviews and Updates</a>'
         else:
             shareLink = ""
-        if self.mw.col.sched._is_finished():
+        # PGRE fork: subject decks always get the chalkboard, even when the deck
+        # is finished for the day — the stock "congrats" screen would otherwise
+        # hide it. Non-subject decks keep the stock finished screen.
+        subject_key = subject_key_for_deck(deck["name"])
+        if self.mw.col.sched._is_finished() and subject_key is None:
             self._show_finished_screen()
             return
         content = OverviewContent(
@@ -199,9 +203,8 @@ class Overview:
         )
         gui_hooks.overview_will_render_content(self, content)
         content.deck = html.escape(content.deck)
-        # PGRE fork: subject decks get the chalkboard treatment; anything else
-        # keeps the stock overview.
-        subject_key = subject_key_for_deck(deck["name"])
+        # (subject_key computed above; subject decks get the chalkboard, others
+        # keep the stock overview.)
         if subject_key is not None:
             body = blackboard_page_html(
                 subject_key,

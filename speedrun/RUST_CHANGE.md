@@ -44,27 +44,44 @@ option from §7a.
 
 ## Upstream files touched (and merge difficulty)
 
-All logic lives in **new files**; only tiny registrations touch tracked upstream
-files. Total upstream delta: **10 files, +45 lines** (`git diff --stat`).
+Line counts are approximate. Two groups: (A) the **Rust engine change** (this
+§7a deliverable) has a tiny upstream footprint; (B) the **wider fork UI**
+(manifold home screen, blackboard subject screens, Speed Recall) touches a few
+more Qt files more substantively. Listed separately so nothing is hidden.
 
-| Upstream file                | Lines added | What                                                            | Merge risk            |
-| ---------------------------- | ----------- | --------------------------------------------------------------- | --------------------- |
-| `rslib/src/lib.rs`           | 1           | `pub mod speedrun;`                                             | trivial               |
-| `rslib/proto/src/lib.rs`     | 1           | `protobuf!(speedrun, "speedrun");`                              | trivial               |
-| `rslib/proto/python.rs`      | 1           | `import anki.speedrun_pb2` in the generated-Python preamble     | trivial               |
-| `pylib/anki/collection.py`   | 2           | `self.speedrun = SpeedrunManager(self)` + import                | trivial               |
-| `qt/aqt/mediasrv.py`         | 3           | register the `speedrun-dashboard` page + expose `topic_mastery` | trivial               |
-| `Cargo.toml`                 | 1           | add `mobile/anki-ffi` workspace member                          | trivial               |
-| `Cargo.lock`                 | 11          | resolved deps for the new crate                                 | regenerated           |
-| `justfile`                   | 19          | `speedrun-*` / `bench` recipes                                  | additive, no conflict |
-| `docs/index.md`, `CLAUDE.md` | 3+3         | doc links                                                       | trivial               |
+### A. The Rust change (TopicMastery RPC) — trivial registrations only
 
-**New files** (zero merge risk — they don't exist upstream):
-`proto/anki/speedrun.proto`, `rslib/src/speedrun/**`, `pylib/anki/speedrun.py`,
-`pylib/tests/test_speedrun.py`, `ts/routes/speedrun-dashboard/**`,
-`ts/tests/e2e/speedrun-dashboard.test.ts`, `mobile/**`, `speedrun/**`.
+| Upstream file              | ~Lines | What                                                            | Merge risk |
+| -------------------------- | ------ | --------------------------------------------------------------- | ---------- |
+| `rslib/src/lib.rs`         | 1      | `pub mod speedrun;`                                             | trivial    |
+| `rslib/proto/src/lib.rs`   | 1      | `protobuf!(speedrun, "speedrun");`                              | trivial    |
+| `rslib/proto/python.rs`    | 1      | `import anki.speedrun_pb2` in the generated-Python preamble     | trivial    |
+| `pylib/anki/collection.py` | 2      | `self.speedrun = SpeedrunManager(self)` + import                | trivial    |
+| `qt/aqt/mediasrv.py`       | 3      | register the `speedrun-dashboard` page + expose `topic_mastery` | trivial    |
 
-**Assessment:** a future upstream merge is **easy**. Every edit to a shared file
-is a single additive line/registration in a list; no upstream function bodies were
-modified. The only mechanical follow-up after a big upstream pull would be
-regenerating `Cargo.lock` and re-running codegen.
+All engine logic is in **new files**: `proto/anki/speedrun.proto`,
+`rslib/src/speedrun/**`, `pylib/anki/speedrun.py`, `pylib/tests/test_speedrun.py`,
+`ts/routes/speedrun-dashboard/**`.
+
+### B. Wider fork UI + build (not part of the §7a Rust change)
+
+| Upstream file                | ~Lines | What                                                                                            | Merge risk                                    |
+| ---------------------------- | ------ | ----------------------------------------------------------------------------------------------- | --------------------------------------------- |
+| `qt/aqt/main.py`             | ~25    | new `manifold` + `speedRecall` `MainWindowState`s, setup/state handlers, first-run deck seeding | moderate — adds enum variants + dispatch arms |
+| `qt/aqt/overview.py`         | ~15    | render the chalkboard for subject decks (incl. when the deck is finished)                       | moderate — new branch in `_renderPage`        |
+| `qt/aqt/toolbar.py`          | small  | manifold home integration                                                                       | low                                           |
+| `Cargo.toml`                 | 1      | add `mobile/anki-ffi` workspace member                                                          | trivial                                       |
+| `Cargo.lock`                 | ~11    | resolved deps for the new crate                                                                 | regenerated                                   |
+| `justfile`                   | ~19    | `speedrun-*` / `bench` recipes                                                                  | additive                                      |
+| `docs/index.md`, `CLAUDE.md` | few    | doc links                                                                                       | trivial                                       |
+
+New UI/support files (don't exist upstream): `qt/aqt/manifold.py`,
+`qt/aqt/pgre.py`, `qt/aqt/speedrecall.py`, `qt/aqt/blackboard/**`,
+`qt/aqt/data/decks/**`, `qt/tests/test_{pgre,blackboard,speedrecall}.py`,
+`ts/tests/e2e/**`, `mobile/**`, `speedrun/**`.
+
+**Assessment:** merging the **Rust change** upstream is trivial (5 one-line
+registrations + new files). The wider fork is a **moderate** merge — `main.py`
+and `overview.py` add new `MainWindowState` variants and a render branch (new
+code, not rewritten upstream bodies), so conflicts would be small and mechanical.
+After a big upstream pull, regenerate `Cargo.lock` and re-run codegen.
