@@ -431,7 +431,8 @@ class Toolbar:
         return False
 
     def _deckLinkHandler(self) -> None:
-        self.mw.moveToState("deckBrowser")
+        # Home is the Calabi-Yau manifold; the classic list is one click from it.
+        self.mw.moveToState("manifold")
 
     def _studyLinkHandler(self) -> None:
         # if overview already shown, switch to review

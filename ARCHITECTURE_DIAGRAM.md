@@ -24,7 +24,8 @@ flowchart TB
         subgraph DESK["🟦 Desktop (existing) + 🟩 Speedrun page"]
             SK["🟦 Svelte/SvelteKit pages<br/>ts/routes/*"]
             DASH["🟩 ts/routes/speedrun-dashboard/<br/>3-score UI (Memory live;<br/>Performance/Readiness stubbed)"]
-            QT["🟦 PyQt shell + WebView<br/>qt/aqt/main.py · webview.py"]
+            MANI["🟩 Manifold home screen (landing)<br/>qt/aqt/manifold.py · pgre.py<br/>Calabi-Yau + 9 PGRE points<br/>+ first-run default-deck import"]
+            QT["🟦 PyQt shell + WebView<br/>qt/aqt/main.py · webview.py<br/>state 'manifold'"]
         end
         subgraph IOS["🟩 iOS app (planned)"]
             SWIFT["🟩 SwiftUI review screen<br/>mobile/SpeedrunApp/"]
@@ -53,6 +54,7 @@ flowchart TB
 
     SK --> HTTP
     DASH --> HTTP
+    MANI --> QT
     QT --> PYLIB
     SWIFT --> CFFI
 
@@ -80,7 +82,7 @@ flowchart TB
     classDef store fill:#e5e7eb,stroke:#6b7280,color:#111827;
 
     class SK,QT,HTTP,PYO3,PYLIB,DISPATCH,SCHED,SEARCH,STORE existing;
-    class DASH,SWIFT,CFFI,SPEED new;
+    class DASH,MANI,SWIFT,CFFI,SPEED new;
     class PROTO gen;
     class DB store;
 ```
@@ -89,6 +91,16 @@ flowchart TB
 desktop through PyO3/HTTP, iOS through a new tiny C-ABI. The only engine change is
 one **read-only** RPC (`TopicMastery`) that composes existing search + FSRS +
 revlog primitives, so undo and DB integrity are untouched (the spec's key claim).
+
+**Desktop landing screen:** the fork opens on a **Calabi-Yau manifold home
+screen** ([qt/aqt/manifold.py](qt/aqt/manifold.py), HTML from
+[qt/aqt/pgre.py](qt/aqt/pgre.py) `build_manifold_html`) instead of the deck list
+— a new `"manifold"` `MainWindowState` in [qt/aqt/main.py](qt/aqt/main.py). Its
+9 outer points open the PGRE decks' Study Now overview; a "Classic deck list"
+link falls back to the intact `DeckBrowser`. On a fresh collection, first launch
+auto-imports the 9 bundled `categorized decks/` `.apkg` files into
+`PGRE::<Subject>` decks (`_seed_default_decks` → `import_default_decks`, guarded
+by `pgreDefaultDecksImported`).
 
 ---
 
@@ -227,12 +239,13 @@ flowchart LR
 
 ## Quick map: doc → what it answers
 
-| Question                                 | Doc                                      |
-| ---------------------------------------- | ---------------------------------------- |
-| Where is feature X's file+function?      | [CODE_MAP.md](CODE_MAP.md)               |
-| What is each technology / crate?         | [docs/tech-stack.md](docs/tech-stack.md) |
-| What happens to one RPC at runtime?      | [docs/data-flow.md](docs/data-flow.md)   |
-| How is `rslib` organized?                | [docs/rust-core.md](docs/rust-core.md)   |
-| Why these product choices?               | [PRD.md](PRD.md)                         |
-| What exactly to build + test thresholds? | [SPECS.md](SPECS.md)                     |
-| Deck-prep / fixture tooling?             | [speedrun/README.md](speedrun/README.md) |
+| Question                                   | Doc                                                                                                                                          |
+| ------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------- |
+| Where is feature X's file+function?        | [CODE_MAP.md](CODE_MAP.md)                                                                                                                   |
+| What is each technology / crate?           | [docs/tech-stack.md](docs/tech-stack.md)                                                                                                     |
+| What happens to one RPC at runtime?        | [docs/data-flow.md](docs/data-flow.md)                                                                                                       |
+| How is `rslib` organized?                  | [docs/rust-core.md](docs/rust-core.md)                                                                                                       |
+| Desktop UI: manifold home + default decks? | [CODE_MAP.md](CODE_MAP.md) (Diagram 6), [docs/data-flow.md](docs/data-flow.md), [categorized decks/README.md](categorized%20decks/README.md) |
+| Why these product choices?                 | [PRD.md](PRD.md)                                                                                                                             |
+| What exactly to build + test thresholds?   | [SPECS.md](SPECS.md)                                                                                                                         |
+| Deck-prep / fixture tooling?               | [speedrun/README.md](speedrun/README.md)                                                                                                     |

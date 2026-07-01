@@ -981,7 +981,7 @@ timerStopped = false;
             diag = askUserDialog(message, [tr.studying_continue(), fin])
             diag.setIcon(QMessageBox.Icon.Information)
             if diag.run() == fin:
-                self.mw.moveToState("deckBrowser")
+                self.mw.moveToState("manifold")
                 return True
             self.mw.col.startTimebox()
         return False

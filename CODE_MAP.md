@@ -171,18 +171,36 @@ flowchart TD
 
 ```mermaid
 flowchart TD
-    MAIN["App shell / main window / state<br/>qt/aqt/main.py :: AnkiQt"]
+    MAIN["App shell / main window / state<br/>qt/aqt/main.py :: AnkiQt<br/>landing state = 'manifold' (Speedrun)"]
     MAIN --> MSRV["Local HTTP server (serves pages + RPC)<br/>qt/aqt/mediasrv.py :: handle_request() L382"]
     MAIN --> WV["WebView bridge (pycmd / web.eval)<br/>qt/aqt/webview.py :: AnkiWebView"]
+    MAIN --> MAN["🟩 Manifold home screen (Speedrun landing)<br/>qt/aqt/manifold.py :: Manifold<br/>HTML: qt/aqt/pgre.py :: build_manifold_html()"]
     MAIN --> REV["Reviewer screen<br/>qt/aqt/reviewer.py :: Reviewer"]
+    MAIN --> DB2["Classic deck list (reachable from manifold)<br/>qt/aqt/deckbrowser.py :: DeckBrowser"]
     MAIN --> BROW["Card browser<br/>qt/aqt/browser/browser.py :: Browser"]
     MAIN --> ED["Editor host<br/>qt/aqt/editor.py :: Editor"]
     MAIN --> DOPT["Deck options dialog (hosts Svelte page)<br/>qt/aqt/deckoptions.py"]
+    MAIN --> SEED["🟩 First-run default-deck seeder<br/>qt/aqt/pgre.py :: import_default_decks() /<br/>maybe_import_default_decks()"]
     MAIN --> OPS["Undoable GUI operations<br/>qt/aqt/operations/"]
     WV --> MSRV
+    MAN --> WV
     DOPT --> WV
     REV --> WV
 ```
+
+The Speedrun fork replaces the deck list as the landing screen with a
+**Calabi-Yau manifold home screen** ([qt/aqt/manifold.py](qt/aqt/manifold.py),
+modeled on `qt/aqt/deckbrowser.py`). `AnkiQt` gains a `"manifold"`
+`MainWindowState` plus `setupManifold()` / `_manifoldState()`, and
+`loadCollection` calls `moveToState("manifold")`. The screen renders
+`qt/aqt/data/web/imgs/calabi-yau.jpg` with a button at each of the manifold's 10
+outer points: the first 9 are the PGRE subjects (clicking runs
+`pycmd('open:<deckId>')` → the deck's "Study Now" overview), the 10th is a
+"Coming soon" placeholder, and a "Classic deck list" link (`pycmd('classic')`)
+opens the intact `DeckBrowser`. The toolbar "Decks" link, the `d` shortcut, the
+overview "Decks" back-link, and the reviewer "Finish" action all return to
+`"manifold"`. On first launch of a fresh collection, `_seed_default_decks`
+auto-imports the 9 bundled PGRE decks (see Diagram 7 / the taxonomy note).
 
 ---
 
@@ -225,35 +243,37 @@ flowchart TD
 
 ## 9. Feature → file/function index (fallback lookup)
 
-| Feature                            | File :: symbol                                                                                                         |
-| ---------------------------------- | ---------------------------------------------------------------------------------------------------------------------- |
-| RPC dispatch (service,method→impl) | `rslib/rust_interface.rs :: run_service_method` (gen → `rslib/src/services.rs`)                                        |
-| Backend init / collection lock     | `rslib/src/backend/mod.rs :: init_backend` (L69), `with_col` (L116)                                                    |
-| Raw SQL proxy                      | `rslib/src/backend/mod.rs :: run_db_command_bytes` (L104) → `backend/dbproxy.rs`                                       |
-| Open a collection                  | `rslib/src/backend/collection.rs :: open_collection` (L17)                                                             |
-| Python→Rust FFI                    | `pylib/rsbridge/lib.rs :: command` (L49) / `open_backend` (L40)                                                        |
-| Python command entry               | `pylib/anki/_backend.py :: _run_command` (L159)                                                                        |
-| TS→Rust transport                  | `ts/lib/generated/post.ts :: postProto` (L9) → `qt/aqt/mediasrv.py :: handle_request` (L382)                           |
-| Get next cards to review           | `rslib/src/scheduler/queue/mod.rs :: get_queued_cards` (L88)                                                           |
-| Answer a card                      | `rslib/src/scheduler/answering/mod.rs :: answer_card` (L311); service `scheduler/service/mod.rs :: answer_card` (L232) |
-| Answer latency (speed signal)      | `rslib/src/revlog/mod.rs :: RevlogEntry.taken_millis` (L57)                                                            |
-| FSRS memory state (type)           | `rslib/src/card/mod.rs :: FsrsMemoryState` (L106)                                                                      |
-| Compute memory state               | `rslib/src/scheduler/fsrs/memory_state.rs :: compute_memory_state` (L360)                                              |
-| Current recall probability R       | `fsrs` crate `current_retrievability_seconds`; call site `rslib/src/browser_table.rs` (L548)                           |
-| FSRS decay selection               | `rslib/src/scheduler/fsrs/memory_state.rs :: get_decay_from_params` (L37)                                              |
-| Deck FSRS params / retention       | `rslib/src/deckconfig/mod.rs :: fsrs_params` (L112)                                                                    |
-| Tag search builder                 | `rslib/src/search/builder.rs :: from_tag_name` (L175)                                                                  |
-| Search parse / SQL                 | `rslib/src/search/parser.rs`, `sqlwriter.rs`, run via `search/mod.rs :: search_cards`                                  |
-| Note tags storage                  | `rslib/src/notes/mod.rs :: Note.tags`; all tags `rslib/src/tags/service.rs :: all_tags`                                |
-| Undo / change tracking             | `rslib/src/ops.rs :: Op/OpChanges/StateChanges`; `rslib/src/undo/ :: UndoManager`                                      |
-| Error → protobuf                   | `rslib/src/backend/error.rs :: into_protobuf` (L11); `rslib/src/error/mod.rs :: AnkiError`                             |
-| "now" / day rollover               | `rslib/src/scheduler/mod.rs :: timing_today` (L50)                                                                     |
-| Card render / templates            | `rslib/src/template.rs`, `cloze.rs`, `card_rendering/`                                                                 |
-| Import/export (.apkg/CSV)          | `rslib/src/import_export/package/`, `import_export/text/`                                                              |
-| Sync (collection/media)            | `rslib/src/sync/{collection,media,http_client,http_server}/`                                                           |
-| Reviewer UI (desktop)              | `qt/aqt/reviewer.py :: Reviewer`; web `ts/reviewer/index.ts`                                                           |
-| Test helpers (Rust)                | `rslib/src/tests.rs :: NoteAdder, CardAdder`; `Collection::new()`                                                      |
-| Test helpers (Python)              | `pylib/tests/shared.py :: getEmptyCol`; review via `col.sched.answerCard(card, ease)`                                  |
+| Feature                            | File :: symbol                                                                                                                                                                                           |
+| ---------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| RPC dispatch (service,method→impl) | `rslib/rust_interface.rs :: run_service_method` (gen → `rslib/src/services.rs`)                                                                                                                          |
+| Backend init / collection lock     | `rslib/src/backend/mod.rs :: init_backend` (L69), `with_col` (L116)                                                                                                                                      |
+| Raw SQL proxy                      | `rslib/src/backend/mod.rs :: run_db_command_bytes` (L104) → `backend/dbproxy.rs`                                                                                                                         |
+| Open a collection                  | `rslib/src/backend/collection.rs :: open_collection` (L17)                                                                                                                                               |
+| Python→Rust FFI                    | `pylib/rsbridge/lib.rs :: command` (L49) / `open_backend` (L40)                                                                                                                                          |
+| Python command entry               | `pylib/anki/_backend.py :: _run_command` (L159)                                                                                                                                                          |
+| TS→Rust transport                  | `ts/lib/generated/post.ts :: postProto` (L9) → `qt/aqt/mediasrv.py :: handle_request` (L382)                                                                                                             |
+| Get next cards to review           | `rslib/src/scheduler/queue/mod.rs :: get_queued_cards` (L88)                                                                                                                                             |
+| Answer a card                      | `rslib/src/scheduler/answering/mod.rs :: answer_card` (L311); service `scheduler/service/mod.rs :: answer_card` (L232)                                                                                   |
+| Answer latency (speed signal)      | `rslib/src/revlog/mod.rs :: RevlogEntry.taken_millis` (L57)                                                                                                                                              |
+| FSRS memory state (type)           | `rslib/src/card/mod.rs :: FsrsMemoryState` (L106)                                                                                                                                                        |
+| Compute memory state               | `rslib/src/scheduler/fsrs/memory_state.rs :: compute_memory_state` (L360)                                                                                                                                |
+| Current recall probability R       | `fsrs` crate `current_retrievability_seconds`; call site `rslib/src/browser_table.rs` (L548)                                                                                                             |
+| FSRS decay selection               | `rslib/src/scheduler/fsrs/memory_state.rs :: get_decay_from_params` (L37)                                                                                                                                |
+| Deck FSRS params / retention       | `rslib/src/deckconfig/mod.rs :: fsrs_params` (L112)                                                                                                                                                      |
+| Tag search builder                 | `rslib/src/search/builder.rs :: from_tag_name` (L175)                                                                                                                                                    |
+| Search parse / SQL                 | `rslib/src/search/parser.rs`, `sqlwriter.rs`, run via `search/mod.rs :: search_cards`                                                                                                                    |
+| Note tags storage                  | `rslib/src/notes/mod.rs :: Note.tags`; all tags `rslib/src/tags/service.rs :: all_tags`                                                                                                                  |
+| Undo / change tracking             | `rslib/src/ops.rs :: Op/OpChanges/StateChanges`; `rslib/src/undo/ :: UndoManager`                                                                                                                        |
+| Error → protobuf                   | `rslib/src/backend/error.rs :: into_protobuf` (L11); `rslib/src/error/mod.rs :: AnkiError`                                                                                                               |
+| "now" / day rollover               | `rslib/src/scheduler/mod.rs :: timing_today` (L50)                                                                                                                                                       |
+| Card render / templates            | `rslib/src/template.rs`, `cloze.rs`, `card_rendering/`                                                                                                                                                   |
+| Import/export (.apkg/CSV)          | `rslib/src/import_export/package/`, `import_export/text/`                                                                                                                                                |
+| Sync (collection/media)            | `rslib/src/sync/{collection,media,http_client,http_server}/`                                                                                                                                             |
+| Reviewer UI (desktop)              | `qt/aqt/reviewer.py :: Reviewer`; web `ts/reviewer/index.ts`                                                                                                                                             |
+| Manifold home screen (Speedrun)    | `qt/aqt/manifold.py :: Manifold`; HTML `qt/aqt/pgre.py :: build_manifold_html`; state `qt/aqt/main.py :: "manifold"` (`setupManifold`/`_manifoldState`)                                                  |
+| First-run default-deck import      | `qt/aqt/pgre.py :: import_default_decks`/`maybe_import_default_decks` (flag `pgreDefaultDecksImported`); `qt/aqt/main.py :: _seed_default_decks`; build rule `build/configure/src/aqt.rs :: build_decks` |
+| Test helpers (Rust)                | `rslib/src/tests.rs :: NoteAdder, CardAdder`; `Collection::new()`                                                                                                                                        |
+| Test helpers (Python)              | `pylib/tests/shared.py :: getEmptyCol`; review via `col.sched.answerCard(card, ease)`                                                                                                                    |
 
 ```
 ```

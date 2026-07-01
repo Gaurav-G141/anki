@@ -83,7 +83,13 @@ from aqt.webview import AnkiWebView, AnkiWebViewKind
 install_pylib_legacy()
 
 MainWindowState = Literal[
-    "startup", "deckBrowser", "overview", "review", "resetRequired", "profileManager"
+    "startup",
+    "manifold",
+    "deckBrowser",
+    "overview",
+    "review",
+    "resetRequired",
+    "profileManager",
 ]
 
 
@@ -240,6 +246,7 @@ class AnkiQt(QMainWindow):
         self.setup_focus()
         # screens
         self.setupDeckBrowser()
+        self.setupManifold()
         self.setupOverview()
         self.setupReviewer()
 
@@ -662,7 +669,8 @@ class AnkiQt(QMainWindow):
             self.update_undo_actions()
             gui_hooks.collection_did_load(self.col)
             self.apply_collection_options()
-            self.moveToState("deckBrowser")
+            self._seed_default_decks()
+            self.moveToState("manifold")
         except Exception:
             # dump error to stderr so it gets picked up by errors.py
             traceback.print_exc()
@@ -673,6 +681,19 @@ class AnkiQt(QMainWindow):
         cpath = self.pm.collectionPath()
         self.col = Collection(cpath, backend=self.backend)
         self.setEnabled(True)
+
+    def _seed_default_decks(self) -> None:
+        """First-run only: import the bundled Physics GRE subject decks.
+
+        Failures here must never block startup, so any error is logged and
+        swallowed (the manifold simply shows the missing subjects as disabled).
+        """
+        from aqt.pgre import maybe_import_default_decks
+
+        try:
+            maybe_import_default_decks(self.col)
+        except Exception:
+            traceback.print_exc()
 
     def reopen(self, after_full_sync: bool = False) -> None:
         self.col.reopen(after_full_sync=after_full_sync)
@@ -772,6 +793,9 @@ class AnkiQt(QMainWindow):
     def _deckBrowserState(self, oldState: MainWindowState) -> None:
         self.deckBrowser.show()
 
+    def _manifoldState(self, oldState: MainWindowState) -> None:
+        self.manifold.show()
+
     def _selectedDeck(self) -> DeckDict | None:
         did = self.col.decks.selected()
         if not self.col.decks.name_if_exists(did):
@@ -781,7 +805,7 @@ class AnkiQt(QMainWindow):
 
     def _overviewState(self, oldState: MainWindowState) -> None:
         if not self._selectedDeck():
-            return self.moveToState("deckBrowser")
+            return self.moveToState("manifold")
         self.overview.show()
 
     def _reviewState(self, oldState: MainWindowState) -> None:
@@ -848,6 +872,8 @@ class AnkiQt(QMainWindow):
             dirty = self.overview.op_executed(changes, handler, focused)
         elif self.state == "deckBrowser":
             dirty = self.deckBrowser.op_executed(changes, handler, focused)
+        elif self.state == "manifold":
+            dirty = self.manifold.op_executed(changes, handler, focused)
         else:
             dirty = False
 
@@ -871,6 +897,8 @@ class AnkiQt(QMainWindow):
                 self.overview.refresh_if_needed()
             elif self.state == "deckBrowser":
                 self.deckBrowser.refresh_if_needed()
+            elif self.state == "manifold":
+                self.manifold.refresh_if_needed()
 
     def fade_out_webview(self) -> None:
         self.web.eval("document.body.style.opacity = 0.3")
@@ -1062,6 +1090,11 @@ title="{}" {}>{}</button>""".format(
 
         self.deckBrowser = DeckBrowser(self)
 
+    def setupManifold(self) -> None:
+        from aqt.manifold import Manifold
+
+        self.manifold = Manifold(self)
+
     def setupOverview(self) -> None:
         from aqt.overview import Overview
 
@@ -1166,7 +1199,7 @@ title="{}" {}>{}</button>""".format(
     def setupKeys(self) -> None:
         globalShortcuts = [
             ("Ctrl+:", show_debug_console),
-            ("d", lambda: self.moveToState("deckBrowser")),
+            ("d", lambda: self.moveToState("manifold")),
             ("s", self.onStudyKey),
             ("a", self.onAddCard),
             ("b", self.onBrowse),
@@ -1541,6 +1574,8 @@ title="{}" {}>{}</button>""".format(
     def onRefreshTimer(self) -> None:
         if self.state == "deckBrowser":
             self.deckBrowser.refresh()
+        elif self.state == "manifold":
+            self.manifold.refresh()
         elif self.state == "overview":
             self.overview.refresh()
 
@@ -1828,7 +1863,7 @@ title="{}" {}>{}</button>""".format(
 
     def interactiveState(self) -> bool:
         "True if not in profile manager, syncing, etc."
-        return self.state in ("overview", "review", "deckBrowser")
+        return self.state in ("overview", "review", "deckBrowser", "manifold")
 
     # GC
     ##########################################################################

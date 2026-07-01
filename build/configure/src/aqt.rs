@@ -113,8 +113,22 @@ fn build_data_folder(build: &mut Build) -> Result<()> {
     build_js(build)?;
     build_pages(build)?;
     build_icons(build)?;
+    build_decks(build)?;
     copy_sveltekit(build)?;
     Ok(())
+}
+
+/// Bundled Physics GRE "default decks" (the 9 categorized subject .apkg files),
+/// copied so they resolve at runtime via `aqt_data_path()/"decks"` for
+/// first-run auto-import (see qt/aqt/pgre.py).
+fn build_decks(build: &mut Build) -> Result<()> {
+    build.add_action(
+        "qt:aqt:data:decks",
+        CopyFiles {
+            inputs: inputs![glob!["qt/aqt/data/decks/*.apkg"]],
+            output_folder: "qt/_aqt/data/decks",
+        },
+    )
 }
 
 fn copy_sveltekit(build: &mut Build) -> Result<()> {

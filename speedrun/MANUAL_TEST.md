@@ -104,6 +104,47 @@ PY
 
 ---
 
+## S1b — bundled default decks + the manifold home screen (desktop UI)
+
+Two desktop-UI features to verify by hand. Use a **throwaway profile** so a fresh
+collection triggers the first-run import (`ANKI_BASE` points at a fresh dir).
+
+```bash
+rm -rf /tmp/pgre-manifold                 # ensure a fresh collection
+ANKI_BASE=/tmp/pgre-manifold just run
+```
+
+**Default decks (auto-import on first run).** On this fresh profile, the 9
+bundled decks import automatically into `PGRE::<Subject>` decks — no manual
+File → Import needed. The 9 subjects are: Classical Mechanics, Electromagnetism,
+Quantum Mechanics, Atomic Physics, Thermodynamics & Statistical Mechanics,
+Optics & Waves, Specialized Topics, Special Relativity, Laboratory Methods. The
+import is one-time (flag `pgreDefaultDecksImported`) and idempotent — restarting
+on the same profile does **not** re-import or duplicate them.
+
+**Manifold home screen (landing state).** The app opens on the **Calabi-Yau
+manifold home screen** (not the classic deck list). Verify:
+
+1. The manifold image renders with a **button at each of its 10 outer points** —
+   the first 9 are the PGRE subjects (point 1 at top, clockwise), the 10th is a
+   blank **"Coming soon"** placeholder.
+2. **Click a subject point** → it selects that deck and lands on the deck's
+   **Study Now** overview (same as clicking a deck in the classic list).
+3. **Study** a few cards, then **Finish** the session → you return to the
+   **manifold** home screen (not the deck list).
+4. From the overview, the **"Decks"** back-link, the toolbar **"Decks"** link,
+   and the **`d`** shortcut all return to the **manifold**.
+5. The **"Classic deck list"** link on the manifold opens the traditional deck
+   browser (fully intact), which still shows the 9 `PGRE::<Subject>` decks and
+   lets you add/import your own.
+
+Automated coverage: `qt/tests/test_pgre.py` (5 tests) covers import idempotency,
+the `pgreDefaultDecksImported` flag, and the manifold HTML. Implementation lives
+in `qt/aqt/manifold.py`, `qt/aqt/pgre.py`, and the `"manifold"` state in
+`qt/aqt/main.py`.
+
+---
+
 ## S2 & S3 — the honest memory score (`SpeedrunService.TopicMastery`)
 
 The real Rust engine change (see [RUST_CHANGE.md](RUST_CHANGE.md)): a read-only RPC

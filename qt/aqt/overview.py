@@ -110,7 +110,7 @@ class Overview:
         elif url == "empty":
             self.empty_current_filtered_deck()
         elif url == "decks":
-            self.mw.moveToState("deckBrowser")
+            self.mw.moveToState("manifold")
         elif url == "review":
             openLink(f"{aqt.appShared}info/{self.sid}?v={self.sidVer}")
         elif url in {"studymore", "customStudy"}:

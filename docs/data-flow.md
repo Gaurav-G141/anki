@@ -135,6 +135,47 @@ production the pages are pre-built into `out/sveltekit/` and served directly.
 See [e2e-testing.md](./e2e-testing.md) and [architecture.md](./architecture.md)
 for the serving details rather than relying on this summary.
 
+## The Speedrun landing screen (`"manifold"` state)
+
+The Speedrun fork changes which screen the main window opens on. `AnkiQt`
+([qt/aqt/main.py](../qt/aqt/main.py)) has a `MainWindowState` string-literal
+enum; the fork adds a `"manifold"` member with `setupManifold()` /
+`_manifoldState()`, and `loadCollection` now calls `moveToState("manifold")`
+instead of landing on the deck list. The state is served by the
+`Manifold` webview ([qt/aqt/manifold.py](../qt/aqt/manifold.py)), a home screen
+modeled on [qt/aqt/deckbrowser.py](../qt/aqt/deckbrowser.py) whose HTML is built
+by `build_manifold_html(col, depth)` in [qt/aqt/pgre.py](../qt/aqt/pgre.py). It
+renders the transparent Calabi-Yau manifold PNG
+(`qt/aqt/data/web/imgs/calabi-yau.png`, served at `/_anki/imgs/calabi-yau.png`)
+with a button hand-placed on each of the 10 outer spikes (positions in
+`_SPIKE_POSITIONS`, tuned to the artwork). Decks are shown 9-per-page and paged
+through by "depth": depth `n` shows decks `9n..9n+8` on the deck spikes and
+leaves any leftover spikes empty; the 10th spike is always a "More decks" button
+(`pycmd('more')`) that advances to the next depth, wrapping back to depth 0 past
+the last page. `Manifold` ([qt/aqt/manifold.py](../qt/aqt/manifold.py)) holds the
+current `depth` (reset to 0 on show).
+
+Clicks flow through the standard `pycmd()` WebView bridge:
+
+- `open:<deckId>` — selects the deck and moves to its "Study Now" overview
+  (same effect as clicking a deck in the classic list).
+- `more` — advances to the next depth (page of 9 decks).
+- `classic` — opens the intact classic deck browser (`DeckBrowser`).
+
+The toolbar "Decks" link ([qt/aqt/toolbar.py](../qt/aqt/toolbar.py)
+`_deckLinkHandler`), the `d` shortcut, the overview "Decks" back-link
+([qt/aqt/overview.py](../qt/aqt/overview.py)), the reviewer "Finish" action
+([qt/aqt/reviewer.py](../qt/aqt/reviewer.py)), and the overview no-deck fallback
+all return to `"manifold"`.
+
+On first launch of a fresh collection, `loadCollection` also calls
+`_seed_default_decks`, which runs `maybe_import_default_decks` /
+`import_default_decks` in [qt/aqt/pgre.py](../qt/aqt/pgre.py) to auto-import the
+9 bundled PGRE `.apkg` decks (guarded by the collection config flag
+`pgreDefaultDecksImported`; idempotent and one-time per collection). The decks
+ship in `qt/aqt/data/decks/`, copied into the build output by the `build_decks`
+rule in [build/configure/src/aqt.rs](../build/configure/src/aqt.rs).
+
 ## The raw SQL proxy (`db_command`)
 
 Some callers need to run SQL directly instead of going through a typed RPC
