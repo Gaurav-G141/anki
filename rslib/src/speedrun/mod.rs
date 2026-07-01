@@ -194,43 +194,70 @@ impl Collection {
         let fsrs = FSRS::new(None)?;
 
         let mut accums: [Accum; 9] = std::array::from_fn(|_| Accum::default());
+        let subject_tags: [String; 9] = std::array::from_fn(|i| SUBJECTS[i].tag());
+        // Precomputed "pgre::<key>::" child prefixes so a parent tag matches its
+        // hierarchical children (e.g. pgre::classical_mechanics::small_osc).
+        let subject_child: [String; 9] = std::array::from_fn(|i| format!("{}::", subject_tags[i]));
 
-        for (i, subject) in SUBJECTS.iter().enumerate() {
-            let search = format!("tag:{}", subject.tag());
-            let guard = self.search_cards_into_table(search.as_str(), SortMode::NoOrder)?;
-            let cards = guard.col.storage.all_searched_cards()?;
-            let revlog = guard
-                .col
-                .storage
-                .get_revlog_entries_for_searched_cards_in_card_order()?;
-            drop(guard);
+        // One scan for all PGRE-tagged cards (+ their revlog), instead of one
+        // full tag scan per subject. Each card is bucketed into its subject via
+        // its note's tags, looked up by id (indexed) rather than re-scanned.
+        let guard = self.search_cards_into_table("tag:pgre::*", SortMode::NoOrder)?;
+        let cards = guard.col.storage.all_searched_cards()?;
+        let revlog = guard
+            .col
+            .storage
+            .get_revlog_entries_for_searched_cards_in_card_order()?;
+        drop(guard);
 
-            let acc = &mut accums[i];
-            acc.total_cards = cards.len() as u32;
-            for card in &cards {
-                if let Some(state) = card.memory_state {
-                    let secs = card.seconds_since_last_review(&timing).unwrap_or(0);
-                    let decay = card.decay.unwrap_or(FSRS5_DEFAULT_DECAY);
-                    let r = fsrs.current_retrievability_seconds(state.into(), secs, decay);
-                    acc.cards_with_state += 1;
-                    acc.sum_r += r as f64;
-                    acc.sum_stability += state.stability as f64;
-                    if r >= mastered_threshold {
-                        acc.mastered += 1;
-                    }
+        // Map note -> subject via one streamed pass over note tags (no temp
+        // table / per-id inserts): cheaper than looking up each note id, and the
+        // predicate skips the (usually many) non-PGRE notes up front.
+        let mut note_subject: HashMap<NoteId, usize> = HashMap::new();
+        for nt in self
+            .storage
+            .get_note_tags_by_predicate(|tags| tags.contains("pgre::"))?
+        {
+            if let Some(idx) = subject_index_for_tags(&nt.tags, &subject_tags, &subject_child) {
+                note_subject.insert(nt.id, idx);
+            }
+        }
+
+        // Per-card stats; also remember each card's subject for the revlog pass.
+        let mut card_subject: HashMap<CardId, usize> = HashMap::with_capacity(cards.len());
+        for card in &cards {
+            let Some(&idx) = note_subject.get(&card.note_id) else {
+                continue;
+            };
+            card_subject.insert(card.id, idx);
+            let acc = &mut accums[idx];
+            acc.total_cards += 1;
+            if let Some(state) = card.memory_state {
+                let secs = card.seconds_since_last_review(&timing).unwrap_or(0);
+                let decay = card.decay.unwrap_or(FSRS5_DEFAULT_DECAY);
+                let r = fsrs.current_retrievability_seconds(state.into(), secs, decay);
+                acc.cards_with_state += 1;
+                acc.sum_r += r as f64;
+                acc.sum_stability += state.stability as f64;
+                if r >= mastered_threshold {
+                    acc.mastered += 1;
                 }
             }
-            for e in &revlog {
-                if matches!(
-                    e.review_kind,
-                    RevlogReviewKind::Learning
-                        | RevlogReviewKind::Review
-                        | RevlogReviewKind::Relearning
-                ) {
-                    acc.reviews += 1;
-                    if e.taken_millis > 0 {
-                        acc.latencies.push(e.taken_millis.min(LATENCY_CAP_MS));
-                    }
+        }
+        for e in &revlog {
+            let Some(&idx) = card_subject.get(&e.cid) else {
+                continue;
+            };
+            if matches!(
+                e.review_kind,
+                RevlogReviewKind::Learning
+                    | RevlogReviewKind::Review
+                    | RevlogReviewKind::Relearning
+            ) {
+                let acc = &mut accums[idx];
+                acc.reviews += 1;
+                if e.taken_millis > 0 {
+                    acc.latencies.push(e.taken_millis.min(LATENCY_CAP_MS));
                 }
             }
         }
@@ -420,6 +447,25 @@ impl Collection {
             mastered_threshold,
         })
     }
+}
+
+/// Map a note's space-separated tag string to a subject index: a tag matches a
+/// subject when it equals the subject tag (`pgre::<key>`) or is one of its
+/// hierarchical children (`pgre::<key>::...`). Returns the first match, if any.
+/// Non-subject `pgre::*` tags (e.g. `pgre::heuristic::x`) map to nothing.
+fn subject_index_for_tags(
+    tags: &str,
+    subject_tags: &[String; 9],
+    subject_child: &[String; 9],
+) -> Option<usize> {
+    for tag in tags.split_whitespace() {
+        for idx in 0..subject_tags.len() {
+            if tag == subject_tags[idx].as_str() || tag.starts_with(subject_child[idx].as_str()) {
+                return Some(idx);
+            }
+        }
+    }
+    None
 }
 
 /// Up to three covered subjects with the lowest mean retrievability, ascending.

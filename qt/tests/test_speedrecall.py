@@ -26,12 +26,16 @@ def _empty_col() -> Collection:
 
 def _add_cards(col: Collection, deck_name: str, n: int) -> list[int]:
     did = col.decks.id(deck_name)
-    nt = col.models.by_name("Basic")
+    # Use the current default notetype and set fields by index so the test is
+    # locale-independent (under a non-English language, the default notetype and
+    # its fields aren't named "Basic"/"Front"/"Back").
+    nt = col.models.current()
     cids = []
     for i in range(n):
         note = col.new_note(nt)
-        note["Front"] = f"{deck_name} front {i}"
-        note["Back"] = f"back {i}"
+        note.fields[0] = f"{deck_name} front {i}"
+        if len(note.fields) > 1:
+            note.fields[1] = "back"
         col.add_note(note, did)
         cids.extend(col.card_ids_of_note(note.id))
     return cids

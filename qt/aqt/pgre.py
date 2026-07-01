@@ -510,7 +510,7 @@ _MANIFOLD_BODY = """
 </style>
 <div id="cy-wrap">
   <div id="cy-title">Ankimatter</div>
-  <div id="cy-sub">the best app to prepare for the Physics GRE</div>
+  <div id="cy-sub">Making the physics GRE as easy as \\(\\sum \\vec{{F}} = 0 \\Rightarrow \\Delta\\vec{{v}} = 0\\), \\(\\vec{{F}} = m\\vec{{a}}\\), \\(\\vec{{F}}_{{12}} = -\\vec{{F}}_{{21}}\\)</div>
   <div id="cy-page">{page_info}</div>
   <div id="cy-stage">
     {svg}
@@ -574,6 +574,16 @@ _MANIFOLD_SCRIPT = """
   function endDrag() { dragging = false; stage.classList.remove("cy-drag"); }
   stage.addEventListener("pointerup", endDrag);
   stage.addEventListener("pointercancel", endDrag);
+})();
+
+// Render the LaTeX in the subtitle. MathJax loads async and is configured with
+// startup.typeset:false, so wait until it's ready, then typeset once.
+(function typeset() {
+  if (globalThis.MathJax && MathJax.startup && MathJax.startup.promise) {
+    MathJax.startup.promise.then(function () { MathJax.typesetPromise(); });
+  } else {
+    setTimeout(typeset, 50);
+  }
 })();
 </script>
 """

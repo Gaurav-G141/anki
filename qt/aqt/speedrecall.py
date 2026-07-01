@@ -51,13 +51,17 @@ SLOW_FLOOR = 0.07
 #: product spec: fast Easy ≈ 1 week, slow (>1 min) Easy ≈ 12 hours.
 BASE_HOURS: dict[int, float] = {
     1: 1.0 / 6.0,  # Again  → ~10 minutes
-    2: 24.0,       # Hard   → 1 day  (fast) … ~1.7 h (slow)
-    3: 72.0,       # Good   → 3 days (fast) … ~5 h  (slow)
-    4: 168.0,      # Easy   → 1 week (fast) … ~12 h (slow)
+    2: 24.0,  # Hard   → 1 day  (fast) … ~1.7 h (slow)
+    3: 72.0,  # Good   → 3 days (fast) … ~5 h  (slow)
+    4: 168.0,  # Easy   → 1 week (fast) … ~12 h (slow)
 }
 
-#: Collection-config key holding the speed-recall schedule.
+#: Legacy collection-config key: the old single-JSON-blob schedule (still read
+#: for backward compatibility / migration-on-read).
 SCHED_KEY = "speedRecallSched"
+#: Per-card config-key prefix, e.g. ``speedRecall:sched:<card_id>``. Each answer
+#: writes one row (O(1)) instead of rewriting a growing blob (was O(n) -> O(n^2)).
+SCHED_PREFIX = "speedRecall:sched:"
 #: Preferred source: the dedicated formula deck (built from Conquering the
 #: Physics GRE's equation index). Falls back to the ``PGRE::`` subject decks if
 #: the formula deck isn't present.
@@ -107,31 +111,57 @@ def format_interval(hours: float) -> str:
 # ---------------------------------------------------------------------------
 
 
-def _load_sched(col: Collection) -> dict[str, dict[str, float]]:
-    return col.get_config(SCHED_KEY, {}) or {}
+def _card_key(card_id: int) -> str:
+    """Per-card config key, e.g. ``speedRecall:sched:1234``."""
+    return f"{SCHED_PREFIX}{int(card_id)}"
+
+
+def _load_sched(col: Collection) -> dict[int, dict[str, float]]:
+    """All schedule entries as ``{card_id: {"due", "ivl_h"}}``.
+
+    Reads the per-card config keys (each written in O(1)) and merges any entries
+    from the **legacy** single-blob ``speedRecallSched`` key so collections
+    written by the old code keep working (migrate-on-write happens naturally as
+    those cards are answered again).
+    """
+    out: dict[int, dict[str, float]] = {}
+    legacy = col.get_config(SCHED_KEY, None)
+    if isinstance(legacy, dict):
+        for k, v in legacy.items():
+            try:
+                out[int(k)] = v
+            except (ValueError, TypeError):
+                continue
+    prefix = SCHED_PREFIX
+    for key in col.db.list("select key from config where key like ?", f"{prefix}%"):
+        try:
+            cid = int(key[len(prefix) :])
+        except ValueError:
+            continue
+        rec = col.get_config(key, None)
+        if isinstance(rec, dict):
+            out[cid] = rec
+    return out
 
 
 def record_answer(
     col: Collection, card_id: int, rating: int, seconds: float, now: float | None = None
 ) -> float:
-    """Persist the next speed-recall due time for a card. Returns interval hours."""
+    """Persist the next speed-recall due time for a card. Returns interval hours.
+
+    Writes a single per-card config row (O(1)) rather than rewriting a growing
+    JSON blob, so recording N answers is O(N), not O(N^2).
+    """
     now = time.time() if now is None else now
     ivl_h = next_interval_hours(rating, seconds)
-    sched = _load_sched(col)
-    sched[str(int(card_id))] = {"due": now + ivl_h * 3600.0, "ivl_h": ivl_h}
-    col.set_config(SCHED_KEY, sched)
+    col.set_config(_card_key(card_id), {"due": now + ivl_h * 3600.0, "ivl_h": ivl_h})
     return ivl_h
 
 
 def due_card_ids(col: Collection, now: float | None = None) -> set[int]:
     """Card ids whose speed-recall due time has arrived (or were never seen)."""
     now = time.time() if now is None else now
-    sched = _load_sched(col)
-    due: set[int] = set()
-    for cid, rec in sched.items():
-        if rec.get("due", 0) <= now:
-            due.add(int(cid))
-    return due
+    return {cid for cid, rec in _load_sched(col).items() if rec.get("due", 0) <= now}
 
 
 # ---------------------------------------------------------------------------
@@ -157,7 +187,10 @@ def subject_deck_names(col: Collection) -> list[str]:
 
 
 def build_queue(
-    col: Collection, limit: int = 60, now: float | None = None, rng: random.Random | None = None
+    col: Collection,
+    limit: int = 60,
+    now: float | None = None,
+    rng: random.Random | None = None,
 ) -> list[CardId]:
     """Interleave due speed-recall cards round-robin across the 9 subjects.
 
@@ -171,7 +204,7 @@ def build_queue(
     seen = set(sched)
 
     def card_due(cid: int) -> bool:
-        rec = sched.get(str(int(cid)))
+        rec = sched.get(int(cid))
         return rec is None or rec.get("due", 0) <= now
 
     per_subject: list[list[CardId]] = []
@@ -264,7 +297,9 @@ class SpeedRecall:
             self._next_card()
             return
         card.render_output(reload=True)
-        self._current = _Current(card=card, subject=self._subject_of(card), shown_at=time.time())
+        self._current = _Current(
+            card=card, subject=self._subject_of(card), shown_at=time.time()
+        )
         q = self.mw.prepare_card_text_for_display(card.question())
         payload = {
             "front": q,
@@ -280,7 +315,9 @@ class SpeedRecall:
         seconds = max(0.0, elapsed_ms / 1000.0)
         card = self._current.card
         a = self.mw.prepare_card_text_for_display(card.answer())
-        labels = {r: format_interval(next_interval_hours(r, seconds)) for r in (1, 2, 3, 4)}
+        labels = {
+            r: format_interval(next_interval_hours(r, seconds)) for r in (1, 2, 3, 4)
+        }
         self.web.eval(f"speedShowBack({json.dumps(a)}, {json.dumps(labels)});")
 
     def _rate(self, rating: int, elapsed_ms: float) -> None:

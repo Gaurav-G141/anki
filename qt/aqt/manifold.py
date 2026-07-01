@@ -56,6 +56,11 @@ class Manifold:
     def refresh(self) -> None:
         self.web.stdHtml(
             build_manifold_html(self.mw.col, self.depth),
+            js=[
+                "js/vendor/jquery.min.js",
+                "js/mathjax.js",
+                "js/vendor/mathjax/tex-chtml-full.js",
+            ],
             context=self,
         )
         self._draw_buttons()

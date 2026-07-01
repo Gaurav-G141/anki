@@ -12,6 +12,7 @@ import aqt.operations
 from anki.collection import OpChanges
 from anki.scheduler import UnburyDeck
 from aqt import gui_hooks
+from aqt.blackboard import blackboard_page_html, subject_key_for_deck
 from aqt.deckdescription import DeckDescriptionDialog
 from aqt.deckoptions import display_options_for_deck
 from aqt.operations import QueryOp
@@ -198,8 +199,21 @@ class Overview:
         )
         gui_hooks.overview_will_render_content(self, content)
         content.deck = html.escape(content.deck)
+        # PGRE fork: subject decks get the chalkboard treatment; anything else
+        # keeps the stock overview.
+        subject_key = subject_key_for_deck(deck["name"])
+        if subject_key is not None:
+            body = blackboard_page_html(
+                subject_key,
+                content.deck,
+                content.shareLink,
+                content.desc,
+                content.table,
+            )
+        else:
+            body = self._body % content.__dict__
         self.web.stdHtml(
-            self._body % content.__dict__,
+            body,
             css=["css/overview.css"],
             js=["js/vendor/jquery.min.js"],
             context=self,
