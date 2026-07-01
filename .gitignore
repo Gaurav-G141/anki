@@ -31,3 +31,5 @@ docs/autoapi/
 /categorized decks/
 # Speedrun: iOS xcframework is a build artifact (regenerate via mobile/build-xcframework.sh)
 mobile/AnkiCore.xcframework/
+# Speedrun: compiled installers (DMG / iOS .app) are large build outputs, not source
+/installers/
