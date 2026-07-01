@@ -26,13 +26,19 @@ from collections.abc import Callable
 from dataclasses import dataclass
 
 from anki.collection import Collection
+from anki.decks import DeckId
 
-#: A 3D point and a meshed quad (four corners + its base rgb), used by the
-#: Calabi-Yau renderer below.
+#: A 3D point and a meshed quad (its four corners), used by the Calabi-Yau
+#: renderer below.
 _Vec3 = tuple[float, float, float]
-_Quad = tuple[list[_Vec3], _Vec3]
+_Quad = list[_Vec3]
 #: A depth-keyed, projected, shaded face: ``(depth, 2D polygon, "#rrggbb")``.
 _Face = tuple[float, list[tuple[float, float]], str]
+#: A render-ready face: ``(2D polygon, Lambert intensity, nearest-spike index)``.
+#: The base colour is *not* stored here — it's derived from each spike's mastery
+#: (red → green) at build time and multiplied by the intensity, so recolouring
+#: never rebuilds the geometry.
+_ShadedFace = tuple[tuple[tuple[float, float], ...], float, int]
 
 #: Collection config flag: True once the bundled decks have been seeded, so we
 #: never re-import (and never fight a user who deletes a seeded deck).
@@ -179,6 +185,18 @@ _CY_LIGHT = (-0.35, -0.45, 0.82)
 #: sit exactly on the tip). A slight pull keeps the tip poking out past the label.
 _INWARD = 0.97
 
+#: Subject mastery colour: a spike is red while its subject is unmastered and
+#: shifts toward green as it is mastered. The three core subjects (Classical
+#: Mechanics, Electromagnetism, Quantum Mechanics) use a concave mastery curve
+#: (``m ** _CORE_MASTERY_EXP``), so they stay red for longer — only greening near
+#: full mastery.
+_HUE_RED = 0.0  # HSV hue for a fully-unmastered subject (red)
+_HUE_GREEN = 0.33  # HSV hue for a fully-mastered subject (green)
+_MASTERY_SAT = 0.70  # colour saturation (matches the old palette's vividness)
+_MASTERY_VAL = 1.0  # base colour value before Lambert shading
+_CORE_MASTERY_EXP = 2.5  # >1: core subjects need more mastery to turn green
+_MATURE_IVL_DAYS = 21  # a card counts as "mastered" once its interval hits this
+
 
 def _cy_rotate(p: _Vec3) -> _Vec3:
     """Rotate a 3D point into the fixed viewing orientation."""
@@ -202,12 +220,11 @@ def _cy_surface(k1: int, k2: int, a: float, b: float) -> _Vec3:
 
 
 def _cy_quads() -> list[_Quad]:
-    """Mesh every branch patch into quads: ``(4 rotated 3D corners, base rgb)``."""
+    """Mesh every branch patch into quads of four rotated 3D corners."""
     n, res = _CY_DEGREE, _CY_RES
     quads: list[_Quad] = []
     for k1 in range(n):
         for k2 in range(n):
-            base = colorsys.hsv_to_rgb((k1 * n + k2) / (n * n), 0.70, 1.0)
             for i in range(res):
                 a0 = i / res * (math.pi / 2)
                 a1 = (i + 1) / res * (math.pi / 2)
@@ -215,23 +232,20 @@ def _cy_quads() -> list[_Quad]:
                     b0 = -math.pi / 2 + j / res * math.pi
                     b1 = -math.pi / 2 + (j + 1) / res * math.pi
                     quads.append(
-                        (
-                            [
-                                _cy_surface(k1, k2, a0, b0),
-                                _cy_surface(k1, k2, a1, b0),
-                                _cy_surface(k1, k2, a1, b1),
-                                _cy_surface(k1, k2, a0, b1),
-                            ],
-                            base,
-                        )
+                        [
+                            _cy_surface(k1, k2, a0, b0),
+                            _cy_surface(k1, k2, a1, b0),
+                            _cy_surface(k1, k2, a1, b1),
+                            _cy_surface(k1, k2, a0, b1),
+                        ]
                     )
     return quads
 
 
 def _cy_projector(quads: list[_Quad]) -> Callable[[_Vec3], tuple[float, float]]:
     """Return a fn mapping a rotated 3D point to (x%, y%) filling the stage."""
-    xs = [p[0] for q, _ in quads for p in q]
-    ys = [p[1] for q, _ in quads for p in q]
+    xs = [p[0] for q in quads for p in q]
+    ys = [p[1] for q in quads for p in q]
     minx, maxx, miny, maxy = min(xs), max(xs), min(ys), max(ys)
     span = max(maxx - minx, maxy - miny) or 1.0
 
@@ -245,13 +259,40 @@ def _cy_projector(quads: list[_Quad]) -> Callable[[_Vec3], tuple[float, float]]:
     return project
 
 
-def _cy_shade(base: _Vec3, normal: _Vec3) -> str:
-    """Lambert-shade ``base`` by a face ``normal`` and return ``#rrggbb``."""
+def _face_intensity(normal: _Vec3) -> float:
+    """Lambert diffuse intensity for a face ``normal`` (a scalar multiplier)."""
     lx, ly, lz = _CY_LIGHT
     ln = math.sqrt(lx * lx + ly * ly + lz * lz) or 1.0
     diffuse = max(0.0, (normal[0] * lx + normal[1] * ly + normal[2] * lz) / ln)
-    inten = min(1.15, 0.30 + 0.75 * diffuse)
-    return "#" + "".join(f"{min(255, int(255 * c * inten)):02x}" for c in base)
+    return min(1.15, 0.30 + 0.75 * diffuse)
+
+
+def _mastery_rgb(mastery: float, is_core: bool) -> _Vec3:
+    """Base colour for a spike: red when unmastered, green when mastered.
+
+    Core subjects follow a concave curve (``m ** _CORE_MASTERY_EXP``), so they
+    stay red for longer and only green near full mastery.
+    """
+    m = max(0.0, min(1.0, mastery))
+    if is_core:
+        m = m**_CORE_MASTERY_EXP
+    hue = _HUE_RED + (_HUE_GREEN - _HUE_RED) * m
+    return colorsys.hsv_to_rgb(hue, _MASTERY_SAT, _MASTERY_VAL)
+
+
+def _rgb_hex(rgb: _Vec3, intensity: float = 1.0) -> str:
+    """Convert float rgb to ``#rrggbb``, scaled by ``intensity`` and clamped."""
+    return "#" + "".join(f"{min(255, int(255 * c * intensity)):02x}" for c in rgb)
+
+
+def _nearest_tip(x: float, y: float, tips: tuple[tuple[float, float], ...]) -> int:
+    """Index of the spike tip nearest the 2D point ``(x, y)``."""
+    best_i, best_d = 0, float("inf")
+    for i, (tx, ty) in enumerate(tips):
+        d = (x - tx) ** 2 + (y - ty) ** 2
+        if d < best_d:
+            best_d, best_i = d, i
+    return best_i
 
 
 def _detect_tips(faces: list[_Face], count: int) -> list[tuple[float, float]]:
@@ -298,16 +339,19 @@ def _detect_tips(faces: list[_Face], count: int) -> list[tuple[float, float]]:
 
 
 @functools.lru_cache(maxsize=1)
-def _manifold_geometry() -> tuple[str, tuple[tuple[float, float], ...]]:
-    """Build the manifold once: return ``(svg_markup, spike_tip_positions)``.
+def _manifold_geometry() -> tuple[tuple[_ShadedFace, ...], tuple[tuple[float, float], ...]]:
+    """Build the manifold once: return ``(shaded_faces, spike_tip_positions)``.
 
-    Collection-independent, so cached. Tips are in stage-percent coordinates,
-    matching the SVG's ``0..100`` viewBox.
+    Collection-independent, so cached. Each face carries its 2D polygon, its
+    Lambert-shaded (pre-brightness) rgb, and the index of the spike tip it sits
+    nearest — so ``_manifold_svg`` can brighten each face by its subject's
+    mastery without recomputing the geometry. Tips are in stage-percent
+    coordinates, matching the SVG's ``0..100`` viewBox.
     """
     quads = _cy_quads()
     project = _cy_projector(quads)
-    faces: list[_Face] = []
-    for corners, base in quads:
+    shaded: list[tuple[float, list[tuple[float, float]], float]] = []
+    for corners in quads:
         (ax, ay, az), (bx, by, bz), (cx, cy, cz), _ = corners
         ux, uy, uz = bx - ax, by - ay, bz - az
         vx, vy, vz = cx - ax, cy - ay, cz - az
@@ -317,25 +361,37 @@ def _manifold_geometry() -> tuple[str, tuple[tuple[float, float], ...]]:
         if nz < 0:  # face the normal toward the viewer for consistent shading
             nx, ny, nz = -nx, -ny, -nz
         depth = sum(p[2] for p in corners) / 4
-        faces.append(
-            (depth, [project(p) for p in corners], _cy_shade(base, (nx, ny, nz)))
-        )
-    faces.sort(key=lambda f: f[0])  # painter's algorithm: far faces first
+        shaded.append((depth, [project(p) for p in corners], _face_intensity((nx, ny, nz))))
+    shaded.sort(key=lambda f: f[0])  # painter's algorithm: far faces first
 
-    polys = [
-        '<polygon points="{}" fill="{}" stroke="{}" stroke-width="0.35"/>'.format(
-            " ".join(f"{x:.2f},{y:.2f}" for x, y in poly), color, color
+    tips = tuple(
+        _detect_tips([(d, poly, "") for d, poly, _ in shaded], MANIFOLD_POINTS)
+    )
+    faces: list[_ShadedFace] = []
+    for _depth, poly, inten in shaded:
+        fx = sum(x for x, _ in poly) / len(poly)
+        fy = sum(y for _, y in poly) / len(poly)
+        faces.append((tuple(poly), inten, _nearest_tip(fx, fy, tips)))
+    return tuple(faces), tips
+
+
+def _manifold_svg(mastery: tuple[float, ...], core: tuple[bool, ...]) -> str:
+    """Assemble the manifold SVG, colouring each face red→green by mastery."""
+    faces, _ = _manifold_geometry()
+    polys = []
+    for poly, inten, spike in faces:
+        color = _rgb_hex(_mastery_rgb(mastery[spike], core[spike]), inten)
+        points = " ".join(f"{x:.2f},{y:.2f}" for x, y in poly)
+        polys.append(
+            f'<polygon points="{points}" fill="{color}" stroke="{color}" '
+            'stroke-width="0.35"/>'
         )
-        for _, poly, color in faces
-    ]
-    svg = (
+    return (
         '<svg id="cy-svg" viewBox="0 0 100 100" '
         'xmlns="http://www.w3.org/2000/svg" aria-hidden="true">'
         + "".join(polys)
         + "</svg>"
     )
-    tips = tuple(_detect_tips(faces, MANIFOLD_POINTS))
-    return svg, tips
 
 
 def _point_positions() -> list[tuple[float, float]]:
@@ -379,6 +435,47 @@ def page_count(col: Collection) -> int:
     """Number of manifold depths needed to show every deck (at least 1)."""
     decks = len(_display_decks(col))
     return max(1, math.ceil(decks / DECKS_PER_PAGE))
+
+
+def _core_deck_ids(col: Collection) -> set[int]:
+    """Deck ids of the three core subjects (Classical, EM, Quantum), if present."""
+    ids: set[int] = set()
+    for subject in SUBJECTS[:3]:
+        deck = col.decks.by_name(subject.deck_name)
+        if deck is not None:
+            ids.add(int(deck["id"]))
+    return ids
+
+
+def _deck_mastery(col: Collection, deck_id: int) -> float:
+    """Fraction of a deck's cards (incl. subdecks) that are mature (>= 21d ivl).
+
+    A cheap mastery proxy for colouring the manifold: 0.0 for an empty or
+    all-new deck, 1.0 when every card has reached a mature interval.
+    """
+    ids = ",".join(str(int(d)) for d in col.decks.deck_and_child_ids(DeckId(deck_id)))
+    total, mature = col.db.first(
+        f"select count(), coalesce(sum(ivl >= {_MATURE_IVL_DAYS}), 0) "
+        f"from cards where did in ({ids})"
+    )
+    return mature / total if total else 0.0
+
+
+def _spike_mastery(
+    col: Collection, page: list[tuple[int, str]], core_ids: set[int]
+) -> tuple[tuple[float, ...], tuple[bool, ...]]:
+    """Per-spike ``(mastery, is_core)`` used to colour the manifold red→green.
+
+    Empty spikes and the "More decks" spike stay at mastery 0 (red), so a fresh
+    manifold is entirely red and greens only where the student masters a subject.
+    The three core subjects are flagged so they stay red for longer.
+    """
+    mastery = [0.0] * MANIFOLD_POINTS
+    core = [False] * MANIFOLD_POINTS
+    for index, (deck_id, _label) in enumerate(page[:DECKS_PER_PAGE]):
+        mastery[index] = _deck_mastery(col, deck_id)
+        core[index] = deck_id in core_ids
+    return tuple(mastery), tuple(core)
 
 
 def build_manifold_html(col: Collection, depth: int = 0) -> str:
@@ -433,7 +530,8 @@ def build_manifold_html(col: Collection, depth: int = 0) -> str:
     else:
         page_info = ""
 
-    svg, _ = _manifold_geometry()
+    mastery, core = _spike_mastery(col, page, _core_deck_ids(col))
+    svg = _manifold_svg(mastery, core)
     return (
         _MANIFOLD_BODY.format(
             svg=svg,

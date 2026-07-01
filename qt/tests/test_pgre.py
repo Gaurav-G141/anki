@@ -15,6 +15,7 @@ import os
 import tempfile
 
 from anki.collection import Collection
+from anki.decks import DeckId
 from aqt import pgre
 
 DECK_DIR = os.path.normpath(
@@ -101,6 +102,57 @@ def test_manifold_html_empty_when_no_decks():
     assert "pycmd('open:" not in rendered
     assert "More decks" in rendered
     assert "pycmd('classic')" in rendered
+
+
+def test_manifold_color_reflects_mastery():
+    col = _empty_col()
+    pgre.import_default_decks(col, DECK_DIR)
+    page = pgre._display_decks(col)
+    core_ids = pgre._core_deck_ids(col)
+
+    # The three core subjects (Classical, EM, Quantum) are flagged as core.
+    assert len(core_ids) == 3
+    for subject in pgre.SUBJECTS[:3]:
+        deck = col.decks.by_name(subject.deck_name)
+        assert deck is not None
+        assert int(deck["id"]) in core_ids
+
+    # Fresh collection: nothing mastered -> every spike is red.
+    mastery, core = pgre._spike_mastery(col, page, core_ids)
+    assert mastery[0] == 0.0
+    assert core[0] and core[1] and core[2] and not core[3]
+    r0, g0, _ = pgre._mastery_rgb(mastery[0], core[0])
+    assert r0 > g0  # red dominates when unmastered
+
+    # Fully mastered -> green dominates.
+    r1, g1, _ = pgre._mastery_rgb(1.0, False)
+    assert g1 > r1
+
+    # Core subjects stay red for longer: at the same partial mastery, a core
+    # subject is less green (redder) than a non-core one.
+    _, g_core, _ = pgre._mastery_rgb(0.5, True)
+    _, g_noncore, _ = pgre._mastery_rgb(0.5, False)
+    assert g_core < g_noncore
+
+    # Pick a non-core subject deck that actually has cards.
+    candidates = []
+    for subject in pgre.SUBJECTS[3:]:
+        did = int(col.decks.by_name(subject.deck_name)["id"])
+        ids = ",".join(str(int(d)) for d in col.decks.deck_and_child_ids(DeckId(did)))
+        count = col.db.scalar(f"select count() from cards where did in ({ids})")
+        candidates.append((count, did))
+    candidates.sort(reverse=True)
+    n_cards, target = candidates[0]
+    assert n_cards > 0
+
+    # Mastering every card in a subject shifts its colour greener end-to-end.
+    assert pgre._deck_mastery(col, target) == 0.0
+    _, g_before, _ = pgre._mastery_rgb(pgre._deck_mastery(col, target), False)
+    ids = ",".join(str(int(d)) for d in col.decks.deck_and_child_ids(DeckId(target)))
+    col.db.execute(f"update cards set ivl = 999 where did in ({ids})")
+    assert pgre._deck_mastery(col, target) == 1.0
+    _, g_after, _ = pgre._mastery_rgb(pgre._deck_mastery(col, target), False)
+    assert g_after > g_before
 
 
 def test_manifold_depth_pages_through_decks():
