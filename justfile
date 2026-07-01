@@ -174,6 +174,29 @@ ci branch:
 complexipy-diff:
     {{ ninja }} check:complexipy-diff
 
+# Speedrun (fork-specific) -----------------------------------------------------
+
+# Generate PGRE deck fixtures (.colpkg) under out/speedrun (macOS/Linux)
+speedrun-fixtures:
+    {{ ninja }} pylib
+    PYTHONPATH=out/pylib out/pyenv/bin/python speedrun/make_fixtures.py
+
+# Verify the generated PGRE fixtures (SPECS.md S1 tests) (macOS/Linux)
+speedrun-test:
+    PYTHONPATH=out/pylib out/pyenv/bin/python speedrun/verify_fixtures.py
+
+# Show the memory score for a collection (.anki2) (macOS/Linux)
+speedrun-mastery col="out/speedrun/work/pgre_main.anki2":
+    PYTHONPATH=out/pylib out/pyenv/bin/python speedrun/show_mastery.py --col {{col}}
+
+# Crash-safety test: SIGKILL the engine mid-write N times, prove no corruption (macOS/Linux)
+speedrun-crash-test rounds="50":
+    PYTHONPATH=out/pylib out/pyenv/bin/python speedrun/crash_test.py {{rounds}}
+
+# One-command benchmark (Speedrun §7h): topic_mastery scan latency (p50/p95/p99) on a 50k deck, release build
+bench:
+    cargo test -p anki --release speedrun::tests_perf -- --ignored --nocapture
+
 # Remove build outputs from out/ (pass keep-env to keep node_modules/pyenv); macOS/Linux
 clean *args:
     ./tools/clean {{ args }}

@@ -1,0 +1,589 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0286400539FB965AAE5369EE /* backend.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9BA8A4E538A1B75C947572C /* backend.pb.swift */; };
+		07AFAD93BACF2CF777F0B383 /* collection.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8653DF280C7ECDCE21E8280 /* collection.pb.swift */; };
+		32124D702644D8C984D7CE96 /* deck_config.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = C49C8459CD6FFFF15EFB34A9 /* deck_config.pb.swift */; };
+		44839D2ED9402C8904BEB322 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36D0E7556E2E5AB3946A8222 /* ContentView.swift */; };
+		476015C1E4757C9E3A909B5D /* SpeedrunApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0CD4FA934F1AEA465F11896 /* SpeedrunApp.swift */; };
+		52252E04A29D5810AB1853B9 /* card_rendering.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A5DE14B9B5A7085B3A7E858 /* card_rendering.pb.swift */; };
+		5D7596D4CCA245BF19116C28 /* generic.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90650C1F2BF75D9A88495AF /* generic.pb.swift */; };
+		70CE61277F9154AB7DAFD712 /* SwiftProtobuf in Frameworks */ = {isa = PBXBuildFile; productRef = 58F1D384620E30C99EF63CCD /* SwiftProtobuf */; };
+		75D44CA7F1D1ABE2C9A08E23 /* notetypes.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3209D8DE6896FF4E7E8F092F /* notetypes.pb.swift */; };
+		7A3D7BF9B460A1000803010B /* ReviewFlowUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA402D7CC58F59A635BDE545 /* ReviewFlowUITests.swift */; };
+		85D38E7787A0B79AD3589E16 /* AnkiCore.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 130AD1BE49642DBFD31D1BF9 /* AnkiCore.xcframework */; };
+		A93184C1F30C94CF5B68FD19 /* ReviewSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1EA751BF434F430868895C9 /* ReviewSession.swift */; };
+		B555B4995DCAD811AE73F0AE /* links.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB8348F594655883C40C8A2 /* links.pb.swift */; };
+		B6E0F4C78B1AA7221F4D5E6F /* pgre_main.anki2 in Resources */ = {isa = PBXBuildFile; fileRef = F8E7D2C0FC2DACF515FB6080 /* pgre_main.anki2 */; };
+		BFB9749DC930E51780D9BCD7 /* cards.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DCEA94F2B106B11504FF7EF /* cards.pb.swift */; };
+		C387BF9CD5FD8C3128134E51 /* scheduler.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA6E5CD489172F24315E8EE4 /* scheduler.pb.swift */; };
+		DCA78AC66E758F78160D3E3B /* config.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049367AB60DB28D49FFB9972 /* config.pb.swift */; };
+		E67EFD020FCFD64D8596301A /* AnkiEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C486204719B63819EA11F1 /* AnkiEngine.swift */; };
+		EF0AB9233D06A85B66FAAF5A /* sync.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F50E10B02EF0AAB7F5B2F2C /* sync.pb.swift */; };
+		F178AAAB8E73940E1F9DB079 /* decks.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AD631CE3CC106DE1019DE56 /* decks.pb.swift */; };
+		FDE490AAA067077321DA676F /* notes.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4CD2AAF21AEFAE5F01CB46C /* notes.pb.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		3093BB4A43E6F2CE0C96A01E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4C763258D0C9C26DB054633B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 2DBA01CB0B0BC524C20D8FAC;
+			remoteInfo = SpeedrunApp;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		049367AB60DB28D49FFB9972 /* config.pb.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = config.pb.swift; sourceTree = "<group>"; };
+		0DCEA94F2B106B11504FF7EF /* cards.pb.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = cards.pb.swift; sourceTree = "<group>"; };
+		130AD1BE49642DBFD31D1BF9 /* AnkiCore.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = AnkiCore.xcframework; path = ../AnkiCore.xcframework; sourceTree = "<group>"; };
+		3209D8DE6896FF4E7E8F092F /* notetypes.pb.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = notetypes.pb.swift; sourceTree = "<group>"; };
+		36D0E7556E2E5AB3946A8222 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		4A5DE14B9B5A7085B3A7E858 /* card_rendering.pb.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = card_rendering.pb.swift; sourceTree = "<group>"; };
+		6BFC572208F556E664456CA1 /* SpeedrunAppUITests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = SpeedrunAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		7570E523A7C2207946ABE743 /* SpeedrunApp.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = SpeedrunApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		7AD631CE3CC106DE1019DE56 /* decks.pb.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = decks.pb.swift; sourceTree = "<group>"; };
+		7F50E10B02EF0AAB7F5B2F2C /* sync.pb.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = sync.pb.swift; sourceTree = "<group>"; };
+		80C486204719B63819EA11F1 /* AnkiEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnkiEngine.swift; sourceTree = "<group>"; };
+		A6F8071A76AF645A740687FB /* anki_ffi.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = anki_ffi.h; sourceTree = "<group>"; };
+		AA6E5CD489172F24315E8EE4 /* scheduler.pb.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = scheduler.pb.swift; sourceTree = "<group>"; };
+		B4CD2AAF21AEFAE5F01CB46C /* notes.pb.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = notes.pb.swift; sourceTree = "<group>"; };
+		B8653DF280C7ECDCE21E8280 /* collection.pb.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = collection.pb.swift; sourceTree = "<group>"; };
+		BA402D7CC58F59A635BDE545 /* ReviewFlowUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewFlowUITests.swift; sourceTree = "<group>"; };
+		C02EB83E3E0BE41F30BEEE3D /* module.modulemap */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.module-map"; path = module.modulemap; sourceTree = "<group>"; };
+		C0CD4FA934F1AEA465F11896 /* SpeedrunApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeedrunApp.swift; sourceTree = "<group>"; };
+		C1EA751BF434F430868895C9 /* ReviewSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewSession.swift; sourceTree = "<group>"; };
+		C49C8459CD6FFFF15EFB34A9 /* deck_config.pb.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = deck_config.pb.swift; sourceTree = "<group>"; };
+		C90650C1F2BF75D9A88495AF /* generic.pb.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = generic.pb.swift; sourceTree = "<group>"; };
+		CEB8348F594655883C40C8A2 /* links.pb.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = links.pb.swift; sourceTree = "<group>"; };
+		E9BA8A4E538A1B75C947572C /* backend.pb.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = backend.pb.swift; sourceTree = "<group>"; };
+		F8E7D2C0FC2DACF515FB6080 /* pgre_main.anki2 */ = {isa = PBXFileReference; path = pgre_main.anki2; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		9DA55E4158B9406FDFAC2D77 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				70CE61277F9154AB7DAFD712 /* SwiftProtobuf in Frameworks */,
+				85D38E7787A0B79AD3589E16 /* AnkiCore.xcframework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		198E1EAAFE0FF0D355BF0CBA /* CAnkiFFI */ = {
+			isa = PBXGroup;
+			children = (
+				A6F8071A76AF645A740687FB /* anki_ffi.h */,
+				C02EB83E3E0BE41F30BEEE3D /* module.modulemap */,
+			);
+			path = CAnkiFFI;
+			sourceTree = "<group>";
+		};
+		2A823AC83A7C34C27A5EF257 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				F8E7D2C0FC2DACF515FB6080 /* pgre_main.anki2 */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		3CDC86068BD00910C486E792 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				130AD1BE49642DBFD31D1BF9 /* AnkiCore.xcframework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		6C75FDB9D04728E7DC388745 /* UITests */ = {
+			isa = PBXGroup;
+			children = (
+				BA402D7CC58F59A635BDE545 /* ReviewFlowUITests.swift */,
+			);
+			path = UITests;
+			sourceTree = "<group>";
+		};
+		75FEAE705B189A58348E16F6 /* Generated */ = {
+			isa = PBXGroup;
+			children = (
+				D6C33A2A020785CF854E8828 /* anki */,
+			);
+			path = Generated;
+			sourceTree = "<group>";
+		};
+		824678E60B79FDCC4870AB95 = {
+			isa = PBXGroup;
+			children = (
+				198E1EAAFE0FF0D355BF0CBA /* CAnkiFFI */,
+				75FEAE705B189A58348E16F6 /* Generated */,
+				2A823AC83A7C34C27A5EF257 /* Resources */,
+				C116B0E1B3145C8AD1EE7321 /* Sources */,
+				6C75FDB9D04728E7DC388745 /* UITests */,
+				3CDC86068BD00910C486E792 /* Frameworks */,
+				B429418B0E253670D69F5688 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		B429418B0E253670D69F5688 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				7570E523A7C2207946ABE743 /* SpeedrunApp.app */,
+				6BFC572208F556E664456CA1 /* SpeedrunAppUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C116B0E1B3145C8AD1EE7321 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				80C486204719B63819EA11F1 /* AnkiEngine.swift */,
+				36D0E7556E2E5AB3946A8222 /* ContentView.swift */,
+				C1EA751BF434F430868895C9 /* ReviewSession.swift */,
+				C0CD4FA934F1AEA465F11896 /* SpeedrunApp.swift */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		D6C33A2A020785CF854E8828 /* anki */ = {
+			isa = PBXGroup;
+			children = (
+				E9BA8A4E538A1B75C947572C /* backend.pb.swift */,
+				4A5DE14B9B5A7085B3A7E858 /* card_rendering.pb.swift */,
+				0DCEA94F2B106B11504FF7EF /* cards.pb.swift */,
+				B8653DF280C7ECDCE21E8280 /* collection.pb.swift */,
+				049367AB60DB28D49FFB9972 /* config.pb.swift */,
+				C49C8459CD6FFFF15EFB34A9 /* deck_config.pb.swift */,
+				7AD631CE3CC106DE1019DE56 /* decks.pb.swift */,
+				C90650C1F2BF75D9A88495AF /* generic.pb.swift */,
+				CEB8348F594655883C40C8A2 /* links.pb.swift */,
+				B4CD2AAF21AEFAE5F01CB46C /* notes.pb.swift */,
+				3209D8DE6896FF4E7E8F092F /* notetypes.pb.swift */,
+				AA6E5CD489172F24315E8EE4 /* scheduler.pb.swift */,
+				7F50E10B02EF0AAB7F5B2F2C /* sync.pb.swift */,
+			);
+			path = anki;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		2DBA01CB0B0BC524C20D8FAC /* SpeedrunApp */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3FC6C5847AD41EB3385F55DE /* Build configuration list for PBXNativeTarget "SpeedrunApp" */;
+			buildPhases = (
+				DBDF21B1553860FE48848535 /* Sources */,
+				1507B818C3CEEFB369B44D83 /* Resources */,
+				9DA55E4158B9406FDFAC2D77 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SpeedrunApp;
+			packageProductDependencies = (
+				58F1D384620E30C99EF63CCD /* SwiftProtobuf */,
+			);
+			productName = SpeedrunApp;
+			productReference = 7570E523A7C2207946ABE743 /* SpeedrunApp.app */;
+			productType = "com.apple.product-type.application";
+		};
+		73EF752400A9AD70343D3CE2 /* SpeedrunAppUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 080110F2BF61D5C68CB3921C /* Build configuration list for PBXNativeTarget "SpeedrunAppUITests" */;
+			buildPhases = (
+				1A2DF6B033FB9EEA0C0B966A /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				6C2D0E5A0D493C6021F0B3EE /* PBXTargetDependency */,
+			);
+			name = SpeedrunAppUITests;
+			packageProductDependencies = (
+			);
+			productName = SpeedrunAppUITests;
+			productReference = 6BFC572208F556E664456CA1 /* SpeedrunAppUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		4C763258D0C9C26DB054633B /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+					73EF752400A9AD70343D3CE2 = {
+						TestTargetID = 2DBA01CB0B0BC524C20D8FAC;
+					};
+				};
+			};
+			buildConfigurationList = 999C0E685190A30E296B8D57 /* Build configuration list for PBXProject "SpeedrunApp" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = 824678E60B79FDCC4870AB95;
+			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				3CBEF2DB00513E6188AAC830 /* XCRemoteSwiftPackageReference "swift-protobuf" */,
+			);
+			preferredProjectObjectVersion = 77;
+			productRefGroup = B429418B0E253670D69F5688 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				2DBA01CB0B0BC524C20D8FAC /* SpeedrunApp */,
+				73EF752400A9AD70343D3CE2 /* SpeedrunAppUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		1507B818C3CEEFB369B44D83 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B6E0F4C78B1AA7221F4D5E6F /* pgre_main.anki2 in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		1A2DF6B033FB9EEA0C0B966A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7A3D7BF9B460A1000803010B /* ReviewFlowUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DBDF21B1553860FE48848535 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E67EFD020FCFD64D8596301A /* AnkiEngine.swift in Sources */,
+				44839D2ED9402C8904BEB322 /* ContentView.swift in Sources */,
+				A93184C1F30C94CF5B68FD19 /* ReviewSession.swift in Sources */,
+				476015C1E4757C9E3A909B5D /* SpeedrunApp.swift in Sources */,
+				0286400539FB965AAE5369EE /* backend.pb.swift in Sources */,
+				52252E04A29D5810AB1853B9 /* card_rendering.pb.swift in Sources */,
+				BFB9749DC930E51780D9BCD7 /* cards.pb.swift in Sources */,
+				07AFAD93BACF2CF777F0B383 /* collection.pb.swift in Sources */,
+				DCA78AC66E758F78160D3E3B /* config.pb.swift in Sources */,
+				32124D702644D8C984D7CE96 /* deck_config.pb.swift in Sources */,
+				F178AAAB8E73940E1F9DB079 /* decks.pb.swift in Sources */,
+				5D7596D4CCA245BF19116C28 /* generic.pb.swift in Sources */,
+				B555B4995DCAD811AE73F0AE /* links.pb.swift in Sources */,
+				FDE490AAA067077321DA676F /* notes.pb.swift in Sources */,
+				75D44CA7F1D1ABE2C9A08E23 /* notetypes.pb.swift in Sources */,
+				C387BF9CD5FD8C3128134E51 /* scheduler.pb.swift in Sources */,
+				EF0AB9233D06A85B66FAAF5A /* sync.pb.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		6C2D0E5A0D493C6021F0B3EE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 2DBA01CB0B0BC524C20D8FAC /* SpeedrunApp */;
+			targetProxy = 3093BB4A43E6F2CE0C96A01E /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		0DE1CFF7AD7D898F09D0B9A5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		436B932645BB7B47FDE7E5DC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGNING_ALLOWED = NO;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 1;
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = x86_64;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"..\"",
+				);
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = Speedrun;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 0.1.0;
+				OTHER_LDFLAGS = (
+					"-lc++",
+					"-lz",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = net.ankiweb.speedrun;
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SWIFT_INCLUDE_PATHS = "$(SRCROOT)/CAnkiFFI";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		4B5019F807733A03318A0A66 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGNING_ALLOWED = NO;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = net.ankiweb.speedrun.uitests;
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = SpeedrunApp;
+			};
+			name = Release;
+		};
+		97CF92C451CB451D38ECBB11 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGNING_ALLOWED = NO;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 1;
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = x86_64;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"..\"",
+				);
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = Speedrun;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 0.1.0;
+				OTHER_LDFLAGS = (
+					"-lc++",
+					"-lz",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = net.ankiweb.speedrun;
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SWIFT_INCLUDE_PATHS = "$(SRCROOT)/CAnkiFFI";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		9BAC9F2FA6CD7E47917D3B47 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGNING_ALLOWED = NO;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = net.ankiweb.speedrun.uitests;
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = SpeedrunApp;
+			};
+			name = Debug;
+		};
+		CCBAE0FCA785B09E7D728144 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		080110F2BF61D5C68CB3921C /* Build configuration list for PBXNativeTarget "SpeedrunAppUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9BAC9F2FA6CD7E47917D3B47 /* Debug */,
+				4B5019F807733A03318A0A66 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		3FC6C5847AD41EB3385F55DE /* Build configuration list for PBXNativeTarget "SpeedrunApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				436B932645BB7B47FDE7E5DC /* Debug */,
+				97CF92C451CB451D38ECBB11 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		999C0E685190A30E296B8D57 /* Build configuration list for PBXProject "SpeedrunApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CCBAE0FCA785B09E7D728144 /* Debug */,
+				0DE1CFF7AD7D898F09D0B9A5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		3CBEF2DB00513E6188AAC830 /* XCRemoteSwiftPackageReference "swift-protobuf" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apple/swift-protobuf.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.28.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		58F1D384620E30C99EF63CCD /* SwiftProtobuf */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3CBEF2DB00513E6188AAC830 /* XCRemoteSwiftPackageReference "swift-protobuf" */;
+			productName = SwiftProtobuf;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = 4C763258D0C9C26DB054633B /* Project object */;
+}

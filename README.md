@@ -1,3 +1,19 @@
+# Speedrun (Physics GRE) — an Anki fork
+
+> **Exam: the Physics GRE (PGRE)** — scored 200–990, three subscores (Classical
+> Mechanics, Electromagnetism, Quantum + Atomic).
+>
+> This is a **fork of [Anki](https://apps.ankiweb.net)** adding a desktop + iOS
+> study app that shares one Rust engine, with an honest per-topic _memory score_.
+> It stays licensed **AGPL-3.0-or-later** and credits the upstream Anki project
+> and its contributors. New work lives in `speedrun/`, `rslib/src/speedrun/`,
+> `proto/anki/speedrun.proto`, `ts/routes/speedrun-dashboard/`, and `mobile/`.
+> See [PRD.md](./PRD.md), [SPECS.md](./SPECS.md),
+> [speedrun/RUST_CHANGE.md](./speedrun/RUST_CHANGE.md), and
+> [speedrun/MANUAL_TEST.md](./speedrun/MANUAL_TEST.md).
+
+---
+
 # Anki
 
 [![Build Status](https://github.com/ankitects/anki/actions/workflows/ci.yml/badge.svg)](https://github.com/ankitects/anki/actions/workflows/ci.yml)

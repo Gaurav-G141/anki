@@ -1,0 +1,68 @@
+// Copyright: Ankitects Pty Ltd and contributors
+// License: GNU AGPL, version 3 or later; http://www.gnu.org/licenses/agpl.html
+
+syntax = "proto3";
+
+option java_multiple_files = true;
+
+package anki.speedrun;
+
+// Fork-specific (Speedrun PGRE) read-only service. See PRD.md / SPECS.md
+// (S2/S3).
+service SpeedrunService {
+  // Per-topic mastery plus an honest, range-bearing memory score.
+  rpc TopicMastery(TopicMasteryRequest) returns (TopicMasteryResponse);
+}
+
+// Implicitly delegates the above to the collection-scoped service.
+service BackendSpeedrunService {}
+
+message TopicMasteryRequest {
+  // Zero/empty fields fall back to the documented defaults.
+  float mastered_threshold =
+      1;  // default 0.9 (recall R at/above this = mastered)
+  uint32 review_floor =
+      2;  // default 20 (abstain below this many graded reviews)
+  float coverage_floor =
+      3;  // default 0.40 (abstain below this weighted coverage)
+}
+
+message AppliedThresholds {
+  float mastered_threshold = 1;
+  uint32 review_floor = 2;
+  float coverage_floor = 3;
+}
+
+message TopicMastery {
+  string tag = 1;
+  string name = 2;
+  float weight = 3;  // exam content weight in [0,1]
+  uint32 total_cards = 4;
+  uint32 cards_with_state = 5;  // cards that have FSRS memory state
+  uint32 mastered = 6;  // cards with current recall >= mastered_threshold
+  float mean_retrievability = 7;
+  float mean_stability = 8;  // days
+  uint32 median_latency_ms = 9;
+}
+
+message TopicMasteryResponse {
+  // The give-up rule: when true, no score is shown and abstain_reasons
+  // explains.
+  bool abstain = 1;
+  repeated string abstain_reasons = 2;
+
+  // Score (mastered fraction) + Wilson 95% interval. Valid only when !abstain.
+  float memory_score = 3;
+  float score_low = 4;
+  float score_high = 5;
+
+  // Honesty metadata (always populated).
+  float coverage = 6;  // weighted fraction of exam subjects with >=1 card
+  uint32 total_reviews = 7;
+  string confidence = 8;        // "low" | "medium" | "high"
+  repeated string reasons = 9;  // weakest covered subjects (when scored)
+  int64 updated_at_millis = 10;
+  AppliedThresholds thresholds = 11;
+
+  repeated TopicMastery topics = 12;
+}

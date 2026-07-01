@@ -1,0 +1,7 @@
+# Xcode / xcodegen build artifacts. The .xcodeproj is regenerated from
+# project.yml via `xcodegen generate`, so it need not be committed either.
+build/
+DerivedData/
+*.xcodeproj/xcuserdata/
+*.xcodeproj/project.xcworkspace/xcuserdata/
+.swiftpm/

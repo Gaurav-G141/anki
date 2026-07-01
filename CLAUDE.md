@@ -16,6 +16,9 @@ Anki is a spaced repetition flashcard program with a multi-layered architecture.
 - Protobuf definitions in proto/ that are used by the different layers to
   talk to each other.
 
+For a tour of the tech stack and its less-common tools (Fluent, protobuf
+codegen, PyO3, the custom ninja build, Svelte 5, etc.), see docs/tech-stack.md.
+
 ## Running Anki
 
 To build and run Anki in development mode:

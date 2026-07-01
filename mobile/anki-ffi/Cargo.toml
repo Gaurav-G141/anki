@@ -1,0 +1,31 @@
+# Copyright: Ankitects Pty Ltd and contributors
+# License: GNU AGPL, version 3 or later; http://www.gnu.org/licenses/agpl.html
+
+[package]
+name = "anki-ffi"
+version.workspace = true
+authors.workspace = true
+edition.workspace = true
+license.workspace = true
+publish = false
+rust-version.workspace = true
+description = "Tiny C ABI around Anki's backend command interface, for iOS"
+
+[lib]
+name = "anki_ffi"
+# staticlib is required for the iOS xcframework; cdylib lets the host run the
+# round-trip tests against a shared object as well.
+crate-type = ["staticlib", "cdylib", "rlib"]
+path = "lib.rs"
+
+[dependencies]
+anki = { path = "../../rslib" }
+anki_proto.workspace = true
+prost.workspace = true
+# `anki` relies on these tokio features being enabled via workspace feature
+# unification (rsbridge pulls them in transitively). When building this crate in
+# isolation we must request them ourselves, or `anki` fails to compile.
+tokio = { workspace = true, features = ["io-util", "fs", "rt-multi-thread"] }
+
+[dev-dependencies]
+tempfile.workspace = true

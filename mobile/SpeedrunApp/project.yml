@@ -1,0 +1,85 @@
+name: SpeedrunApp
+options:
+  bundleIdPrefix: net.ankiweb
+  deploymentTarget:
+    iOS: "15.0"
+  createIntermediateGroups: true
+
+packages:
+  SwiftProtobuf:
+    url: https://github.com/apple/swift-protobuf.git
+    from: "1.28.0"
+
+targets:
+  SpeedrunApp:
+    type: application
+    platform: iOS
+    deploymentTarget: "15.0"
+    sources:
+      - path: Sources
+      - path: Generated
+      - path: CAnkiFFI
+        # The module map + header are exposed to Swift via SWIFT_INCLUDE_PATHS
+        # below; we still list it so xcodegen tracks the files in the project.
+        buildPhase: none
+      # Bundle the prebuilt PGRE deck as an app resource; ReviewSession copies it
+      # to Documents/collection.anki2 on first launch. Force the resources build
+      # phase so the unknown .anki2 extension isn't treated as a compile source.
+      - path: Resources/pgre_main.anki2
+        buildPhase: resources
+    dependencies:
+      - package: SwiftProtobuf
+      - framework: ../AnkiCore.xcframework
+        embed: false
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: net.ankiweb.speedrun
+        SUPPORTED_PLATFORMS: "iphoneos iphonesimulator"
+        TARGETED_DEVICE_FAMILY: "1,2"
+        # The xcframework provides only arm64 slices (device + Apple-silicon
+        # simulator); exclude the legacy x86_64 simulator arch so linking finds
+        # a matching slice. Apple-silicon Macs run the simulator as arm64.
+        "EXCLUDED_ARCHS[sdk=iphonesimulator*]": x86_64
+        GENERATE_INFOPLIST_FILE: YES
+        INFOPLIST_KEY_UILaunchScreen_Generation: YES
+        INFOPLIST_KEY_CFBundleDisplayName: Speedrun
+        MARKETING_VERSION: "0.1.0"
+        CURRENT_PROJECT_VERSION: "1"
+        SWIFT_VERSION: "5.0"
+        # Expose the C FFI module map to Swift.
+        SWIFT_INCLUDE_PATHS: $(SRCROOT)/CAnkiFFI
+        # The xcframework is a plain static archive; no code signing of the lib.
+        CODE_SIGNING_ALLOWED: NO
+        # libanki_ffi.a needs the C++ and compression system libs that rslib's
+        # deps (zstd, etc.) and the Rust std library pull in.
+        OTHER_LDFLAGS:
+          - -lc++
+          - -lz
+  SpeedrunAppUITests:
+    type: bundle.ui-testing
+    platform: iOS
+    deploymentTarget: "15.0"
+    sources:
+      - path: UITests
+    dependencies:
+      - target: SpeedrunApp
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: net.ankiweb.speedrun.uitests
+        GENERATE_INFOPLIST_FILE: YES
+        SWIFT_VERSION: "5.0"
+        TEST_TARGET_NAME: SpeedrunApp
+        CODE_SIGNING_ALLOWED: NO
+
+schemes:
+  SpeedrunApp:
+    build:
+      targets:
+        SpeedrunApp: all
+        SpeedrunAppUITests: [test]
+    run:
+      config: Debug
+    test:
+      config: Debug
+      targets:
+        - SpeedrunAppUITests
