@@ -42,3 +42,12 @@ class SpeedrunManager:
             review_floor=review_floor,
             coverage_floor=coverage_floor,
         )
+
+    def deck_mastery(
+        self, *, mastered_threshold: float = 0.0
+    ) -> anki.speedrun_pb2.DeckMasteryResponse:
+        """Per-deck mastered-card counts (for the Stats "Mastered" view).
+
+        One row per deck that has >=1 card. Zero applies the default threshold.
+        """
+        return self.col._backend.deck_mastery(mastered_threshold=mastered_threshold)

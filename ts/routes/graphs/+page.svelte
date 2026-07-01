@@ -13,6 +13,7 @@ License: GNU AGPL, version 3 or later; http://www.gnu.org/licenses/agpl.html
     import GraphsPage from "./GraphsPage.svelte";
     import HourGraph from "./HourGraph.svelte";
     import IntervalsGraph from "./IntervalsGraph.svelte";
+    import MasteryGraph from "./MasteryGraph.svelte";
     import RangeBox from "./RangeBox.svelte";
     import RetrievabilityGraph from "./RetrievabilityGraph.svelte";
     import ReviewsGraph from "./ReviewsGraph.svelte";
@@ -21,6 +22,7 @@ License: GNU AGPL, version 3 or later; http://www.gnu.org/licenses/agpl.html
     import TrueRetention from "./TrueRetention.svelte";
 
     const graphs = [
+        MasteryGraph,
         TodayStats,
         FutureDue,
         CalendarGraph,

@@ -100,6 +100,27 @@ def test_public_wrapper():
     assert r2.thresholds.review_floor == 5
 
 
+def test_deck_mastery_groups_by_deck():
+    # Per-deck view (general, not PGRE-specific): one row per deck with cards.
+    col = getEmptyCol()
+    basic = col.models.by_name("Basic")
+    assert basic is not None
+    for deck in ("Alpha", "Beta"):
+        did = col.decks.id(deck)
+        for i in range(3):
+            note = col.new_note(basic)
+            note["Front"] = f"{deck} {i}"
+            note["Back"] = str(i)
+            col.add_note(note, did)
+    r = col.speedrun.deck_mastery()
+    by_name = {d.deck_name: d for d in r.decks}
+    assert "Alpha" in by_name and "Beta" in by_name
+    assert by_name["Alpha"].total_cards == 3
+    # No FSRS memory state yet → nothing mastered.
+    assert by_name["Alpha"].mastered == 0
+    assert by_name["Alpha"].cards_with_state == 0
+
+
 def test_honesty_shape():
     col = getEmptyCol()
     r = _topic_mastery(col)

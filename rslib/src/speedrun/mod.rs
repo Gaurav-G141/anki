@@ -13,7 +13,12 @@ mod tests_correctness;
 #[cfg(test)]
 mod tests_perf;
 
+use std::collections::HashMap;
+
 use anki_proto::speedrun::AppliedThresholds;
+use anki_proto::speedrun::DeckMastery;
+use anki_proto::speedrun::DeckMasteryRequest;
+use anki_proto::speedrun::DeckMasteryResponse;
 use anki_proto::speedrun::TopicMastery;
 use anki_proto::speedrun::TopicMasteryRequest;
 use anki_proto::speedrun::TopicMasteryResponse;
@@ -340,6 +345,79 @@ impl Collection {
             updated_at_millis,
             thresholds,
             topics,
+        })
+    }
+
+    /// Read-only per-deck mastered-card counts, for the Stats "Mastered" view.
+    /// One row per deck that has at least one card. General-purpose (not
+    /// PGRE-specific): "mastered" = current FSRS recall >= threshold.
+    pub(crate) fn deck_mastery_report(
+        &mut self,
+        req: DeckMasteryRequest,
+    ) -> Result<DeckMasteryResponse> {
+        let mastered_threshold = if req.mastered_threshold > 0.0 {
+            req.mastered_threshold
+        } else {
+            DEFAULT_MASTERED_THRESHOLD
+        };
+        let timing = self.timing_today()?;
+        let fsrs = FSRS::new(None)?;
+
+        #[derive(Default)]
+        struct DeckAcc {
+            total: u32,
+            with_state: u32,
+            mastered: u32,
+            sum_r: f64,
+        }
+        let mut by_deck: HashMap<DeckId, DeckAcc> = HashMap::new();
+
+        // One scan over the whole collection, grouped by the card's deck.
+        {
+            let guard = self.search_cards_into_table("", SortMode::NoOrder)?;
+            let cards = guard.col.storage.all_searched_cards()?;
+            drop(guard);
+            for card in &cards {
+                let acc = by_deck.entry(card.deck_id).or_default();
+                acc.total += 1;
+                if let Some(state) = card.memory_state {
+                    let secs = card.seconds_since_last_review(&timing).unwrap_or(0);
+                    let decay = card.decay.unwrap_or(FSRS5_DEFAULT_DECAY);
+                    let r = fsrs.current_retrievability_seconds(state.into(), secs, decay);
+                    acc.with_state += 1;
+                    acc.sum_r += r as f64;
+                    if r >= mastered_threshold {
+                        acc.mastered += 1;
+                    }
+                }
+            }
+        }
+
+        let mut decks = Vec::with_capacity(by_deck.len());
+        for (did, acc) in by_deck {
+            let deck_name = self
+                .get_deck(did)?
+                .map(|d| d.human_name())
+                .unwrap_or_default();
+            let mean_retrievability = if acc.with_state > 0 {
+                (acc.sum_r / acc.with_state as f64) as f32
+            } else {
+                0.0
+            };
+            decks.push(DeckMastery {
+                deck_id: did.0,
+                deck_name,
+                total_cards: acc.total,
+                cards_with_state: acc.with_state,
+                mastered: acc.mastered,
+                mean_retrievability,
+            });
+        }
+        decks.sort_by(|a, b| a.deck_name.cmp(&b.deck_name));
+
+        Ok(DeckMasteryResponse {
+            decks,
+            mastered_threshold,
         })
     }
 }

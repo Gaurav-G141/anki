@@ -1,0 +1,4 @@
+ninja: no work to do.
+[0m[1m[32m
+Build succeeded in 0.03s.
+[0m

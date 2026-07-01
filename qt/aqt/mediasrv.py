@@ -768,6 +768,7 @@ exposed_backend_list = [
     "get_retention_workload",
     # SpeedrunService (fork-specific)
     "topic_mastery",
+    "deck_mastery",
 ]
 
 

@@ -5,6 +5,7 @@
 
 #![allow(unused_imports)]
 
+use anki_proto::speedrun::DeckMasteryRequest;
 use anki_proto::speedrun::TopicMasteryRequest;
 use anki_proto::speedrun::TopicMasteryResponse;
 use fsrs::FSRS;
@@ -13,6 +14,7 @@ use fsrs::FSRS5_DEFAULT_DECAY;
 use super::*;
 use crate::card::CardId;
 use crate::card::FsrsMemoryState;
+use crate::prelude::DeckId;
 use crate::revlog::RevlogEntry;
 use crate::revlog::RevlogReviewKind;
 use crate::tests::NoteAdder;
@@ -64,6 +66,32 @@ fn add_card_no_state(col: &mut Collection, subject_key: &str) -> CardId {
     col.add_tags_to_notes(&[note.id], &format!("pgre::{subject_key}"))
         .unwrap();
     col.storage.all_cards_of_note(note.id).unwrap()[0].id
+}
+
+/// Add a Basic card in a specific deck with a known FSRS memory state.
+fn add_card_in_deck(
+    col: &mut Collection,
+    deck_id: DeckId,
+    stability: f32,
+    elapsed_secs: i64,
+) -> CardId {
+    let note = NoteAdder::basic(col)
+        .fields(&["F", "B"])
+        .deck(deck_id)
+        .add(col);
+    let mut card = col
+        .storage
+        .all_cards_of_note(note.id)
+        .unwrap()
+        .pop()
+        .unwrap();
+    card.memory_state = Some(FsrsMemoryState {
+        stability,
+        difficulty: 5.0,
+    });
+    card.last_review_time = Some(TimestampSecs(TimestampSecs::now().0 - elapsed_secs));
+    col.storage.update_card(&card).unwrap();
+    card.id
 }
 
 fn add_reviews(col: &mut Collection, cid: CardId, n: u32, taken_millis: u32) {
@@ -330,6 +358,35 @@ fn rpc_is_read_only_and_preserves_integrity() -> Result<()> {
     assert!(
         problems.is_empty(),
         "dbcheck reported problems: {problems:?}"
+    );
+    Ok(())
+}
+
+#[test]
+fn deck_mastery_groups_by_deck() -> Result<()> {
+    let mut col = Collection::new();
+    let alpha = col.get_or_create_normal_deck("Alpha")?.id;
+    let beta = col.get_or_create_normal_deck("Beta")?.id;
+    // Alpha: 2 clearly-mastered (R~1) + 1 clearly-unmastered (R~0).
+    add_card_in_deck(&mut col, alpha, 1000.0, 0);
+    add_card_in_deck(&mut col, alpha, 1000.0, 60);
+    add_card_in_deck(&mut col, alpha, 0.01, 86_400 * 60);
+    // Beta: 1 mastered.
+    add_card_in_deck(&mut col, beta, 1000.0, 0);
+
+    let r = col.deck_mastery_report(DeckMasteryRequest::default())?;
+    let a = r.decks.iter().find(|d| d.deck_name == "Alpha").unwrap();
+    assert_eq!(a.total_cards, 3);
+    assert_eq!(a.cards_with_state, 3);
+    assert_eq!(a.mastered, 2, "Alpha mastered: {}", a.mastered);
+    let b = r.decks.iter().find(|d| d.deck_name == "Beta").unwrap();
+    assert_eq!(b.total_cards, 1);
+    assert_eq!(b.mastered, 1);
+    // decks are returned sorted by name
+    let names: Vec<&str> = r.decks.iter().map(|d| d.deck_name.as_str()).collect();
+    assert!(
+        names.windows(2).all(|w| w[0] <= w[1]),
+        "not sorted: {names:?}"
     );
     Ok(())
 }

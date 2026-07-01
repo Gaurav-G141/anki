@@ -12,6 +12,9 @@ package anki.speedrun;
 service SpeedrunService {
   // Per-topic mastery plus an honest, range-bearing memory score.
   rpc TopicMastery(TopicMasteryRequest) returns (TopicMasteryResponse);
+  // Per-deck mastered-card counts, for the Stats "Mastered" view. Added after
+  // TopicMastery so existing method indices stay stable.
+  rpc DeckMastery(DeckMasteryRequest) returns (DeckMasteryResponse);
 }
 
 // Implicitly delegates the above to the collection-scoped service.
@@ -65,4 +68,23 @@ message TopicMasteryResponse {
   AppliedThresholds thresholds = 11;
 
   repeated TopicMastery topics = 12;
+}
+
+message DeckMasteryRequest {
+  float mastered_threshold =
+      1;  // default 0.9 (recall R at/above this = mastered)
+}
+
+message DeckMastery {
+  int64 deck_id = 1;
+  string deck_name = 2;  // full human name, e.g. "PGRE::Classical Mechanics"
+  uint32 total_cards = 3;
+  uint32 cards_with_state = 4;  // cards that have FSRS memory state
+  uint32 mastered = 5;
+  float mean_retrievability = 6;
+}
+
+message DeckMasteryResponse {
+  repeated DeckMastery decks = 1;  // one row per deck that has >=1 card
+  float mastered_threshold = 2;
 }
