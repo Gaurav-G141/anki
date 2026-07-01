@@ -189,6 +189,10 @@ speedrun-test:
 speedrun-mastery col="out/speedrun/work/pgre_main.anki2":
     PYTHONPATH=out/pylib out/pyenv/bin/python speedrun/show_mastery.py --col {{col}}
 
+# Demo: give-up/abstain -> real honest score (studies a deck with FSRS, prints both) (macOS/Linux)
+speedrun-demo:
+    PYTHONPATH=out/pylib out/pyenv/bin/python speedrun/demo.py
+
 # Crash-safety test: SIGKILL the engine mid-write N times, prove no corruption (macOS/Linux)
 speedrun-crash-test rounds="50":
     PYTHONPATH=out/pylib out/pyenv/bin/python speedrun/crash_test.py {{rounds}}

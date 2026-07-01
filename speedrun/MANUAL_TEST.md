@@ -115,7 +115,33 @@ cargo test -p anki speedrun                                   # 17 correctness/u
 cargo test -p anki speedrun::tests_perf -- --ignored --nocapture   # 50k perf table (or: just bench)
 ```
 
-The score, by hand:
+### See it working end to end (one command)
+
+This is the quickest way to **see the memory model + honest score + give-up rule**
+— for your own check or a demo. It studies a copy of the deck with FSRS on, then
+prints the RPC output in **both** states:
+
+```bash
+just speedrun-demo
+```
+
+Expected:
+
+- **STATE A (give-up rule):** `ABSTAIN — no memory score shown`, reason
+  _"no FSRS memory-state data yet"_.
+- **STATE B (real honest score):** e.g. `MEMORY SCORE: 100%  range [92%, 100%]
+  (Wilson 95%)  confidence: medium`, coverage 100%, weakest-topic reasons, and a
+  per-topic table (cards / with-state / mastered / mean R / latency) across all 9
+  subjects. The score is high but the app is **honest**: the range is wide and
+  confidence only "medium" because the sample is small — never a bare number.
+
+It leaves a reusable scored collection at `out/speedrun/work/pgre_scored.anki2`:
+
+```bash
+just speedrun-mastery col=out/speedrun/work/pgre_scored.anki2   # re-print the scored card
+```
+
+### The abstain / give-up states individually
 
 ```bash
 just speedrun-mastery                                    # defaults to pgre_main
