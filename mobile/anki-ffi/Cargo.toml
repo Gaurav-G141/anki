@@ -19,7 +19,11 @@ crate-type = ["staticlib", "cdylib", "rlib"]
 path = "lib.rs"
 
 [dependencies]
-anki = { path = "../../rslib" }
+# `rustls-webpki` gives the sync client a self-contained TLS stack (bundled
+# Mozilla roots, no Security.framework linking) so HTTPS logins to AnkiWeb work
+# on iOS. Without any TLS feature, reqwest is built http-only and AnkiWeb
+# (https) fails with a "backend error"; self-hosted http servers still work.
+anki = { path = "../../rslib", features = ["rustls-webpki"] }
 anki_proto.workspace = true
 prost.workspace = true
 # `anki` relies on these tokio features being enabled via workspace feature

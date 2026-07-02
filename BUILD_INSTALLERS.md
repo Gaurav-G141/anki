@@ -5,8 +5,11 @@ This fork ships two apps:
 - **Desktop** — the full Anki app (the "Ankimatter" Calabi-Yau home screen, the 9
   PGRE subject decks, Speed Recall, the mastery dashboard), packaged as a **macOS
   `.dmg`**.
-- **iOS** — a lightweight **Speedrun** review app (`mobile/SpeedrunApp`) that talks
-  to the same Rust core over a C-FFI, built for the **iOS Simulator**.
+- **iOS** — a **Speedrun** app (`mobile/SpeedrunApp`) that talks to the _same_ Rust
+  core over a C-FFI (the `AnkiCore.xcframework` is `rslib`, identical to the engine
+  the desktop uses). It opens on a **deck list** (like AnkiMobile): tap a deck to
+  run a deck-scoped review, or use **"+"** to create a new empty deck or import a
+  bundled PGRE subject deck. Built for the **iOS Simulator**.
 
 The prebuilt binaries are **not** committed to the repo (they're large and land
 in git-ignored folders). Follow the steps below to build them from source. All
@@ -121,17 +124,29 @@ Output:
 out/ios/Build/Products/Release-iphonesimulator/SpeedrunApp.app
 ```
 
-> If you edit `mobile/SpeedrunApp/project.yml`, regenerate the project first with
-> `brew install xcodegen` then `cd mobile/SpeedrunApp && xcodegen generate`.
-> The build is unsigned (`CODE_SIGNING_ALLOWED = NO`) — it runs on the
-> **Simulator only**, not a physical device.
+> If you edit `mobile/SpeedrunApp/project.yml` (e.g. adding files/resources),
+> regenerate the project first with `brew install xcodegen` then
+> `cd mobile/SpeedrunApp && xcodegen generate`. The build is unsigned
+> (`CODE_SIGNING_ALLOWED = NO`) — it runs on the **Simulator only**, not a
+> physical device.
+>
+> The Swift protobuf types under `mobile/SpeedrunApp/Generated/anki/` are
+> committed. If you need to (re)generate one from a `.proto` — e.g. after a proto
+> change — run (with `protoc` + `protoc-gen-swift` on PATH, both from Homebrew):
+> `protoc -I proto --swift_out=mobile/SpeedrunApp/Generated proto/anki/<name>.proto`.
 
-**What's bundled (already committed — no extra step):** the app ships the real
-PGRE exam deck `Resources/pgre_exam.anki2` (the 166-card formula deck) and a
-trimmed **MathJax** under `Resources/mathjax/`. On first launch the deck is
-copied to the app's Documents and opened via the shared Rust engine, and card
-sides are rendered in a `WKWebView` that typesets the LaTeX with the bundled
-MathJax **offline**. (To regenerate the deck from a different source, import an
+**What's bundled (already committed — no extra step):**
+
+- `Resources/pgre_exam.anki2` — the starting collection (a `Speed Recall` parent
+  deck + 9 subject subdecks, 166 formula cards). Copied to the app's Documents on
+  first launch and opened via the shared Rust engine.
+- `Resources/decks/*.apkg` — the 9 full PGRE subject decks (~8 MB), importable
+  in-app via **"+" → Import Deck** (`CollectionStore.importBundled` →
+  `ImportAnkiPackage` on the shared engine). Re-import is safe (GUID dedupe).
+- `Resources/mathjax/` — trimmed **MathJax**; card sides render in a `WKWebView`
+  that typesets the LaTeX **offline**.
+
+(To regenerate the starting collection from a different source, import an
 `.apkg`/`.colpkg` into a fresh `Collection`, `col.decks.select(<deck id>)` so it
 has due cards, and copy the resulting `.anki2` over `Resources/pgre_exam.anki2`.)
 
@@ -159,10 +174,12 @@ xcrun simctl install booted out/ios/Build/Products/Release-iphonesimulator/Speed
 xcrun simctl launch booted net.ankiweb.speedrun
 ```
 
-The app opens to the "Speedrun PGRE" review screen loaded with the **real exam
-deck** (166 formula cards). A question shows a prompt like "Formula for the
-hydrogen-atom Hamiltonian"; tap **Show Answer** to see the formula typeset by
-MathJax, then grade Again/Hard/Good/Easy. Tap through cards to review.
+The app opens to the **deck list** (Speed Recall + its 9 subject subdecks, each
+with due counts). Tap a deck to start a **deck-scoped** review: a question shows a
+prompt like "Formula for the hydrogen-atom Hamiltonian"; tap **Show Answer** to
+see the formula typeset by MathJax, then grade Again/Hard/Good/Easy. Back returns
+to the deck list (counts refresh). Use **"+"** to **create** a new empty deck or
+**import** one of the bundled PGRE subject decks.
 
 To take a screenshot of the running simulator:
 

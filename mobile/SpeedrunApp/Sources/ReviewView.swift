@@ -1,16 +1,24 @@
 // Copyright: Ankitects Pty Ltd and contributors
 // License: GNU AGPL, version 3 or later; http://www.gnu.org/licenses/agpl.html
+//
+// The per-deck review screen (pushed from the deck list). Owns a deck-scoped
+// `ReviewSession` bound to the app's single shared engine (`CollectionStore`).
 
 import SwiftUI
 import WebKit
 
-struct ContentView: View {
-    @StateObject private var session = ReviewSession()
-    @Environment(\.scenePhase) private var scenePhase
+struct ReviewView: View {
+    @StateObject private var session: ReviewSession
+    let deckName: String
+
+    init(store: CollectionStore, deckId: Int64, deckName: String) {
+        _session = StateObject(wrappedValue: ReviewSession(store: store, deckId: deckId))
+        self.deckName = deckName
+    }
 
     var body: some View {
         VStack(spacing: 16) {
-            header
+            counts
 
             Divider()
 
@@ -72,28 +80,21 @@ struct ContentView: View {
             }
         }
         .padding()
+        .navigationTitle(deckName)
+        .navigationBarTitleDisplayMode(.inline)
         .onAppear { session.start() }
-        .onChange(of: scenePhase) { newPhase in
-            // Checkpoint graded progress into collection.anki2 when the app
-            // leaves the foreground, so the on-disk database is always complete.
-            if newPhase == .background { session.flush() }
-        }
     }
 
-    private var header: some View {
-        VStack(spacing: 4) {
-            Text("Speedrun PGRE")
-                .font(.title2.bold())
-            HStack(spacing: 16) {
-                Label("\(session.reviewedCount)", systemImage: "checkmark.seal")
-                    .accessibilityIdentifier("reviewedCount")
-                Text("new \(session.newCount)")
-                Text("lrn \(session.learnCount)")
-                Text("rev \(session.reviewCount)")
-            }
-            .font(.caption)
-            .foregroundColor(.secondary)
+    private var counts: some View {
+        HStack(spacing: 16) {
+            Label("\(session.reviewedCount)", systemImage: "checkmark.seal")
+                .accessibilityIdentifier("reviewedCount")
+            Text("new \(session.newCount)")
+            Text("lrn \(session.learnCount)")
+            Text("rev \(session.reviewCount)")
         }
+        .font(.caption)
+        .foregroundColor(.secondary)
     }
 
     private func cardArea(html: String) -> some View {
@@ -123,7 +124,7 @@ struct ContentView: View {
 }
 
 /// Renders a card side's HTML in a `WKWebView`, typesetting any LaTeX with the
-/// bundled MathJax (staged into Documents by `ReviewSession.prepareMathjax`).
+/// bundled MathJax (staged into Documents by `CollectionStore.prepareMathjax`).
 /// Loading from a file in Documents — with read access to Documents — lets the
 /// relative `mathjax/…` script + fonts resolve fully offline.
 struct CardWebView: UIViewRepresentable {

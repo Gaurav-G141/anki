@@ -106,6 +106,10 @@ class Manifold:
             self.mw.moveToState("speedRecall")
         elif cmd == "memory":
             self._open_memory_dashboard()
+        elif cmd == "login":
+            self._on_login()
+        elif cmd == "logout":
+            self._on_logout()
         return False
 
     def _open_memory_dashboard(self) -> None:
@@ -118,6 +122,44 @@ class Manifold:
             existing.activateWindow()
             return
         setattr(self.mw, "_memory_dashboard", MemoryDashboard(self.mw))
+
+    # Sync login / logout
+    ##########################################################################
+    # Reuses Anki's built-in sync auth (no reimplementation): `sync_login` shows
+    # the id/pass dialog and stores the hkey against the configured endpoint
+    # (AnkiWeb, or a self-hosted server set in Preferences → Syncing); logout
+    # just clears that stored key. The bottom-bar button (see `_draw_buttons`)
+    # flips between the two based on `mw.pm.sync_auth()`.
+
+    def _on_login(self) -> None:
+        from aqt.sync import sync_login
+
+        # Already logged in? Treat the tap as a sync instead of a second login.
+        if self.mw.pm.sync_auth():
+            self.mw.on_sync_button_clicked()
+            return
+        sync_login(self.mw, on_success=self._after_auth_change)
+
+    def _on_logout(self) -> None:
+        from aqt.utils import askUser, tooltip
+
+        if self.mw.pm.sync_auth() is None:
+            return
+        if not askUser(
+            "Log out of sync? Your collection stays on this device; you can log "
+            "back in any time.",
+            parent=self.mw,
+            title="Log out",
+        ):
+            return
+        self.mw.pm.clear_sync_auth()
+        tooltip("Logged out.", parent=self.mw)
+        self._after_auth_change()
+
+    def _after_auth_change(self) -> None:
+        # Redraw the top toolbar (its sync indicator) and the bottom-bar button.
+        self.mw.toolbar.redraw()
+        self.refresh()
 
     def _open_deck(self, deck_id: DeckId) -> None:
         set_current_deck(parent=self.mw, deck_id=deck_id).success(
@@ -154,6 +196,15 @@ class Manifold:
             buf += (
                 f"<button title='{title}' onclick='pycmd(\"{cmd}\");'>{label}</button>"
             )
+        # Dynamic sync auth button: reflects whether we're logged in. Clicking
+        # "Log in" opens the sync login dialog; when logged in it becomes
+        # "Log out" (and a tap on the top-toolbar sync icon still syncs).
+        if self.mw.pm.sync_auth():
+            user = self.mw.pm.profile.get("syncUser") or ""
+            label = f"🔓 Log out{f' ({user})' if user else ''}"
+            buf += f"<button title='Log out of sync' onclick='pycmd(\"logout\");'>{label}</button>"
+        else:
+            buf += "<button title='Log in to sync' onclick='pycmd(\"login\");'>🔑 Log in</button>"
         self.bottom.draw(
             buf=buf,
             link_handler=self._linkHandler,

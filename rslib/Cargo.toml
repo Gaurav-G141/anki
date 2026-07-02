@@ -12,6 +12,10 @@ description = "Anki's Rust library code"
 [features]
 bench = ["criterion"]
 rustls = ["reqwest/rustls-tls", "reqwest/rustls-tls-native-roots"]
+# Pure-Rust TLS with Mozilla roots bundled into the binary. Used by the iOS
+# anki-ffi build: no Security.framework / system trust-store linking, so the
+# staticlib is self-contained (HTTPS/AnkiWeb works on device + simulator).
+rustls-webpki = ["reqwest/rustls-tls", "reqwest/rustls-tls-webpki-roots"]
 native-tls = ["reqwest/native-tls"]
 
 [[bench]]

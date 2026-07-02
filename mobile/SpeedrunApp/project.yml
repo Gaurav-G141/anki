@@ -33,6 +33,13 @@ targets:
       # copied verbatim so the output/chtml/fonts subtree is preserved.
       - path: Resources/mathjax
         type: folder
+      # Bundle the 9 PGRE subject decks (.apkg) so they can be imported on the
+      # phone via "+ → Import Deck" (CollectionStore.importBundled). A group (NOT
+      # a folder reference) so each file lands flat in the bundle root, where
+      # Bundle.main.url(forResource:withExtension:"apkg") resolves it. Force the
+      # resources phase so the unknown .apkg extension isn't treated as a source.
+      - path: Resources/decks
+        buildPhase: resources
     dependencies:
       - package: SwiftProtobuf
       - framework: ../AnkiCore.xcframework

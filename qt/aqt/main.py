@@ -1493,6 +1493,20 @@ title="{}" {}>{}</button>""".format(
         qconnect(m.action_check_for_updates.triggered, self.on_check_for_updates)
         qconnect(m.actionPreferences.triggered, self.onPrefs)
 
+        # Tools — Speedrun: one-step sync login (with an explicit endpoint) +
+        # logout, mirroring the iOS login sheet, for testing iOS<->desktop sync
+        # against a self-hosted server.
+        from aqt.qt import QAction
+        from aqt.speedrun_sync import sync_login_dialog, sync_logout
+
+        m.menuTools.addSeparator()
+        sync_login_action = QAction("Sync — Log In…", self)
+        qconnect(sync_login_action.triggered, lambda: sync_login_dialog(self))
+        m.menuTools.addAction(sync_login_action)
+        sync_logout_action = QAction("Sync — Log Out", self)
+        qconnect(sync_logout_action.triggered, lambda: sync_logout(self))
+        m.menuTools.addAction(sync_logout_action)
+
         # View
         qconnect(
             m.actionZoomIn.triggered,

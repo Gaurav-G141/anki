@@ -1,10 +1,11 @@
 // Copyright: Ankitects Pty Ltd and contributors
 // License: GNU AGPL, version 3 or later; http://www.gnu.org/licenses/agpl.html
 //
-// S7-T02: drives a real review session through the SwiftUI UI — taps "Show
-// Answer" then "Good" repeatedly — and asserts at least 20 cards are graded
-// without the app crashing. Each grade goes through AnswerCard on the shared
-// Rust engine, so a green run also demonstrates that 20+ revlog rows persist.
+// S7-T02: drives a real review session through the SwiftUI UI — opens the deck
+// list, enters the Speed Recall deck, then taps "Show Answer" then "Again"
+// repeatedly — and asserts at least 20 cards are graded without the app
+// crashing. Each grade goes through AnswerCard on the shared Rust engine, so a
+// green run also demonstrates that 20+ revlog rows persist.
 
 import XCTest
 
@@ -22,6 +23,17 @@ final class ReviewFlowUITests: XCTestCase {
         // Generous per-step timeouts; FFI calls run off-main and are fast, but
         // the very first open + render can take a moment on a cold simulator.
         let stepTimeout: TimeInterval = 20
+
+        // Home screen is now the deck list. Enter the "Speed Recall" parent deck
+        // (its 9 subdecks give 166 cards, plenty for 20 reviews). The row's
+        // identifier is set on the NavigationLink; match any element type.
+        let deckRow = app.descendants(matching: .any)
+            .matching(identifier: "deck_Speed Recall").firstMatch
+        XCTAssertTrue(
+            deckRow.waitForExistence(timeout: stepTimeout),
+            "Speed Recall deck row never appeared on the deck list"
+        )
+        deckRow.tap()
 
         let showAnswer = app.buttons["showAnswer"]
         // Grade with "Again": it keeps cards in the intraday learning queue so a

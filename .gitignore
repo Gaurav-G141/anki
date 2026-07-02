@@ -33,3 +33,6 @@ docs/autoapi/
 mobile/AnkiCore.xcframework/
 # Speedrun: compiled installers (DMG / iOS .app) are large build outputs, not source
 /installers/
+# Speedrun: transient SQLite WAL sidecars (never commit next to a bundled deck)
+*.anki2-wal
+*.anki2-shm

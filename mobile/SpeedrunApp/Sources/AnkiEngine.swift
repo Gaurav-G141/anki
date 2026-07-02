@@ -19,10 +19,16 @@ import SwiftProtobuf
 ///   * GetQueuedCards      -> service 13, method 3  (Scheduler, merged dispatch)
 ///   * AnswerCard          -> service 13, method 4  (Scheduler, merged dispatch)
 ///   * RenderExistingCard  -> service 27, method 6  (CardRendering, merged)
+///   * DeckTree/NewDeck/AddDeck/SetCurrentDeck -> service 7 (Decks)
+///   * SyncLogin/SyncCollection/FullUploadOrDownload -> service 1 (Sync)
+///   * ImportAnkiPackage   -> service 39, method 2 (ImportExport)
 enum AnkiService {
+    static let sync: UInt32 = 1
     static let collection: UInt32 = 3
+    static let decks: UInt32 = 7
     static let scheduler: UInt32 = 13
     static let cardRendering: UInt32 = 27
+    static let importExport: UInt32 = 39
 }
 
 enum AnkiMethod {
@@ -31,6 +37,19 @@ enum AnkiMethod {
     static let getQueuedCards: UInt32 = 3
     static let answerCard: UInt32 = 4
     static let renderExistingCard: UInt32 = 6
+    // Decks service (7): method order from proto/anki/decks.proto.
+    static let newDeck: UInt32 = 0
+    static let addDeck: UInt32 = 1
+    static let deckTree: UInt32 = 4
+    static let setCurrentDeck: UInt32 = 22
+    // Sync service (1): method order from proto/anki/sync.proto.
+    static let syncLogin: UInt32 = 3
+    static let syncStatus: UInt32 = 4
+    static let syncCollection: UInt32 = 5
+    static let fullUploadOrDownload: UInt32 = 6
+    static let abortSync: UInt32 = 7
+    // ImportExport service (39).
+    static let importAnkiPackage: UInt32 = 2
 }
 
 enum AnkiEngineError: Error, CustomStringConvertible {

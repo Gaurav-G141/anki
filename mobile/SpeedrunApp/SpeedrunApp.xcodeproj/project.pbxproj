@@ -9,26 +9,38 @@
 /* Begin PBXBuildFile section */
 		0286400539FB965AAE5369EE /* backend.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9BA8A4E538A1B75C947572C /* backend.pb.swift */; };
 		07AFAD93BACF2CF777F0B383 /* collection.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8653DF280C7ECDCE21E8280 /* collection.pb.swift */; };
+		09C55D4FCDC7ED88682FDFF6 /* ReviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74004647ED7E4726EDCBFC6 /* ReviewView.swift */; };
 		32124D702644D8C984D7CE96 /* deck_config.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = C49C8459CD6FFFF15EFB34A9 /* deck_config.pb.swift */; };
-		44839D2ED9402C8904BEB322 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36D0E7556E2E5AB3946A8222 /* ContentView.swift */; };
+		44D0B6F84CEE5FCD78959611 /* 04_Atomic_Physics.apkg in Resources */ = {isa = PBXBuildFile; fileRef = 39D593BF6ED38C725329CA3B /* 04_Atomic_Physics.apkg */; };
 		476015C1E4757C9E3A909B5D /* SpeedrunApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0CD4FA934F1AEA465F11896 /* SpeedrunApp.swift */; };
+		4EB6F91C9610351A47649842 /* 05_Thermodynamics_Statistical_Mechanics.apkg in Resources */ = {isa = PBXBuildFile; fileRef = 09427C715141E991F74A158C /* 05_Thermodynamics_Statistical_Mechanics.apkg */; };
+		4EE8538046E2A811D92E1903 /* DeckListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AAED1622343D85FBD2C3B9A /* DeckListView.swift */; };
+		517D6FD04F0873AC46CE6BB8 /* 09_Laboratory_Methods.apkg in Resources */ = {isa = PBXBuildFile; fileRef = 95655EE9CBCECBA81F2AED7B /* 09_Laboratory_Methods.apkg */; };
 		52252E04A29D5810AB1853B9 /* card_rendering.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A5DE14B9B5A7085B3A7E858 /* card_rendering.pb.swift */; };
 		573CF4592B70CA1312729517 /* pgre_exam.anki2 in Resources */ = {isa = PBXBuildFile; fileRef = 020FBDD971592C305687982E /* pgre_exam.anki2 */; };
+		5AC79BF826CD72334EBAE7CE /* 06_Optics_Waves.apkg in Resources */ = {isa = PBXBuildFile; fileRef = D534E77B30601DBA8DD4FA59 /* 06_Optics_Waves.apkg */; };
 		5D7596D4CCA245BF19116C28 /* generic.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90650C1F2BF75D9A88495AF /* generic.pb.swift */; };
+		5EB88B5A9313C14ABAD639C2 /* CollectionStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C9DE2102D04AE7317EA295B /* CollectionStore.swift */; };
 		64C9E3274BBDAD74E7B8BC37 /* mathjax in Resources */ = {isa = PBXBuildFile; fileRef = F0A2774A40B38D3738AE4F6A /* mathjax */; };
 		70CE61277F9154AB7DAFD712 /* SwiftProtobuf in Frameworks */ = {isa = PBXBuildFile; productRef = 58F1D384620E30C99EF63CCD /* SwiftProtobuf */; };
 		75D44CA7F1D1ABE2C9A08E23 /* notetypes.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3209D8DE6896FF4E7E8F092F /* notetypes.pb.swift */; };
 		7A3D7BF9B460A1000803010B /* ReviewFlowUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA402D7CC58F59A635BDE545 /* ReviewFlowUITests.swift */; };
+		7F16A8A50607A48DE707D6FF /* 02_Electromagnetism.apkg in Resources */ = {isa = PBXBuildFile; fileRef = 6D6B72218D3B4055E20459BB /* 02_Electromagnetism.apkg */; };
 		85D38E7787A0B79AD3589E16 /* AnkiCore.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 130AD1BE49642DBFD31D1BF9 /* AnkiCore.xcframework */; };
+		A4FDCB5F07C5432225BBC8B7 /* 03_Quantum_Mechanics.apkg in Resources */ = {isa = PBXBuildFile; fileRef = E63620C9B800E9AD1C059400 /* 03_Quantum_Mechanics.apkg */; };
 		A93184C1F30C94CF5B68FD19 /* ReviewSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1EA751BF434F430868895C9 /* ReviewSession.swift */; };
 		B555B4995DCAD811AE73F0AE /* links.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB8348F594655883C40C8A2 /* links.pb.swift */; };
+		BB0CB510167F9E522F113594 /* 07_Specialized_Topics.apkg in Resources */ = {isa = PBXBuildFile; fileRef = 70C4FFC2565808B30B46A13D /* 07_Specialized_Topics.apkg */; };
+		BD609AE82EB15AFD5DA5C180 /* 01_Classical_Mechanics.apkg in Resources */ = {isa = PBXBuildFile; fileRef = EC0449C9B59A15ED6DA653AB /* 01_Classical_Mechanics.apkg */; };
 		BFB9749DC930E51780D9BCD7 /* cards.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DCEA94F2B106B11504FF7EF /* cards.pb.swift */; };
 		C387BF9CD5FD8C3128134E51 /* scheduler.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA6E5CD489172F24315E8EE4 /* scheduler.pb.swift */; };
+		DBE68AC7120EC600CE3A5691 /* 08_Special_Relativity.apkg in Resources */ = {isa = PBXBuildFile; fileRef = 56C5B2A40545270F52DDEC0E /* 08_Special_Relativity.apkg */; };
 		DCA78AC66E758F78160D3E3B /* config.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049367AB60DB28D49FFB9972 /* config.pb.swift */; };
 		E67EFD020FCFD64D8596301A /* AnkiEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C486204719B63819EA11F1 /* AnkiEngine.swift */; };
 		EF0AB9233D06A85B66FAAF5A /* sync.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F50E10B02EF0AAB7F5B2F2C /* sync.pb.swift */; };
 		F178AAAB8E73940E1F9DB079 /* decks.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AD631CE3CC106DE1019DE56 /* decks.pb.swift */; };
 		FDE490AAA067077321DA676F /* notes.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4CD2AAF21AEFAE5F01CB46C /* notes.pb.swift */; };
+		FDE8543DF4B099883AA097FA /* import_export.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58B3074E9BA304929F53676 /* import_export.pb.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,19 +56,28 @@
 /* Begin PBXFileReference section */
 		020FBDD971592C305687982E /* pgre_exam.anki2 */ = {isa = PBXFileReference; path = pgre_exam.anki2; sourceTree = "<group>"; };
 		049367AB60DB28D49FFB9972 /* config.pb.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = config.pb.swift; sourceTree = "<group>"; };
+		09427C715141E991F74A158C /* 05_Thermodynamics_Statistical_Mechanics.apkg */ = {isa = PBXFileReference; path = 05_Thermodynamics_Statistical_Mechanics.apkg; sourceTree = "<group>"; };
 		0DCEA94F2B106B11504FF7EF /* cards.pb.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = cards.pb.swift; sourceTree = "<group>"; };
 		130AD1BE49642DBFD31D1BF9 /* AnkiCore.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = AnkiCore.xcframework; path = ../AnkiCore.xcframework; sourceTree = "<group>"; };
 		3209D8DE6896FF4E7E8F092F /* notetypes.pb.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = notetypes.pb.swift; sourceTree = "<group>"; };
-		36D0E7556E2E5AB3946A8222 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		39D593BF6ED38C725329CA3B /* 04_Atomic_Physics.apkg */ = {isa = PBXFileReference; path = 04_Atomic_Physics.apkg; sourceTree = "<group>"; };
 		4A5DE14B9B5A7085B3A7E858 /* card_rendering.pb.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = card_rendering.pb.swift; sourceTree = "<group>"; };
+		56C5B2A40545270F52DDEC0E /* 08_Special_Relativity.apkg */ = {isa = PBXFileReference; path = 08_Special_Relativity.apkg; sourceTree = "<group>"; };
+		5AAED1622343D85FBD2C3B9A /* DeckListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeckListView.swift; sourceTree = "<group>"; };
 		6BFC572208F556E664456CA1 /* SpeedrunAppUITests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = SpeedrunAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		6D6B72218D3B4055E20459BB /* 02_Electromagnetism.apkg */ = {isa = PBXFileReference; path = 02_Electromagnetism.apkg; sourceTree = "<group>"; };
+		70C4FFC2565808B30B46A13D /* 07_Specialized_Topics.apkg */ = {isa = PBXFileReference; path = 07_Specialized_Topics.apkg; sourceTree = "<group>"; };
 		7570E523A7C2207946ABE743 /* SpeedrunApp.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = SpeedrunApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7AD631CE3CC106DE1019DE56 /* decks.pb.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = decks.pb.swift; sourceTree = "<group>"; };
 		7F50E10B02EF0AAB7F5B2F2C /* sync.pb.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = sync.pb.swift; sourceTree = "<group>"; };
 		80C486204719B63819EA11F1 /* AnkiEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnkiEngine.swift; sourceTree = "<group>"; };
+		95655EE9CBCECBA81F2AED7B /* 09_Laboratory_Methods.apkg */ = {isa = PBXFileReference; path = 09_Laboratory_Methods.apkg; sourceTree = "<group>"; };
+		9C9DE2102D04AE7317EA295B /* CollectionStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionStore.swift; sourceTree = "<group>"; };
 		A6F8071A76AF645A740687FB /* anki_ffi.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = anki_ffi.h; sourceTree = "<group>"; };
+		A74004647ED7E4726EDCBFC6 /* ReviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewView.swift; sourceTree = "<group>"; };
 		AA6E5CD489172F24315E8EE4 /* scheduler.pb.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = scheduler.pb.swift; sourceTree = "<group>"; };
 		B4CD2AAF21AEFAE5F01CB46C /* notes.pb.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = notes.pb.swift; sourceTree = "<group>"; };
+		B58B3074E9BA304929F53676 /* import_export.pb.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = import_export.pb.swift; sourceTree = "<group>"; };
 		B8653DF280C7ECDCE21E8280 /* collection.pb.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = collection.pb.swift; sourceTree = "<group>"; };
 		BA402D7CC58F59A635BDE545 /* ReviewFlowUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewFlowUITests.swift; sourceTree = "<group>"; };
 		C02EB83E3E0BE41F30BEEE3D /* module.modulemap */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.module-map"; path = module.modulemap; sourceTree = "<group>"; };
@@ -65,7 +86,10 @@
 		C49C8459CD6FFFF15EFB34A9 /* deck_config.pb.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = deck_config.pb.swift; sourceTree = "<group>"; };
 		C90650C1F2BF75D9A88495AF /* generic.pb.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = generic.pb.swift; sourceTree = "<group>"; };
 		CEB8348F594655883C40C8A2 /* links.pb.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = links.pb.swift; sourceTree = "<group>"; };
+		D534E77B30601DBA8DD4FA59 /* 06_Optics_Waves.apkg */ = {isa = PBXFileReference; path = 06_Optics_Waves.apkg; sourceTree = "<group>"; };
+		E63620C9B800E9AD1C059400 /* 03_Quantum_Mechanics.apkg */ = {isa = PBXFileReference; path = 03_Quantum_Mechanics.apkg; sourceTree = "<group>"; };
 		E9BA8A4E538A1B75C947572C /* backend.pb.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = backend.pb.swift; sourceTree = "<group>"; };
+		EC0449C9B59A15ED6DA653AB /* 01_Classical_Mechanics.apkg */ = {isa = PBXFileReference; path = 01_Classical_Mechanics.apkg; sourceTree = "<group>"; };
 		F0A2774A40B38D3738AE4F6A /* mathjax */ = {isa = PBXFileReference; lastKnownFileType = folder; name = mathjax; path = Resources/mathjax; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
@@ -96,6 +120,7 @@
 			children = (
 				F0A2774A40B38D3738AE4F6A /* mathjax */,
 				020FBDD971592C305687982E /* pgre_exam.anki2 */,
+				5A36D18DE80B57CCC96A84D5 /* decks */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -106,6 +131,22 @@
 				130AD1BE49642DBFD31D1BF9 /* AnkiCore.xcframework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		5A36D18DE80B57CCC96A84D5 /* decks */ = {
+			isa = PBXGroup;
+			children = (
+				EC0449C9B59A15ED6DA653AB /* 01_Classical_Mechanics.apkg */,
+				6D6B72218D3B4055E20459BB /* 02_Electromagnetism.apkg */,
+				E63620C9B800E9AD1C059400 /* 03_Quantum_Mechanics.apkg */,
+				39D593BF6ED38C725329CA3B /* 04_Atomic_Physics.apkg */,
+				09427C715141E991F74A158C /* 05_Thermodynamics_Statistical_Mechanics.apkg */,
+				D534E77B30601DBA8DD4FA59 /* 06_Optics_Waves.apkg */,
+				70C4FFC2565808B30B46A13D /* 07_Specialized_Topics.apkg */,
+				56C5B2A40545270F52DDEC0E /* 08_Special_Relativity.apkg */,
+				95655EE9CBCECBA81F2AED7B /* 09_Laboratory_Methods.apkg */,
+			);
+			path = decks;
 			sourceTree = "<group>";
 		};
 		6C75FDB9D04728E7DC388745 /* UITests */ = {
@@ -150,8 +191,10 @@
 			isa = PBXGroup;
 			children = (
 				80C486204719B63819EA11F1 /* AnkiEngine.swift */,
-				36D0E7556E2E5AB3946A8222 /* ContentView.swift */,
+				9C9DE2102D04AE7317EA295B /* CollectionStore.swift */,
+				5AAED1622343D85FBD2C3B9A /* DeckListView.swift */,
 				C1EA751BF434F430868895C9 /* ReviewSession.swift */,
+				A74004647ED7E4726EDCBFC6 /* ReviewView.swift */,
 				C0CD4FA934F1AEA465F11896 /* SpeedrunApp.swift */,
 			);
 			path = Sources;
@@ -168,6 +211,7 @@
 				C49C8459CD6FFFF15EFB34A9 /* deck_config.pb.swift */,
 				7AD631CE3CC106DE1019DE56 /* decks.pb.swift */,
 				C90650C1F2BF75D9A88495AF /* generic.pb.swift */,
+				B58B3074E9BA304929F53676 /* import_export.pb.swift */,
 				CEB8348F594655883C40C8A2 /* links.pb.swift */,
 				B4CD2AAF21AEFAE5F01CB46C /* notes.pb.swift */,
 				3209D8DE6896FF4E7E8F092F /* notetypes.pb.swift */,
@@ -260,6 +304,15 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BD609AE82EB15AFD5DA5C180 /* 01_Classical_Mechanics.apkg in Resources */,
+				7F16A8A50607A48DE707D6FF /* 02_Electromagnetism.apkg in Resources */,
+				A4FDCB5F07C5432225BBC8B7 /* 03_Quantum_Mechanics.apkg in Resources */,
+				44D0B6F84CEE5FCD78959611 /* 04_Atomic_Physics.apkg in Resources */,
+				4EB6F91C9610351A47649842 /* 05_Thermodynamics_Statistical_Mechanics.apkg in Resources */,
+				5AC79BF826CD72334EBAE7CE /* 06_Optics_Waves.apkg in Resources */,
+				BB0CB510167F9E522F113594 /* 07_Specialized_Topics.apkg in Resources */,
+				DBE68AC7120EC600CE3A5691 /* 08_Special_Relativity.apkg in Resources */,
+				517D6FD04F0873AC46CE6BB8 /* 09_Laboratory_Methods.apkg in Resources */,
 				64C9E3274BBDAD74E7B8BC37 /* mathjax in Resources */,
 				573CF4592B70CA1312729517 /* pgre_exam.anki2 in Resources */,
 			);
@@ -281,8 +334,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				E67EFD020FCFD64D8596301A /* AnkiEngine.swift in Sources */,
-				44839D2ED9402C8904BEB322 /* ContentView.swift in Sources */,
+				5EB88B5A9313C14ABAD639C2 /* CollectionStore.swift in Sources */,
+				4EE8538046E2A811D92E1903 /* DeckListView.swift in Sources */,
 				A93184C1F30C94CF5B68FD19 /* ReviewSession.swift in Sources */,
+				09C55D4FCDC7ED88682FDFF6 /* ReviewView.swift in Sources */,
 				476015C1E4757C9E3A909B5D /* SpeedrunApp.swift in Sources */,
 				0286400539FB965AAE5369EE /* backend.pb.swift in Sources */,
 				52252E04A29D5810AB1853B9 /* card_rendering.pb.swift in Sources */,
@@ -292,6 +347,7 @@
 				32124D702644D8C984D7CE96 /* deck_config.pb.swift in Sources */,
 				F178AAAB8E73940E1F9DB079 /* decks.pb.swift in Sources */,
 				5D7596D4CCA245BF19116C28 /* generic.pb.swift in Sources */,
+				FDE8543DF4B099883AA097FA /* import_export.pb.swift in Sources */,
 				B555B4995DCAD811AE73F0AE /* links.pb.swift in Sources */,
 				FDE490AAA067077321DA676F /* notes.pb.swift in Sources */,
 				75D44CA7F1D1ABE2C9A08E23 /* notetypes.pb.swift in Sources */,

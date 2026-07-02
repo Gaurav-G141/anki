@@ -286,6 +286,105 @@ async fn sync_roundtrip() -> Result<()> {
     .await
 }
 
+/// Friday sync guarantee: reviews (revlog rows) done on one device appear on
+/// the other after sync, and reviews done on BOTH devices while offline merge
+/// with none lost and none double-counted. Models the iOS<->desktop flow:
+/// bootstrap (one uploads, the other downloads), then incremental two-way sync.
+#[tokio::test]
+async fn revlogs_are_never_lost_or_double_counted() -> Result<()> {
+    with_active_server(|client| async move {
+        let ctx = SyncTestContext::new(client);
+        // Bootstrap: col1 uploads, col2 downloads -> both on the same collection.
+        upload_download(&ctx).await?;
+
+        fn revlog_count(col: &mut Collection) -> Result<u32> {
+            col.storage.db_scalar::<u32>("select count() from revlog")
+        }
+        // Add `n` reviews (revlog rows, pending usn=-1) with ids `base..base+n`,
+        // then bump the collection's modification time so a normal sync fires
+        // (sync compares `modified`; raw revlog inserts don't touch it — a real
+        // answer_card would, via set_modified). Distinct ids model distinct
+        // reviews. The tiny sleep keeps each batch's ms-granular `modified`
+        // strictly after the previous sync's finalize (this file's own idiom).
+        fn add_reviews(col: &mut Collection, base: i64, n: i64) -> Result<()> {
+            std::thread::sleep(std::time::Duration::from_millis(5));
+            for i in 0..n {
+                col.storage.add_revlog_entry(
+                    &RevlogEntry {
+                        id: RevlogId(base + i),
+                        cid: CardId(1),
+                        usn: Usn(-1),
+                        interval: 10,
+                        ..Default::default()
+                    },
+                    false,
+                )?;
+            }
+            col.set_modified()?;
+            Ok(())
+        }
+
+        let mut col1 = ctx.col1();
+        let mut col2 = ctx.col2();
+        assert_eq!(revlog_count(&mut col1)?, 0);
+        assert_eq!(revlog_count(&mut col2)?, 0);
+
+        // --- One direction: 3 reviews on col1 ("phone") reach col2 ("desktop").
+        add_reviews(&mut col1, 1000, 3)?;
+        assert_eq!(
+            ctx.normal_sync(&mut col1).await.required,
+            SyncActionRequired::NoChanges
+        );
+        assert_eq!(
+            ctx.normal_sync(&mut col2).await.required,
+            SyncActionRequired::NoChanges
+        );
+        assert_eq!(
+            revlog_count(&mut col2)?,
+            3,
+            "col2 should see col1's reviews"
+        );
+
+        // --- Reverse direction: 2 reviews on col2 reach col1.
+        add_reviews(&mut col2, 2000, 2)?;
+        ctx.normal_sync(&mut col2).await; // push
+        ctx.normal_sync(&mut col1).await; // pull
+        assert_eq!(
+            revlog_count(&mut col1)?,
+            5,
+            "col1 should see col2's reviews"
+        );
+
+        // --- Both offline, then reconnect: merge with no loss, no double-count.
+        add_reviews(&mut col1, 3000, 4)?; // phone reviewed offline
+        add_reviews(&mut col2, 4000, 6)?; // desktop reviewed offline
+        ctx.normal_sync(&mut col1).await; // push phone's
+        ctx.normal_sync(&mut col2).await; // push desktop's + pull phone's
+        ctx.normal_sync(&mut col1).await; // pull desktop's
+
+        let total = 3 + 2 + 4 + 6;
+        assert_eq!(revlog_count(&mut col1)?, total, "no loss/dup on col1");
+        assert_eq!(revlog_count(&mut col2)?, total, "no loss/dup on col2");
+        // Every specific review is present exactly once on both sides.
+        let ids = [
+            1000, 1001, 1002, 2000, 2001, 3000, 3001, 3002, 3003, 4000, 4001, 4002, 4003, 4004,
+            4005,
+        ];
+        for id in ids {
+            assert!(
+                col1.storage.get_revlog_entry(RevlogId(id))?.is_some(),
+                "col1 missing review {id}"
+            );
+            assert!(
+                col2.storage.get_revlog_entry(RevlogId(id))?.is_some(),
+                "col2 missing review {id}"
+            );
+        }
+        Ok(())
+    })
+    .await
+}
+
 #[tokio::test]
 async fn sanity_check_should_roll_back_and_force_full_sync() -> Result<()> {
     with_active_server(|client| async move {
