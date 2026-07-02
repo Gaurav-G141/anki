@@ -27,6 +27,7 @@ enum AnkiService {
 
 enum AnkiMethod {
     static let openCollection: UInt32 = 0
+    static let closeCollection: UInt32 = 1
     static let getQueuedCards: UInt32 = 3
     static let answerCard: UInt32 = 4
     static let renderExistingCard: UInt32 = 6

@@ -104,7 +104,20 @@ class Manifold:
             self.mw.onImport()
         elif cmd == "speedrecall":
             self.mw.moveToState("speedRecall")
+        elif cmd == "memory":
+            self._open_memory_dashboard()
         return False
+
+    def _open_memory_dashboard(self) -> None:
+        from aqt.memorydash import MemoryDashboard
+
+        # Re-focus an existing window instead of stacking duplicates.
+        existing = getattr(self.mw, "_memory_dashboard", None)
+        if existing is not None and existing.isVisible():
+            existing.raise_()
+            existing.activateWindow()
+            return
+        setattr(self.mw, "_memory_dashboard", MemoryDashboard(self.mw))
 
     def _open_deck(self, deck_id: DeckId) -> None:
         set_current_deck(parent=self.mw, deck_id=deck_id).success(
@@ -131,6 +144,7 @@ class Manifold:
         ["", "create", tr.decks_create_deck()],
         ["Ctrl+Shift+I", "import", tr.decks_import_file()],
         ["Ctrl+Shift+R", "speedrecall", "⚡ Speed Recall"],
+        ["Ctrl+Shift+M", "memory", "📊 Memory"],
     ]
 
     def _draw_buttons(self) -> None:

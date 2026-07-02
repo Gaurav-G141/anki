@@ -22,11 +22,17 @@ targets:
         # The module map + header are exposed to Swift via SWIFT_INCLUDE_PATHS
         # below; we still list it so xcodegen tracks the files in the project.
         buildPhase: none
-      # Bundle the prebuilt PGRE deck as an app resource; ReviewSession copies it
-      # to Documents/collection.anki2 on first launch. Force the resources build
-      # phase so the unknown .anki2 extension isn't treated as a compile source.
-      - path: Resources/pgre_main.anki2
+      # Bundle the prebuilt PGRE exam deck as an app resource; ReviewSession
+      # copies it to Documents/collection.anki2 on first launch. Force the
+      # resources build phase so the unknown .anki2 extension isn't treated as a
+      # compile source.
+      - path: Resources/pgre_exam.anki2
         buildPhase: resources
+      # Bundle a trimmed MathJax (tex-chtml + web fonts) so the card WebView can
+      # typeset the formula LaTeX offline. `type: folder` = a folder reference,
+      # copied verbatim so the output/chtml/fonts subtree is preserved.
+      - path: Resources/mathjax
+        type: folder
     dependencies:
       - package: SwiftProtobuf
       - framework: ../AnkiCore.xcframework

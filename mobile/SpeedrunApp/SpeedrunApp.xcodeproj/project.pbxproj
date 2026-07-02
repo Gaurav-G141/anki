@@ -13,14 +13,15 @@
 		44839D2ED9402C8904BEB322 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36D0E7556E2E5AB3946A8222 /* ContentView.swift */; };
 		476015C1E4757C9E3A909B5D /* SpeedrunApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0CD4FA934F1AEA465F11896 /* SpeedrunApp.swift */; };
 		52252E04A29D5810AB1853B9 /* card_rendering.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A5DE14B9B5A7085B3A7E858 /* card_rendering.pb.swift */; };
+		573CF4592B70CA1312729517 /* pgre_exam.anki2 in Resources */ = {isa = PBXBuildFile; fileRef = 020FBDD971592C305687982E /* pgre_exam.anki2 */; };
 		5D7596D4CCA245BF19116C28 /* generic.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90650C1F2BF75D9A88495AF /* generic.pb.swift */; };
+		64C9E3274BBDAD74E7B8BC37 /* mathjax in Resources */ = {isa = PBXBuildFile; fileRef = F0A2774A40B38D3738AE4F6A /* mathjax */; };
 		70CE61277F9154AB7DAFD712 /* SwiftProtobuf in Frameworks */ = {isa = PBXBuildFile; productRef = 58F1D384620E30C99EF63CCD /* SwiftProtobuf */; };
 		75D44CA7F1D1ABE2C9A08E23 /* notetypes.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3209D8DE6896FF4E7E8F092F /* notetypes.pb.swift */; };
 		7A3D7BF9B460A1000803010B /* ReviewFlowUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA402D7CC58F59A635BDE545 /* ReviewFlowUITests.swift */; };
 		85D38E7787A0B79AD3589E16 /* AnkiCore.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 130AD1BE49642DBFD31D1BF9 /* AnkiCore.xcframework */; };
 		A93184C1F30C94CF5B68FD19 /* ReviewSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1EA751BF434F430868895C9 /* ReviewSession.swift */; };
 		B555B4995DCAD811AE73F0AE /* links.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB8348F594655883C40C8A2 /* links.pb.swift */; };
-		B6E0F4C78B1AA7221F4D5E6F /* pgre_main.anki2 in Resources */ = {isa = PBXBuildFile; fileRef = F8E7D2C0FC2DACF515FB6080 /* pgre_main.anki2 */; };
 		BFB9749DC930E51780D9BCD7 /* cards.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DCEA94F2B106B11504FF7EF /* cards.pb.swift */; };
 		C387BF9CD5FD8C3128134E51 /* scheduler.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA6E5CD489172F24315E8EE4 /* scheduler.pb.swift */; };
 		DCA78AC66E758F78160D3E3B /* config.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049367AB60DB28D49FFB9972 /* config.pb.swift */; };
@@ -41,6 +42,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		020FBDD971592C305687982E /* pgre_exam.anki2 */ = {isa = PBXFileReference; path = pgre_exam.anki2; sourceTree = "<group>"; };
 		049367AB60DB28D49FFB9972 /* config.pb.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = config.pb.swift; sourceTree = "<group>"; };
 		0DCEA94F2B106B11504FF7EF /* cards.pb.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = cards.pb.swift; sourceTree = "<group>"; };
 		130AD1BE49642DBFD31D1BF9 /* AnkiCore.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = AnkiCore.xcframework; path = ../AnkiCore.xcframework; sourceTree = "<group>"; };
@@ -64,7 +66,7 @@
 		C90650C1F2BF75D9A88495AF /* generic.pb.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = generic.pb.swift; sourceTree = "<group>"; };
 		CEB8348F594655883C40C8A2 /* links.pb.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = links.pb.swift; sourceTree = "<group>"; };
 		E9BA8A4E538A1B75C947572C /* backend.pb.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = backend.pb.swift; sourceTree = "<group>"; };
-		F8E7D2C0FC2DACF515FB6080 /* pgre_main.anki2 */ = {isa = PBXFileReference; path = pgre_main.anki2; sourceTree = "<group>"; };
+		F0A2774A40B38D3738AE4F6A /* mathjax */ = {isa = PBXFileReference; lastKnownFileType = folder; name = mathjax; path = Resources/mathjax; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,7 +94,8 @@
 		2A823AC83A7C34C27A5EF257 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				F8E7D2C0FC2DACF515FB6080 /* pgre_main.anki2 */,
+				F0A2774A40B38D3738AE4F6A /* mathjax */,
+				020FBDD971592C305687982E /* pgre_exam.anki2 */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -257,7 +260,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B6E0F4C78B1AA7221F4D5E6F /* pgre_main.anki2 in Resources */,
+				64C9E3274BBDAD74E7B8BC37 /* mathjax in Resources */,
+				573CF4592B70CA1312729517 /* pgre_exam.anki2 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

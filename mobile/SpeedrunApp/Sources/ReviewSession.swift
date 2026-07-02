@@ -73,6 +73,11 @@ final class ReviewSession: ObservableObject {
     private var currentCard: Anki_Scheduler_QueuedCards.QueuedCard?
     /// CACurrentMediaTime() captured when the current question was shown.
     private var shownAt: CFTimeInterval = 0
+    /// Collection paths, captured on `start` so `flush` can reopen after a
+    /// close without re-staging the bundled files.
+    private var collectionPath = ""
+    private var mediaFolder = ""
+    private var mediaDB = ""
 
     /// Opens the collection (copying the bundled deck to Documents on first
     /// launch) and fetches the first card. Safe to call once on appear.
@@ -81,32 +86,68 @@ final class ReviewSession: ObservableObject {
         queue.async { [weak self] in
             guard let self else { return }
             do {
-                let collectionPath = try Self.prepareCollectionPath()
-                let mediaFolder = try Self.prepareMediaFolder()
-                let mediaDB = Self.documentsURL().appendingPathComponent("collection.media.db").path
+                self.collectionPath = try Self.prepareCollectionPath()
+                self.mediaFolder = try Self.prepareMediaFolder()
+                _ = try Self.prepareMathjax()
+                self.mediaDB = Self.documentsURL().appendingPathComponent("collection.media.db").path
 
                 var initProto = Anki_Backend_BackendInit()
                 initProto.preferredLangs = []
 
                 let engine = try AnkiEngine.open(init: initProto)
-
-                var openReq = Anki_Collection_OpenCollectionRequest()
-                openReq.collectionPath = collectionPath
-                openReq.mediaFolderPath = mediaFolder
-                openReq.mediaDbPath = mediaDB
-
-                _ = try engine.command(
-                    service: AnkiService.collection,
-                    method: AnkiMethod.openCollection,
-                    request: openReq,
-                    response: Anki_Generic_Empty.self
-                )
+                try self.openCollectionLocked(engine: engine)
                 self.engine = engine
                 try self.fetchNextLocked()
             } catch {
                 self.publishError(error)
             }
         }
+    }
+
+    /// Flushes graded progress to the on-disk `collection.anki2` file.
+    ///
+    /// Every answer is already committed durably to the collection's WAL, so no
+    /// data is lost on an app kill. But the WAL is only checkpointed back into
+    /// the single `collection.anki2` file on a *clean* close. Closing then
+    /// reopening the collection performs that checkpoint, leaving a complete,
+    /// consistent Anki database that can be reopened on desktop or copied off
+    /// the device. Called when the app leaves the foreground. Safe to call when
+    /// no engine is open (no-op); reopens so the session can keep running.
+    func flush() {
+        queue.async { [weak self] in
+            guard let self, let engine = self.engine else { return }
+            do {
+                var closeReq = Anki_Collection_CloseCollectionRequest()
+                closeReq.downgradeToSchema11 = false
+                _ = try engine.command(
+                    service: AnkiService.collection,
+                    method: AnkiMethod.closeCollection,
+                    request: closeReq,
+                    response: Anki_Generic_Empty.self
+                )
+                // Reopen so a foregrounded session can keep grading cards.
+                try self.openCollectionLocked(engine: engine)
+            } catch {
+                self.publishError(error)
+            }
+        }
+    }
+
+    /// Opens the collection on `engine` from the captured paths. Must run on
+    /// `queue`. Shared by `start` (initial open) and `flush` (reopen after a
+    /// checkpointing close).
+    private func openCollectionLocked(engine: AnkiEngine) throws {
+        var openReq = Anki_Collection_OpenCollectionRequest()
+        openReq.collectionPath = collectionPath
+        openReq.mediaFolderPath = mediaFolder
+        openReq.mediaDbPath = mediaDB
+
+        _ = try engine.command(
+            service: AnkiService.collection,
+            method: AnkiMethod.openCollection,
+            request: openReq,
+            response: Anki_Generic_Empty.self
+        )
     }
 
     /// Reveals the answer; records nothing yet (timing continues).
@@ -200,14 +241,17 @@ final class ReviewSession: ObservableObject {
             response: Anki_CardRendering_RenderCardResponse.self
         )
 
-        let q = Self.plainText(from: rendered.questionNodes)
-        let a = Self.plainText(from: rendered.answerNodes)
+        let q = Self.htmlString(from: rendered.questionNodes)
+        let a = Self.htmlString(from: rendered.answerNodes)
 
+        // Test/demo hook: SPEEDRUN_AUTOREVEAL=1 starts each card on the answer
+        // side (so screenshots can show the typeset formula). Off in normal use.
+        let autoReveal = ProcessInfo.processInfo.environment["SPEEDRUN_AUTOREVEAL"] == "1"
         DispatchQueue.main.async {
             self.questionHTML = q
             self.answerHTML = a
             self.shownAt = CACurrentMediaTime()
-            self.phase = .question
+            self.phase = autoReveal ? .answer : .question
         }
     }
 
@@ -215,9 +259,9 @@ final class ReviewSession: ObservableObject {
         DispatchQueue.main.async { self.phase = .error(String(describing: error)) }
     }
 
-    /// Concatenates rendered template nodes into a plain string, stripping the
-    /// most common HTML tags so the minimal UI stays readable without a webview.
-    private static func plainText(from nodes: [Anki_CardRendering_RenderedTemplateNode]) -> String {
+    /// Concatenates rendered template nodes into the card side's HTML, keeping
+    /// the markup so the WebView can style it and MathJax can typeset the LaTeX.
+    private static func htmlString(from nodes: [Anki_CardRendering_RenderedTemplateNode]) -> String {
         var out = ""
         for node in nodes {
             switch node.value {
@@ -226,30 +270,7 @@ final class ReviewSession: ObservableObject {
             case .none: break
             }
         }
-        return strippingHTML(out)
-    }
-
-    private static func strippingHTML(_ s: String) -> String {
-        var result = s
-        // Turn common block separators into newlines, then drop tags.
-        for tag in ["<br>", "<br/>", "<br />", "</div>", "</p>", "<hr>", "<hr/>", "<hr id=answer>"] {
-            result = result.replacingOccurrences(of: tag, with: "\n")
-        }
-        // Strip any remaining tags.
-        var stripped = ""
-        var inTag = false
-        for ch in result {
-            if ch == "<" { inTag = true; continue }
-            if ch == ">" { inTag = false; continue }
-            if !inTag { stripped.append(ch) }
-        }
-        // Decode a couple of frequent entities.
-        stripped = stripped
-            .replacingOccurrences(of: "&nbsp;", with: " ")
-            .replacingOccurrences(of: "&amp;", with: "&")
-            .replacingOccurrences(of: "&lt;", with: "<")
-            .replacingOccurrences(of: "&gt;", with: ">")
-        return stripped.trimmingCharacters(in: .whitespacesAndNewlines)
+        return out
     }
 
     // MARK: - Filesystem setup
@@ -258,14 +279,28 @@ final class ReviewSession: ObservableObject {
         FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
     }
 
-    /// Copies the bundled `pgre_main.anki2` to `Documents/collection.anki2` on
-    /// first launch, returning the destination path.
+    /// Copies the bundled `pgre_exam.anki2` (the real PGRE exam deck) to
+    /// `Documents/collection.anki2` on first launch, returning the destination.
     private static func prepareCollectionPath() throws -> String {
         let dest = documentsURL().appendingPathComponent("collection.anki2")
         let fm = FileManager.default
         if !fm.fileExists(atPath: dest.path) {
-            guard let bundled = Bundle.main.url(forResource: "pgre_main", withExtension: "anki2") else {
-                throw AnkiEngineError.openBackendFailed("bundled deck pgre_main.anki2 not found in app bundle")
+            guard let bundled = Bundle.main.url(forResource: "pgre_exam", withExtension: "anki2") else {
+                throw AnkiEngineError.openBackendFailed("bundled deck pgre_exam.anki2 not found in app bundle")
+            }
+            try fm.copyItem(at: bundled, to: dest)
+        }
+        return dest.path
+    }
+
+    /// Copies the bundled MathJax folder to `Documents/mathjax` on first launch,
+    /// so the card WebView can typeset LaTeX offline via a relative script URL.
+    private static func prepareMathjax() throws -> String {
+        let dest = documentsURL().appendingPathComponent("mathjax")
+        let fm = FileManager.default
+        if !fm.fileExists(atPath: dest.path) {
+            guard let bundled = Bundle.main.url(forResource: "mathjax", withExtension: nil) else {
+                throw AnkiEngineError.openBackendFailed("bundled mathjax folder not found in app bundle")
             }
             try fm.copyItem(at: bundled, to: dest)
         }
