@@ -102,6 +102,33 @@ def references_other_problem(text: str) -> bool:
     return bool(_CROSS_REF.search(text or ""))
 
 
+# Deterministic difficulty proxy (1 = easiest … 5 = hardest), used by the quiz's
+# adaptive "zone of proximal development" selector on both apps. No LLM / no
+# per-question labels needed: harder GRE items tend to carry denser math and
+# longer stems/solutions. Soft by design — it only has to give the adaptive
+# engine a usable spread to climb/descend.
+_MATH_TOKENS = re.compile(
+    r"\\frac|\\int|\\oint|\\sqrt|\\partial|\\nabla|\\sum|\\prod|\\vec|\\hat|\\dot"
+    r"|\\omega|\\psi|\\phi|\\hbar|\\times|\\cdot|\\pi|\\epsilon|\\mu|\\lambda|\\Delta"
+    r"|\\alpha|\\beta|\\gamma|\\theta|\\rho|\\sigma|\^|_"
+)
+
+
+def difficulty(statement: str, solution: str = "", choices=None) -> int:
+    """A 1–5 difficulty estimate from math density + stem/solution length."""
+    stmt = statement or ""
+    sol = solution or ""
+    math = len(_MATH_TOKENS.findall(stmt + " " + sol))
+    score = min(3, math // 4)  # 0–3 from math density
+    if len(stmt) > 160:
+        score += 1  # long stem
+    if len(stmt) > 300:
+        score += 1
+    if len(sol) > 240:
+        score += 1  # deep solution
+    return max(1, min(5, 1 + score))
+
+
 def well_formed(choices, answer) -> bool:
     """True iff ``choices`` is exactly the five A–E options, ``answer`` is one of
     those letters, and no choice is degenerate. ``choices`` may be a list of

@@ -196,6 +196,7 @@ class MCQQuiz(QDialog):
                 "solution": to_mathjax(q.get("solution", "")),
                 "subject": q.get("topic") or q.get("subject", ""),
                 "source": q.get("source", ""),
+                "difficulty": q.get("difficulty", 3),
                 "optimal": optimal(q),
             }
             for q in questions
@@ -369,8 +370,23 @@ _QUIZ_PAGE = """
       var t = a[i]; a[i] = a[j]; a[j] = t;
     }
   }
-  shuffle(DATA);
-  var idx = 0, answered = 0, correct = 0, locked = false;
+  shuffle(DATA);  // randomises tie-breaks; the actual order is chosen adaptively below
+  var answered = 0, correct = 0, locked = false;
+  // Adaptive difficulty (Zone of Proximal Development): serve the unanswered
+  // question whose 1-5 difficulty is closest to a running ability estimate that
+  // rises on a correct answer and falls (faster) on a wrong one.
+  var ability = 3.0, served = 0, cur = -1, used = {};
+  function diffOf(q) { var d = q && q.difficulty; return (typeof d === "number" && d >= 1) ? d : 3; }
+  function pickNext() {
+    var best = 1e9, cands = [];
+    for (var i = 0; i < DATA.length; i++) {
+      if (used[i]) { continue; }
+      var gap = Math.abs(diffOf(DATA[i]) - ability);
+      if (gap < best - 1e-9) { best = gap; cands = [i]; }
+      else if (gap < best + 1e-9) { cands.push(i); }
+    }
+    return cands.length ? cands[Math.floor(Math.random() * cands.length)] : -1;
+  }
 
   function typeset(el) {
     if (window.MathJax && MathJax.typesetPromise) { MathJax.typesetPromise(el ? [el] : undefined); }
@@ -383,9 +399,11 @@ _QUIZ_PAGE = """
       answered ? (correct + "/" + answered + " correct (" + Math.round(100 * correct / answered) + "%)") : "";
   }
   function render() {
-    if (idx >= DATA.length) { return done(); }
+    cur = pickNext();
+    if (cur < 0) { return done(); }
+    used[cur] = true; served++;
     locked = false;
-    var q = DATA[idx];
+    var q = DATA[cur];
     document.getElementById("summary").style.display = "none";
     document.getElementById("feedback").innerHTML = "";
     document.getElementById("frq").style.display = "block";
@@ -394,9 +412,9 @@ _QUIZ_PAGE = """
             : "How would you solve this? (jot your approach, then check it against the fastest route)";
     var ta = document.getElementById("reason");
     ta.value = ""; ta.disabled = false;
-    document.getElementById("progress").textContent = "Q " + (idx + 1) + " / " + DATA.length;
+    document.getElementById("progress").textContent = "Q " + served + " / " + DATA.length;
     var pf = document.getElementById("progressFill");
-    if (pf) { pf.style.width = (DATA.length ? ((idx + 1) / DATA.length) * 100 : 0) + "%"; }
+    if (pf) { pf.style.width = (DATA.length ? (served / DATA.length) * 100 : 0) + "%"; }
     score();
     document.getElementById("subjectText").textContent = q.subject || "";
     // Badge AI-generated items only (real released questions have no pill).
@@ -417,11 +435,13 @@ _QUIZ_PAGE = """
   function choose(letter) {
     if (locked) { return; }
     locked = true;
-    var q = DATA[idx];
+    var q = DATA[cur];
     var reasoning = document.getElementById("reason").value.trim();
     document.getElementById("reason").disabled = true;
     var ok = letter === q.answer;
     answered++; if (ok) { correct++; }
+    // ZPD: climb on a correct answer, ease down (faster) on a miss.
+    ability = ok ? Math.min(5, ability + 0.5) : Math.max(1, ability - 0.8);
     score();
     document.querySelectorAll(".choice").forEach(function (b) {
       b.disabled = true;
@@ -444,7 +464,7 @@ _QUIZ_PAGE = """
     html += "<button class='pg-btn pg-btn--primary' id='nextBtn'>Next question →</button>";
     var fb = document.getElementById("feedback");
     fb.innerHTML = html;
-    document.getElementById("nextBtn").onclick = function () { idx++; render(); };
+    document.getElementById("nextBtn").onclick = function () { render(); };
     typeset(fb);
     if (AI_ON && reasoning) {
       pycmd("grade:" + JSON.stringify({ id: q.id, chosen: letter, reasoning: reasoning }));
@@ -497,7 +517,7 @@ _QUIZ_PAGE = """
       "<div>" + correct + " / " + answered + " correct</div>" +
       "<button class='pg-btn pg-btn--primary' id='againBtn'>Try again</button>";
     document.getElementById("againBtn").onclick = function () {
-      shuffle(DATA); idx = 0; answered = 0; correct = 0; render();
+      shuffle(DATA); used = {}; served = 0; ability = 3.0; answered = 0; correct = 0; render();
     };
   }
 

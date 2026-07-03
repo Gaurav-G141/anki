@@ -183,8 +183,23 @@ private struct MCQWebView: UIViewRepresentable {
           var DATA = ROOT.questions || [];
           var AI_ON = !!ROOT.ai_on;
           function shuffle(a){ for (var i=a.length-1;i>0;i--){ var j=Math.floor(Math.random()*(i+1)); var t=a[i];a[i]=a[j];a[j]=t; } }
-          shuffle(DATA);
-          var idx = 0, answered = 0, correct = 0, locked = false;
+          shuffle(DATA);  // randomises tie-breaks; the actual order is chosen adaptively below
+          var answered = 0, correct = 0, locked = false;
+          // Adaptive difficulty (Zone of Proximal Development): serve the unanswered
+          // question whose 1-5 difficulty is closest to a running ability estimate
+          // that rises on a correct answer and falls (faster) on a wrong one.
+          var ability = 3.0, served = 0, cur = -1, used = {};
+          function diffOf(q){ var d = q && q.difficulty; return (typeof d === "number" && d >= 1) ? d : 3; }
+          function pickNext(){
+            var best = 1e9, cands = [];
+            for (var i=0;i<DATA.length;i++){
+              if (used[i]) continue;
+              var gap = Math.abs(diffOf(DATA[i]) - ability);
+              if (gap < best - 1e-9) { best = gap; cands = [i]; }
+              else if (gap < best + 1e-9) { cands.push(i); }
+            }
+            return cands.length ? cands[Math.floor(Math.random()*cands.length)] : -1;
+          }
           function esc(s){ return (s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
           function mathify(t){
             if (!t) return "";
@@ -195,9 +210,11 @@ private struct MCQWebView: UIViewRepresentable {
           function typeset(el){ if (window.MathJax && MathJax.typesetPromise) { MathJax.typesetPromise(el ? [el] : undefined).catch(function(){}); } }
           function score(){ document.getElementById("score").textContent = answered ? (correct + "/" + answered + " (" + Math.round(100*correct/answered) + "%)") : ""; }
           function render(){
-            if (idx >= DATA.length) { return done(); }
+            cur = pickNext();
+            if (cur < 0) { return done(); }
+            used[cur] = true; served++;
             locked = false;
-            var q = DATA[idx];
+            var q = DATA[cur];
             document.getElementById("summary").style.display = "none";
             document.getElementById("feedback").innerHTML = "";
             document.getElementById("frq").style.display = "block";
@@ -205,7 +222,7 @@ private struct MCQWebView: UIViewRepresentable {
               AI_ON ? "How would you solve this? (type your approach — you'll get AI coaching on it)"
                     : "How would you solve this? (jot your approach, then check it against the fastest route)";
             var ta = document.getElementById("reason"); ta.value = ""; ta.disabled = false;
-            document.getElementById("progress").textContent = "Question " + (idx+1) + " / " + DATA.length;
+            document.getElementById("progress").textContent = "Question " + served + " / " + DATA.length;
             score();
             document.getElementById("subject").textContent = q.subject || "";
             // Badge AI-generated (Phase-2) items only; real questions have no source.
@@ -223,11 +240,13 @@ private struct MCQWebView: UIViewRepresentable {
           }
           function choose(letter){
             if (locked) { return; } locked = true;
-            var q = DATA[idx];
+            var q = DATA[cur];
             var reasoning = (document.getElementById("reason").value || "").trim();
             document.getElementById("reason").disabled = true;
             var ok = letter === q.answer;
             answered++; if (ok) { correct++; }
+            // ZPD: climb on a correct answer, ease down (faster) on a miss.
+            ability = ok ? Math.min(5, ability + 0.5) : Math.max(1, ability - 0.8);
             score();
             document.querySelectorAll(".choice").forEach(function(b){
               b.disabled = true;
@@ -249,7 +268,7 @@ private struct MCQWebView: UIViewRepresentable {
             }
             html += "<button class='btn' id='nextBtn'>Next question →</button>";
             var fb = document.getElementById("feedback"); fb.innerHTML = html;
-            document.getElementById("nextBtn").onclick = function(){ idx++; render(); };
+            document.getElementById("nextBtn").onclick = function(){ render(); };
             typeset(fb);
             if (AI_ON && reasoning) {
               window.webkit.messageHandlers.grade.postMessage({ id: q.id, chosen: letter, reasoning: reasoning });
@@ -292,7 +311,7 @@ private struct MCQWebView: UIViewRepresentable {
             sm.innerHTML = "<div>Performance on real GR9277 questions</div><div class='big'>" + pct +
               "%</div><div>" + correct + " / " + answered + " correct</div>" +
               "<button class='btn' id='againBtn'>Try again</button>";
-            document.getElementById("againBtn").onclick = function(){ shuffle(DATA); idx=0; answered=0; correct=0; render(); };
+            document.getElementById("againBtn").onclick = function(){ shuffle(DATA); used={}; served=0; ability=3.0; answered=0; correct=0; render(); };
           }
           if (!DATA.length) { document.getElementById("stmt").textContent = "No questions available."; }
           else { render(); }

@@ -675,27 +675,91 @@ _MANIFOLD_BODY = """
      data-cx/cy=50 so the orbit script pivots it about the centre — i.e. it stays
      put while the manifold spins. This is the ONE glowing cyan core: the single
      loud element on the screen. */
+  /* The MCQ core is now an ATOM: a glowing cyan nucleus with electrons orbiting
+     it — the one loud, animated element on the screen. The button itself is a
+     transparent 132px stage; nucleus + 3 tilted orbits are procedural CSS. */
   .cy-center {{
     max-width: none;
-    padding: 11px 20px;
-    font-size: 14px;
-    font-weight: 700;
-    background: color-mix(in srgb, var(--pg-accent) 20%, var(--pg-panel-2));
-    border-color: var(--pg-accent);
-    color: var(--pg-text);
-    box-shadow: var(--pg-glow);
-    animation: cy-core-pulse 3.6s ease-in-out infinite;
+    width: 132px;
+    height: 132px;
+    padding: 0;
+    border: none;
+    background: transparent;
+    box-shadow: none;
+    overflow: visible;
   }}
-  .cy-center:hover {{
-    background: color-mix(in srgb, var(--pg-accent) 32%, var(--pg-panel-2));
-    box-shadow: 0 0 30px var(--pg-accent-glow);
+  .cy-center:hover {{ background: transparent; box-shadow: none; }}
+  .cy-center .nucleus {{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 30px;
+    height: 30px;
+    margin: -15px 0 0 -15px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 34% 30%, #eafcff, var(--pg-accent) 58%,
+                color-mix(in srgb, var(--pg-accent) 45%, transparent));
+    box-shadow: 0 0 16px var(--pg-accent-glow), 0 0 34px var(--pg-accent-glow);
+    animation: cy-core-pulse 3.4s ease-in-out infinite;
   }}
+  .cy-center:hover .nucleus {{ box-shadow: 0 0 26px var(--pg-accent), 0 0 48px var(--pg-accent-glow); }}
+  /* Each orbit is tilted (rotate) and flattened (scaleY) into an ellipse; both
+     its static ring and its spinning electron inherit that transform, so the
+     electron rides the ring exactly. */
+  .cy-center .orbit {{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 118px;
+    height: 118px;
+    margin: -59px 0 0 -59px;
+    pointer-events: none;
+  }}
+  .cy-center .orbit .ring {{
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    border: 1px solid color-mix(in srgb, var(--pg-accent) 26%, transparent);
+  }}
+  .cy-center .orbit .electron-wrap {{ position: absolute; inset: 0; }}
+  .cy-center .orbit .electron {{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 7px;
+    height: 7px;
+    margin: -3.5px 0 0 -3.5px;
+    border-radius: 50%;
+    background: var(--pg-accent);
+    box-shadow: 0 0 8px var(--pg-accent-glow);
+    transform: translateX(59px) scaleY(2.5);
+  }}
+  .cy-center .o1 {{ transform: rotate(0deg) scaleY(0.4); }}
+  .cy-center .o2 {{ transform: rotate(60deg) scaleY(0.4); }}
+  .cy-center .o3 {{ transform: rotate(120deg) scaleY(0.4); }}
+  .cy-center .o1 .electron-wrap {{ animation: cy-orbit 3.1s linear infinite; }}
+  .cy-center .o2 .electron-wrap {{ animation: cy-orbit 4.3s linear infinite reverse; }}
+  .cy-center .o3 .electron-wrap {{ animation: cy-orbit 3.7s linear infinite; }}
+  .cy-center-label {{
+    position: absolute;
+    left: 50%;
+    top: 100%;
+    transform: translate(-50%, 4px);
+    font-family: var(--pg-mono);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--pg-text-dim);
+    white-space: nowrap;
+  }}
+  .cy-center:hover .cy-center-label {{ color: var(--pg-accent); }}
+  @keyframes cy-orbit {{ from {{ transform: rotate(0deg); }} to {{ transform: rotate(360deg); }} }}
   @keyframes cy-core-pulse {{
     0%, 100% {{ box-shadow: 0 0 16px var(--pg-accent-glow); }}
-    50% {{ box-shadow: 0 0 30px var(--pg-accent-glow); }}
+    50% {{ box-shadow: 0 0 30px var(--pg-accent-glow), 0 0 46px var(--pg-accent-glow); }}
   }}
   @media (prefers-reduced-motion: reduce) {{
-    .cy-center {{ animation: none; }}
+    .cy-center .nucleus, .cy-center .electron-wrap {{ animation: none; }}
   }}
 </style>
 <div id="cy-wrap">
@@ -709,7 +773,14 @@ _MANIFOLD_BODY = """
     {buttons}
     <button class="cy-point cy-center" style="left:50%;top:50%"
             data-cx="50" data-cy="50" onclick="pycmd('mcq')"
-            title="Practice real Physics GRE exam questions with AI heuristic coaching">⚛️ Practice MCQs</button>
+            aria-label="Practice MCQs — real Physics GRE questions with AI coaching"
+            title="Practice real Physics GRE exam questions with AI heuristic coaching">
+      <span class="orbit o1" aria-hidden="true"><span class="ring"></span><span class="electron-wrap"><span class="electron"></span></span></span>
+      <span class="orbit o2" aria-hidden="true"><span class="ring"></span><span class="electron-wrap"><span class="electron"></span></span></span>
+      <span class="orbit o3" aria-hidden="true"><span class="ring"></span><span class="electron-wrap"><span class="electron"></span></span></span>
+      <span class="nucleus" aria-hidden="true"></span>
+      <span class="cy-center-label">Practice MCQs</span>
+    </button>
   </div>
   <div id="cy-classic">
     <a onclick="pycmd('classic')">Classic deck list</a>

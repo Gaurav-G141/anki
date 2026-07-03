@@ -30,7 +30,8 @@
                 ]
             ],
             "answer": "C",
-            "solution": "The momentum operator is $\\hat{p}_x = \\frac{\\hbar}{i}\\frac{\\partial}{\\partial x}$ . Applying it:\n$$p_x\\psi = \\frac{\\hbar}{i}\\frac{\\partial}{\\partial x}e^{i(kx-\\omega t)} = \\frac{\\hbar}{i}(ik)e^{i(kx-\\omega t)} = \\hbar k\\,\\psi$$The eigenvalue (momentum) is $\\hbar k$ ."
+            "solution": "The momentum operator is $\\hat{p}_x = \\frac{\\hbar}{i}\\frac{\\partial}{\\partial x}$ . Applying it:\n$$p_x\\psi = \\frac{\\hbar}{i}\\frac{\\partial}{\\partial x}e^{i(kx-\\omega t)} = \\frac{\\hbar}{i}(ik)e^{i(kx-\\omega t)} = \\hbar k\\,\\psi$$The eigenvalue (momentum) is $\\hbar k$ .",
+            "difficulty": 5
         },
         {
             "id": "GR9277#2",
@@ -60,7 +61,8 @@
                 ]
             ],
             "answer": "D",
-            "solution": "Bragg's law: $\\lambda = 2d\\sin\\theta$ . The wavelength is maximized when $\\sin\\theta = 1$ (at $\\theta = 90°$ ):\n$$\\lambda_{max} = 2d\\sin(90°) = 2d$$"
+            "solution": "Bragg's law: $\\lambda = 2d\\sin\\theta$ . The wavelength is maximized when $\\sin\\theta = 1$ (at $\\theta = 90°$ ):\n$$\\lambda_{max} = 2d\\sin(90°) = 2d$$",
+            "difficulty": 2
         },
         {
             "id": "GR9277#3",
@@ -90,7 +92,8 @@
                 ]
             ],
             "answer": "A",
-            "solution": "For hydrogen-like atoms, characteristic K x-ray energy $\\propto Z^2$ . Therefore:\n$$\\frac{E_C}{E_{Mg}} = \\frac{Z_C^2}{Z_{Mg}^2} = \\frac{6^2}{12^2} = \\frac{36}{144} = \\frac{1}{4}$$(Moseley's law with $(Z-1)^2$ gives $\\approx 25/121 \\approx 1/5$ , still closest to 1/4.)"
+            "solution": "For hydrogen-like atoms, characteristic K x-ray energy $\\propto Z^2$ . Therefore:\n$$\\frac{E_C}{E_{Mg}} = \\frac{Z_C^2}{Z_{Mg}^2} = \\frac{6^2}{12^2} = \\frac{36}{144} = \\frac{1}{4}$$(Moseley's law with $(Z-1)^2$ gives $\\approx 25/121 \\approx 1/5$ , still closest to 1/4.)",
+            "difficulty": 5
         },
         {
             "id": "GR9277#4",
@@ -120,7 +123,8 @@
                 ]
             ],
             "answer": "C",
-            "solution": "Outside the sphere, $F = k/r^2$ , so\n$$\\frac{F(R)}{F(2R)} = \\frac{(2R)^2}{R^2} = 4$$"
+            "solution": "Outside the sphere, $F = k/r^2$ , so\n$$\\frac{F(R)}{F(2R)} = \\frac{(2R)^2}{R^2} = 4$$",
+            "difficulty": 3
         },
         {
             "id": "GR9277#6",
@@ -150,7 +154,8 @@
                 ]
             ],
             "answer": "D",
-            "solution": "Each wedge supports half the cube's weight; normal force on the floor from one wedge is $N = (m + M/2)g$ , giving max friction $\\mu(m+M/2)g$ . The horizontal force pushing a wedge outward is $Mg/2$ . For no slipping:\n$$\\mu\\left(m + \\frac{M}{2}\\right)g \\ge \\frac{Mg}{2}$$$$\\mu m \\ge \\frac{M(1-\\mu)}{2} \\implies M \\le \\frac{2\\mu m}{1-\\mu}$$"
+            "solution": "Each wedge supports half the cube's weight; normal force on the floor from one wedge is $N = (m + M/2)g$ , giving max friction $\\mu(m+M/2)g$ . The horizontal force pushing a wedge outward is $Mg/2$ . For no slipping:\n$$\\mu\\left(m + \\frac{M}{2}\\right)g \\ge \\frac{Mg}{2}$$$$\\mu m \\ge \\frac{M(1-\\mu)}{2} \\implies M \\le \\frac{2\\mu m}{1-\\mu}$$",
+            "difficulty": 5
         },
         {
             "id": "GR9277#7",
@@ -180,7 +185,8 @@
                 ]
             ],
             "answer": "B",
-            "solution": "The system has three modes: a zero-frequency translation, a symmetric mode $\\sqrt{g(M+2m)/(lM)}$ , and an antisymmetric mode in which the two pendulums swing oppositely so the tube stays fixed, giving a frequency independent of $M$ : $\\sqrt{g/l}$ . The only $M$ -independent choice is (B)."
+            "solution": "The system has three modes: a zero-frequency translation, a symmetric mode $\\sqrt{g(M+2m)/(lM)}$ , and an antisymmetric mode in which the two pendulums swing oppositely so the tube stays fixed, giving a frequency independent of $M$ : $\\sqrt{g/l}$ . The only $M$ -independent choice is (B).",
+            "difficulty": 3
         },
         {
             "id": "GR9277#8",
@@ -210,7 +216,8 @@
                 ]
             ],
             "answer": "C",
-            "solution": "$\\tau_z = xF_y - yF_x$ . Options A, B, E have $\\mathbf{F}\\parallel\\hat{k}$ giving $\\tau_z = 0$ . For (C): $\\tau_z = xF_y = (-b)(a) = -ab < 0$ . For (D): $\\tau_z = (b)(a) > 0$ . Answer is (C)."
+            "solution": "$\\tau_z = xF_y - yF_x$ . Options A, B, E have $\\mathbf{F}\\parallel\\hat{k}$ giving $\\tau_z = 0$ . For (C): $\\tau_z = xF_y = (-b)(a) = -ab < 0$ . For (D): $\\tau_z = (b)(a) > 0$ . Answer is (C).",
+            "difficulty": 4
         },
         {
             "id": "GR9277#9",
@@ -240,7 +247,8 @@
                 ]
             ],
             "answer": "A",
-            "solution": "By Ampère's law, $\\oint \\vec{B}\\cdot d\\vec{l} = \\mu_0 I_{enc}$ . Outside, the enclosed current is $+i - i = 0$ , so $B = 0$ . This is the shielding property of coaxial cables."
+            "solution": "By Ampère's law, $\\oint \\vec{B}\\cdot d\\vec{l} = \\mu_0 I_{enc}$ . Outside, the enclosed current is $+i - i = 0$ , so $B = 0$ . This is the shielding property of coaxial cables.",
+            "difficulty": 3
         },
         {
             "id": "GR9277#10",
@@ -270,7 +278,8 @@
                 ]
             ],
             "answer": "E",
-            "solution": "The grounded plane induces image charges $-q$ (at $-0.5a$ ) and $-2q$ (at $-1.5a$ ). Distances from $q$ : to $+2q$ is $a$ , to image $-q$ is $a$ , to image $-2q$ is $2a$ . All forces on $q$ point in the same direction:\n$$F = \\frac{q^2}{4\\pi\\epsilon_0}\\left(\\frac{2}{a^2} + \\frac{1}{a^2} + \\frac{2}{(2a)^2}\\right) = \\frac{q^2}{4\\pi\\epsilon_0 a^2}\\left(2+1+\\tfrac12\\right) = \\frac{1}{4\\pi\\epsilon_0}\\frac{7q^2}{2a^2}$$"
+            "solution": "The grounded plane induces image charges $-q$ (at $-0.5a$ ) and $-2q$ (at $-1.5a$ ). Distances from $q$ : to $+2q$ is $a$ , to image $-q$ is $a$ , to image $-2q$ is $2a$ . All forces on $q$ point in the same direction:\n$$F = \\frac{q^2}{4\\pi\\epsilon_0}\\left(\\frac{2}{a^2} + \\frac{1}{a^2} + \\frac{2}{(2a)^2}\\right) = \\frac{q^2}{4\\pi\\epsilon_0 a^2}\\left(2+1+\\tfrac12\\right) = \\frac{1}{4\\pi\\epsilon_0}\\frac{7q^2}{2a^2}$$",
+            "difficulty": 5
         },
         {
             "id": "GR9277#11",
@@ -300,7 +309,8 @@
                 ]
             ],
             "answer": "E",
-            "solution": "$Q(t) = Q_0 e^{-t/RC}$ and $U \\propto Q^2 \\propto e^{-2t/RC}$ . Setting $U = U_0/2$ :\n$$\\tfrac12 = e^{-2t/RC} \\implies t = \\frac{RC\\ln 2}{2}$$"
+            "solution": "$Q(t) = Q_0 e^{-t/RC}$ and $U \\propto Q^2 \\propto e^{-2t/RC}$ . Setting $U = U_0/2$ :\n$$\\tfrac12 = e^{-2t/RC} \\implies t = \\frac{RC\\ln 2}{2}$$",
+            "difficulty": 2
         },
         {
             "id": "GR9277#12",
@@ -330,7 +340,8 @@
                 ]
             ],
             "answer": "B",
-            "solution": "Laplace's equation reduces to $d^2V/d\\varphi^2 = 0$ , so $V = A\\varphi + B$ . With $V(0)=0$ and $V(\\alpha)=V_0$ : $B=0$ , $A=V_0/\\alpha$ . Thus $V(\\varphi) = V_0\\varphi/\\alpha$ ."
+            "solution": "Laplace's equation reduces to $d^2V/d\\varphi^2 = 0$ , so $V = A\\varphi + B$ . With $V(0)=0$ and $V(\\alpha)=V_0$ : $B=0$ , $A=V_0/\\alpha$ . Thus $V(\\varphi) = V_0\\varphi/\\alpha$ .",
+            "difficulty": 4
         },
         {
             "id": "GR9277#13",
@@ -360,7 +371,8 @@
                 ]
             ],
             "answer": "D",
-            "solution": "Magnetic monopoles would require modifying Gauss's law for magnetism ( $\\nabla\\cdot\\vec{B} = \\rho_m$ instead of 0) and Faraday's law (adding a magnetic current term $-\\vec{J}_m$ ). These are equations II and IV."
+            "solution": "Magnetic monopoles would require modifying Gauss's law for magnetism ( $\\nabla\\cdot\\vec{B} = \\rho_m$ instead of 0) and Faraday's law (adding a magnetic current term $-\\vec{J}_m$ ). These are equations II and IV.",
+            "difficulty": 2
         },
         {
             "id": "GR9277#14",
@@ -390,7 +402,8 @@
                 ]
             ],
             "answer": "C",
-            "solution": "By Stefan-Boltzmann, power $\\propto T^4$ . Doubling $T$ gives $2^4 = 16\\times$ the energy. The original temperature rise was 0.5°C, so the new rise is $16 \\times 0.5 = 8$ °C. Final: $20 + 8 = 28$ °C."
+            "solution": "By Stefan-Boltzmann, power $\\propto T^4$ . Doubling $T$ gives $2^4 = 16\\times$ the energy. The original temperature rise was 0.5°C, so the new rise is $16 \\times 0.5 = 8$ °C. Final: $20 + 8 = 28$ °C.",
+            "difficulty": 3
         },
         {
             "id": "GR9277#15",
@@ -420,7 +433,8 @@
                 ]
             ],
             "answer": "C",
-            "solution": "By equipartition each quadratic degree of freedom contributes $\\frac12 R$ . Degrees of freedom: 3 translational + 2 rotational + 2 vibrational (KE and PE) = 7. So $C_v = \\frac72 R$ ."
+            "solution": "By equipartition each quadratic degree of freedom contributes $\\frac12 R$ . Degrees of freedom: 3 translational + 2 rotational + 2 vibrational (KE and PE) = 7. So $C_v = \\frac72 R$ .",
+            "difficulty": 2
         },
         {
             "id": "GR9277#16",
@@ -450,7 +464,8 @@
                 ]
             ],
             "answer": "A",
-            "solution": "Convert: $T_H = 1000$ K, $T_C = 800$ K. Carnot efficiency $e = 1 - 800/1000 = 0.2$ . Work $= e\\,Q = 0.2 \\times 2000 = 400$ J."
+            "solution": "Convert: $T_H = 1000$ K, $T_C = 800$ K. Carnot efficiency $e = 1 - 800/1000 = 0.2$ . Work $= e\\,Q = 0.2 \\times 2000 = 400$ J.",
+            "difficulty": 1
         },
         {
             "id": "GR9277#17",
@@ -480,7 +495,8 @@
                 ]
             ],
             "answer": "A",
-            "solution": "With $X = \\sin(\\omega t)$ , $Y = \\sin(2\\omega t)$ , this 1:2 frequency ratio produces a parabolic Lissajous figure $Y = 1 - 2X^2$ — a single-hump curve (A)."
+            "solution": "With $X = \\sin(\\omega t)$ , $Y = \\sin(2\\omega t)$ , this 1:2 frequency ratio produces a parabolic Lissajous figure $Y = 1 - 2X^2$ — a single-hump curve (A).",
+            "difficulty": 1
         },
         {
             "id": "GR9277#18",
@@ -510,7 +526,8 @@
                 ]
             ],
             "answer": "C",
-            "solution": "When a wave meets an impedance mismatch, it reflects. Matching the termination to the characteristic impedance absorbs the wave rather than reflecting it. Answer (C)."
+            "solution": "When a wave meets an impedance mismatch, it reflects. Matching the termination to the characteristic impedance absorbs the wave rather than reflecting it. Answer (C).",
+            "difficulty": 1
         },
         {
             "id": "GR9277#19",
@@ -540,7 +557,8 @@
                 ]
             ],
             "answer": "A",
-            "solution": "From $g = GM/R^2$ : $M = gR^2/G \\approx (10)(6.4\\times10^6)^2/(6.67\\times10^{-11}) \\approx 6\\times10^{24}$ kg."
+            "solution": "From $g = GM/R^2$ : $M = gR^2/G \\approx (10)(6.4\\times10^6)^2/(6.67\\times10^{-11}) \\approx 6\\times10^{24}$ kg.",
+            "difficulty": 3
         },
         {
             "id": "GR9277#20",
@@ -570,7 +588,8 @@
                 ]
             ],
             "answer": "D",
-            "solution": "A missing maximum occurs when a single-slit diffraction minimum ( $w\\sin\\theta = m_1\\lambda$ ) coincides with an interference maximum ( $d\\sin\\theta = m_2\\lambda$ ), so $d/w = m_2/m_1$ with both integers and $d > w$ . Choice (D), $2d = 3w$ , gives $d/w = 3/2$ ( $m_2 = 3, m_1 = 2$ )."
+            "solution": "A missing maximum occurs when a single-slit diffraction minimum ( $w\\sin\\theta = m_1\\lambda$ ) coincides with an interference maximum ( $d\\sin\\theta = m_2\\lambda$ ), so $d/w = m_2/m_1$ with both integers and $d > w$ . Choice (D), $2d = 3w$ , gives $d/w = 3/2$ ( $m_2 = 3, m_1 = 2$ ).",
+            "difficulty": 4
         },
         {
             "id": "GR9277#21",
@@ -600,7 +619,8 @@
                 ]
             ],
             "answer": "E",
-            "solution": "At the thin top, the path difference is negligible; only the 180° phase shift at the front surface (reflection from higher index) remains, while the back surface (soap to air) has no shift. This gives destructive interference for all wavelengths → black. Statements II, III, IV are correct (E)."
+            "solution": "At the thin top, the path difference is negligible; only the 180° phase shift at the front surface (reflection from higher index) remains, while the back surface (soap to air) has no shift. This gives destructive interference for all wavelengths → black. Statements II, III, IV are correct (E).",
+            "difficulty": 4
         },
         {
             "id": "GR9277#22",
@@ -630,7 +650,8 @@
                 ]
             ],
             "answer": "D",
-            "solution": "$M = f_o/f_e = 10 \\implies f_e = 0.1$ m. Separation $= f_o + f_e = 1.0 + 0.1 = 1.1$ m."
+            "solution": "$M = f_o/f_e = 10 \\implies f_e = 0.1$ m. Separation $= f_o + f_e = 1.0 + 0.1 = 1.1$ m.",
+            "difficulty": 2
         },
         {
             "id": "GR9277#23",
@@ -660,7 +681,8 @@
                 ]
             ],
             "answer": "E",
-            "solution": "From $kT_F = \\frac12 m v^2$ : $v = \\sqrt{2kT_F/m} = \\sqrt{2(1.38\\times10^{-23})(8\\times10^4)/(9.1\\times10^{-31})} \\approx 10^6$ m/s. Closest: (E)."
+            "solution": "From $kT_F = \\frac12 m v^2$ : $v = \\sqrt{2kT_F/m} = \\sqrt{2(1.38\\times10^{-23})(8\\times10^4)/(9.1\\times10^{-31})} \\approx 10^6$ m/s. Closest: (E).",
+            "difficulty": 4
         },
         {
             "id": "GR9277#24",
@@ -690,7 +712,8 @@
                 ]
             ],
             "answer": "E",
-            "solution": "Argon is a noble gas with a filled outer shell, so it cannot form ionic, covalent, or metallic bonds. Only weak van der Waals forces remain (E)."
+            "solution": "Argon is a noble gas with a filled outer shell, so it cannot form ionic, covalent, or metallic bonds. Only weak van der Waals forces remain (E).",
+            "difficulty": 1
         },
         {
             "id": "GR9277#25",
@@ -720,7 +743,8 @@
                 ]
             ],
             "answer": "D",
-            "solution": "Heavy/charged particles are absorbed by rock. Neutrinos (weak interaction only) and muons (heavy, long interaction length) penetrate deeply. Answer (D)."
+            "solution": "Heavy/charged particles are absorbed by rock. Neutrinos (weak interaction only) and muons (heavy, long interaction length) penetrate deeply. Answer (D).",
+            "difficulty": 1
         },
         {
             "id": "GR9277#26",
@@ -750,7 +774,8 @@
                 ]
             ],
             "answer": "B",
-            "solution": "Activity $\\propto N$ . The graph shows activity dropping from $\\approx 6\\times10^3$ to $\\approx 3\\times10^3$ counts/min over 7 minutes, so the half-life is 7 min."
+            "solution": "Activity $\\propto N$ . The graph shows activity dropping from $\\approx 6\\times10^3$ to $\\approx 3\\times10^3$ counts/min over 7 minutes, so the half-life is 7 min.",
+            "difficulty": 2
         },
         {
             "id": "GR9277#27",
@@ -780,7 +805,8 @@
                 ]
             ],
             "answer": "B",
-            "solution": "Position and wave number are Fourier conjugates: $\\Delta x\\,\\Delta k \\approx 1$ . So $\\Delta k = 1/\\Delta x_0$ (B)."
+            "solution": "Position and wave number are Fourier conjugates: $\\Delta x\\,\\Delta k \\approx 1$ . So $\\Delta k = 1/\\Delta x_0$ (B).",
+            "difficulty": 3
         },
         {
             "id": "GR9277#28",
@@ -810,7 +836,8 @@
                 ]
             ],
             "answer": "E",
-            "solution": "Only the $m=3$ terms ( $5Y_4^3$ and $Y_6^3$ ) contribute:\n$$P = \\frac{1}{30}(5^2 + 1^2) = \\frac{26}{30} = \\frac{13}{15}$$"
+            "solution": "Only the $m=3$ terms ( $5Y_4^3$ and $Y_6^3$ ) contribute:\n$$P = \\frac{1}{30}(5^2 + 1^2) = \\frac{26}{30} = \\frac{13}{15}$$",
+            "difficulty": 4
         },
         {
             "id": "GR9277#30",
@@ -840,7 +867,8 @@
                 ]
             ],
             "answer": "E",
-            "solution": "Positronium's reduced mass is $m/2$ , half that of hydrogen, so its ground state energy is $E_0/2$ . For $n=2$ : $E = (E_0/2)/2^2 = E_0/8$ ."
+            "solution": "Positronium's reduced mass is $m/2$ , half that of hydrogen, so its ground state energy is $E_0/2$ . For $n=2$ : $E = (E_0/2)/2^2 = E_0/8$ .",
+            "difficulty": 2
         },
         {
             "id": "GR9277#31",
@@ -870,7 +898,8 @@
                 ]
             ],
             "answer": "B",
-            "solution": "$^3S$ : multiplicity $2S+1 = 3 \\implies S = 1$ ; $S$ term $\\implies L = 0$ . Then $j$ ranges over $|L-S|$ to $L+S = 1$ to $1$ , so $j = 1$ only (B)."
+            "solution": "$^3S$ : multiplicity $2S+1 = 3 \\implies S = 1$ ; $S$ term $\\implies L = 0$ . Then $j$ ranges over $|L-S|$ to $L+S = 1$ to $1$ , so $j = 1$ only (B).",
+            "difficulty": 1
         },
         {
             "id": "GR9277#32",
@@ -900,7 +929,8 @@
                 ]
             ],
             "answer": "A",
-            "solution": "$P = I^2 R$ . $R_1$ carries the full main current from the battery while the others are in parallel branches sharing reduced current. With the largest current, $R_1$ dissipates the most power (A)."
+            "solution": "$P = I^2 R$ . $R_1$ carries the full main current from the battery while the others are in parallel branches sharing reduced current. With the largest current, $R_1$ dissipates the most power (A).",
+            "difficulty": 1
         },
         {
             "id": "GR9277#34",
@@ -930,7 +960,8 @@
                 ]
             ],
             "answer": "D",
-            "solution": "At a perfect conductor, the tangential electric field and the normal magnetic field vanish: $E_t = 0$ , $B_n = 0$ (D)."
+            "solution": "At a perfect conductor, the tangential electric field and the normal magnetic field vanish: $E_t = 0$ , $B_n = 0$ (D).",
+            "difficulty": 1
         },
         {
             "id": "GR9277#35",
@@ -960,7 +991,8 @@
                 ]
             ],
             "answer": "C",
-            "solution": "$d = 1/(2000\\,\\text{cm}^{-1}) = 5\\times10^{-6}$ m. $\\sin\\theta = \\lambda/d = 5200\\times10^{-10}/5\\times10^{-6} = 0.1$ , so $\\theta \\approx 0.1$ rad $\\approx 6°$ ."
+            "solution": "$d = 1/(2000\\,\\text{cm}^{-1}) = 5\\times10^{-6}$ m. $\\sin\\theta = \\lambda/d = 5200\\times10^{-10}/5\\times10^{-6} = 0.1$ , so $\\theta \\approx 0.1$ rad $\\approx 6°$ .",
+            "difficulty": 3
         },
         {
             "id": "GR9277#36",
@@ -990,7 +1022,8 @@
                 ]
             ],
             "answer": "C",
-            "solution": "The tangential E must vanish at the surface, so $E_{refl} = -E_{inc}$ (E reverses). With the propagation direction reversed and $\\vec{B} \\propto \\hat{k}\\times\\vec{E}$ , B does not reverse (C)."
+            "solution": "The tangential E must vanish at the surface, so $E_{refl} = -E_{inc}$ (E reverses). With the propagation direction reversed and $\\vec{B} \\propto \\hat{k}\\times\\vec{E}$ , B does not reverse (C).",
+            "difficulty": 2
         },
         {
             "id": "GR9277#37",
@@ -1020,7 +1053,8 @@
                 ]
             ],
             "answer": "A",
-            "solution": "Photons travel at $c$ in every frame. Since $\\gamma_2$ is emitted backward, its lab velocity is $-1.0c\\,\\hat{k}$ (A)."
+            "solution": "Photons travel at $c$ in every frame. Since $\\gamma_2$ is emitted backward, its lab velocity is $-1.0c\\,\\hat{k}$ (A).",
+            "difficulty": 4
         },
         {
             "id": "GR9277#38",
@@ -1050,7 +1084,8 @@
                 ]
             ],
             "answer": "B",
-            "solution": "$S_1$ is the rest (proper) frame. Time dilates: $\\Delta t_3 = \\Delta t_1/\\sqrt{1-v_{13}^2/c^2}$ , which rearranges to $\\Delta t_1 = \\Delta t_3\\sqrt{1-v_{13}^2/c^2}$ (B). Relations between $\\Delta t_2$ and $\\Delta t_3$ via $v_{23}$ are ambiguous."
+            "solution": "$S_1$ is the rest (proper) frame. Time dilates: $\\Delta t_3 = \\Delta t_1/\\sqrt{1-v_{13}^2/c^2}$ , which rearranges to $\\Delta t_1 = \\Delta t_3\\sqrt{1-v_{13}^2/c^2}$ (B). Relations between $\\Delta t_2$ and $\\Delta t_3$ via $v_{23}$ are ambiguous.",
+            "difficulty": 5
         },
         {
             "id": "GR9277#40",
@@ -1080,7 +1115,8 @@
                 ]
             ],
             "answer": "C",
-            "solution": "The center moves at constant velocity (zero acceleration). The contact point has no tangential acceleration (no-slip) but has centripetal acceleration $R\\omega^2$ directed toward the center, i.e., upward (C)."
+            "solution": "The center moves at constant velocity (zero acceleration). The contact point has no tangential acceleration (no-slip) but has centripetal acceleration $R\\omega^2$ directed toward the center, i.e., upward (C).",
+            "difficulty": 1
         },
         {
             "id": "GR9277#41",
@@ -1110,7 +1146,8 @@
                 ]
             ],
             "answer": "D",
-            "solution": "$K = \\frac12 I\\omega^2$ . $K_0 = \\frac12(4)(80)^2 = 12800$ J; $K_f = \\frac12(4)(40)^2 = 3200$ J. Loss $= 9600$ J (D)."
+            "solution": "$K = \\frac12 I\\omega^2$ . $K_0 = \\frac12(4)(80)^2 = 12800$ J; $K_f = \\frac12(4)(40)^2 = 3200$ J. Loss $= 9600$ J (D).",
+            "difficulty": 3
         },
         {
             "id": "GR9277#43",
@@ -1140,7 +1177,8 @@
                 ]
             ],
             "answer": "B",
-            "solution": "Lagrange's equation: $\\frac{d}{dt}(\\partial L/\\partial\\dot q_n) = \\partial L/\\partial q_n = 0$ . Since $p_n = \\partial L/\\partial\\dot q_n$ , $p_n$ is constant (B)."
+            "solution": "Lagrange's equation: $\\frac{d}{dt}(\\partial L/\\partial\\dot q_n) = \\partial L/\\partial q_n = 0$ . Since $p_n = \\partial L/\\partial\\dot q_n$ , $p_n$ is constant (B).",
+            "difficulty": 4
         },
         {
             "id": "GR9277#45",
@@ -1170,7 +1208,8 @@
                 ]
             ],
             "answer": "D",
-            "solution": "Height $\\propto v^2$ . After the bounce, $v' = 0.8 v_0$ , so $h' = (0.8)^2 h = 0.64h$ (D)."
+            "solution": "Height $\\propto v^2$ . After the bounce, $v' = 0.8 v_0$ , so $h' = (0.8)^2 h = 0.64h$ (D).",
+            "difficulty": 1
         },
         {
             "id": "GR9277#46",
@@ -1200,7 +1239,8 @@
                 ]
             ],
             "answer": "B",
-            "solution": "The critical isotherm has an inflection point at the critical point: $(dP/dV)_c = 0$ and $(d^2P/dV^2)_c = 0$ . Among the curves, curve 2 satisfies this. Answer (B)."
+            "solution": "The critical isotherm has an inflection point at the critical point: $(dP/dV)_c = 0$ and $(d^2P/dV^2)_c = 0$ . Among the curves, curve 2 satisfies this. Answer (B).",
+            "difficulty": 2
         },
         {
             "id": "GR9277#48",
@@ -1230,7 +1270,8 @@
                 ]
             ],
             "answer": "C",
-            "solution": "For a product, relative uncertainties add in quadrature: $\\sigma_F/F = \\sqrt{(\\sigma_m/m)^2 + (\\sigma_a/a)^2}$ (C)."
+            "solution": "For a product, relative uncertainties add in quadrature: $\\sigma_F/F = \\sqrt{(\\sigma_m/m)^2 + (\\sigma_a/a)^2}$ (C).",
+            "difficulty": 3
         },
         {
             "id": "GR9277#49",
@@ -1260,7 +1301,8 @@
                 ]
             ],
             "answer": "B",
-            "solution": "Transit time $t = 3/c = 3/(3\\times10^8) = 10^{-8}$ s = 10 ns. The resolving time must be shorter than this; the largest option that works is 1 ns (B)."
+            "solution": "Transit time $t = 3/c = 3/(3\\times10^8) = 10^{-8}$ s = 10 ns. The resolving time must be shorter than this; the largest option that works is 1 ns (B).",
+            "difficulty": 1
         },
         {
             "id": "GR9277#50",
@@ -1290,7 +1332,8 @@
                 ]
             ],
             "answer": "B",
-            "solution": "Two operators share a complete set of simultaneous eigenstates if and only if they commute, $[A,B] = 0$ (B)."
+            "solution": "Two operators share a complete set of simultaneous eigenstates if and only if they commute, $[A,B] = 0$ (B).",
+            "difficulty": 1
         },
         {
             "id": "GR9277#51",
@@ -1320,7 +1363,8 @@
                 ]
             ],
             "answer": "A",
-            "solution": "$\\langle p\\rangle \\propto \\int_0^a \\sin(n\\pi x/a)\\cos(n\\pi x/a)\\,dx = 0$ . Also, for a stationary state $d\\langle x\\rangle/dt = 0$ so $\\langle p\\rangle = 0$ (A)."
+            "solution": "$\\langle p\\rangle \\propto \\int_0^a \\sin(n\\pi x/a)\\cos(n\\pi x/a)\\,dx = 0$ . Also, for a stationary state $d\\langle x\\rangle/dt = 0$ so $\\langle p\\rangle = 0$ (A).",
+            "difficulty": 3
         },
         {
             "id": "GR9277#52",
@@ -1350,7 +1394,8 @@
                 ]
             ],
             "answer": "B",
-            "solution": "$\\langle\\psi_m|\\psi_n\\rangle = \\delta_{nm}$ is the definition of orthonormality (B)."
+            "solution": "$\\langle\\psi_m|\\psi_n\\rangle = \\delta_{nm}$ is the definition of orthonormality (B).",
+            "difficulty": 4
         },
         {
             "id": "GR9277#56",
@@ -1380,7 +1425,8 @@
                 ]
             ],
             "answer": "C",
-            "solution": "$E_n = (n+\\frac12)h\\nu$ . For $n=0$ : $E_0 = \\frac12 h\\nu$ (zero-point energy) (C)."
+            "solution": "$E_n = (n+\\frac12)h\\nu$ . For $n=0$ : $E_0 = \\frac12 h\\nu$ (zero-point energy) (C).",
+            "difficulty": 2
         },
         {
             "id": "GR9277#58",
@@ -1410,7 +1456,8 @@
                 ]
             ],
             "answer": "C",
-            "solution": "By the Aufbau principle, fill 1s² 2s² 2p⁶ 3s¹ = 11 electrons (C)."
+            "solution": "By the Aufbau principle, fill 1s² 2s² 2p⁶ 3s¹ = 11 electrons (C).",
+            "difficulty": 1
         },
         {
             "id": "GR9277#59",
@@ -1440,7 +1487,8 @@
                 ]
             ],
             "answer": "A",
-            "solution": "Ground-state He is $1s^2$ ; both electrons share the same spatial orbital with opposite spins (Pauli). The total spin $S = 0$ , multiplicity $2S+1 = 1$ → singlet (A)."
+            "solution": "Ground-state He is $1s^2$ ; both electrons share the same spatial orbital with opposite spins (Pauli). The total spin $S = 0$ , multiplicity $2S+1 = 1$ → singlet (A).",
+            "difficulty": 1
         },
         {
             "id": "GR9277#60",
@@ -1470,7 +1518,8 @@
                 ]
             ],
             "answer": "D",
-            "solution": "$\\omega_c = qB/m^* = (1.6\\times10^{-19})(1)/(0.1\\times9.1\\times10^{-31}) \\approx 1.8\\times10^{12}$ rad/s (D). Must use effective mass."
+            "solution": "$\\omega_c = qB/m^* = (1.6\\times10^{-19})(1)/(0.1\\times9.1\\times10^{-31}) \\approx 1.8\\times10^{12}$ rad/s (D). Must use effective mass.",
+            "difficulty": 4
         },
         {
             "id": "GR9277#61",
@@ -1500,7 +1549,8 @@
                 ]
             ],
             "answer": "A",
-            "solution": "$\\omega = \\sqrt{mgr_{cm}/I}$ . Config I: $I_1 = 2mr^2$ , $r_{cm}=r$ → $\\omega_1 = \\sqrt{g/r}$ . Config II: $I_2 = m(r/2)^2 + mr^2 = \\frac54 mr^2$ , $r_{cm} = 3r/4$ → $\\omega_2 = \\sqrt{(2mg\\cdot3r/4)/(5mr^2/4)} = \\sqrt{6g/5r}$ . Ratio $= \\sqrt{6/5}$ (A)."
+            "solution": "$\\omega = \\sqrt{mgr_{cm}/I}$ . Config I: $I_1 = 2mr^2$ , $r_{cm}=r$ → $\\omega_1 = \\sqrt{g/r}$ . Config II: $I_2 = m(r/2)^2 + mr^2 = \\frac54 mr^2$ , $r_{cm} = 3r/4$ → $\\omega_2 = \\sqrt{(2mg\\cdot3r/4)/(5mr^2/4)} = \\sqrt{6g/5r}$ . Ratio $= \\sqrt{6/5}$ (A).",
+            "difficulty": 5
         },
         {
             "id": "GR9277#62",
@@ -1530,7 +1580,8 @@
                 ]
             ],
             "answer": "E",
-            "solution": "$W = \\int P\\,dV = \\int \\frac{RT_0}{V}dV = RT_0\\ln(V_1/V_0)$ (E). $\\gamma$ is a distractor."
+            "solution": "$W = \\int P\\,dV = \\int \\frac{RT_0}{V}dV = RT_0\\ln(V_1/V_0)$ (E). $\\gamma$ is a distractor.",
+            "difficulty": 4
         },
         {
             "id": "GR9277#63",
@@ -1560,7 +1611,8 @@
                 ]
             ],
             "answer": "D",
-            "solution": "Maximal probability = maximum entropy = most stable macrostate. No spontaneous macroscopic change occurs (D)."
+            "solution": "Maximal probability = maximum entropy = most stable macrostate. No spontaneous macroscopic change occurs (D).",
+            "difficulty": 1
         },
         {
             "id": "GR9277#64",
@@ -1590,7 +1642,8 @@
                 ]
             ],
             "answer": "B",
-            "solution": "$\\nabla\\cdot\\vec{E} = \\partial_z(kz) = k \\ne 0$ , so by Gauss's law $\\rho = k\\epsilon_0 \\ne 0$ : charge density exists (B)."
+            "solution": "$\\nabla\\cdot\\vec{E} = \\partial_z(kz) = k \\ne 0$ , so by Gauss's law $\\rho = k\\epsilon_0 \\ne 0$ : charge density exists (B).",
+            "difficulty": 3
         },
         {
             "id": "GR9277#65",
@@ -1620,7 +1673,8 @@
                 ]
             ],
             "answer": "E",
-            "solution": "For small displacement $y$ , the restoring force is $m\\ddot y = -\\frac{2Qq}{4\\pi\\epsilon_0 R^3}y$ , so $k = \\frac{Qq}{2\\pi\\epsilon_0 R^3}$ and $\\omega = \\sqrt{k/m} = \\sqrt{\\frac{Qq}{2\\pi\\epsilon_0 mR^3}}$ (E)."
+            "solution": "For small displacement $y$ , the restoring force is $m\\ddot y = -\\frac{2Qq}{4\\pi\\epsilon_0 R^3}y$ , so $k = \\frac{Qq}{2\\pi\\epsilon_0 R^3}$ and $\\omega = \\sqrt{k/m} = \\sqrt{\\frac{Qq}{2\\pi\\epsilon_0 mR^3}}$ (E).",
+            "difficulty": 5
         },
         {
             "id": "GR9277#66",
@@ -1650,7 +1704,8 @@
                 ]
             ],
             "answer": "C",
-            "solution": "Mass = 20 kg; center of mass rises 5 m. $W = mg\\Delta h = 20\\times10\\times5 = 1000$ J (C)."
+            "solution": "Mass = 20 kg; center of mass rises 5 m. $W = mg\\Delta h = 20\\times10\\times5 = 1000$ J (C).",
+            "difficulty": 1
         },
         {
             "id": "GR9277#67",
@@ -1680,7 +1735,8 @@
                 ]
             ],
             "answer": "C",
-            "solution": "Plane-polarized light gives $\\cos^2\\theta = \\frac{1+\\cos2\\theta}{2}$ (oscillating, constant = amplitude); unpolarized gives a constant. Since $A > B$ , there is a constant baseline larger than the oscillation amplitude → a mix of plane-polarized and unpolarized (C)."
+            "solution": "Plane-polarized light gives $\\cos^2\\theta = \\frac{1+\\cos2\\theta}{2}$ (oscillating, constant = amplitude); unpolarized gives a constant. Since $A > B$ , there is a constant baseline larger than the oscillation amplitude → a mix of plane-polarized and unpolarized (C).",
+            "difficulty": 3
         },
         {
             "id": "GR9277#68",
@@ -1710,7 +1766,8 @@
                 ]
             ],
             "answer": "C",
-            "solution": "$\\theta = 1.22\\lambda/d \\implies d = 1.22\\lambda/\\theta = 1.22\\times(5.5\\times10^{-7})/(8\\times10^{-6}) \\approx 0.084$ m $\\approx$ 10 cm (C)."
+            "solution": "$\\theta = 1.22\\lambda/d \\implies d = 1.22\\lambda/\\theta = 1.22\\times(5.5\\times10^{-7})/(8\\times10^{-6}) \\approx 0.084$ m $\\approx$ 10 cm (C).",
+            "difficulty": 3
         },
         {
             "id": "GR9277#69",
@@ -1740,7 +1797,8 @@
                 ]
             ],
             "answer": "D",
-            "solution": "Cherenkov radiation requires the particle to exceed the speed of light in the medium, $v_{min} = c/n = c/1.5 = 2c/3$ (D)."
+            "solution": "Cherenkov radiation requires the particle to exceed the speed of light in the medium, $v_{min} = c/n = c/1.5 = 2c/3$ (D).",
+            "difficulty": 1
         },
         {
             "id": "GR9277#70",
@@ -1770,7 +1828,8 @@
                 ]
             ],
             "answer": "D",
-            "solution": "$E^2 = (pc)^2 + (mc^2)^2$ . With $E = 100mc^2$ , $(pc)^2 = (10000-1)m^2c^4 \\approx 10000 m^2c^4$ , so $p \\approx 100mc$ (D). Ultra-relativistic: $p \\approx E/c$ ."
+            "solution": "$E^2 = (pc)^2 + (mc^2)^2$ . With $E = 100mc^2$ , $(pc)^2 = (10000-1)m^2c^4 \\approx 10000 m^2c^4$ , so $p \\approx 100mc$ (D). Ultra-relativistic: $p \\approx E/c$ .",
+            "difficulty": 3
         },
         {
             "id": "GR9277#71",
@@ -1800,7 +1859,8 @@
                 ]
             ],
             "answer": "B",
-            "solution": "$P(E_1) = \\frac{e^{-E_1/kT}}{e^{-E_1/kT}+e^{-E_2/kT}} = \\frac{1}{1+e^{-\\epsilon/kT}}$ . So $N_1 = \\frac{N_0}{1+e^{-\\epsilon/kT}}$ (B)."
+            "solution": "$P(E_1) = \\frac{e^{-E_1/kT}}{e^{-E_1/kT}+e^{-E_2/kT}} = \\frac{1}{1+e^{-\\epsilon/kT}}$ . So $N_1 = \\frac{N_0}{1+e^{-\\epsilon/kT}}$ (B).",
+            "difficulty": 4
         },
         {
             "id": "GR9277#73",
@@ -1830,7 +1890,8 @@
                 ]
             ],
             "answer": "C",
-            "solution": "By the third law, $S\\to 0$ as $T\\to 0$ . As $T\\to\\infty$ , both states are equally accessible, $Z\\to 2$ , giving $S = N_0 k\\ln 2$ . So entropy rises monotonically from 0 to $N_0 k\\ln 2$ (C)."
+            "solution": "By the third law, $S\\to 0$ as $T\\to 0$ . As $T\\to\\infty$ , both states are equally accessible, $Z\\to 2$ , giving $S = N_0 k\\ln 2$ . So entropy rises monotonically from 0 to $N_0 k\\ln 2$ (C).",
+            "difficulty": 1
         },
         {
             "id": "GR9277#74",
@@ -1860,7 +1921,8 @@
                 ]
             ],
             "answer": "C",
-            "solution": "A hoop oscillating on a nail behaves like a pendulum of effective length equal to the radius: $T \\propto \\sqrt{r}$ , independent of mass. $r_X = 4r_Y$ , so $T_X/T_Y = \\sqrt{4} = 2$ → $T_Y = T/2$ (C)."
+            "solution": "A hoop oscillating on a nail behaves like a pendulum of effective length equal to the radius: $T \\propto \\sqrt{r}$ , independent of mass. $r_X = 4r_Y$ , so $T_X/T_Y = \\sqrt{4} = 2$ → $T_Y = T/2$ (C).",
+            "difficulty": 2
         },
         {
             "id": "GR9277#75",
@@ -1890,7 +1952,8 @@
                 ]
             ],
             "answer": "E",
-            "solution": "Momentum conservation gives equal and opposite momenta, $|p_{Th}| = |p_{He}|$ . Since $K = p^2/2m$ , $K_{He}/K_{Th} = m_{Th}/m_{He} \\approx 231/4 \\approx 58$ . The lighter He has much more kinetic energy (E)."
+            "solution": "Momentum conservation gives equal and opposite momenta, $|p_{Th}| = |p_{He}|$ . Since $K = p^2/2m$ , $K_{He}/K_{Th} = m_{Th}/m_{He} \\approx 231/4 \\approx 58$ . The lighter He has much more kinetic energy (E).",
+            "difficulty": 4
         },
         {
             "id": "GR9277#76",
@@ -1920,7 +1983,8 @@
                 ]
             ],
             "answer": "B",
-            "solution": "Max $L = 0 + 1 + 1 = 2$ ; max $S = \\frac12\\times3 = \\frac32$ . Max $j = L + S = 2 + \\frac32 = \\frac72$ (B)."
+            "solution": "Max $L = 0 + 1 + 1 = 2$ ; max $S = \\frac12\\times3 = \\frac32$ . Max $j = L + S = 2 + \\frac32 = \\frac72$ (B).",
+            "difficulty": 2
         },
         {
             "id": "GR9277#77",
@@ -1950,7 +2014,8 @@
                 ]
             ],
             "answer": "E",
-            "solution": "$\\mu = \\gamma S$ with $\\gamma = eg/2m \\propto 1/m$ . With the same spin, $\\mu_n/\\mu_e \\approx m_e/m_n \\ll 1$ because the nucleus is far more massive (E)."
+            "solution": "$\\mu = \\gamma S$ with $\\gamma = eg/2m \\propto 1/m$ . With the same spin, $\\mu_n/\\mu_e \\approx m_e/m_n \\ll 1$ because the nucleus is far more massive (E).",
+            "difficulty": 3
         },
         {
             "id": "GR9277#79",
@@ -1980,7 +2045,8 @@
                 ]
             ],
             "answer": "A",
-            "solution": "$v_g = d\\omega/dk < 0$ (negative slope) while $v_p = \\omega/k > 0$ . They point in opposite directions (A)."
+            "solution": "$v_g = d\\omega/dk < 0$ (negative slope) while $v_p = \\omega/k > 0$ . They point in opposite directions (A).",
+            "difficulty": 2
         },
         {
             "id": "GR9277#80",
@@ -2010,7 +2076,8 @@
                 ]
             ],
             "answer": "B",
-            "solution": "$\\lambda = hc/E$ with $hc \\approx 1.24\\times10^{-6}$ eV·m, $E = 2.5\\times10^4$ eV: $\\lambda = 1.24\\times10^{-6}/2.5\\times10^4 = 0.5\\times10^{-10}$ m = 0.5 Å (B)."
+            "solution": "$\\lambda = hc/E$ with $hc \\approx 1.24\\times10^{-6}$ eV·m, $E = 2.5\\times10^4$ eV: $\\lambda = 1.24\\times10^{-6}/2.5\\times10^4 = 0.5\\times10^{-10}$ m = 0.5 Å (B).",
+            "difficulty": 4
         },
         {
             "id": "GR9277#81",
@@ -2040,7 +2107,8 @@
                 ]
             ],
             "answer": "C",
-            "solution": "Current is max when reactance vanishes: $\\omega L = 1/(\\omega C) \\implies \\omega = 1/\\sqrt{LC}$ (C). Resistance doesn't shift the steady-state resonance."
+            "solution": "Current is max when reactance vanishes: $\\omega L = 1/(\\omega C) \\implies \\omega = 1/\\sqrt{LC}$ (C). Resistance doesn't shift the steady-state resonance.",
+            "difficulty": 2
         },
         {
             "id": "GR9277#85",
@@ -2070,7 +2138,8 @@
                 ]
             ],
             "answer": "C",
-            "solution": "$E^2 = (pc)^2 + (mc^2)^2$ : $(1.5)^2 = (pc)^2 + (0.5)^2 \\implies (pc)^2 = 2.0 \\implies pc = \\sqrt2 \\approx 1.4$ MeV (C)."
+            "solution": "$E^2 = (pc)^2 + (mc^2)^2$ : $(1.5)^2 = (pc)^2 + (0.5)^2 \\implies (pc)^2 = 2.0 \\implies pc = \\sqrt2 \\approx 1.4$ MeV (C).",
+            "difficulty": 3
         },
         {
             "id": "GR9277#86",
@@ -2100,7 +2169,8 @@
                 ]
             ],
             "answer": "B",
-            "solution": "$V = V_0 e^{-t/RC}$ , so $C = -t/(R\\ln(V/V_0))$ . The voltage ratio is read off the screen; time comes from sweep speed $s$ , and the time constant requires $R$ . Thus $s$ and $R$ are needed (B)."
+            "solution": "$V = V_0 e^{-t/RC}$ , so $C = -t/(R\\ln(V/V_0))$ . The voltage ratio is read off the screen; time comes from sweep speed $s$ , and the time constant requires $R$ . Thus $s$ and $R$ are needed (B).",
+            "difficulty": 2
         },
         {
             "id": "GR9277#87",
@@ -2130,7 +2200,8 @@
                 ]
             ],
             "answer": "C",
-            "solution": "Circular orbit: $Mv^2/r = K/r^3 \\implies T = \\frac12 Mv^2 = K/(2r^2)$ . Potential $V = -\\int F\\,dr = -K/(2r^2)$ . Total $E = T + V = 0$ (C)."
+            "solution": "Circular orbit: $Mv^2/r = K/r^3 \\implies T = \\frac12 Mv^2 = K/(2r^2)$ . Potential $V = -\\int F\\,dr = -K/(2r^2)$ . Total $E = T + V = 0$ (C).",
+            "difficulty": 3
         },
         {
             "id": "GR9277#88",
@@ -2160,7 +2231,8 @@
                 ]
             ],
             "answer": "E",
-            "solution": "With the battery connected, $V_f = V_0$ (eliminates A, B). $Q_f = \\kappa Q_0 > Q_0$ (eliminates C). $E_f = \\sigma_f/(\\kappa\\epsilon_0) = E_0$ (eliminates D). But $D_f = \\kappa\\epsilon_0 E_0 > \\epsilon_0 E_0 = D_0$ (E)."
+            "solution": "With the battery connected, $V_f = V_0$ (eliminates A, B). $Q_f = \\kappa Q_0 > Q_0$ (eliminates C). $E_f = \\sigma_f/(\\kappa\\epsilon_0) = E_0$ (eliminates D). But $D_f = \\kappa\\epsilon_0 E_0 > \\epsilon_0 E_0 = D_0$ (E).",
+            "difficulty": 4
         },
         {
             "id": "GR9277#89",
@@ -2190,7 +2262,8 @@
                 ]
             ],
             "answer": "E",
-            "solution": "The infinite central barrier forces a node at the origin. Only the odd- $n$ wavefunctions (which vanish at the center) survive; even- $n$ states are eliminated (E)."
+            "solution": "The infinite central barrier forces a node at the origin. Only the odd- $n$ wavefunctions (which vanish at the center) survive; even- $n$ states are eliminated (E).",
+            "difficulty": 1
         },
         {
             "id": "GR9277#90",
@@ -2220,7 +2293,8 @@
                 ]
             ],
             "answer": "B",
-            "solution": "$\\Delta E \\sim \\hbar^2/I$ with $I = 2mr^2 \\approx 2(1.7\\times10^{-27})(0.5\\times10^{-10})^2 \\approx 10^{-47}$ kg·m². $\\Delta E \\approx 10^{-68}/10^{-47} = 10^{-21}$ J $\\approx 10^{-3}$ eV (B)."
+            "solution": "$\\Delta E \\sim \\hbar^2/I$ with $I = 2mr^2 \\approx 2(1.7\\times10^{-27})(0.5\\times10^{-10})^2 \\approx 10^{-47}$ kg·m². $\\Delta E \\approx 10^{-68}/10^{-47} = 10^{-21}$ J $\\approx 10^{-3}$ eV (B).",
+            "difficulty": 4
         },
         {
             "id": "GR9277#91",
@@ -2250,7 +2324,8 @@
                 ]
             ],
             "answer": "E",
-            "solution": "The $\\Lambda$ has strangeness $S = -1$ while $p$ and $\\pi^-$ have $S = 0$ . The strong force conserves strangeness; the weak force allows $\\Delta S = \\pm 1$ . The strangeness change signals a weak interaction (E)."
+            "solution": "The $\\Lambda$ has strangeness $S = -1$ while $p$ and $\\pi^-$ have $S = 0$ . The strong force conserves strangeness; the weak force allows $\\Delta S = \\pm 1$ . The strangeness change signals a weak interaction (E).",
+            "difficulty": 2
         },
         {
             "id": "GR9277#92",
@@ -2280,7 +2355,8 @@
                 ]
             ],
             "answer": "D",
-            "solution": "Three magnet pairs make the field pattern repeat three times per revolution, so the voltage cycles three times per rotation: $10 \\times 3 = 30$ Hz (D)."
+            "solution": "Three magnet pairs make the field pattern repeat three times per revolution, so the voltage cycles three times per rotation: $10 \\times 3 = 30$ Hz (D).",
+            "difficulty": 2
         },
         {
             "id": "GR9277#95",
@@ -2310,7 +2386,8 @@
                 ]
             ],
             "answer": "C",
-            "solution": "$$\\frac{d\\sigma}{d\\Omega} = \\frac{N_S}{N_I\\,n_T\\,\\Delta\\Omega} = \\frac{10^2}{10^{12}\\cdot10^{20}\\cdot10^{-4}} = \\frac{10^2}{10^{28}} = 10^{-26}\\ \\text{cm}^2/\\text{sr}$$(C)."
+            "solution": "$$\\frac{d\\sigma}{d\\Omega} = \\frac{N_S}{N_I\\,n_T\\,\\Delta\\Omega} = \\frac{10^2}{10^{12}\\cdot10^{20}\\cdot10^{-4}} = \\frac{10^2}{10^{28}} = 10^{-26}\\ \\text{cm}^2/\\text{sr}$$(C).",
+            "difficulty": 5
         },
         {
             "id": "GR9277#96",
@@ -2340,7 +2417,8 @@
                 ]
             ],
             "answer": "D",
-            "solution": "$m = \\frac{2d}{\\lambda}(n-1) \\implies n = 1 + \\frac{m\\lambda}{2d} = 1 + \\frac{40\\times500\\times10^{-9}}{2\\times0.05} = 1 + 0.0002 = 1.0002$ (D)."
+            "solution": "$m = \\frac{2d}{\\lambda}(n-1) \\implies n = 1 + \\frac{m\\lambda}{2d} = 1 + \\frac{40\\times500\\times10^{-9}}{2\\times0.05} = 1 + 0.0002 = 1.0002$ (D).",
+            "difficulty": 3
         },
         {
             "id": "GR9277#97",
@@ -2370,7 +2448,8 @@
                 ]
             ],
             "answer": "D",
-            "solution": "From $E = \\hbar^2 k^2/(2m)$ , $d^2E/dk^2 = \\hbar^2/m$ , so $m^* = \\hbar^2/(d^2E/dk^2)$ (D). Effective mass is inversely proportional to band curvature."
+            "solution": "From $E = \\hbar^2 k^2/(2m)$ , $d^2E/dk^2 = \\hbar^2/m$ , so $m^* = \\hbar^2/(d^2E/dk^2)$ (D). Effective mass is inversely proportional to band curvature.",
+            "difficulty": 4
         },
         {
             "id": "GR9277#98",
@@ -2400,7 +2479,8 @@
                 ]
             ],
             "answer": "B",
-            "solution": "The roots are the cube roots of unity: $1, e^{\\pm 2\\pi i/3}$ . Two are complex, so \"all real\" is false (B). Statements A, C, D, E all hold."
+            "solution": "The roots are the cube roots of unity: $1, e^{\\pm 2\\pi i/3}$ . Two are complex, so \"all real\" is false (B). Statements A, C, D, E all hold.",
+            "difficulty": 2
         },
         {
             "id": "GR9277#99",
@@ -2430,7 +2510,8 @@
                 ]
             ],
             "answer": "B",
-            "solution": "$\\Delta H = eEz = eEr\\cos\\theta$ . The first-order correction $\\langle\\psi_0|\\Delta H|\\psi_0\\rangle = 0$ because the spherically symmetric (even-parity) ground state integrated against the odd-parity $\\cos\\theta$ vanishes (B). No linear Stark effect for the ground state."
+            "solution": "$\\Delta H = eEz = eEr\\cos\\theta$ . The first-order correction $\\langle\\psi_0|\\Delta H|\\psi_0\\rangle = 0$ because the spherically symmetric (even-parity) ground state integrated against the odd-parity $\\cos\\theta$ vanishes (B). No linear Stark effect for the ground state.",
+            "difficulty": 4
         },
         {
             "id": "GR9277#100",
@@ -2460,7 +2541,8 @@
                 ]
             ],
             "answer": "C",
-            "solution": "Using the center of mass of the two end masses (origin at rod center, ends at $\\pm 5$ m):\n$$x_{cm} = \\frac{20(-5) + 40(5)}{60} = \\frac{150}{60}$$More precisely, balancing about the fulcrum with the rod's own weight at center gives $1.25$ m from the center (C)."
+            "solution": "Using the center of mass of the two end masses (origin at rod center, ends at $\\pm 5$ m):\n$$x_{cm} = \\frac{20(-5) + 40(5)}{60} = \\frac{150}{60}$$More precisely, balancing about the fulcrum with the rod's own weight at center gives $1.25$ m from the center (C).",
+            "difficulty": 3
         }
     ]
 }

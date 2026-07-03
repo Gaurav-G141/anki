@@ -210,6 +210,10 @@ bake-ai-key:
 bench:
     cargo test -p anki --release speedrun::tests_perf -- --ignored --nocapture
 
+# AI-vs-simpler-method comparison (Friday §2): blind GPT-4o solver vs keyword/vector search on the held-out split. Add --dry-run for baselines-only (no key). (macOS/Linux)
+baseline-eval *args:
+    out/pyenv/bin/python speedrun/baseline_eval.py {{args}}
+
 # Remove build outputs from out/ (pass keep-env to keep node_modules/pyenv); macOS/Linux
 clean *args:
     ./tools/clean {{ args }}

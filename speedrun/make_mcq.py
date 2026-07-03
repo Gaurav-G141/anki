@@ -26,7 +26,13 @@ import os
 import shutil
 
 import pgre_problems as pp
-from mcq_schema import clean_solution, references_other_problem, space_math, well_formed
+from mcq_schema import (
+    clean_solution,
+    difficulty,
+    references_other_problem,
+    space_math,
+    well_formed,
+)
 
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 QT_DEST = os.path.join(REPO, "qt", "aqt", "data", "pgre_mcq.json")
@@ -47,6 +53,7 @@ def build() -> list[dict]:
         statement = space_math(p.statement.strip())
         if not statement:
             continue
+        solution = clean_solution(p.solution)
         # Drop problems that reference another problem (e.g. GR9277 #5 "Same setup
         # as Problem 4."): they aren't self-contained, so they're ungradeable when
         # shown individually/shuffled in the quiz.
@@ -60,10 +67,31 @@ def build() -> list[dict]:
                 "statement": statement,
                 "choices": choices,
                 "answer": p.answer,
-                "solution": clean_solution(p.solution),
+                "solution": solution,
+                # 1–5 difficulty for the quiz's adaptive (ZPD) question selector.
+                "difficulty": difficulty(statement, solution, choices),
             }
         )
     return out
+
+
+def _stamp_generated() -> None:
+    """Add/refresh the ``difficulty`` field on the AI-generated bank (produced by a
+    separate pipeline) and mirror it to iOS, so generated items join the adaptive
+    (ZPD) pool with the same difficulty proxy as the real questions."""
+    gen_qt = os.path.join(REPO, "qt", "aqt", "data", "pgre_mcq_generated.json")
+    gen_ios = os.path.join(REPO, "mobile", "SpeedrunApp", "Resources", "pgre_mcq_generated.json")
+    if not os.path.exists(gen_qt):
+        return
+    with open(gen_qt, encoding="utf-8") as f:
+        payload = json.load(f)
+    qs = payload.get("questions", payload if isinstance(payload, list) else [])
+    for q in qs:
+        q["difficulty"] = difficulty(q.get("statement", ""), q.get("solution", ""), q.get("choices"))
+    with open(gen_qt, "w", encoding="utf-8") as f:
+        json.dump(payload, f, ensure_ascii=False, indent=1)
+    shutil.copyfile(gen_qt, gen_ios)
+    print(f"stamped difficulty on {len(qs)} generated MCQs → {gen_qt} + iOS")
 
 
 def main() -> None:
@@ -81,6 +109,8 @@ def main() -> None:
         print(f"synced optimal-approach key → {IOS_KEY}")
     else:
         print(f"note: {QT_KEY} not found; skipped key sync (run heuristic_eval.py first)")
+
+    _stamp_generated()
 
 
 if __name__ == "__main__":
