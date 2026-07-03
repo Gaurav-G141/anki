@@ -1,2556 +1,2526 @@
 {
- "exam": "GR9277",
- "source": "grephysics.net",
- "questions": [
-  {
-   "id": "GR9277#1",
-   "subject": "quantum_mechanics",
-   "topic": "Quantum Mechanics → Momentum Operator",
-   "statement": "The wave function of a particle is $e^{i(kx-\\omega t)}$ where $x$ is distance, $t$ is time, and $k$ and $\\omega$ are positive real numbers. Find the x-component of the momentum.",
-   "choices": [
-    [
-     "A",
-     "0"
-    ],
-    [
-     "B",
-     "$\\hbar\\omega$"
-    ],
-    [
-     "C",
-     "$\\hbar k$"
-    ],
-    [
-     "D",
-     "$\\frac{\\hbar\\omega}{c}$"
-    ],
-    [
-     "E",
-     "$\\frac{\\hbar k}{\\omega}$"
+    "exam": "GR9277",
+    "source": "grephysics.net",
+    "questions": [
+        {
+            "id": "GR9277#1",
+            "subject": "quantum_mechanics",
+            "topic": "Quantum Mechanics → Momentum Operator",
+            "statement": "The wave function of a particle is $e^{i(kx-\\omega t)}$ where $x$ is distance, $t$ is time, and $k$ and $\\omega$ are positive real numbers. Find the x-component of the momentum.",
+            "choices": [
+                [
+                    "A",
+                    "0"
+                ],
+                [
+                    "B",
+                    "$\\hbar\\omega$"
+                ],
+                [
+                    "C",
+                    "$\\hbar k$"
+                ],
+                [
+                    "D",
+                    "$\\frac{\\hbar\\omega}{c}$"
+                ],
+                [
+                    "E",
+                    "$\\frac{\\hbar k}{\\omega}$"
+                ]
+            ],
+            "answer": "C",
+            "solution": "The momentum operator is $\\hat{p}_x = \\frac{\\hbar}{i}\\frac{\\partial}{\\partial x}$ . Applying it:\n$$p_x\\psi = \\frac{\\hbar}{i}\\frac{\\partial}{\\partial x}e^{i(kx-\\omega t)} = \\frac{\\hbar}{i}(ik)e^{i(kx-\\omega t)} = \\hbar k\\,\\psi$$The eigenvalue (momentum) is $\\hbar k$ ."
+        },
+        {
+            "id": "GR9277#2",
+            "subject": "atomic_physics",
+            "topic": "Atomic Physics → Bragg Diffraction",
+            "statement": "The longest wavelength x-ray that can undergo Bragg diffraction in a crystal for a given family of planes of spacing $d$ is:",
+            "choices": [
+                [
+                    "A",
+                    "$d/4$"
+                ],
+                [
+                    "B",
+                    "$d/2$"
+                ],
+                [
+                    "C",
+                    "$d$"
+                ],
+                [
+                    "D",
+                    "$2d$"
+                ],
+                [
+                    "E",
+                    "$4d$"
+                ]
+            ],
+            "answer": "D",
+            "solution": "Bragg's law: $\\lambda = 2d\\sin\\theta$ . The wavelength is maximized when $\\sin\\theta = 1$ (at $\\theta = 90°$ ):\n$$\\lambda_{max} = 2d\\sin(90°) = 2d$$"
+        },
+        {
+            "id": "GR9277#3",
+            "subject": "quantum_mechanics",
+            "topic": "Quantum Mechanics → Bohr Theory",
+            "statement": "Determine the ratio of characteristic K x-ray energies between carbon ( $Z=6$ ) and magnesium ( $Z=12$ ).",
+            "choices": [
+                [
+                    "A",
+                    "1/4"
+                ],
+                [
+                    "B",
+                    "1/2"
+                ],
+                [
+                    "C",
+                    "1"
+                ],
+                [
+                    "D",
+                    "2"
+                ],
+                [
+                    "E",
+                    "4"
+                ]
+            ],
+            "answer": "A",
+            "solution": "For hydrogen-like atoms, characteristic K x-ray energy $\\propto Z^2$ . Therefore:\n$$\\frac{E_C}{E_{Mg}} = \\frac{Z_C^2}{Z_{Mg}^2} = \\frac{6^2}{12^2} = \\frac{36}{144} = \\frac{1}{4}$$(Moseley's law with $(Z-1)^2$ gives $\\approx 25/121 \\approx 1/5$ , still closest to 1/4.)"
+        },
+        {
+            "id": "GR9277#4",
+            "subject": "classical_mechanics",
+            "topic": "Mechanics → Gravitational Law",
+            "statement": "The magnitude of the Earth's gravitational force on a point mass is $F(r)$ , where $r$ is the distance from the Earth's center. Assume the Earth is a homogeneous sphere of radius $R$ . What is $F(R)/F(2R)$ ?",
+            "choices": [
+                [
+                    "A",
+                    "32"
+                ],
+                [
+                    "B",
+                    "8"
+                ],
+                [
+                    "C",
+                    "4"
+                ],
+                [
+                    "D",
+                    "2"
+                ],
+                [
+                    "E",
+                    "1"
+                ]
+            ],
+            "answer": "C",
+            "solution": "Outside the sphere, $F = k/r^2$ , so\n$$\\frac{F(R)}{F(2R)} = \\frac{(2R)^2}{R^2} = 4$$"
+        },
+        {
+            "id": "GR9277#6",
+            "subject": "classical_mechanics",
+            "topic": "Mechanics → Statics / Friction",
+            "statement": "Two wedges, each of mass $m$ , are placed next to each other on a flat floor. A cube of mass $M$ is balanced on the wedges (45°). There is no friction between cube and wedges, but a coefficient of static friction $\\mu < 1$ exists between wedges and floor. What is the largest $M$ that can be balanced without the wedges moving?",
+            "choices": [
+                [
+                    "A",
+                    "$m/\\sqrt{2}$"
+                ],
+                [
+                    "B",
+                    "$\\mu m/\\sqrt{2}$"
+                ],
+                [
+                    "C",
+                    "$\\mu m/(1-\\mu)$"
+                ],
+                [
+                    "D",
+                    "$2\\mu m/(1-\\mu)$"
+                ],
+                [
+                    "E",
+                    "All $M$will balance"
+                ]
+            ],
+            "answer": "D",
+            "solution": "Each wedge supports half the cube's weight; normal force on the floor from one wedge is $N = (m + M/2)g$ , giving max friction $\\mu(m+M/2)g$ . The horizontal force pushing a wedge outward is $Mg/2$ . For no slipping:\n$$\\mu\\left(m + \\frac{M}{2}\\right)g \\ge \\frac{Mg}{2}$$$$\\mu m \\ge \\frac{M(1-\\mu)}{2} \\implies M \\le \\frac{2\\mu m}{1-\\mu}$$"
+        },
+        {
+            "id": "GR9277#7",
+            "subject": "classical_mechanics",
+            "topic": "Mechanics → Normal Modes",
+            "statement": "A cylindrical tube of mass $M$ slides on a horizontal wire. Two identical pendulums, each of mass $m$ and length $l$ , hang from the ends of the tube. The system undergoes small oscillations. Which is a normal mode frequency? (The missing one of three.)",
+            "choices": [
+                [
+                    "A",
+                    "$\\sqrt{\\frac{g(M+2m)}{lM}}$"
+                ],
+                [
+                    "B",
+                    "$\\sqrt{g/l}$"
+                ],
+                [
+                    "C",
+                    "$\\sqrt{\\frac{g(M+m)}{lM}}$"
+                ],
+                [
+                    "D",
+                    "$\\sqrt{\\frac{gm}{lM}}$"
+                ],
+                [
+                    "E",
+                    "$\\sqrt{\\frac{gm}{l(M+m)}}$(F) $\\sqrt{\\frac{gm}{l(M+2m)}}$"
+                ]
+            ],
+            "answer": "B",
+            "solution": "The system has three modes: a zero-frequency translation, a symmetric mode $\\sqrt{g(M+2m)/(lM)}$ , and an antisymmetric mode in which the two pendulums swing oppositely so the tube stays fixed, giving a frequency independent of $M$ : $\\sqrt{g/l}$ . The only $M$ -independent choice is (B)."
+        },
+        {
+            "id": "GR9277#8",
+            "subject": "classical_mechanics",
+            "topic": "Mechanics → Torque (Cross Product)",
+            "statement": "A solid cone hangs from a frictionless pivot at origin O. Which force $\\mathbf{F}$ applied at point P on the rim produces torque with $\\tau_z < 0$ ? ( $a,b,c$ positive constants.)",
+            "choices": [
+                [
+                    "A",
+                    "$\\mathbf{F}=a\\hat{k}$, P$=(0,b,-c)$"
+                ],
+                [
+                    "B",
+                    "$\\mathbf{F}=-a\\hat{k}$, P$=(0,-b,-c)$"
+                ],
+                [
+                    "C",
+                    "$\\mathbf{F}=a\\hat{j}$, P$=(-b,0,-c)$"
+                ],
+                [
+                    "D",
+                    "$\\mathbf{F}=a\\hat{j}$, P$=(b,0,-c)$"
+                ],
+                [
+                    "E",
+                    "$\\mathbf{F}=-a\\hat{k}$, P$=(-b,0,-c)$"
+                ]
+            ],
+            "answer": "C",
+            "solution": "$\\tau_z = xF_y - yF_x$ . Options A, B, E have $\\mathbf{F}\\parallel\\hat{k}$ giving $\\tau_z = 0$ . For (C): $\\tau_z = xF_y = (-b)(a) = -ab < 0$ . For (D): $\\tau_z = (b)(a) > 0$ . Answer is (C)."
+        },
+        {
+            "id": "GR9277#9",
+            "subject": "electromagnetism",
+            "topic": "Electromagnetism → Ampère's Law (Coaxial Cable)",
+            "statement": "A coaxial cable carries equal and opposite currents $i$ on the inner and outer conductors. Find the magnetic field magnitude at point P outside the cable at distance $r$ from the axis.",
+            "choices": [
+                [
+                    "A",
+                    "Zero"
+                ],
+                [
+                    "B",
+                    "$\\frac{\\mu_0 i r}{2\\pi a^2}$"
+                ],
+                [
+                    "C",
+                    "$\\frac{\\mu_0 i}{2\\pi r}$"
+                ],
+                [
+                    "D",
+                    "$\\frac{\\mu_0 i}{2\\pi r}\\frac{c^2-r^2}{c^2-b^2}$"
+                ],
+                [
+                    "E",
+                    "$\\frac{\\mu_0 i}{2\\pi r}\\frac{r^2-b^2}{c^2-b^2}$"
+                ]
+            ],
+            "answer": "A",
+            "solution": "By Ampère's law, $\\oint \\vec{B}\\cdot d\\vec{l} = \\mu_0 I_{enc}$ . Outside, the enclosed current is $+i - i = 0$ , so $B = 0$ . This is the shielding property of coaxial cables."
+        },
+        {
+            "id": "GR9277#10",
+            "subject": "electromagnetism",
+            "topic": "Electromagnetism → Image Charges",
+            "statement": "Charges $q$ and $2q$ are on the x-axis at $x=0.5a$ and $1.5a$ . An infinite grounded conducting plane is at $x=0$ . Find the magnitude of the net force on charge $q$ .",
+            "choices": [
+                [
+                    "A",
+                    "$\\frac{1}{4\\pi\\epsilon_0}\\frac{q^2}{a^2}$"
+                ],
+                [
+                    "B",
+                    "$\\frac{1}{4\\pi\\epsilon_0}\\frac{3q^2}{2a^2}$"
+                ],
+                [
+                    "C",
+                    "$\\frac{1}{4\\pi\\epsilon_0}\\frac{2q^2}{a^2}$"
+                ],
+                [
+                    "D",
+                    "$\\frac{1}{4\\pi\\epsilon_0}\\frac{3q^2}{a^2}$"
+                ],
+                [
+                    "E",
+                    "$\\frac{1}{4\\pi\\epsilon_0}\\frac{7q^2}{2a^2}$"
+                ]
+            ],
+            "answer": "E",
+            "solution": "The grounded plane induces image charges $-q$ (at $-0.5a$ ) and $-2q$ (at $-1.5a$ ). Distances from $q$ : to $+2q$ is $a$ , to image $-q$ is $a$ , to image $-2q$ is $2a$ . All forces on $q$ point in the same direction:\n$$F = \\frac{q^2}{4\\pi\\epsilon_0}\\left(\\frac{2}{a^2} + \\frac{1}{a^2} + \\frac{2}{(2a)^2}\\right) = \\frac{q^2}{4\\pi\\epsilon_0 a^2}\\left(2+1+\\tfrac12\\right) = \\frac{1}{4\\pi\\epsilon_0}\\frac{7q^2}{2a^2}$$"
+        },
+        {
+            "id": "GR9277#11",
+            "subject": "electromagnetism",
+            "topic": "Electromagnetism → RC Circuit",
+            "statement": "A charged capacitor is discharged through a resistor. How much time elapses until half of the capacitor's initial stored energy is dissipated?",
+            "choices": [
+                [
+                    "A",
+                    "$RC$"
+                ],
+                [
+                    "B",
+                    "$2RC$"
+                ],
+                [
+                    "C",
+                    "$RC/2$"
+                ],
+                [
+                    "D",
+                    "$RC/4$"
+                ],
+                [
+                    "E",
+                    "$RC\\ln(2)/2$"
+                ]
+            ],
+            "answer": "E",
+            "solution": "$Q(t) = Q_0 e^{-t/RC}$ and $U \\propto Q^2 \\propto e^{-2t/RC}$ . Setting $U = U_0/2$ :\n$$\\tfrac12 = e^{-2t/RC} \\implies t = \\frac{RC\\ln 2}{2}$$"
+        },
+        {
+            "id": "GR9277#12",
+            "subject": "electromagnetism",
+            "topic": "Electromagnetism → Laplace's Equation",
+            "statement": "Two large conducting plates form a wedge of angle $\\alpha$ . One is at potential $V_0$ , the other grounded. Find the potential as a function of angle $\\varphi$ (independent of $z$ and $\\rho$ ).",
+            "choices": [
+                [
+                    "A",
+                    "$V_0/\\alpha$"
+                ],
+                [
+                    "B",
+                    "$V_0\\varphi/\\alpha$"
+                ],
+                [
+                    "C",
+                    "$V_0\\alpha/\\varphi$"
+                ],
+                [
+                    "D",
+                    "$V_0\\varphi^2/\\alpha$"
+                ],
+                [
+                    "E",
+                    "$V_0\\alpha/\\varphi^2$"
+                ]
+            ],
+            "answer": "B",
+            "solution": "Laplace's equation reduces to $d^2V/d\\varphi^2 = 0$ , so $V = A\\varphi + B$ . With $V(0)=0$ and $V(\\alpha)=V_0$ : $B=0$ , $A=V_0/\\alpha$ . Thus $V(\\varphi) = V_0\\varphi/\\alpha$ ."
+        },
+        {
+            "id": "GR9277#13",
+            "subject": "electromagnetism",
+            "topic": "Electromagnetism → Maxwell's Equations",
+            "statement": "Which of Maxwell's equations would be incorrect if magnetic monopoles exist?",
+            "choices": [
+                [
+                    "A",
+                    "IV only"
+                ],
+                [
+                    "B",
+                    "I and II"
+                ],
+                [
+                    "C",
+                    "I and III"
+                ],
+                [
+                    "D",
+                    "II and IV"
+                ],
+                [
+                    "E",
+                    "III and IV"
+                ]
+            ],
+            "answer": "D",
+            "solution": "Magnetic monopoles would require modifying Gauss's law for magnetism ( $\\nabla\\cdot\\vec{B} = \\rho_m$ instead of 0) and Faraday's law (adding a magnetic current term $-\\vec{J}_m$ ). These are equations II and IV."
+        },
+        {
+            "id": "GR9277#14",
+            "subject": "thermo_stat_mech",
+            "topic": "Statistical Mechanics → Blackbody Radiation",
+            "statement": "A blackbody's radiation heats water from 20.0°C to 20.5°C in one minute. If the blackbody's absolute temperature is doubled and the experiment repeated, what is the final water temperature?",
+            "choices": [
+                [
+                    "A",
+                    "21°C"
+                ],
+                [
+                    "B",
+                    "24°C"
+                ],
+                [
+                    "C",
+                    "28°C"
+                ],
+                [
+                    "D",
+                    "36°C"
+                ],
+                [
+                    "E",
+                    "Water would boil within one minute"
+                ]
+            ],
+            "answer": "C",
+            "solution": "By Stefan-Boltzmann, power $\\propto T^4$ . Doubling $T$ gives $2^4 = 16\\times$ the energy. The original temperature rise was 0.5°C, so the new rise is $16 \\times 0.5 = 8$ °C. Final: $20 + 8 = 28$ °C."
+        },
+        {
+            "id": "GR9277#15",
+            "subject": "thermo_stat_mech",
+            "topic": "Statistical Mechanics → Heat Capacity",
+            "statement": "A diatomic molecule is modeled as a springy dumbbell, free to rotate about axes perpendicular to the spring. In the high-temperature limit, what is the molar specific heat at constant volume?",
+            "choices": [
+                [
+                    "A",
+                    "$3R/2$"
+                ],
+                [
+                    "B",
+                    "$5R/2$"
+                ],
+                [
+                    "C",
+                    "$7R/2$"
+                ],
+                [
+                    "D",
+                    "$9R/2$"
+                ],
+                [
+                    "E",
+                    "$11R/2$"
+                ]
+            ],
+            "answer": "C",
+            "solution": "By equipartition each quadratic degree of freedom contributes $\\frac12 R$ . Degrees of freedom: 3 translational + 2 rotational + 2 vibrational (KE and PE) = 7. So $C_v = \\frac72 R$ ."
+        },
+        {
+            "id": "GR9277#16",
+            "subject": "thermo_stat_mech",
+            "topic": "Thermodynamics → Carnot Engine",
+            "statement": "An engine absorbs heat at 727°C and exhausts at 527°C, operating at maximum efficiency. For 2000 J of heat input, the work performed is most nearly:",
+            "choices": [
+                [
+                    "A",
+                    "400 J"
+                ],
+                [
+                    "B",
+                    "1450 J"
+                ],
+                [
+                    "C",
+                    "1600 J"
+                ],
+                [
+                    "D",
+                    "2000 J"
+                ],
+                [
+                    "E",
+                    "2760 J"
+                ]
+            ],
+            "answer": "A",
+            "solution": "Convert: $T_H = 1000$ K, $T_C = 800$ K. Carnot efficiency $e = 1 - 800/1000 = 0.2$ . Work $= e\\,Q = 0.2 \\times 2000 = 400$ J."
+        },
+        {
+            "id": "GR9277#17",
+            "subject": "lab_methods",
+            "topic": "Lab Methods → Oscilloscope (Lissajous Figures)",
+            "statement": "Two oscillators feed an oscilloscope in X-Y mode. If oscillator Y's frequency is twice oscillator X's, which pattern appears?",
+            "choices": [
+                [
+                    "A",
+                    "A figure with one hump (parabolic-like)"
+                ],
+                [
+                    "B",
+                    "A more complex pattern"
+                ],
+                [
+                    "C",
+                    "A simple sinusoid"
+                ],
+                [
+                    "D",
+                    "An elliptical pattern"
+                ],
+                [
+                    "E",
+                    "An elongated circle"
+                ]
+            ],
+            "answer": "A",
+            "solution": "With $X = \\sin(\\omega t)$ , $Y = \\sin(2\\omega t)$ , this 1:2 frequency ratio produces a parabolic Lissajous figure $Y = 1 - 2X^2$ — a single-hump curve (A)."
+        },
+        {
+            "id": "GR9277#18",
+            "subject": "electromagnetism",
+            "topic": "Electromagnetism → Transmission Lines",
+            "statement": "A coaxial cable transmitting high-frequency signals should be terminated with its characteristic impedance to avoid:",
+            "choices": [
+                [
+                    "A",
+                    "Leakage"
+                ],
+                [
+                    "B",
+                    "Overheating"
+                ],
+                [
+                    "C",
+                    "Reflection of signal from the terminated end"
+                ],
+                [
+                    "D",
+                    "Attenuation"
+                ],
+                [
+                    "E",
+                    "Image currents"
+                ]
+            ],
+            "answer": "C",
+            "solution": "When a wave meets an impedance mismatch, it reflects. Matching the termination to the characteristic impedance absorbs the wave rather than reflecting it. Answer (C)."
+        },
+        {
+            "id": "GR9277#19",
+            "subject": "classical_mechanics",
+            "topic": "Mechanics → Mass of Earth (Estimation)",
+            "statement": "Which is most nearly the mass of the Earth? (Radius $\\approx 6.4\\times10^6$ m.)",
+            "choices": [
+                [
+                    "A",
+                    "$6\\times10^{24}$kg"
+                ],
+                [
+                    "B",
+                    "$6\\times10^{27}$"
+                ],
+                [
+                    "C",
+                    "$6\\times10^{30}$"
+                ],
+                [
+                    "D",
+                    "$6\\times10^{33}$"
+                ],
+                [
+                    "E",
+                    "$6\\times10^{36}$"
+                ]
+            ],
+            "answer": "A",
+            "solution": "From $g = GM/R^2$ : $M = gR^2/G \\approx (10)(6.4\\times10^6)^2/(6.67\\times10^{-11}) \\approx 6\\times10^{24}$ kg."
+        },
+        {
+            "id": "GR9277#20",
+            "subject": "optics_waves",
+            "topic": "Optics → Missing Fringes (Double-Slit)",
+            "statement": "In a double-slit experiment with slit separation $d$ and slit width $w$ , an interference maximum is \"missing\" when:",
+            "choices": [
+                [
+                    "A",
+                    "$d=\\sqrt{2}w$"
+                ],
+                [
+                    "B",
+                    "$d=\\sqrt{3}w$"
+                ],
+                [
+                    "C",
+                    "$2d=w$"
+                ],
+                [
+                    "D",
+                    "$2d=3w$"
+                ],
+                [
+                    "E",
+                    "$3d=2w$"
+                ]
+            ],
+            "answer": "D",
+            "solution": "A missing maximum occurs when a single-slit diffraction minimum ( $w\\sin\\theta = m_1\\lambda$ ) coincides with an interference maximum ( $d\\sin\\theta = m_2\\lambda$ ), so $d/w = m_2/m_1$ with both integers and $d > w$ . Choice (D), $2d = 3w$ , gives $d/w = 3/2$ ( $m_2 = 3, m_1 = 2$ )."
+        },
+        {
+            "id": "GR9277#21",
+            "subject": "optics_waves",
+            "topic": "Optics → Thin Film Interference",
+            "statement": "A vertical soap film ( $n > 1$ ) viewed in reflected white light shows colored bands below but black at top. Which statements correctly explain this?\n(I) top absorbs all light; (II) top thickness $\\ll$ wavelength; (III) 180° phase change for all wavelengths at front surface; (IV) no phase change at back surface.",
+            "choices": [
+                [
+                    "A",
+                    "I only"
+                ],
+                [
+                    "B",
+                    "II and III"
+                ],
+                [
+                    "C",
+                    "III and IV"
+                ],
+                [
+                    "D",
+                    "I, II, III"
+                ],
+                [
+                    "E",
+                    "II, III, IV"
+                ]
+            ],
+            "answer": "E",
+            "solution": "At the thin top, the path difference is negligible; only the 180° phase shift at the front surface (reflection from higher index) remains, while the back surface (soap to air) has no shift. This gives destructive interference for all wavelengths → black. Statements II, III, IV are correct (E)."
+        },
+        {
+            "id": "GR9277#22",
+            "subject": "optics_waves",
+            "topic": "Optics → Telescope",
+            "statement": "A telescope of two convex lenses sharing a focal point has objective focal length 1.0 m and angular magnification 10. Find the separation between lenses.",
+            "choices": [
+                [
+                    "A",
+                    "0.1 m"
+                ],
+                [
+                    "B",
+                    "0.9 m"
+                ],
+                [
+                    "C",
+                    "1.0 m"
+                ],
+                [
+                    "D",
+                    "1.1 m"
+                ],
+                [
+                    "E",
+                    "10 m"
+                ]
+            ],
+            "answer": "D",
+            "solution": "$M = f_o/f_e = 10 \\implies f_e = 0.1$ m. Separation $= f_o + f_e = 1.0 + 0.1 = 1.1$ m."
+        },
+        {
+            "id": "GR9277#23",
+            "subject": "thermo_stat_mech",
+            "topic": "Statistical Mechanics / Solid State → Fermi Temperature",
+            "statement": "The Fermi temperature of Cu is about 80,000 K. The average speed of a conduction electron is most nearly:",
+            "choices": [
+                [
+                    "A",
+                    "$2\\times10^{-2}$m/s"
+                ],
+                [
+                    "B",
+                    "2 m/s"
+                ],
+                [
+                    "C",
+                    "$2\\times10^2$"
+                ],
+                [
+                    "D",
+                    "$2\\times10^4$"
+                ],
+                [
+                    "E",
+                    "$2\\times10^6$"
+                ]
+            ],
+            "answer": "E",
+            "solution": "From $kT_F = \\frac12 m v^2$ : $v = \\sqrt{2kT_F/m} = \\sqrt{2(1.38\\times10^{-23})(8\\times10^4)/(9.1\\times10^{-31})} \\approx 10^6$ m/s. Closest: (E)."
+        },
+        {
+            "id": "GR9277#24",
+            "subject": "atomic_physics",
+            "topic": "Atomic Bonding",
+            "statement": "What holds solid argon together?",
+            "choices": [
+                [
+                    "A",
+                    "Ionic"
+                ],
+                [
+                    "B",
+                    "Covalent"
+                ],
+                [
+                    "C",
+                    "Partly covalent/ionic"
+                ],
+                [
+                    "D",
+                    "Metallic"
+                ],
+                [
+                    "E",
+                    "van der Waals"
+                ]
+            ],
+            "answer": "E",
+            "solution": "Argon is a noble gas with a filled outer shell, so it cannot form ionic, covalent, or metallic bonds. Only weak van der Waals forces remain (E)."
+        },
+        {
+            "id": "GR9277#25",
+            "subject": "atomic_physics",
+            "topic": "Particle/Cosmic Ray Physics",
+            "statement": "Deep underground, the two types of cosmic rays that most commonly reach the apparatus are:",
+            "choices": [
+                [
+                    "A",
+                    "Alpha particles and neutrons"
+                ],
+                [
+                    "B",
+                    "Protons and electrons"
+                ],
+                [
+                    "C",
+                    "Iron and carbon nuclei"
+                ],
+                [
+                    "D",
+                    "Muons and neutrinos"
+                ],
+                [
+                    "E",
+                    "Positrons and electrons"
+                ]
+            ],
+            "answer": "D",
+            "solution": "Heavy/charged particles are absorbed by rock. Neutrinos (weak interaction only) and muons (heavy, long interaction length) penetrate deeply. Answer (D)."
+        },
+        {
+            "id": "GR9277#26",
+            "subject": "atomic_physics",
+            "topic": "Nuclear Physics → Radioactive Decay",
+            "statement": "From an activity-vs-time graph, determine the half-life.",
+            "choices": [
+                [
+                    "A",
+                    "2 min"
+                ],
+                [
+                    "B",
+                    "7 min"
+                ],
+                [
+                    "C",
+                    "11 min"
+                ],
+                [
+                    "D",
+                    "18 min"
+                ],
+                [
+                    "E",
+                    "23 min"
+                ]
+            ],
+            "answer": "B",
+            "solution": "Activity $\\propto N$ . The graph shows activity dropping from $\\approx 6\\times10^3$ to $\\approx 3\\times10^3$ counts/min over 7 minutes, so the half-life is 7 min."
+        },
+        {
+            "id": "GR9277#27",
+            "subject": "quantum_mechanics",
+            "topic": "Quantum Mechanics → Uncertainty / Fourier",
+            "statement": "A localized electron has wave packet $\\psi(x,t) = \\int e^{i(kx-\\omega t)}f(k)\\,dk$ with $f(k)$ peaked at $k_0$ . The width of the peak in $k$ is most nearly:",
+            "choices": [
+                [
+                    "A",
+                    "$\\Delta k = 1/x_0$"
+                ],
+                [
+                    "B",
+                    "$\\Delta k = 1/\\Delta x_0$"
+                ],
+                [
+                    "C",
+                    "$\\Delta k = \\Delta x_0/x_0^2$"
+                ],
+                [
+                    "D",
+                    "$\\Delta k = k_0(\\Delta x_0/x_0)$"
+                ],
+                [
+                    "E",
+                    "$\\Delta k = \\sqrt{k_0^2 + (1/x_0)^2}$"
+                ]
+            ],
+            "answer": "B",
+            "solution": "Position and wave number are Fourier conjugates: $\\Delta x\\,\\Delta k \\approx 1$ . So $\\Delta k = 1/\\Delta x_0$ (B)."
+        },
+        {
+            "id": "GR9277#28",
+            "subject": "quantum_mechanics",
+            "topic": "Quantum Mechanics → Probability (Spherical Harmonics)",
+            "statement": "A normalized state is $\\psi = \\frac{1}{\\sqrt{30}}(5Y_4^3 + Y_6^3 - 2Y_6^0)$ . Find the probability of measuring $m = 3$ .",
+            "choices": [
+                [
+                    "A",
+                    "0"
+                ],
+                [
+                    "B",
+                    "1/15"
+                ],
+                [
+                    "C",
+                    "1/6"
+                ],
+                [
+                    "D",
+                    "1/3"
+                ],
+                [
+                    "E",
+                    "13/15"
+                ]
+            ],
+            "answer": "E",
+            "solution": "Only the $m=3$ terms ( $5Y_4^3$ and $Y_6^3$ ) contribute:\n$$P = \\frac{1}{30}(5^2 + 1^2) = \\frac{26}{30} = \\frac{13}{15}$$"
+        },
+        {
+            "id": "GR9277#30",
+            "subject": "quantum_mechanics",
+            "topic": "Quantum Mechanics → Bohr Theory (Positronium)",
+            "statement": "Given hydrogen ground-state binding energy $E_0 = 13.6$ eV, find the binding energy of the $n=2$ state of positronium.",
+            "choices": [
+                [
+                    "A",
+                    "$8E_0$"
+                ],
+                [
+                    "B",
+                    "$4E_0$"
+                ],
+                [
+                    "C",
+                    "$E_0$"
+                ],
+                [
+                    "D",
+                    "$E_0/4$"
+                ],
+                [
+                    "E",
+                    "$E_0/8$"
+                ]
+            ],
+            "answer": "E",
+            "solution": "Positronium's reduced mass is $m/2$ , half that of hydrogen, so its ground state energy is $E_0/2$ . For $n=2$ : $E = (E_0/2)/2^2 = E_0/8$ ."
+        },
+        {
+            "id": "GR9277#31",
+            "subject": "atomic_physics",
+            "topic": "Atomic Physics → Term Symbols",
+            "statement": "For a $^3S$ state of helium, what are the possible total angular momentum quantum numbers $j$ ?",
+            "choices": [
+                [
+                    "A",
+                    "0 only"
+                ],
+                [
+                    "B",
+                    "1 only"
+                ],
+                [
+                    "C",
+                    "0 and 1"
+                ],
+                [
+                    "D",
+                    "0, 1/2, 1"
+                ],
+                [
+                    "E",
+                    "0, 1, 2"
+                ]
+            ],
+            "answer": "B",
+            "solution": "$^3S$ : multiplicity $2S+1 = 3 \\implies S = 1$ ; $S$ term $\\implies L = 0$ . Then $j$ ranges over $|L-S|$ to $L+S = 1$ to $1$ , so $j = 1$ only (B)."
+        },
+        {
+            "id": "GR9277#32",
+            "subject": "electromagnetism",
+            "topic": "Electromagnetism → Circuits (Power)",
+            "statement": "In a five-resistor circuit with a 3.0 V ideal battery, which resistor dissipates the most power?",
+            "choices": [
+                [
+                    "A",
+                    "$R_1$"
+                ],
+                [
+                    "B",
+                    "$R_2$"
+                ],
+                [
+                    "C",
+                    "$R_3$"
+                ],
+                [
+                    "D",
+                    "$R_4$"
+                ],
+                [
+                    "E",
+                    "$R_5$"
+                ]
+            ],
+            "answer": "A",
+            "solution": "$P = I^2 R$ . $R_1$ carries the full main current from the battery while the others are in parallel branches sharing reduced current. With the largest current, $R_1$ dissipates the most power (A)."
+        },
+        {
+            "id": "GR9277#33",
+            "subject": "electromagnetism",
+            "topic": "Electromagnetism → Circuits",
+            "statement": "For the same circuit, find the voltage across resistor $R_4$ .",
+            "choices": [
+                [
+                    "A",
+                    "0.4 V"
+                ],
+                [
+                    "B",
+                    "0.6 V"
+                ],
+                [
+                    "C",
+                    "1.2 V"
+                ],
+                [
+                    "D",
+                    "1.5 V"
+                ],
+                [
+                    "E",
+                    "3.0 V"
+                ]
+            ],
+            "answer": "A",
+            "solution": "Reducing the network (e.g., $R_3 \\parallel R_4 \\approx 20\\,\\Omega$ , total $\\approx 75\\,\\Omega$ , total current 0.04 A), the branch current through the $R_4$ path is $1/50$ A, giving $V_4 = 1\\,\\text{V} - (1/50)(30) = 0.4$ V."
+        },
+        {
+            "id": "GR9277#34",
+            "subject": "electromagnetism",
+            "topic": "Electromagnetism → Cavity Boundary Conditions",
+            "statement": "For a perfectly conducting cavity resonator, what boundary conditions hold at the inner walls?",
+            "choices": [
+                [
+                    "A",
+                    "$E_n=0, B_n=0$"
+                ],
+                [
+                    "B",
+                    "$E_n=0, B_t=0$"
+                ],
+                [
+                    "C",
+                    "$E_t=0, B_t=0$"
+                ],
+                [
+                    "D",
+                    "$E_t=0, B_n=0$"
+                ],
+                [
+                    "E",
+                    "None"
+                ]
+            ],
+            "answer": "D",
+            "solution": "At a perfect conductor, the tangential electric field and the normal magnetic field vanish: $E_t = 0$ , $B_n = 0$ (D)."
+        },
+        {
+            "id": "GR9277#35",
+            "subject": "optics_waves",
+            "topic": "Optics → Diffraction Grating",
+            "statement": "Light of 5200 Å is normally incident on a grating of 2000 lines/cm. Find the angle of the first-order maximum.",
+            "choices": [
+                [
+                    "A",
+                    "2°"
+                ],
+                [
+                    "B",
+                    "3°"
+                ],
+                [
+                    "C",
+                    "6°"
+                ],
+                [
+                    "D",
+                    "9°"
+                ],
+                [
+                    "E",
+                    "12° (F) 15°"
+                ]
+            ],
+            "answer": "C",
+            "solution": "$d = 1/(2000\\,\\text{cm}^{-1}) = 5\\times10^{-6}$ m. $\\sin\\theta = \\lambda/d = 5200\\times10^{-10}/5\\times10^{-6} = 0.1$ , so $\\theta \\approx 0.1$ rad $\\approx 6°$ ."
+        },
+        {
+            "id": "GR9277#36",
+            "subject": "electromagnetism",
+            "topic": "Electromagnetism → Reflection at a Conductor",
+            "statement": "A plane-polarized EM wave is normally incident on a perfect conductor. Upon reflection:",
+            "choices": [
+                [
+                    "A",
+                    "Both E and B reversed"
+                ],
+                [
+                    "B",
+                    "Neither reversed"
+                ],
+                [
+                    "C",
+                    "E reversed, B not"
+                ],
+                [
+                    "D",
+                    "B reversed, E not"
+                ],
+                [
+                    "E",
+                    "E and B interchanged"
+                ]
+            ],
+            "answer": "C",
+            "solution": "The tangential E must vanish at the surface, so $E_{refl} = -E_{inc}$ (E reverses). With the propagation direction reversed and $\\vec{B} \\propto \\hat{k}\\times\\vec{E}$ , B does not reverse (C)."
+        },
+        {
+            "id": "GR9277#37",
+            "subject": "special_relativity",
+            "topic": "Special Relativity → Photon Speed",
+            "statement": "A $\\pi^0$ meson (rest energy 135 MeV) moves at $0.8c\\,\\hat{k}$ and decays into two photons; $\\gamma_2$ is emitted backward in the rest frame. Find the lab-frame velocity of $\\gamma_2$ .",
+            "choices": [
+                [
+                    "A",
+                    "$-1.0c\\,\\hat{k}$"
+                ],
+                [
+                    "B",
+                    "$-1.2c\\,\\hat{k}$"
+                ],
+                [
+                    "C",
+                    "$+0.8c\\,\\hat{k}$"
+                ],
+                [
+                    "D",
+                    "$+1.0c\\,\\hat{k}$"
+                ],
+                [
+                    "E",
+                    "$+1.8c\\,\\hat{k}$"
+                ]
+            ],
+            "answer": "A",
+            "solution": "Photons travel at $c$ in every frame. Since $\\gamma_2$ is emitted backward, its lab velocity is $-1.0c\\,\\hat{k}$ (A)."
+        },
+        {
+            "id": "GR9277#38",
+            "subject": "special_relativity",
+            "topic": "Special Relativity → Time Dilation",
+            "statement": "Tau leptons have rest-frame half-life $\\Delta t_1$ in $S_1$ . $S_2$ moves at $v_{12}$ relative to $S_1$ , $S_3$ at $v_{13}$ . Which relationship is correct?",
+            "choices": [
+                [
+                    "A",
+                    "$\\Delta t_2 = \\Delta t_1\\sqrt{1-v_{12}^2/c^2}$"
+                ],
+                [
+                    "B",
+                    "$\\Delta t_1 = \\Delta t_3\\sqrt{1-v_{13}^2/c^2}$"
+                ],
+                [
+                    "C",
+                    "$\\Delta t_2 = \\Delta t_3\\sqrt{1-v_{23}^2/c^2}$"
+                ],
+                [
+                    "D",
+                    "$\\Delta t_3 = \\Delta t_2\\sqrt{1-v_{23}^2/c^2}$"
+                ],
+                [
+                    "E",
+                    "$\\Delta t_1 = \\Delta t_2\\sqrt{1-v_{23}^2/c^2}$"
+                ]
+            ],
+            "answer": "B",
+            "solution": "$S_1$ is the rest (proper) frame. Time dilates: $\\Delta t_3 = \\Delta t_1/\\sqrt{1-v_{13}^2/c^2}$ , which rearranges to $\\Delta t_1 = \\Delta t_3\\sqrt{1-v_{13}^2/c^2}$ (B). Relations between $\\Delta t_2$ and $\\Delta t_3$ via $v_{23}$ are ambiguous."
+        },
+        {
+            "id": "GR9277#40",
+            "subject": "classical_mechanics",
+            "topic": "Mechanics → Rolling Motion",
+            "statement": "A rigid cylinder rolls without slipping at constant speed. The acceleration of a point on the circumference at the instant it touches the plane is:",
+            "choices": [
+                [
+                    "A",
+                    "forward"
+                ],
+                [
+                    "B",
+                    "backward"
+                ],
+                [
+                    "C",
+                    "up"
+                ],
+                [
+                    "D",
+                    "down"
+                ],
+                [
+                    "E",
+                    "zero"
+                ]
+            ],
+            "answer": "C",
+            "solution": "The center moves at constant velocity (zero acceleration). The contact point has no tangential acceleration (no-slip) but has centripetal acceleration $R\\omega^2$ directed toward the center, i.e., upward (C)."
+        },
+        {
+            "id": "GR9277#41",
+            "subject": "classical_mechanics",
+            "topic": "Mechanics → Rotational Energy",
+            "statement": "A cylinder with $I = 4$ kg·m² rotating at 80 rad/s is slowed to 40 rad/s. Find the kinetic energy lost.",
+            "choices": [
+                [
+                    "A",
+                    "80 J"
+                ],
+                [
+                    "B",
+                    "800 J"
+                ],
+                [
+                    "C",
+                    "4000 J"
+                ],
+                [
+                    "D",
+                    "9600 J"
+                ],
+                [
+                    "E",
+                    "19,200 J"
+                ]
+            ],
+            "answer": "D",
+            "solution": "$K = \\frac12 I\\omega^2$ . $K_0 = \\frac12(4)(80)^2 = 12800$ J; $K_f = \\frac12(4)(40)^2 = 3200$ J. Loss $= 9600$ J (D)."
+        },
+        {
+            "id": "GR9277#42",
+            "subject": "classical_mechanics",
+            "topic": "Mechanics → Angular Kinematics",
+            "statement": "Same cylinder slows from 80 to 40 rad/s in 10 s. Find the magnitude of the applied torque.",
+            "choices": [
+                [
+                    "A",
+                    "80 N·m"
+                ],
+                [
+                    "B",
+                    "40"
+                ],
+                [
+                    "C",
+                    "32"
+                ],
+                [
+                    "D",
+                    "16"
+                ],
+                [
+                    "E",
+                    "8"
+                ]
+            ],
+            "answer": "D",
+            "solution": "$\\alpha = (40-80)/10 = -4$ rad/s². $\\tau = I\\alpha = 4\\times4 = 16$ N·m in magnitude (D)."
+        },
+        {
+            "id": "GR9277#43",
+            "subject": "classical_mechanics",
+            "topic": "Mechanics → Lagrangian (Cyclic Coordinates)",
+            "statement": "If $\\partial L/\\partial q_n = 0$ for a conservative, unconstrained system, then the generalized momentum $p_n$ is:",
+            "choices": [
+                [
+                    "A",
+                    "An ignorable coordinate"
+                ],
+                [
+                    "B",
+                    "Constant"
+                ],
+                [
+                    "C",
+                    "Undefined"
+                ],
+                [
+                    "D",
+                    "Equal to $\\frac{d}{dt}(\\partial L/\\partial\\dot q_n)$"
+                ],
+                [
+                    "E",
+                    "Equal to the Hamiltonian"
+                ]
+            ],
+            "answer": "B",
+            "solution": "Lagrange's equation: $\\frac{d}{dt}(\\partial L/\\partial\\dot q_n) = \\partial L/\\partial q_n = 0$ . Since $p_n = \\partial L/\\partial\\dot q_n$ , $p_n$ is constant (B)."
+        },
+        {
+            "id": "GR9277#45",
+            "subject": "classical_mechanics",
+            "topic": "Mechanics → Energy Conservation",
+            "statement": "A ball dropped from height $h$ bounces back at 80% of its impact speed. Find the maximum height after the bounce.",
+            "choices": [
+                [
+                    "A",
+                    "0.94h"
+                ],
+                [
+                    "B",
+                    "0.80h"
+                ],
+                [
+                    "C",
+                    "0.75h"
+                ],
+                [
+                    "D",
+                    "0.64h"
+                ],
+                [
+                    "E",
+                    "0.50h"
+                ]
+            ],
+            "answer": "D",
+            "solution": "Height $\\propto v^2$ . After the bounce, $v' = 0.8 v_0$ , so $h' = (0.8)^2 h = 0.64h$ (D)."
+        },
+        {
+            "id": "GR9277#46",
+            "subject": "thermo_stat_mech",
+            "topic": "Thermodynamics → Critical Isotherm",
+            "statement": "On a pV diagram of isotherms, which numbered curve is the critical isotherm?",
+            "choices": [
+                [
+                    "A",
+                    "1"
+                ],
+                [
+                    "B",
+                    "2"
+                ],
+                [
+                    "C",
+                    "3"
+                ],
+                [
+                    "D",
+                    "4"
+                ],
+                [
+                    "E",
+                    "5"
+                ]
+            ],
+            "answer": "B",
+            "solution": "The critical isotherm has an inflection point at the critical point: $(dP/dV)_c = 0$ and $(d^2P/dV^2)_c = 0$ . Among the curves, curve 2 satisfies this. Answer (B)."
+        },
+        {
+            "id": "GR9277#48",
+            "subject": "lab_methods",
+            "topic": "Lab Methods → Error Propagation",
+            "statement": "For $F = ma$ with uncorrelated, normally distributed measurements, $\\sigma_F/F$ is:",
+            "choices": [
+                [
+                    "A",
+                    "$(\\sigma_m/m)^2 + (\\sigma_a/a)^2$"
+                ],
+                [
+                    "B",
+                    "$(\\sigma_m/m + \\sigma_a/a)^{1/2}$"
+                ],
+                [
+                    "C",
+                    "$((\\sigma_m/m)^2 + (\\sigma_a/a)^2)^{1/2}$"
+                ],
+                [
+                    "D",
+                    "$\\sigma_m\\sigma_a/(ma)$"
+                ],
+                [
+                    "E",
+                    "$\\sigma_m/m + \\sigma_a/a$"
+                ]
+            ],
+            "answer": "C",
+            "solution": "For a product, relative uncertainties add in quadrature: $\\sigma_F/F = \\sqrt{(\\sigma_m/m)^2 + (\\sigma_a/a)^2}$ (C)."
+        },
+        {
+            "id": "GR9277#49",
+            "subject": "special_relativity",
+            "topic": "Lab Methods / Relativity → Timing",
+            "statement": "Two scintillation counters are 3.0 m apart vertically. What is the largest resolving time that can distinguish downward from upward relativistic muons?",
+            "choices": [
+                [
+                    "A",
+                    "1 ps"
+                ],
+                [
+                    "B",
+                    "1 ns"
+                ],
+                [
+                    "C",
+                    "1 μs"
+                ],
+                [
+                    "D",
+                    "1 ms"
+                ],
+                [
+                    "E",
+                    "1 s"
+                ]
+            ],
+            "answer": "B",
+            "solution": "Transit time $t = 3/c = 3/(3\\times10^8) = 10^{-8}$ s = 10 ns. The resolving time must be shorter than this; the largest option that works is 1 ns (B)."
+        },
+        {
+            "id": "GR9277#50",
+            "subject": "quantum_mechanics",
+            "topic": "Quantum Mechanics → Simultaneous Eigenstates",
+            "statement": "When can all wave functions be expanded in simultaneous eigenfunctions of observables A and B?",
+            "choices": [
+                [
+                    "A",
+                    "Only if eigenvalues nondegenerate"
+                ],
+                [
+                    "B",
+                    "Only if A and B commute"
+                ],
+                [
+                    "C",
+                    "Only if A commutes with H"
+                ],
+                [
+                    "D",
+                    "Only if B commutes with H"
+                ],
+                [
+                    "E",
+                    "Always"
+                ]
+            ],
+            "answer": "B",
+            "solution": "Two operators share a complete set of simultaneous eigenstates if and only if they commute, $[A,B] = 0$ (B)."
+        },
+        {
+            "id": "GR9277#51",
+            "subject": "quantum_mechanics",
+            "topic": "Quantum Mechanics → Momentum Expectation",
+            "statement": "For an infinite square well with $\\psi_n = \\sqrt{2/a}\\sin(n\\pi x/a)$ , find $\\langle p\\rangle$ for any state $n$ .",
+            "choices": [
+                [
+                    "A",
+                    "0"
+                ],
+                [
+                    "B",
+                    "$\\hbar n\\pi/a$"
+                ],
+                [
+                    "C",
+                    "$\\hbar n\\pi/a$"
+                ],
+                [
+                    "D",
+                    "$2\\hbar n\\pi/a$"
+                ],
+                [
+                    "E",
+                    "$(\\hbar n\\pi/a)(\\cos n\\pi - 1)$(F) $(-i\\hbar n\\pi/a)(\\cos n\\pi - 1)$"
+                ]
+            ],
+            "answer": "A",
+            "solution": "$\\langle p\\rangle \\propto \\int_0^a \\sin(n\\pi x/a)\\cos(n\\pi x/a)\\,dx = 0$ . Also, for a stationary state $d\\langle x\\rangle/dt = 0$ so $\\langle p\\rangle = 0$ (A)."
+        },
+        {
+            "id": "GR9277#52",
+            "subject": "quantum_mechanics",
+            "topic": "Quantum Mechanics → Orthonormality",
+            "statement": "The eigenfunctions of the infinite square well satisfy $\\int_0^a \\psi_n^*\\psi_l\\,dx = \\delta_{nl}$ . This property is called:",
+            "choices": [
+                [
+                    "A",
+                    "Solutions to Schrödinger equation"
+                ],
+                [
+                    "B",
+                    "Orthonormal"
+                ],
+                [
+                    "C",
+                    "Bounded"
+                ],
+                [
+                    "D",
+                    "Linearly dependent"
+                ],
+                [
+                    "E",
+                    "Symmetric"
+                ]
+            ],
+            "answer": "B",
+            "solution": "$\\langle\\psi_m|\\psi_n\\rangle = \\delta_{nm}$ is the definition of orthonormality (B)."
+        },
+        {
+            "id": "GR9277#56",
+            "subject": "quantum_mechanics",
+            "topic": "Quantum Mechanics → Harmonic Oscillator",
+            "statement": "Find the ground-state energy of a 1D quantum harmonic oscillator (frequency $\\nu$ ).",
+            "choices": [
+                [
+                    "A",
+                    "0"
+                ],
+                [
+                    "B",
+                    "$h\\nu/3$"
+                ],
+                [
+                    "C",
+                    "$h\\nu/2$"
+                ],
+                [
+                    "D",
+                    "$h\\nu$"
+                ],
+                [
+                    "E",
+                    "$3h\\nu/2$"
+                ]
+            ],
+            "answer": "C",
+            "solution": "$E_n = (n+\\frac12)h\\nu$ . For $n=0$ : $E_0 = \\frac12 h\\nu$ (zero-point energy) (C)."
+        },
+        {
+            "id": "GR9277#58",
+            "subject": "atomic_physics",
+            "topic": "Atomic Physics → Electron Configuration",
+            "statement": "Ground state electron configuration of neutral sodium ( $Z=11$ ):",
+            "choices": [
+                [
+                    "A",
+                    "$1s^22s^22p^53s^2$"
+                ],
+                [
+                    "B",
+                    "$1s^22s^32p^6$"
+                ],
+                [
+                    "C",
+                    "$1s^22s^22p^63s^1$"
+                ],
+                [
+                    "D",
+                    "$1s^22s^22p^63p$"
+                ],
+                [
+                    "E",
+                    "$1s^22s^2sp^5$"
+                ]
+            ],
+            "answer": "C",
+            "solution": "By the Aufbau principle, fill 1s² 2s² 2p⁶ 3s¹ = 11 electrons (C)."
+        },
+        {
+            "id": "GR9277#59",
+            "subject": "atomic_physics",
+            "topic": "Atomic Physics → Spin States",
+            "statement": "The ground state of helium is a:",
+            "choices": [
+                [
+                    "A",
+                    "Singlet"
+                ],
+                [
+                    "B",
+                    "Doublet"
+                ],
+                [
+                    "C",
+                    "Triplet"
+                ],
+                [
+                    "D",
+                    "Quartet"
+                ],
+                [
+                    "E",
+                    "Quintuplet"
+                ]
+            ],
+            "answer": "A",
+            "solution": "Ground-state He is $1s^2$ ; both electrons share the same spatial orbital with opposite spins (Pauli). The total spin $S = 0$ , multiplicity $2S+1 = 1$ → singlet (A)."
+        },
+        {
+            "id": "GR9277#60",
+            "subject": "electromagnetism",
+            "topic": "Electromagnetism → Cyclotron Frequency",
+            "statement": "An electron in a metal has effective mass $m^* = 0.1 m_e$ . In a 1 T field, the cyclotron resonance frequency $\\omega_c$ is most nearly:",
+            "choices": [
+                [
+                    "A",
+                    "930 rad/s"
+                ],
+                [
+                    "B",
+                    "$8.5\\times10^6$"
+                ],
+                [
+                    "C",
+                    "$2.8\\times10^{11}$"
+                ],
+                [
+                    "D",
+                    "$1.8\\times10^{12}$"
+                ],
+                [
+                    "E",
+                    "$7.7\\times10^{20}$"
+                ]
+            ],
+            "answer": "D",
+            "solution": "$\\omega_c = qB/m^* = (1.6\\times10^{-19})(1)/(0.1\\times9.1\\times10^{-31}) \\approx 1.8\\times10^{12}$ rad/s (D). Must use effective mass."
+        },
+        {
+            "id": "GR9277#61",
+            "subject": "classical_mechanics",
+            "topic": "Mechanics → Small Oscillations",
+            "statement": "A massless rod pivots about one end in a vertical plane. Config I: two masses at the free end. Config II: one mass moved to the center. Find $\\omega_{II}/\\omega_I$ .",
+            "choices": [
+                [
+                    "A",
+                    "$\\sqrt{6/5}$"
+                ],
+                [
+                    "B",
+                    "$\\sqrt{3/2}$"
+                ],
+                [
+                    "C",
+                    "6/5"
+                ],
+                [
+                    "D",
+                    "3/2"
+                ],
+                [
+                    "E",
+                    "5/3"
+                ]
+            ],
+            "answer": "A",
+            "solution": "$\\omega = \\sqrt{mgr_{cm}/I}$ . Config I: $I_1 = 2mr^2$ , $r_{cm}=r$ → $\\omega_1 = \\sqrt{g/r}$ . Config II: $I_2 = m(r/2)^2 + mr^2 = \\frac54 mr^2$ , $r_{cm} = 3r/4$ → $\\omega_2 = \\sqrt{(2mg\\cdot3r/4)/(5mr^2/4)} = \\sqrt{6g/5r}$ . Ratio $= \\sqrt{6/5}$ (A)."
+        },
+        {
+            "id": "GR9277#62",
+            "subject": "thermo_stat_mech",
+            "topic": "Thermodynamics → Isothermal Work",
+            "statement": "One mole of ideal gas at $T_0$ , $V_0$ expands reversibly and isothermally to $V_1$ . Given $c_p/c_v = \\gamma$ , find the work done by the gas.",
+            "choices": [
+                [
+                    "A",
+                    "Zero"
+                ],
+                [
+                    "B",
+                    "$RT_0(V_1/V_0)^\\gamma$"
+                ],
+                [
+                    "C",
+                    "$RT_0(V_1/V_0 - 1)$"
+                ],
+                [
+                    "D",
+                    "$c_vT_0(1-(V_0/V_1)^{\\gamma-1})$"
+                ],
+                [
+                    "E",
+                    "$RT_0\\ln(V_1/V_0)$"
+                ]
+            ],
+            "answer": "E",
+            "solution": "$W = \\int P\\,dV = \\int \\frac{RT_0}{V}dV = RT_0\\ln(V_1/V_0)$ (E). $\\gamma$ is a distractor."
+        },
+        {
+            "id": "GR9277#63",
+            "subject": "thermo_stat_mech",
+            "topic": "Statistical Mechanics → Entropy / Equilibrium",
+            "statement": "If an isolated thermodynamic system is in its arrangement of maximal probability, which is true?",
+            "choices": [
+                [
+                    "A",
+                    "Spontaneous change to lower probability"
+                ],
+                [
+                    "B",
+                    "Entropy is minimum"
+                ],
+                [
+                    "C",
+                    "Boltzmann's constant → 0"
+                ],
+                [
+                    "D",
+                    "No spontaneous change occurs"
+                ],
+                [
+                    "E",
+                    "Entropy is zero"
+                ]
+            ],
+            "answer": "D",
+            "solution": "Maximal probability = maximum entropy = most stable macrostate. No spontaneous macroscopic change occurs (D)."
+        },
+        {
+            "id": "GR9277#64",
+            "subject": "electromagnetism",
+            "topic": "Electromagnetism → Gauss's Law",
+            "statement": "An electric field is $E_x = 0, E_y = 0, E_z = kz$ ( $k \\ne 0$ ). Which is true?",
+            "choices": [
+                [
+                    "A",
+                    "Time-varying B field"
+                ],
+                [
+                    "B",
+                    "There is charge density in the region"
+                ],
+                [
+                    "C",
+                    "E cannot be constant in time"
+                ],
+                [
+                    "D",
+                    "E is impossible"
+                ],
+                [
+                    "E",
+                    "None"
+                ]
+            ],
+            "answer": "B",
+            "solution": "$\\nabla\\cdot\\vec{E} = \\partial_z(kz) = k \\ne 0$ , so by Gauss's law $\\rho = k\\epsilon_0 \\ne 0$ : charge density exists (B)."
+        },
+        {
+            "id": "GR9277#65",
+            "subject": "electromagnetism",
+            "topic": "Electromagnetism → Small Oscillations",
+            "statement": "Two fixed charges $+Q$ are separated by $2R$ on the x-axis. A particle of mass $m$ , charge $-q$ at the midpoint. Find $\\omega$ for small oscillations along $y$ .",
+            "choices": [
+                [
+                    "A",
+                    "$\\frac{Qq}{2\\pi\\epsilon_0 mR^2}$"
+                ],
+                [
+                    "B",
+                    "$\\frac{Qq}{4\\pi\\epsilon_0 mR^2}$"
+                ],
+                [
+                    "C",
+                    "$\\frac{Qq}{2\\pi\\epsilon_0 mR^3}$"
+                ],
+                [
+                    "D",
+                    "$(\\frac{Qq}{4\\pi\\epsilon_0 mR^2})^{1/2}$"
+                ],
+                [
+                    "E",
+                    "$(\\frac{Qq}{2\\pi\\epsilon_0 mR^3})^{1/2}$"
+                ]
+            ],
+            "answer": "E",
+            "solution": "For small displacement $y$ , the restoring force is $m\\ddot y = -\\frac{2Qq}{4\\pi\\epsilon_0 R^3}y$ , so $k = \\frac{Qq}{2\\pi\\epsilon_0 R^3}$ and $\\omega = \\sqrt{k/m} = \\sqrt{\\frac{Qq}{2\\pi\\epsilon_0 mR^3}}$ (E)."
+        },
+        {
+            "id": "GR9277#66",
+            "subject": "classical_mechanics",
+            "topic": "Mechanics → Work and Energy",
+            "statement": "A uniform 10 m chain of linear density 2 kg/m hangs vertically from an axle. Find the work to wind it all onto the axle.",
+            "choices": [
+                [
+                    "A",
+                    "100 J"
+                ],
+                [
+                    "B",
+                    "200 J"
+                ],
+                [
+                    "C",
+                    "1000 J"
+                ],
+                [
+                    "D",
+                    "2000 J"
+                ],
+                [
+                    "E",
+                    "10,000 J"
+                ]
+            ],
+            "answer": "C",
+            "solution": "Mass = 20 kg; center of mass rises 5 m. $W = mg\\Delta h = 20\\times10\\times5 = 1000$ J (C)."
+        },
+        {
+            "id": "GR9277#67",
+            "subject": "optics_waves",
+            "topic": "Optics → Polarization",
+            "statement": "Through a rotating polaroid, transmitted intensity varies as $A + B\\cos(2\\theta)$ with $A > B > 0$ . The incident light is:",
+            "choices": [
+                [
+                    "A",
+                    "Completely unpolarized"
+                ],
+                [
+                    "B",
+                    "Completely plane polarized"
+                ],
+                [
+                    "C",
+                    "Partly plane polarized and partly unpolarized"
+                ],
+                [
+                    "D",
+                    "Partly circularly polarized and partly unpolarized"
+                ],
+                [
+                    "E",
+                    "Completely circularly polarized"
+                ]
+            ],
+            "answer": "C",
+            "solution": "Plane-polarized light gives $\\cos^2\\theta = \\frac{1+\\cos2\\theta}{2}$ (oscillating, constant = amplitude); unpolarized gives a constant. Since $A > B$ , there is a constant baseline larger than the oscillation amplitude → a mix of plane-polarized and unpolarized (C)."
+        },
+        {
+            "id": "GR9277#68",
+            "subject": "optics_waves",
+            "topic": "Optics → Rayleigh Criterion",
+            "statement": "A double star has angular separation 8 μrad; light wavelength 5500 Å. The smallest telescope mirror diameter that resolves it is most nearly:",
+            "choices": [
+                [
+                    "A",
+                    "1 mm"
+                ],
+                [
+                    "B",
+                    "1 cm"
+                ],
+                [
+                    "C",
+                    "10 cm"
+                ],
+                [
+                    "D",
+                    "1 m"
+                ],
+                [
+                    "E",
+                    "100 m"
+                ]
+            ],
+            "answer": "C",
+            "solution": "$\\theta = 1.22\\lambda/d \\implies d = 1.22\\lambda/\\theta = 1.22\\times(5.5\\times10^{-7})/(8\\times10^{-6}) \\approx 0.084$ m $\\approx$ 10 cm (C)."
+        },
+        {
+            "id": "GR9277#69",
+            "subject": "special_relativity",
+            "topic": "Optics / Relativity → Cherenkov Radiation",
+            "statement": "A fast charged particle passes through glass ( $n = 1.5$ ) and emits light. Find the minimum speed.",
+            "choices": [
+                [
+                    "A",
+                    "$c/3$"
+                ],
+                [
+                    "B",
+                    "$4c/9$"
+                ],
+                [
+                    "C",
+                    "$5c/9$"
+                ],
+                [
+                    "D",
+                    "$2c/3$"
+                ],
+                [
+                    "E",
+                    "$c$"
+                ]
+            ],
+            "answer": "D",
+            "solution": "Cherenkov radiation requires the particle to exceed the speed of light in the medium, $v_{min} = c/n = c/1.5 = 2c/3$ (D)."
+        },
+        {
+            "id": "GR9277#70",
+            "subject": "special_relativity",
+            "topic": "Special Relativity → Energy-Momentum",
+            "statement": "Unstable particles have total energy 100 times their rest energy (rest mass $m$ ). Find their momentum.",
+            "choices": [
+                [
+                    "A",
+                    "$2mc$"
+                ],
+                [
+                    "B",
+                    "$10mc$"
+                ],
+                [
+                    "C",
+                    "$70mc$"
+                ],
+                [
+                    "D",
+                    "$100mc$"
+                ],
+                [
+                    "E",
+                    "$10^4 mc$"
+                ]
+            ],
+            "answer": "D",
+            "solution": "$E^2 = (pc)^2 + (mc^2)^2$ . With $E = 100mc^2$ , $(pc)^2 = (10000-1)m^2c^4 \\approx 10000 m^2c^4$ , so $p \\approx 100mc$ (D). Ultra-relativistic: $p \\approx E/c$ ."
+        },
+        {
+            "id": "GR9277#71",
+            "subject": "thermo_stat_mech",
+            "topic": "Statistical Mechanics → Boltzmann Distribution",
+            "statement": "$N_0$ two-state subsystems with energies $E_1, E_2$ ( $E_2 - E_1 = \\epsilon > 0$ ) at temperature $T$ . Find the average number in the lower state $E_1$ .",
+            "choices": [
+                [
+                    "A",
+                    "$N_0/2$"
+                ],
+                [
+                    "B",
+                    "$\\frac{N_0}{1+e^{-\\epsilon/kT}}$"
+                ],
+                [
+                    "C",
+                    "$N_0 e^{-\\epsilon/kT}$"
+                ],
+                [
+                    "D",
+                    "$\\frac{N_0}{1+e^{\\epsilon/kT}}$"
+                ],
+                [
+                    "E",
+                    "$\\frac{N_0 e^{\\epsilon/kT}}{2}$"
+                ]
+            ],
+            "answer": "B",
+            "solution": "$P(E_1) = \\frac{e^{-E_1/kT}}{e^{-E_1/kT}+e^{-E_2/kT}} = \\frac{1}{1+e^{-\\epsilon/kT}}$ . So $N_1 = \\frac{N_0}{1+e^{-\\epsilon/kT}}$ (B)."
+        },
+        {
+            "id": "GR9277#73",
+            "subject": "thermo_stat_mech",
+            "topic": "Statistical Mechanics → Entropy",
+            "statement": "For the two-state system, which describes the entropy behavior?",
+            "choices": [
+                [
+                    "A",
+                    "Increases without limit from zero at T=0"
+                ],
+                [
+                    "B",
+                    "Decreases with increasing T"
+                ],
+                [
+                    "C",
+                    "Increases from zero at T=0 to $N_0 k\\ln 2$at high T"
+                ],
+                [
+                    "D",
+                    "$N_0 k(\\frac52\\ln T - \\ln\\rho + \\text{const})$"
+                ],
+                [
+                    "E",
+                    "Cannot be calculated"
+                ]
+            ],
+            "answer": "C",
+            "solution": "By the third law, $S\\to 0$ as $T\\to 0$ . As $T\\to\\infty$ , both states are equally accessible, $Z\\to 2$ , giving $S = N_0 k\\ln 2$ . So entropy rises monotonically from 0 to $N_0 k\\ln 2$ (C)."
+        },
+        {
+            "id": "GR9277#74",
+            "subject": "classical_mechanics",
+            "topic": "Mechanics → Small Oscillations (Hoops)",
+            "statement": "Two hoops X and Y hang on nails. Mass of X is 4× that of Y, diameter of X is 4× that of Y. If X's period is $T$ , find Y's period.",
+            "choices": [
+                [
+                    "A",
+                    "2T"
+                ],
+                [
+                    "B",
+                    "T"
+                ],
+                [
+                    "C",
+                    "T/2"
+                ],
+                [
+                    "D",
+                    "T/4"
+                ],
+                [
+                    "E",
+                    "T/8 (F) T/16"
+                ]
+            ],
+            "answer": "C",
+            "solution": "A hoop oscillating on a nail behaves like a pendulum of effective length equal to the radius: $T \\propto \\sqrt{r}$ , independent of mass. $r_X = 4r_Y$ , so $T_X/T_Y = \\sqrt{4} = 2$ → $T_Y = T/2$ (C)."
+        },
+        {
+            "id": "GR9277#75",
+            "subject": "atomic_physics",
+            "topic": "Nuclear Physics → Conservation Laws",
+            "statement": "$^{235}_{92}U \\to {}^{231}_{90}Th + {}^4_2He$ (decay at rest). Which statement is true?",
+            "choices": [
+                [
+                    "A",
+                    "Same kinetic energy"
+                ],
+                [
+                    "B",
+                    "Same speed"
+                ],
+                [
+                    "C",
+                    "Same direction"
+                ],
+                [
+                    "D",
+                    "Th has more momentum than He"
+                ],
+                [
+                    "E",
+                    "He has more kinetic energy than Th"
+                ]
+            ],
+            "answer": "E",
+            "solution": "Momentum conservation gives equal and opposite momenta, $|p_{Th}| = |p_{He}|$ . Since $K = p^2/2m$ , $K_{He}/K_{Th} = m_{Th}/m_{He} \\approx 231/4 \\approx 58$ . The lighter He has much more kinetic energy (E)."
+        },
+        {
+            "id": "GR9277#76",
+            "subject": "atomic_physics",
+            "topic": "Atomic Physics → Angular Momentum Coupling",
+            "statement": "For the configuration $1s\\,2p\\,3p$ (three electrons), find the maximum possible total angular momentum quantum number.",
+            "choices": [
+                [
+                    "A",
+                    "2"
+                ],
+                [
+                    "B",
+                    "7/2"
+                ],
+                [
+                    "C",
+                    "3"
+                ],
+                [
+                    "D",
+                    "5/2"
+                ],
+                [
+                    "E",
+                    "3/2"
+                ]
+            ],
+            "answer": "B",
+            "solution": "Max $L = 0 + 1 + 1 = 2$ ; max $S = \\frac12\\times3 = \\frac32$ . Max $j = L + S = 2 + \\frac32 = \\frac72$ (B)."
+        },
+        {
+            "id": "GR9277#77",
+            "subject": "quantum_mechanics",
+            "topic": "Quantum Mechanics → Magnetic Moment",
+            "statement": "A heavy nucleus has spin 1/2. The magnitude of the ratio of its intrinsic magnetic moment to that of an electron is:",
+            "choices": [
+                [
+                    "A",
+                    "2"
+                ],
+                [
+                    "B",
+                    "Zero (no moment)"
+                ],
+                [
+                    "C",
+                    "Greater than 1 (many protons)"
+                ],
+                [
+                    "D",
+                    "Greater than 1 (larger diameter)"
+                ],
+                [
+                    "E",
+                    "Less than 1 (nucleus much more massive) (F) Less than 1 (strong interactions)"
+                ]
+            ],
+            "answer": "E",
+            "solution": "$\\mu = \\gamma S$ with $\\gamma = eg/2m \\propto 1/m$ . With the same spin, $\\mu_n/\\mu_e \\approx m_e/m_n \\ll 1$ because the nucleus is far more massive (E)."
+        },
+        {
+            "id": "GR9277#79",
+            "subject": "optics_waves",
+            "topic": "Wave Phenomena → Group vs. Phase Velocity",
+            "statement": "On a dispersion curve $\\omega(k)$ , for $k_1 < k < k_2$ where the slope is negative, the phase and group velocities are:",
+            "choices": [
+                [
+                    "A",
+                    "In opposite directions"
+                ],
+                [
+                    "B",
+                    "Same direction, phase larger"
+                ],
+                [
+                    "C",
+                    "Same direction, group larger"
+                ],
+                [
+                    "D",
+                    "Same in direction and magnitude"
+                ],
+                [
+                    "E",
+                    "Phase infinite, group finite"
+                ]
+            ],
+            "answer": "A",
+            "solution": "$v_g = d\\omega/dk < 0$ (negative slope) while $v_p = \\omega/k > 0$ . They point in opposite directions (A)."
+        },
+        {
+            "id": "GR9277#80",
+            "subject": "quantum_mechanics",
+            "topic": "Quantum Mechanics → Planck Relation (X-rays)",
+            "statement": "Electrons accelerated through 25 kV strike a target. The continuous x-ray spectrum's short-wavelength limit is most nearly:",
+            "choices": [
+                [
+                    "A",
+                    "0.1 Å"
+                ],
+                [
+                    "B",
+                    "0.5 Å"
+                ],
+                [
+                    "C",
+                    "2 Å"
+                ],
+                [
+                    "D",
+                    "25 Å"
+                ],
+                [
+                    "E",
+                    "50 Å"
+                ]
+            ],
+            "answer": "B",
+            "solution": "$\\lambda = hc/E$ with $hc \\approx 1.24\\times10^{-6}$ eV·m, $E = 2.5\\times10^4$ eV: $\\lambda = 1.24\\times10^{-6}/2.5\\times10^4 = 0.5\\times10^{-10}$ m = 0.5 Å (B)."
+        },
+        {
+            "id": "GR9277#81",
+            "subject": "electromagnetism",
+            "topic": "Electromagnetism → RLC Resonance",
+            "statement": "In a driven RLC circuit $\\varepsilon(t) = \\varepsilon_m\\cos\\omega t$ , at what $\\omega$ is the steady-state current amplitude maximum?",
+            "choices": [
+                [
+                    "A",
+                    "$1/(RC)$"
+                ],
+                [
+                    "B",
+                    "$2L/R$"
+                ],
+                [
+                    "C",
+                    "$1/\\sqrt{LC}$"
+                ],
+                [
+                    "D",
+                    "$\\sqrt{1/(LC) - (R/2L)^2}$"
+                ],
+                [
+                    "E",
+                    "$\\sqrt{(1/RC)^2 - (L/R)^2}$"
+                ]
+            ],
+            "answer": "C",
+            "solution": "Current is max when reactance vanishes: $\\omega L = 1/(\\omega C) \\implies \\omega = 1/\\sqrt{LC}$ (C). Resistance doesn't shift the steady-state resonance."
+        },
+        {
+            "id": "GR9277#85",
+            "subject": "special_relativity",
+            "topic": "Special Relativity → Momentum",
+            "statement": "A free electron (rest mass 0.5 MeV/c²) has total energy 1.5 MeV. Find its momentum (MeV/c).",
+            "choices": [
+                [
+                    "A",
+                    "0.86"
+                ],
+                [
+                    "B",
+                    "1.0"
+                ],
+                [
+                    "C",
+                    "1.4"
+                ],
+                [
+                    "D",
+                    "1.5"
+                ],
+                [
+                    "E",
+                    "2.0"
+                ]
+            ],
+            "answer": "C",
+            "solution": "$E^2 = (pc)^2 + (mc^2)^2$ : $(1.5)^2 = (pc)^2 + (0.5)^2 \\implies (pc)^2 = 2.0 \\implies pc = \\sqrt2 \\approx 1.4$ MeV (C)."
+        },
+        {
+            "id": "GR9277#86",
+            "subject": "electromagnetism",
+            "topic": "Electromagnetism → RC Circuit Measurement",
+            "statement": "A capacitance $C$ is measured via an oscilloscope (y = voltage across $R$ , x = sweep at constant speed $s$ ). To compute $C$ from the curve, one additionally needs:",
+            "choices": [
+                [
+                    "A",
+                    "$V_0$and $R$"
+                ],
+                [
+                    "B",
+                    "$s$and $R$"
+                ],
+                [
+                    "C",
+                    "$s$and $V_0$"
+                ],
+                [
+                    "D",
+                    "$R$and $R'$"
+                ],
+                [
+                    "E",
+                    "Oscilloscope sensitivity"
+                ]
+            ],
+            "answer": "B",
+            "solution": "$V = V_0 e^{-t/RC}$ , so $C = -t/(R\\ln(V/V_0))$ . The voltage ratio is read off the screen; time comes from sweep speed $s$ , and the time constant requires $R$ . Thus $s$ and $R$ are needed (B)."
+        },
+        {
+            "id": "GR9277#87",
+            "subject": "classical_mechanics",
+            "topic": "Mechanics → Energy in Orbits",
+            "statement": "A mass $M$ orbits in a circle of radius $r$ under $F = K/r^3$ (attractive), with $V(\\infty) = 0$ . Find the total energy.",
+            "choices": [
+                [
+                    "A",
+                    "$-K/r^2$"
+                ],
+                [
+                    "B",
+                    "$-K/(2r^2)$"
+                ],
+                [
+                    "C",
+                    "0"
+                ],
+                [
+                    "D",
+                    "$K/(2r^2)$"
+                ],
+                [
+                    "E",
+                    "$K/r^2$"
+                ]
+            ],
+            "answer": "C",
+            "solution": "Circular orbit: $Mv^2/r = K/r^3 \\implies T = \\frac12 Mv^2 = K/(2r^2)$ . Potential $V = -\\int F\\,dr = -K/(2r^2)$ . Total $E = T + V = 0$ (C)."
+        },
+        {
+            "id": "GR9277#88",
+            "subject": "electromagnetism",
+            "topic": "Electromagnetism → Capacitors with Dielectric",
+            "statement": "A parallel-plate capacitor (battery connected) has $V_0, Q_0, E_0, D_0$ . A dielectric is inserted while connected, then disconnected. Which is correct?",
+            "choices": [
+                [
+                    "A",
+                    "$V_f > V_0$"
+                ],
+                [
+                    "B",
+                    "$V_f < V_0$"
+                ],
+                [
+                    "C",
+                    "$Q_f = Q_0$"
+                ],
+                [
+                    "D",
+                    "$E_f > E_0$"
+                ],
+                [
+                    "E",
+                    "$D_f > D_0$"
+                ]
+            ],
+            "answer": "E",
+            "solution": "With the battery connected, $V_f = V_0$ (eliminates A, B). $Q_f = \\kappa Q_0 > Q_0$ (eliminates C). $E_f = \\sigma_f/(\\kappa\\epsilon_0) = E_0$ (eliminates D). But $D_f = \\kappa\\epsilon_0 E_0 > \\epsilon_0 E_0 = D_0$ (E)."
+        },
+        {
+            "id": "GR9277#89",
+            "subject": "quantum_mechanics",
+            "topic": "Quantum Mechanics → Modified Harmonic Oscillator",
+            "statement": "The 1D harmonic oscillator has $E_n = h\\nu(n+\\frac12)$ . With an infinite barrier added at the center, how do the energy levels differ?",
+            "choices": [
+                [
+                    "A",
+                    "1/2 → 3/2"
+                ],
+                [
+                    "B",
+                    "Each level doubled"
+                ],
+                [
+                    "C",
+                    "Each level halved"
+                ],
+                [
+                    "D",
+                    "Only even $n$present"
+                ],
+                [
+                    "E",
+                    "Only odd $n$present"
+                ]
+            ],
+            "answer": "E",
+            "solution": "The infinite central barrier forces a node at the origin. Only the odd- $n$ wavefunctions (which vanish at the center) survive; even- $n$ states are eliminated (E)."
+        },
+        {
+            "id": "GR9277#90",
+            "subject": "quantum_mechanics",
+            "topic": "Quantum Mechanics → Rotational Energy Levels",
+            "statement": "The spacing of rotational energy levels for $H_2$ is most nearly:",
+            "choices": [
+                [
+                    "A",
+                    "$10^{-9}$eV"
+                ],
+                [
+                    "B",
+                    "$10^{-3}$eV"
+                ],
+                [
+                    "C",
+                    "10 eV"
+                ],
+                [
+                    "D",
+                    "10 MeV"
+                ],
+                [
+                    "E",
+                    "100 MeV"
+                ]
+            ],
+            "answer": "B",
+            "solution": "$\\Delta E \\sim \\hbar^2/I$ with $I = 2mr^2 \\approx 2(1.7\\times10^{-27})(0.5\\times10^{-10})^2 \\approx 10^{-47}$ kg·m². $\\Delta E \\approx 10^{-68}/10^{-47} = 10^{-21}$ J $\\approx 10^{-3}$ eV (B)."
+        },
+        {
+            "id": "GR9277#91",
+            "subject": "atomic_physics",
+            "topic": "Particle Physics → Strangeness Conservation",
+            "statement": "The decay $\\Lambda \\to p + \\pi^-$ must be a weak interaction because:",
+            "choices": [
+                [
+                    "A",
+                    "$\\pi^-$is a lepton"
+                ],
+                [
+                    "B",
+                    "$\\Lambda$has spin zero"
+                ],
+                [
+                    "C",
+                    "no neutrino is produced"
+                ],
+                [
+                    "D",
+                    "it doesn't conserve angular momentum"
+                ],
+                [
+                    "E",
+                    "it doesn't conserve strangeness"
+                ]
+            ],
+            "answer": "E",
+            "solution": "The $\\Lambda$ has strangeness $S = -1$ while $p$ and $\\pi^-$ have $S = 0$ . The strong force conserves strangeness; the weak force allows $\\Delta S = \\pm 1$ . The strangeness change signals a weak interaction (E)."
+        },
+        {
+            "id": "GR9277#92",
+            "subject": "electromagnetism",
+            "topic": "Electromagnetism → AC Generator Frequency",
+            "statement": "A flat coil rotates at 10 Hz in the field of three pairs of magnets (axis in the coil plane, perpendicular to field). Find the frequency of the alternating voltage.",
+            "choices": [
+                [
+                    "A",
+                    "10/6 Hz"
+                ],
+                [
+                    "B",
+                    "10/3"
+                ],
+                [
+                    "C",
+                    "10"
+                ],
+                [
+                    "D",
+                    "30"
+                ],
+                [
+                    "E",
+                    "60"
+                ]
+            ],
+            "answer": "D",
+            "solution": "Three magnet pairs make the field pattern repeat three times per revolution, so the voltage cycles three times per rotation: $10 \\times 3 = 30$ Hz (D)."
+        },
+        {
+            "id": "GR9277#95",
+            "subject": "atomic_physics",
+            "topic": "Nuclear/Particle Physics → Scattering Cross Section",
+            "statement": "A beam of $10^{12}$ protons/s hits a target of $10^{20}$ nuclei/cm². At 10°, $10^2$ protons/s scatter into a detector subtending $10^{-4}$ sr. Find the differential cross section (cm²/sr).",
+            "choices": [
+                [
+                    "A",
+                    "$10^{-24}$"
+                ],
+                [
+                    "B",
+                    "$10^{-25}$"
+                ],
+                [
+                    "C",
+                    "$10^{-26}$"
+                ],
+                [
+                    "D",
+                    "$10^{-27}$"
+                ],
+                [
+                    "E",
+                    "$10^{-28}$"
+                ]
+            ],
+            "answer": "C",
+            "solution": "$$\\frac{d\\sigma}{d\\Omega} = \\frac{N_S}{N_I\\,n_T\\,\\Delta\\Omega} = \\frac{10^2}{10^{12}\\cdot10^{20}\\cdot10^{-4}} = \\frac{10^2}{10^{28}} = 10^{-26}\\ \\text{cm}^2/\\text{sr}$$(C)."
+        },
+        {
+            "id": "GR9277#96",
+            "subject": "optics_waves",
+            "topic": "Optics → Michelson Interferometer",
+            "statement": "A 5 cm gas cell in one arm of a Michelson interferometer (500 nm light) shows 40 fringes crossing as the gas is evacuated. Find the refractive index of the gas.",
+            "choices": [
+                [
+                    "A",
+                    "2"
+                ],
+                [
+                    "B",
+                    "1.02"
+                ],
+                [
+                    "C",
+                    "1.002"
+                ],
+                [
+                    "D",
+                    "1.0002"
+                ],
+                [
+                    "E",
+                    "1.00002 (F) 0.98"
+                ]
+            ],
+            "answer": "D",
+            "solution": "$m = \\frac{2d}{\\lambda}(n-1) \\implies n = 1 + \\frac{m\\lambda}{2d} = 1 + \\frac{40\\times500\\times10^{-9}}{2\\times0.05} = 1 + 0.0002 = 1.0002$ (D)."
+        },
+        {
+            "id": "GR9277#97",
+            "subject": "specialized_topics",
+            "topic": "Solid State Physics → Effective Mass",
+            "statement": "Which defines the effective mass $m^*$ accounting for lattice effects?",
+            "choices": [
+                [
+                    "A",
+                    "$\\frac12\\hbar^2 k(dk/dE)$"
+                ],
+                [
+                    "B",
+                    "$\\hbar^2 k/(dk/dE)$"
+                ],
+                [
+                    "C",
+                    "$\\hbar^2 k(d^2E/dk^2)^{1/3}$"
+                ],
+                [
+                    "D",
+                    "$\\hbar^2/(d^2E/dk^2)$"
+                ],
+                [
+                    "E",
+                    "$\\frac12\\hbar^2 m^2(d^2E/dk^2)$"
+                ]
+            ],
+            "answer": "D",
+            "solution": "From $E = \\hbar^2 k^2/(2m)$ , $d^2E/dk^2 = \\hbar^2/m$ , so $m^* = \\hbar^2/(d^2E/dk^2)$ (D). Effective mass is inversely proportional to band curvature."
+        },
+        {
+            "id": "GR9277#98",
+            "subject": "specialized_topics",
+            "topic": "Math Methods → Eigenvalues (Cube Roots of Unity)",
+            "statement": "For a matrix with characteristic equation $\\lambda^3 = 1$ , which statement is NOT true?",
+            "choices": [
+                [
+                    "A",
+                    "$\\lambda_1+\\lambda_2+\\lambda_3 = 0$"
+                ],
+                [
+                    "B",
+                    "all $\\lambda_i$real"
+                ],
+                [
+                    "C",
+                    "$\\lambda_2\\lambda_3 = +1$for some pair"
+                ],
+                [
+                    "D",
+                    "$\\lambda_1\\lambda_2 + \\lambda_2\\lambda_3 + \\lambda_3\\lambda_1 = 0$"
+                ],
+                [
+                    "E",
+                    "$\\lambda_i^3 = 1$"
+                ]
+            ],
+            "answer": "B",
+            "solution": "The roots are the cube roots of unity: $1, e^{\\pm 2\\pi i/3}$ . Two are complex, so \"all real\" is false (B). Statements A, C, D, E all hold."
+        },
+        {
+            "id": "GR9277#99",
+            "subject": "quantum_mechanics",
+            "topic": "Quantum Mechanics → Perturbation Theory (Stark Effect)",
+            "statement": "In perturbation theory, the first-order correction to the hydrogen ground-state energy due to a static electric field $E$ is:",
+            "choices": [
+                [
+                    "A",
+                    "(blank)"
+                ],
+                [
+                    "B",
+                    "0"
+                ],
+                [
+                    "C",
+                    "$eEa_0$"
+                ],
+                [
+                    "D",
+                    "$3eEa_0$"
+                ],
+                [
+                    "E",
+                    "$\\frac{8e^2Ea_0^3}{3}$(F) $\\frac{8e^2E^2a_0^3}{3}$"
+                ]
+            ],
+            "answer": "B",
+            "solution": "$\\Delta H = eEz = eEr\\cos\\theta$ . The first-order correction $\\langle\\psi_0|\\Delta H|\\psi_0\\rangle = 0$ because the spherically symmetric (even-parity) ground state integrated against the odd-parity $\\cos\\theta$ vanishes (B). No linear Stark effect for the ground state."
+        },
+        {
+            "id": "GR9277#100",
+            "subject": "classical_mechanics",
+            "topic": "Mechanics → Torque Equilibrium",
+            "statement": "A uniform rod (length 10 m, mass 20 kg) balances on a fulcrum with a 40 kg mass on one end and a 20 kg mass on the other. How far is the fulcrum from the rod's center?",
+            "choices": [
+                [
+                    "A",
+                    "0 m"
+                ],
+                [
+                    "B",
+                    "1 m"
+                ],
+                [
+                    "C",
+                    "1.25 m"
+                ],
+                [
+                    "D",
+                    "1.5 m"
+                ],
+                [
+                    "E",
+                    "2 m"
+                ]
+            ],
+            "answer": "C",
+            "solution": "Using the center of mass of the two end masses (origin at rod center, ends at $\\pm 5$ m):\n$$x_{cm} = \\frac{20(-5) + 40(5)}{60} = \\frac{150}{60}$$More precisely, balancing about the fulcrum with the rod's own weight at center gives $1.25$ m from the center (C)."
+        }
     ]
-   ],
-   "answer": "C",
-   "solution": "The momentum operator is $\\hat{p}_x = \\frac{\\hbar}{i}\\frac{\\partial}{\\partial x}$ . Applying it:\n$$p_x\\psi = \\frac{\\hbar}{i}\\frac{\\partial}{\\partial x}e^{i(kx-\\omega t)} = \\frac{\\hbar}{i}(ik)e^{i(kx-\\omega t)} = \\hbar k\\,\\psi$$The eigenvalue (momentum) is $\\hbar k$ ."
-  },
-  {
-   "id": "GR9277#2",
-   "subject": "atomic_physics",
-   "topic": "Atomic Physics → Bragg Diffraction",
-   "statement": "The longest wavelength x-ray that can undergo Bragg diffraction in a crystal for a given family of planes of spacing $d$ is:",
-   "choices": [
-    [
-     "A",
-     "$d/4$"
-    ],
-    [
-     "B",
-     "$d/2$"
-    ],
-    [
-     "C",
-     "$d$"
-    ],
-    [
-     "D",
-     "$2d$"
-    ],
-    [
-     "E",
-     "$4d$"
-    ]
-   ],
-   "answer": "D",
-   "solution": "Bragg's law: $\\lambda = 2d\\sin\\theta$ . The wavelength is maximized when $\\sin\\theta = 1$ (at $\\theta = 90°$ ):\n$$\\lambda_{max} = 2d\\sin(90°) = 2d$$"
-  },
-  {
-   "id": "GR9277#3",
-   "subject": "quantum_mechanics",
-   "topic": "Quantum Mechanics → Bohr Theory",
-   "statement": "Determine the ratio of characteristic K x-ray energies between carbon ( $Z=6$ ) and magnesium ( $Z=12$ ).",
-   "choices": [
-    [
-     "A",
-     "1/4"
-    ],
-    [
-     "B",
-     "1/2"
-    ],
-    [
-     "C",
-     "1"
-    ],
-    [
-     "D",
-     "2"
-    ],
-    [
-     "E",
-     "4"
-    ]
-   ],
-   "answer": "A",
-   "solution": "For hydrogen-like atoms, characteristic K x-ray energy $\\propto Z^2$ . Therefore:\n$$\\frac{E_C}{E_{Mg}} = \\frac{Z_C^2}{Z_{Mg}^2} = \\frac{6^2}{12^2} = \\frac{36}{144} = \\frac{1}{4}$$(Moseley's law with $(Z-1)^2$ gives $\\approx 25/121 \\approx 1/5$ , still closest to 1/4.)"
-  },
-  {
-   "id": "GR9277#4",
-   "subject": "classical_mechanics",
-   "topic": "Mechanics → Gravitational Law",
-   "statement": "The magnitude of the Earth's gravitational force on a point mass is $F(r)$ , where $r$ is the distance from the Earth's center. Assume the Earth is a homogeneous sphere of radius $R$ . What is $F(R)/F(2R)$ ?",
-   "choices": [
-    [
-     "A",
-     "32"
-    ],
-    [
-     "B",
-     "8"
-    ],
-    [
-     "C",
-     "4"
-    ],
-    [
-     "D",
-     "2"
-    ],
-    [
-     "E",
-     "1"
-    ]
-   ],
-   "answer": "C",
-   "solution": "Outside the sphere, $F = k/r^2$ , so\n$$\\frac{F(R)}{F(2R)} = \\frac{(2R)^2}{R^2} = 4$$"
-  },
-  {
-   "id": "GR9277#5",
-   "subject": "classical_mechanics",
-   "topic": "Mechanics → Gauss's Law (Gravitational)",
-   "statement": "Same setup as Problem 4. A shaft allows placing the mass at radius $R/2$ . Find $F(R)/F(R/2)$ .",
-   "choices": [
-    [
-     "A",
-     "8"
-    ],
-    [
-     "B",
-     "4"
-    ],
-    [
-     "C",
-     "2"
-    ],
-    [
-     "D",
-     "1/2"
-    ],
-    [
-     "E",
-     "1/4"
-    ]
-   ],
-   "answer": "C",
-   "solution": "Inside a uniform sphere, only the mass enclosed within radius $r$ contributes. Using Gauss's law, $g(r) = \\rho r/3$ for $r < R$ , so $F \\propto r$ inside. Thus\n$$\\frac{F(R)}{F(R/2)} = \\frac{R}{R/2} = 2$$"
-  },
-  {
-   "id": "GR9277#6",
-   "subject": "classical_mechanics",
-   "topic": "Mechanics → Statics / Friction",
-   "statement": "Two wedges, each of mass $m$ , are placed next to each other on a flat floor. A cube of mass $M$ is balanced on the wedges (45°). There is no friction between cube and wedges, but a coefficient of static friction $\\mu < 1$ exists between wedges and floor. What is the largest $M$ that can be balanced without the wedges moving?",
-   "choices": [
-    [
-     "A",
-     "$m/\\sqrt{2}$"
-    ],
-    [
-     "B",
-     "$\\mu m/\\sqrt{2}$"
-    ],
-    [
-     "C",
-     "$\\mu m/(1-\\mu)$"
-    ],
-    [
-     "D",
-     "$2\\mu m/(1-\\mu)$"
-    ],
-    [
-     "E",
-     "All $M$will balance"
-    ]
-   ],
-   "answer": "D",
-   "solution": "Each wedge supports half the cube's weight; normal force on the floor from one wedge is $N = (m + M/2)g$ , giving max friction $\\mu(m+M/2)g$ . The horizontal force pushing a wedge outward is $Mg/2$ . For no slipping:\n$$\\mu\\left(m + \\frac{M}{2}\\right)g \\ge \\frac{Mg}{2}$$$$\\mu m \\ge \\frac{M(1-\\mu)}{2} \\implies M \\le \\frac{2\\mu m}{1-\\mu}$$"
-  },
-  {
-   "id": "GR9277#7",
-   "subject": "classical_mechanics",
-   "topic": "Mechanics → Normal Modes",
-   "statement": "A cylindrical tube of mass $M$ slides on a horizontal wire. Two identical pendulums, each of mass $m$ and length $l$ , hang from the ends of the tube. The system undergoes small oscillations. Which is a normal mode frequency? (The missing one of three.)",
-   "choices": [
-    [
-     "A",
-     "$\\sqrt{\\frac{g(M+2m)}{lM}}$"
-    ],
-    [
-     "B",
-     "$\\sqrt{g/l}$"
-    ],
-    [
-     "C",
-     "$\\sqrt{\\frac{g(M+m)}{lM}}$"
-    ],
-    [
-     "D",
-     "$\\sqrt{\\frac{gm}{lM}}$"
-    ],
-    [
-     "E",
-     "$\\sqrt{\\frac{gm}{l(M+m)}}$(F) $\\sqrt{\\frac{gm}{l(M+2m)}}$"
-    ]
-   ],
-   "answer": "B",
-   "solution": "The system has three modes: a zero-frequency translation, a symmetric mode $\\sqrt{g(M+2m)/(lM)}$ , and an antisymmetric mode in which the two pendulums swing oppositely so the tube stays fixed, giving a frequency independent of $M$ : $\\sqrt{g/l}$ . The only $M$ -independent choice is (B)."
-  },
-  {
-   "id": "GR9277#8",
-   "subject": "classical_mechanics",
-   "topic": "Mechanics → Torque (Cross Product)",
-   "statement": "A solid cone hangs from a frictionless pivot at origin O. Which force $\\mathbf{F}$ applied at point P on the rim produces torque with $\\tau_z < 0$ ? ( $a,b,c$ positive constants.)",
-   "choices": [
-    [
-     "A",
-     "$\\mathbf{F}=a\\hat{k}$, P$=(0,b,-c)$"
-    ],
-    [
-     "B",
-     "$\\mathbf{F}=-a\\hat{k}$, P$=(0,-b,-c)$"
-    ],
-    [
-     "C",
-     "$\\mathbf{F}=a\\hat{j}$, P$=(-b,0,-c)$"
-    ],
-    [
-     "D",
-     "$\\mathbf{F}=a\\hat{j}$, P$=(b,0,-c)$"
-    ],
-    [
-     "E",
-     "$\\mathbf{F}=-a\\hat{k}$, P$=(-b,0,-c)$"
-    ]
-   ],
-   "answer": "C",
-   "solution": "$\\tau_z = xF_y - yF_x$ . Options A, B, E have $\\mathbf{F}\\parallel\\hat{k}$ giving $\\tau_z = 0$ . For (C): $\\tau_z = xF_y = (-b)(a) = -ab < 0$ . For (D): $\\tau_z = (b)(a) > 0$ . Answer is (C)."
-  },
-  {
-   "id": "GR9277#9",
-   "subject": "electromagnetism",
-   "topic": "Electromagnetism → Ampère's Law (Coaxial Cable)",
-   "statement": "A coaxial cable carries equal and opposite currents $i$ on the inner and outer conductors. Find the magnetic field magnitude at point P outside the cable at distance $r$ from the axis.",
-   "choices": [
-    [
-     "A",
-     "Zero"
-    ],
-    [
-     "B",
-     "$\\frac{\\mu_0 i r}{2\\pi a^2}$"
-    ],
-    [
-     "C",
-     "$\\frac{\\mu_0 i}{2\\pi r}$"
-    ],
-    [
-     "D",
-     "$\\frac{\\mu_0 i}{2\\pi r}\\frac{c^2-r^2}{c^2-b^2}$"
-    ],
-    [
-     "E",
-     "$\\frac{\\mu_0 i}{2\\pi r}\\frac{r^2-b^2}{c^2-b^2}$"
-    ]
-   ],
-   "answer": "A",
-   "solution": "By Ampère's law, $\\oint \\vec{B}\\cdot d\\vec{l} = \\mu_0 I_{enc}$ . Outside, the enclosed current is $+i - i = 0$ , so $B = 0$ . This is the shielding property of coaxial cables."
-  },
-  {
-   "id": "GR9277#10",
-   "subject": "electromagnetism",
-   "topic": "Electromagnetism → Image Charges",
-   "statement": "Charges $q$ and $2q$ are on the x-axis at $x=0.5a$ and $1.5a$ . An infinite grounded conducting plane is at $x=0$ . Find the magnitude of the net force on charge $q$ .",
-   "choices": [
-    [
-     "A",
-     "$\\frac{1}{4\\pi\\epsilon_0}\\frac{q^2}{a^2}$"
-    ],
-    [
-     "B",
-     "$\\frac{1}{4\\pi\\epsilon_0}\\frac{3q^2}{2a^2}$"
-    ],
-    [
-     "C",
-     "$\\frac{1}{4\\pi\\epsilon_0}\\frac{2q^2}{a^2}$"
-    ],
-    [
-     "D",
-     "$\\frac{1}{4\\pi\\epsilon_0}\\frac{3q^2}{a^2}$"
-    ],
-    [
-     "E",
-     "$\\frac{1}{4\\pi\\epsilon_0}\\frac{7q^2}{2a^2}$"
-    ]
-   ],
-   "answer": "E",
-   "solution": "The grounded plane induces image charges $-q$ (at $-0.5a$ ) and $-2q$ (at $-1.5a$ ). Distances from $q$ : to $+2q$ is $a$ , to image $-q$ is $a$ , to image $-2q$ is $2a$ . All forces on $q$ point in the same direction:\n$$F = \\frac{q^2}{4\\pi\\epsilon_0}\\left(\\frac{2}{a^2} + \\frac{1}{a^2} + \\frac{2}{(2a)^2}\\right) = \\frac{q^2}{4\\pi\\epsilon_0 a^2}\\left(2+1+\\tfrac12\\right) = \\frac{1}{4\\pi\\epsilon_0}\\frac{7q^2}{2a^2}$$"
-  },
-  {
-   "id": "GR9277#11",
-   "subject": "electromagnetism",
-   "topic": "Electromagnetism → RC Circuit",
-   "statement": "A charged capacitor is discharged through a resistor. How much time elapses until half of the capacitor's initial stored energy is dissipated?",
-   "choices": [
-    [
-     "A",
-     "$RC$"
-    ],
-    [
-     "B",
-     "$2RC$"
-    ],
-    [
-     "C",
-     "$RC/2$"
-    ],
-    [
-     "D",
-     "$RC/4$"
-    ],
-    [
-     "E",
-     "$RC\\ln(2)/2$"
-    ]
-   ],
-   "answer": "E",
-   "solution": "$Q(t) = Q_0 e^{-t/RC}$ and $U \\propto Q^2 \\propto e^{-2t/RC}$ . Setting $U = U_0/2$ :\n$$\\tfrac12 = e^{-2t/RC} \\implies t = \\frac{RC\\ln 2}{2}$$"
-  },
-  {
-   "id": "GR9277#12",
-   "subject": "electromagnetism",
-   "topic": "Electromagnetism → Laplace's Equation",
-   "statement": "Two large conducting plates form a wedge of angle $\\alpha$ . One is at potential $V_0$ , the other grounded. Find the potential as a function of angle $\\varphi$ (independent of $z$ and $\\rho$ ).",
-   "choices": [
-    [
-     "A",
-     "$V_0/\\alpha$"
-    ],
-    [
-     "B",
-     "$V_0\\varphi/\\alpha$"
-    ],
-    [
-     "C",
-     "$V_0\\alpha/\\varphi$"
-    ],
-    [
-     "D",
-     "$V_0\\varphi^2/\\alpha$"
-    ],
-    [
-     "E",
-     "$V_0\\alpha/\\varphi^2$"
-    ]
-   ],
-   "answer": "B",
-   "solution": "Laplace's equation reduces to $d^2V/d\\varphi^2 = 0$ , so $V = A\\varphi + B$ . With $V(0)=0$ and $V(\\alpha)=V_0$ : $B=0$ , $A=V_0/\\alpha$ . Thus $V(\\varphi) = V_0\\varphi/\\alpha$ ."
-  },
-  {
-   "id": "GR9277#13",
-   "subject": "electromagnetism",
-   "topic": "Electromagnetism → Maxwell's Equations",
-   "statement": "Which of Maxwell's equations would be incorrect if magnetic monopoles exist?",
-   "choices": [
-    [
-     "A",
-     "IV only"
-    ],
-    [
-     "B",
-     "I and II"
-    ],
-    [
-     "C",
-     "I and III"
-    ],
-    [
-     "D",
-     "II and IV"
-    ],
-    [
-     "E",
-     "III and IV"
-    ]
-   ],
-   "answer": "D",
-   "solution": "Magnetic monopoles would require modifying Gauss's law for magnetism ( $\\nabla\\cdot\\vec{B} = \\rho_m$ instead of 0) and Faraday's law (adding a magnetic current term $-\\vec{J}_m$ ). These are equations II and IV."
-  },
-  {
-   "id": "GR9277#14",
-   "subject": "thermo_stat_mech",
-   "topic": "Statistical Mechanics → Blackbody Radiation",
-   "statement": "A blackbody's radiation heats water from 20.0°C to 20.5°C in one minute. If the blackbody's absolute temperature is doubled and the experiment repeated, what is the final water temperature?",
-   "choices": [
-    [
-     "A",
-     "21°C"
-    ],
-    [
-     "B",
-     "24°C"
-    ],
-    [
-     "C",
-     "28°C"
-    ],
-    [
-     "D",
-     "36°C"
-    ],
-    [
-     "E",
-     "Water would boil within one minute"
-    ]
-   ],
-   "answer": "C",
-   "solution": "By Stefan-Boltzmann, power $\\propto T^4$ . Doubling $T$ gives $2^4 = 16\\times$ the energy. The original temperature rise was 0.5°C, so the new rise is $16 \\times 0.5 = 8$ °C. Final: $20 + 8 = 28$ °C."
-  },
-  {
-   "id": "GR9277#15",
-   "subject": "thermo_stat_mech",
-   "topic": "Statistical Mechanics → Heat Capacity",
-   "statement": "A diatomic molecule is modeled as a springy dumbbell, free to rotate about axes perpendicular to the spring. In the high-temperature limit, what is the molar specific heat at constant volume?",
-   "choices": [
-    [
-     "A",
-     "$3R/2$"
-    ],
-    [
-     "B",
-     "$5R/2$"
-    ],
-    [
-     "C",
-     "$7R/2$"
-    ],
-    [
-     "D",
-     "$9R/2$"
-    ],
-    [
-     "E",
-     "$11R/2$"
-    ]
-   ],
-   "answer": "C",
-   "solution": "By equipartition each quadratic degree of freedom contributes $\\frac12 R$ . Degrees of freedom: 3 translational + 2 rotational + 2 vibrational (KE and PE) = 7. So $C_v = \\frac72 R$ ."
-  },
-  {
-   "id": "GR9277#16",
-   "subject": "thermo_stat_mech",
-   "topic": "Thermodynamics → Carnot Engine",
-   "statement": "An engine absorbs heat at 727°C and exhausts at 527°C, operating at maximum efficiency. For 2000 J of heat input, the work performed is most nearly:",
-   "choices": [
-    [
-     "A",
-     "400 J"
-    ],
-    [
-     "B",
-     "1450 J"
-    ],
-    [
-     "C",
-     "1600 J"
-    ],
-    [
-     "D",
-     "2000 J"
-    ],
-    [
-     "E",
-     "2760 J"
-    ]
-   ],
-   "answer": "A",
-   "solution": "Convert: $T_H = 1000$ K, $T_C = 800$ K. Carnot efficiency $e = 1 - 800/1000 = 0.2$ . Work $= e\\,Q = 0.2 \\times 2000 = 400$ J."
-  },
-  {
-   "id": "GR9277#17",
-   "subject": "lab_methods",
-   "topic": "Lab Methods → Oscilloscope (Lissajous Figures)",
-   "statement": "Two oscillators feed an oscilloscope in X-Y mode. If oscillator Y's frequency is twice oscillator X's, which pattern appears?",
-   "choices": [
-    [
-     "A",
-     "A figure with one hump (parabolic-like)"
-    ],
-    [
-     "B",
-     "A more complex pattern"
-    ],
-    [
-     "C",
-     "A simple sinusoid"
-    ],
-    [
-     "D",
-     "An elliptical pattern"
-    ],
-    [
-     "E",
-     "An elongated circle"
-    ]
-   ],
-   "answer": "A",
-   "solution": "With $X = \\sin(\\omega t)$ , $Y = \\sin(2\\omega t)$ , this 1:2 frequency ratio produces a parabolic Lissajous figure $Y = 1 - 2X^2$ — a single-hump curve (A)."
-  },
-  {
-   "id": "GR9277#18",
-   "subject": "electromagnetism",
-   "topic": "Electromagnetism → Transmission Lines",
-   "statement": "A coaxial cable transmitting high-frequency signals should be terminated with its characteristic impedance to avoid:",
-   "choices": [
-    [
-     "A",
-     "Leakage"
-    ],
-    [
-     "B",
-     "Overheating"
-    ],
-    [
-     "C",
-     "Reflection of signal from the terminated end"
-    ],
-    [
-     "D",
-     "Attenuation"
-    ],
-    [
-     "E",
-     "Image currents"
-    ]
-   ],
-   "answer": "C",
-   "solution": "When a wave meets an impedance mismatch, it reflects. Matching the termination to the characteristic impedance absorbs the wave rather than reflecting it. Answer (C)."
-  },
-  {
-   "id": "GR9277#19",
-   "subject": "classical_mechanics",
-   "topic": "Mechanics → Mass of Earth (Estimation)",
-   "statement": "Which is most nearly the mass of the Earth? (Radius $\\approx 6.4\\times10^6$ m.)",
-   "choices": [
-    [
-     "A",
-     "$6\\times10^{24}$kg"
-    ],
-    [
-     "B",
-     "$6\\times10^{27}$"
-    ],
-    [
-     "C",
-     "$6\\times10^{30}$"
-    ],
-    [
-     "D",
-     "$6\\times10^{33}$"
-    ],
-    [
-     "E",
-     "$6\\times10^{36}$"
-    ]
-   ],
-   "answer": "A",
-   "solution": "From $g = GM/R^2$ : $M = gR^2/G \\approx (10)(6.4\\times10^6)^2/(6.67\\times10^{-11}) \\approx 6\\times10^{24}$ kg."
-  },
-  {
-   "id": "GR9277#20",
-   "subject": "optics_waves",
-   "topic": "Optics → Missing Fringes (Double-Slit)",
-   "statement": "In a double-slit experiment with slit separation $d$ and slit width $w$ , an interference maximum is \"missing\" when:",
-   "choices": [
-    [
-     "A",
-     "$d=\\sqrt{2}w$"
-    ],
-    [
-     "B",
-     "$d=\\sqrt{3}w$"
-    ],
-    [
-     "C",
-     "$2d=w$"
-    ],
-    [
-     "D",
-     "$2d=3w$"
-    ],
-    [
-     "E",
-     "$3d=2w$"
-    ]
-   ],
-   "answer": "D",
-   "solution": "A missing maximum occurs when a single-slit diffraction minimum ( $w\\sin\\theta = m_1\\lambda$ ) coincides with an interference maximum ( $d\\sin\\theta = m_2\\lambda$ ), so $d/w = m_2/m_1$ with both integers and $d > w$ . Choice (D), $2d = 3w$ , gives $d/w = 3/2$ ( $m_2 = 3, m_1 = 2$ )."
-  },
-  {
-   "id": "GR9277#21",
-   "subject": "optics_waves",
-   "topic": "Optics → Thin Film Interference",
-   "statement": "A vertical soap film ( $n > 1$ ) viewed in reflected white light shows colored bands below but black at top. Which statements correctly explain this?\n(I) top absorbs all light; (II) top thickness $\\ll$ wavelength; (III) 180° phase change for all wavelengths at front surface; (IV) no phase change at back surface.",
-   "choices": [
-    [
-     "A",
-     "I only"
-    ],
-    [
-     "B",
-     "II and III"
-    ],
-    [
-     "C",
-     "III and IV"
-    ],
-    [
-     "D",
-     "I, II, III"
-    ],
-    [
-     "E",
-     "II, III, IV"
-    ]
-   ],
-   "answer": "E",
-   "solution": "At the thin top, the path difference is negligible; only the 180° phase shift at the front surface (reflection from higher index) remains, while the back surface (soap to air) has no shift. This gives destructive interference for all wavelengths → black. Statements II, III, IV are correct (E)."
-  },
-  {
-   "id": "GR9277#22",
-   "subject": "optics_waves",
-   "topic": "Optics → Telescope",
-   "statement": "A telescope of two convex lenses sharing a focal point has objective focal length 1.0 m and angular magnification 10. Find the separation between lenses.",
-   "choices": [
-    [
-     "A",
-     "0.1 m"
-    ],
-    [
-     "B",
-     "0.9 m"
-    ],
-    [
-     "C",
-     "1.0 m"
-    ],
-    [
-     "D",
-     "1.1 m"
-    ],
-    [
-     "E",
-     "10 m"
-    ]
-   ],
-   "answer": "D",
-   "solution": "$M = f_o/f_e = 10 \\implies f_e = 0.1$ m. Separation $= f_o + f_e = 1.0 + 0.1 = 1.1$ m."
-  },
-  {
-   "id": "GR9277#23",
-   "subject": "thermo_stat_mech",
-   "topic": "Statistical Mechanics / Solid State → Fermi Temperature",
-   "statement": "The Fermi temperature of Cu is about 80,000 K. The average speed of a conduction electron is most nearly:",
-   "choices": [
-    [
-     "A",
-     "$2\\times10^{-2}$m/s"
-    ],
-    [
-     "B",
-     "2 m/s"
-    ],
-    [
-     "C",
-     "$2\\times10^2$"
-    ],
-    [
-     "D",
-     "$2\\times10^4$"
-    ],
-    [
-     "E",
-     "$2\\times10^6$"
-    ]
-   ],
-   "answer": "E",
-   "solution": "From $kT_F = \\frac12 m v^2$ : $v = \\sqrt{2kT_F/m} = \\sqrt{2(1.38\\times10^{-23})(8\\times10^4)/(9.1\\times10^{-31})} \\approx 10^6$ m/s. Closest: (E)."
-  },
-  {
-   "id": "GR9277#24",
-   "subject": "atomic_physics",
-   "topic": "Atomic Bonding",
-   "statement": "What holds solid argon together?",
-   "choices": [
-    [
-     "A",
-     "Ionic"
-    ],
-    [
-     "B",
-     "Covalent"
-    ],
-    [
-     "C",
-     "Partly covalent/ionic"
-    ],
-    [
-     "D",
-     "Metallic"
-    ],
-    [
-     "E",
-     "van der Waals"
-    ]
-   ],
-   "answer": "E",
-   "solution": "Argon is a noble gas with a filled outer shell, so it cannot form ionic, covalent, or metallic bonds. Only weak van der Waals forces remain (E)."
-  },
-  {
-   "id": "GR9277#25",
-   "subject": "atomic_physics",
-   "topic": "Particle/Cosmic Ray Physics",
-   "statement": "Deep underground, the two types of cosmic rays that most commonly reach the apparatus are:",
-   "choices": [
-    [
-     "A",
-     "Alpha particles and neutrons"
-    ],
-    [
-     "B",
-     "Protons and electrons"
-    ],
-    [
-     "C",
-     "Iron and carbon nuclei"
-    ],
-    [
-     "D",
-     "Muons and neutrinos"
-    ],
-    [
-     "E",
-     "Positrons and electrons"
-    ]
-   ],
-   "answer": "D",
-   "solution": "Heavy/charged particles are absorbed by rock. Neutrinos (weak interaction only) and muons (heavy, long interaction length) penetrate deeply. Answer (D)."
-  },
-  {
-   "id": "GR9277#26",
-   "subject": "atomic_physics",
-   "topic": "Nuclear Physics → Radioactive Decay",
-   "statement": "From an activity-vs-time graph, determine the half-life.",
-   "choices": [
-    [
-     "A",
-     "2 min"
-    ],
-    [
-     "B",
-     "7 min"
-    ],
-    [
-     "C",
-     "11 min"
-    ],
-    [
-     "D",
-     "18 min"
-    ],
-    [
-     "E",
-     "23 min"
-    ]
-   ],
-   "answer": "B",
-   "solution": "Activity $\\propto N$ . The graph shows activity dropping from $\\approx 6\\times10^3$ to $\\approx 3\\times10^3$ counts/min over 7 minutes, so the half-life is 7 min."
-  },
-  {
-   "id": "GR9277#27",
-   "subject": "quantum_mechanics",
-   "topic": "Quantum Mechanics → Uncertainty / Fourier",
-   "statement": "A localized electron has wave packet $\\psi(x,t) = \\int e^{i(kx-\\omega t)}f(k)\\,dk$ with $f(k)$ peaked at $k_0$ . The width of the peak in $k$ is most nearly:",
-   "choices": [
-    [
-     "A",
-     "$\\Delta k = 1/x_0$"
-    ],
-    [
-     "B",
-     "$\\Delta k = 1/\\Delta x_0$"
-    ],
-    [
-     "C",
-     "$\\Delta k = \\Delta x_0/x_0^2$"
-    ],
-    [
-     "D",
-     "$\\Delta k = k_0(\\Delta x_0/x_0)$"
-    ],
-    [
-     "E",
-     "$\\Delta k = \\sqrt{k_0^2 + (1/x_0)^2}$"
-    ]
-   ],
-   "answer": "B",
-   "solution": "Position and wave number are Fourier conjugates: $\\Delta x\\,\\Delta k \\approx 1$ . So $\\Delta k = 1/\\Delta x_0$ (B)."
-  },
-  {
-   "id": "GR9277#28",
-   "subject": "quantum_mechanics",
-   "topic": "Quantum Mechanics → Probability (Spherical Harmonics)",
-   "statement": "A normalized state is $\\psi = \\frac{1}{\\sqrt{30}}(5Y_4^3 + Y_6^3 - 2Y_6^0)$ . Find the probability of measuring $m = 3$ .",
-   "choices": [
-    [
-     "A",
-     "0"
-    ],
-    [
-     "B",
-     "1/15"
-    ],
-    [
-     "C",
-     "1/6"
-    ],
-    [
-     "D",
-     "1/3"
-    ],
-    [
-     "E",
-     "13/15"
-    ]
-   ],
-   "answer": "E",
-   "solution": "Only the $m=3$ terms ( $5Y_4^3$ and $Y_6^3$ ) contribute:\n$$P = \\frac{1}{30}(5^2 + 1^2) = \\frac{26}{30} = \\frac{13}{15}$$"
-  },
-  {
-   "id": "GR9277#30",
-   "subject": "quantum_mechanics",
-   "topic": "Quantum Mechanics → Bohr Theory (Positronium)",
-   "statement": "Given hydrogen ground-state binding energy $E_0 = 13.6$ eV, find the binding energy of the $n=2$ state of positronium.",
-   "choices": [
-    [
-     "A",
-     "$8E_0$"
-    ],
-    [
-     "B",
-     "$4E_0$"
-    ],
-    [
-     "C",
-     "$E_0$"
-    ],
-    [
-     "D",
-     "$E_0/4$"
-    ],
-    [
-     "E",
-     "$E_0/8$"
-    ]
-   ],
-   "answer": "E",
-   "solution": "Positronium's reduced mass is $m/2$ , half that of hydrogen, so its ground state energy is $E_0/2$ . For $n=2$ : $E = (E_0/2)/2^2 = E_0/8$ ."
-  },
-  {
-   "id": "GR9277#31",
-   "subject": "atomic_physics",
-   "topic": "Atomic Physics → Term Symbols",
-   "statement": "For a $^3S$ state of helium, what are the possible total angular momentum quantum numbers $j$ ?",
-   "choices": [
-    [
-     "A",
-     "0 only"
-    ],
-    [
-     "B",
-     "1 only"
-    ],
-    [
-     "C",
-     "0 and 1"
-    ],
-    [
-     "D",
-     "0, 1/2, 1"
-    ],
-    [
-     "E",
-     "0, 1, 2"
-    ]
-   ],
-   "answer": "B",
-   "solution": "$^3S$ : multiplicity $2S+1 = 3 \\implies S = 1$ ; $S$ term $\\implies L = 0$ . Then $j$ ranges over $|L-S|$ to $L+S = 1$ to $1$ , so $j = 1$ only (B)."
-  },
-  {
-   "id": "GR9277#32",
-   "subject": "electromagnetism",
-   "topic": "Electromagnetism → Circuits (Power)",
-   "statement": "In a five-resistor circuit with a 3.0 V ideal battery, which resistor dissipates the most power?",
-   "choices": [
-    [
-     "A",
-     "$R_1$"
-    ],
-    [
-     "B",
-     "$R_2$"
-    ],
-    [
-     "C",
-     "$R_3$"
-    ],
-    [
-     "D",
-     "$R_4$"
-    ],
-    [
-     "E",
-     "$R_5$"
-    ]
-   ],
-   "answer": "A",
-   "solution": "$P = I^2 R$ . $R_1$ carries the full main current from the battery while the others are in parallel branches sharing reduced current. With the largest current, $R_1$ dissipates the most power (A)."
-  },
-  {
-   "id": "GR9277#33",
-   "subject": "electromagnetism",
-   "topic": "Electromagnetism → Circuits",
-   "statement": "For the same circuit, find the voltage across resistor $R_4$ .",
-   "choices": [
-    [
-     "A",
-     "0.4 V"
-    ],
-    [
-     "B",
-     "0.6 V"
-    ],
-    [
-     "C",
-     "1.2 V"
-    ],
-    [
-     "D",
-     "1.5 V"
-    ],
-    [
-     "E",
-     "3.0 V"
-    ]
-   ],
-   "answer": "A",
-   "solution": "Reducing the network (e.g., $R_3 \\parallel R_4 \\approx 20\\,\\Omega$ , total $\\approx 75\\,\\Omega$ , total current 0.04 A), the branch current through the $R_4$ path is $1/50$ A, giving $V_4 = 1\\,\\text{V} - (1/50)(30) = 0.4$ V."
-  },
-  {
-   "id": "GR9277#34",
-   "subject": "electromagnetism",
-   "topic": "Electromagnetism → Cavity Boundary Conditions",
-   "statement": "For a perfectly conducting cavity resonator, what boundary conditions hold at the inner walls?",
-   "choices": [
-    [
-     "A",
-     "$E_n=0, B_n=0$"
-    ],
-    [
-     "B",
-     "$E_n=0, B_t=0$"
-    ],
-    [
-     "C",
-     "$E_t=0, B_t=0$"
-    ],
-    [
-     "D",
-     "$E_t=0, B_n=0$"
-    ],
-    [
-     "E",
-     "None"
-    ]
-   ],
-   "answer": "D",
-   "solution": "At a perfect conductor, the tangential electric field and the normal magnetic field vanish: $E_t = 0$ , $B_n = 0$ (D)."
-  },
-  {
-   "id": "GR9277#35",
-   "subject": "optics_waves",
-   "topic": "Optics → Diffraction Grating",
-   "statement": "Light of 5200 Å is normally incident on a grating of 2000 lines/cm. Find the angle of the first-order maximum.",
-   "choices": [
-    [
-     "A",
-     "2°"
-    ],
-    [
-     "B",
-     "3°"
-    ],
-    [
-     "C",
-     "6°"
-    ],
-    [
-     "D",
-     "9°"
-    ],
-    [
-     "E",
-     "12° (F) 15°"
-    ]
-   ],
-   "answer": "C",
-   "solution": "$d = 1/(2000\\,\\text{cm}^{-1}) = 5\\times10^{-6}$ m. $\\sin\\theta = \\lambda/d = 5200\\times10^{-10}/5\\times10^{-6} = 0.1$ , so $\\theta \\approx 0.1$ rad $\\approx 6°$ ."
-  },
-  {
-   "id": "GR9277#36",
-   "subject": "electromagnetism",
-   "topic": "Electromagnetism → Reflection at a Conductor",
-   "statement": "A plane-polarized EM wave is normally incident on a perfect conductor. Upon reflection:",
-   "choices": [
-    [
-     "A",
-     "Both E and B reversed"
-    ],
-    [
-     "B",
-     "Neither reversed"
-    ],
-    [
-     "C",
-     "E reversed, B not"
-    ],
-    [
-     "D",
-     "B reversed, E not"
-    ],
-    [
-     "E",
-     "E and B interchanged"
-    ]
-   ],
-   "answer": "C",
-   "solution": "The tangential E must vanish at the surface, so $E_{refl} = -E_{inc}$ (E reverses). With the propagation direction reversed and $\\vec{B} \\propto \\hat{k}\\times\\vec{E}$ , B does not reverse (C)."
-  },
-  {
-   "id": "GR9277#37",
-   "subject": "special_relativity",
-   "topic": "Special Relativity → Photon Speed",
-   "statement": "A $\\pi^0$ meson (rest energy 135 MeV) moves at $0.8c\\,\\hat{k}$ and decays into two photons; $\\gamma_2$ is emitted backward in the rest frame. Find the lab-frame velocity of $\\gamma_2$ .",
-   "choices": [
-    [
-     "A",
-     "$-1.0c\\,\\hat{k}$"
-    ],
-    [
-     "B",
-     "$-1.2c\\,\\hat{k}$"
-    ],
-    [
-     "C",
-     "$+0.8c\\,\\hat{k}$"
-    ],
-    [
-     "D",
-     "$+1.0c\\,\\hat{k}$"
-    ],
-    [
-     "E",
-     "$+1.8c\\,\\hat{k}$"
-    ]
-   ],
-   "answer": "A",
-   "solution": "Photons travel at $c$ in every frame. Since $\\gamma_2$ is emitted backward, its lab velocity is $-1.0c\\,\\hat{k}$ (A)."
-  },
-  {
-   "id": "GR9277#38",
-   "subject": "special_relativity",
-   "topic": "Special Relativity → Time Dilation",
-   "statement": "Tau leptons have rest-frame half-life $\\Delta t_1$ in $S_1$ . $S_2$ moves at $v_{12}$ relative to $S_1$ , $S_3$ at $v_{13}$ . Which relationship is correct?",
-   "choices": [
-    [
-     "A",
-     "$\\Delta t_2 = \\Delta t_1\\sqrt{1-v_{12}^2/c^2}$"
-    ],
-    [
-     "B",
-     "$\\Delta t_1 = \\Delta t_3\\sqrt{1-v_{13}^2/c^2}$"
-    ],
-    [
-     "C",
-     "$\\Delta t_2 = \\Delta t_3\\sqrt{1-v_{23}^2/c^2}$"
-    ],
-    [
-     "D",
-     "$\\Delta t_3 = \\Delta t_2\\sqrt{1-v_{23}^2/c^2}$"
-    ],
-    [
-     "E",
-     "$\\Delta t_1 = \\Delta t_2\\sqrt{1-v_{23}^2/c^2}$"
-    ]
-   ],
-   "answer": "B",
-   "solution": "$S_1$ is the rest (proper) frame. Time dilates: $\\Delta t_3 = \\Delta t_1/\\sqrt{1-v_{13}^2/c^2}$ , which rearranges to $\\Delta t_1 = \\Delta t_3\\sqrt{1-v_{13}^2/c^2}$ (B). Relations between $\\Delta t_2$ and $\\Delta t_3$ via $v_{23}$ are ambiguous."
-  },
-  {
-   "id": "GR9277#40",
-   "subject": "classical_mechanics",
-   "topic": "Mechanics → Rolling Motion",
-   "statement": "A rigid cylinder rolls without slipping at constant speed. The acceleration of a point on the circumference at the instant it touches the plane is:",
-   "choices": [
-    [
-     "A",
-     "forward"
-    ],
-    [
-     "B",
-     "backward"
-    ],
-    [
-     "C",
-     "up"
-    ],
-    [
-     "D",
-     "down"
-    ],
-    [
-     "E",
-     "zero"
-    ]
-   ],
-   "answer": "C",
-   "solution": "The center moves at constant velocity (zero acceleration). The contact point has no tangential acceleration (no-slip) but has centripetal acceleration $R\\omega^2$ directed toward the center, i.e., upward (C)."
-  },
-  {
-   "id": "GR9277#41",
-   "subject": "classical_mechanics",
-   "topic": "Mechanics → Rotational Energy",
-   "statement": "A cylinder with $I = 4$ kg·m² rotating at 80 rad/s is slowed to 40 rad/s. Find the kinetic energy lost.",
-   "choices": [
-    [
-     "A",
-     "80 J"
-    ],
-    [
-     "B",
-     "800 J"
-    ],
-    [
-     "C",
-     "4000 J"
-    ],
-    [
-     "D",
-     "9600 J"
-    ],
-    [
-     "E",
-     "19,200 J"
-    ]
-   ],
-   "answer": "D",
-   "solution": "$K = \\frac12 I\\omega^2$ . $K_0 = \\frac12(4)(80)^2 = 12800$ J; $K_f = \\frac12(4)(40)^2 = 3200$ J. Loss $= 9600$ J (D)."
-  },
-  {
-   "id": "GR9277#42",
-   "subject": "classical_mechanics",
-   "topic": "Mechanics → Angular Kinematics",
-   "statement": "Same cylinder slows from 80 to 40 rad/s in 10 s. Find the magnitude of the applied torque.",
-   "choices": [
-    [
-     "A",
-     "80 N·m"
-    ],
-    [
-     "B",
-     "40"
-    ],
-    [
-     "C",
-     "32"
-    ],
-    [
-     "D",
-     "16"
-    ],
-    [
-     "E",
-     "8"
-    ]
-   ],
-   "answer": "D",
-   "solution": "$\\alpha = (40-80)/10 = -4$ rad/s². $\\tau = I\\alpha = 4\\times4 = 16$ N·m in magnitude (D)."
-  },
-  {
-   "id": "GR9277#43",
-   "subject": "classical_mechanics",
-   "topic": "Mechanics → Lagrangian (Cyclic Coordinates)",
-   "statement": "If $\\partial L/\\partial q_n = 0$ for a conservative, unconstrained system, then the generalized momentum $p_n$ is:",
-   "choices": [
-    [
-     "A",
-     "An ignorable coordinate"
-    ],
-    [
-     "B",
-     "Constant"
-    ],
-    [
-     "C",
-     "Undefined"
-    ],
-    [
-     "D",
-     "Equal to $\\frac{d}{dt}(\\partial L/\\partial\\dot q_n)$"
-    ],
-    [
-     "E",
-     "Equal to the Hamiltonian"
-    ]
-   ],
-   "answer": "B",
-   "solution": "Lagrange's equation: $\\frac{d}{dt}(\\partial L/\\partial\\dot q_n) = \\partial L/\\partial q_n = 0$ . Since $p_n = \\partial L/\\partial\\dot q_n$ , $p_n$ is constant (B)."
-  },
-  {
-   "id": "GR9277#45",
-   "subject": "classical_mechanics",
-   "topic": "Mechanics → Energy Conservation",
-   "statement": "A ball dropped from height $h$ bounces back at 80% of its impact speed. Find the maximum height after the bounce.",
-   "choices": [
-    [
-     "A",
-     "0.94h"
-    ],
-    [
-     "B",
-     "0.80h"
-    ],
-    [
-     "C",
-     "0.75h"
-    ],
-    [
-     "D",
-     "0.64h"
-    ],
-    [
-     "E",
-     "0.50h"
-    ]
-   ],
-   "answer": "D",
-   "solution": "Height $\\propto v^2$ . After the bounce, $v' = 0.8 v_0$ , so $h' = (0.8)^2 h = 0.64h$ (D)."
-  },
-  {
-   "id": "GR9277#46",
-   "subject": "thermo_stat_mech",
-   "topic": "Thermodynamics → Critical Isotherm",
-   "statement": "On a pV diagram of isotherms, which numbered curve is the critical isotherm?",
-   "choices": [
-    [
-     "A",
-     "1"
-    ],
-    [
-     "B",
-     "2"
-    ],
-    [
-     "C",
-     "3"
-    ],
-    [
-     "D",
-     "4"
-    ],
-    [
-     "E",
-     "5"
-    ]
-   ],
-   "answer": "B",
-   "solution": "The critical isotherm has an inflection point at the critical point: $(dP/dV)_c = 0$ and $(d^2P/dV^2)_c = 0$ . Among the curves, curve 2 satisfies this. Answer (B)."
-  },
-  {
-   "id": "GR9277#48",
-   "subject": "lab_methods",
-   "topic": "Lab Methods → Error Propagation",
-   "statement": "For $F = ma$ with uncorrelated, normally distributed measurements, $\\sigma_F/F$ is:",
-   "choices": [
-    [
-     "A",
-     "$(\\sigma_m/m)^2 + (\\sigma_a/a)^2$"
-    ],
-    [
-     "B",
-     "$(\\sigma_m/m + \\sigma_a/a)^{1/2}$"
-    ],
-    [
-     "C",
-     "$((\\sigma_m/m)^2 + (\\sigma_a/a)^2)^{1/2}$"
-    ],
-    [
-     "D",
-     "$\\sigma_m\\sigma_a/(ma)$"
-    ],
-    [
-     "E",
-     "$\\sigma_m/m + \\sigma_a/a$"
-    ]
-   ],
-   "answer": "C",
-   "solution": "For a product, relative uncertainties add in quadrature: $\\sigma_F/F = \\sqrt{(\\sigma_m/m)^2 + (\\sigma_a/a)^2}$ (C)."
-  },
-  {
-   "id": "GR9277#49",
-   "subject": "special_relativity",
-   "topic": "Lab Methods / Relativity → Timing",
-   "statement": "Two scintillation counters are 3.0 m apart vertically. What is the largest resolving time that can distinguish downward from upward relativistic muons?",
-   "choices": [
-    [
-     "A",
-     "1 ps"
-    ],
-    [
-     "B",
-     "1 ns"
-    ],
-    [
-     "C",
-     "1 μs"
-    ],
-    [
-     "D",
-     "1 ms"
-    ],
-    [
-     "E",
-     "1 s"
-    ]
-   ],
-   "answer": "B",
-   "solution": "Transit time $t = 3/c = 3/(3\\times10^8) = 10^{-8}$ s = 10 ns. The resolving time must be shorter than this; the largest option that works is 1 ns (B)."
-  },
-  {
-   "id": "GR9277#50",
-   "subject": "quantum_mechanics",
-   "topic": "Quantum Mechanics → Simultaneous Eigenstates",
-   "statement": "When can all wave functions be expanded in simultaneous eigenfunctions of observables A and B?",
-   "choices": [
-    [
-     "A",
-     "Only if eigenvalues nondegenerate"
-    ],
-    [
-     "B",
-     "Only if A and B commute"
-    ],
-    [
-     "C",
-     "Only if A commutes with H"
-    ],
-    [
-     "D",
-     "Only if B commutes with H"
-    ],
-    [
-     "E",
-     "Always"
-    ]
-   ],
-   "answer": "B",
-   "solution": "Two operators share a complete set of simultaneous eigenstates if and only if they commute, $[A,B] = 0$ (B)."
-  },
-  {
-   "id": "GR9277#51",
-   "subject": "quantum_mechanics",
-   "topic": "Quantum Mechanics → Momentum Expectation",
-   "statement": "For an infinite square well with $\\psi_n = \\sqrt{2/a}\\sin(n\\pi x/a)$ , find $\\langle p\\rangle$ for any state $n$ .",
-   "choices": [
-    [
-     "A",
-     "0"
-    ],
-    [
-     "B",
-     "$\\hbar n\\pi/a$"
-    ],
-    [
-     "C",
-     "$\\hbar n\\pi/a$"
-    ],
-    [
-     "D",
-     "$2\\hbar n\\pi/a$"
-    ],
-    [
-     "E",
-     "$(\\hbar n\\pi/a)(\\cos n\\pi - 1)$(F) $(-i\\hbar n\\pi/a)(\\cos n\\pi - 1)$"
-    ]
-   ],
-   "answer": "A",
-   "solution": "$\\langle p\\rangle \\propto \\int_0^a \\sin(n\\pi x/a)\\cos(n\\pi x/a)\\,dx = 0$ . Also, for a stationary state $d\\langle x\\rangle/dt = 0$ so $\\langle p\\rangle = 0$ (A)."
-  },
-  {
-   "id": "GR9277#52",
-   "subject": "quantum_mechanics",
-   "topic": "Quantum Mechanics → Orthonormality",
-   "statement": "The eigenfunctions of the infinite square well satisfy $\\int_0^a \\psi_n^*\\psi_l\\,dx = \\delta_{nl}$ . This property is called:",
-   "choices": [
-    [
-     "A",
-     "Solutions to Schrödinger equation"
-    ],
-    [
-     "B",
-     "Orthonormal"
-    ],
-    [
-     "C",
-     "Bounded"
-    ],
-    [
-     "D",
-     "Linearly dependent"
-    ],
-    [
-     "E",
-     "Symmetric"
-    ]
-   ],
-   "answer": "B",
-   "solution": "$\\langle\\psi_m|\\psi_n\\rangle = \\delta_{nm}$ is the definition of orthonormality (B)."
-  },
-  {
-   "id": "GR9277#56",
-   "subject": "quantum_mechanics",
-   "topic": "Quantum Mechanics → Harmonic Oscillator",
-   "statement": "Find the ground-state energy of a 1D quantum harmonic oscillator (frequency $\\nu$ ).",
-   "choices": [
-    [
-     "A",
-     "0"
-    ],
-    [
-     "B",
-     "$h\\nu/3$"
-    ],
-    [
-     "C",
-     "$h\\nu/2$"
-    ],
-    [
-     "D",
-     "$h\\nu$"
-    ],
-    [
-     "E",
-     "$3h\\nu/2$"
-    ]
-   ],
-   "answer": "C",
-   "solution": "$E_n = (n+\\frac12)h\\nu$ . For $n=0$ : $E_0 = \\frac12 h\\nu$ (zero-point energy) (C)."
-  },
-  {
-   "id": "GR9277#58",
-   "subject": "atomic_physics",
-   "topic": "Atomic Physics → Electron Configuration",
-   "statement": "Ground state electron configuration of neutral sodium ( $Z=11$ ):",
-   "choices": [
-    [
-     "A",
-     "$1s^22s^22p^53s^2$"
-    ],
-    [
-     "B",
-     "$1s^22s^32p^6$"
-    ],
-    [
-     "C",
-     "$1s^22s^22p^63s^1$"
-    ],
-    [
-     "D",
-     "$1s^22s^22p^63p$"
-    ],
-    [
-     "E",
-     "$1s^22s^2sp^5$"
-    ]
-   ],
-   "answer": "C",
-   "solution": "By the Aufbau principle, fill 1s² 2s² 2p⁶ 3s¹ = 11 electrons (C)."
-  },
-  {
-   "id": "GR9277#59",
-   "subject": "atomic_physics",
-   "topic": "Atomic Physics → Spin States",
-   "statement": "The ground state of helium is a:",
-   "choices": [
-    [
-     "A",
-     "Singlet"
-    ],
-    [
-     "B",
-     "Doublet"
-    ],
-    [
-     "C",
-     "Triplet"
-    ],
-    [
-     "D",
-     "Quartet"
-    ],
-    [
-     "E",
-     "Quintuplet"
-    ]
-   ],
-   "answer": "A",
-   "solution": "Ground-state He is $1s^2$ ; both electrons share the same spatial orbital with opposite spins (Pauli). The total spin $S = 0$ , multiplicity $2S+1 = 1$ → singlet (A)."
-  },
-  {
-   "id": "GR9277#60",
-   "subject": "electromagnetism",
-   "topic": "Electromagnetism → Cyclotron Frequency",
-   "statement": "An electron in a metal has effective mass $m^* = 0.1 m_e$ . In a 1 T field, the cyclotron resonance frequency $\\omega_c$ is most nearly:",
-   "choices": [
-    [
-     "A",
-     "930 rad/s"
-    ],
-    [
-     "B",
-     "$8.5\\times10^6$"
-    ],
-    [
-     "C",
-     "$2.8\\times10^{11}$"
-    ],
-    [
-     "D",
-     "$1.8\\times10^{12}$"
-    ],
-    [
-     "E",
-     "$7.7\\times10^{20}$"
-    ]
-   ],
-   "answer": "D",
-   "solution": "$\\omega_c = qB/m^* = (1.6\\times10^{-19})(1)/(0.1\\times9.1\\times10^{-31}) \\approx 1.8\\times10^{12}$ rad/s (D). Must use effective mass."
-  },
-  {
-   "id": "GR9277#61",
-   "subject": "classical_mechanics",
-   "topic": "Mechanics → Small Oscillations",
-   "statement": "A massless rod pivots about one end in a vertical plane. Config I: two masses at the free end. Config II: one mass moved to the center. Find $\\omega_{II}/\\omega_I$ .",
-   "choices": [
-    [
-     "A",
-     "$\\sqrt{6/5}$"
-    ],
-    [
-     "B",
-     "$\\sqrt{3/2}$"
-    ],
-    [
-     "C",
-     "6/5"
-    ],
-    [
-     "D",
-     "3/2"
-    ],
-    [
-     "E",
-     "5/3"
-    ]
-   ],
-   "answer": "A",
-   "solution": "$\\omega = \\sqrt{mgr_{cm}/I}$ . Config I: $I_1 = 2mr^2$ , $r_{cm}=r$ → $\\omega_1 = \\sqrt{g/r}$ . Config II: $I_2 = m(r/2)^2 + mr^2 = \\frac54 mr^2$ , $r_{cm} = 3r/4$ → $\\omega_2 = \\sqrt{(2mg\\cdot3r/4)/(5mr^2/4)} = \\sqrt{6g/5r}$ . Ratio $= \\sqrt{6/5}$ (A)."
-  },
-  {
-   "id": "GR9277#62",
-   "subject": "thermo_stat_mech",
-   "topic": "Thermodynamics → Isothermal Work",
-   "statement": "One mole of ideal gas at $T_0$ , $V_0$ expands reversibly and isothermally to $V_1$ . Given $c_p/c_v = \\gamma$ , find the work done by the gas.",
-   "choices": [
-    [
-     "A",
-     "Zero"
-    ],
-    [
-     "B",
-     "$RT_0(V_1/V_0)^\\gamma$"
-    ],
-    [
-     "C",
-     "$RT_0(V_1/V_0 - 1)$"
-    ],
-    [
-     "D",
-     "$c_vT_0(1-(V_0/V_1)^{\\gamma-1})$"
-    ],
-    [
-     "E",
-     "$RT_0\\ln(V_1/V_0)$"
-    ]
-   ],
-   "answer": "E",
-   "solution": "$W = \\int P\\,dV = \\int \\frac{RT_0}{V}dV = RT_0\\ln(V_1/V_0)$ (E). $\\gamma$ is a distractor."
-  },
-  {
-   "id": "GR9277#63",
-   "subject": "thermo_stat_mech",
-   "topic": "Statistical Mechanics → Entropy / Equilibrium",
-   "statement": "If an isolated thermodynamic system is in its arrangement of maximal probability, which is true?",
-   "choices": [
-    [
-     "A",
-     "Spontaneous change to lower probability"
-    ],
-    [
-     "B",
-     "Entropy is minimum"
-    ],
-    [
-     "C",
-     "Boltzmann's constant → 0"
-    ],
-    [
-     "D",
-     "No spontaneous change occurs"
-    ],
-    [
-     "E",
-     "Entropy is zero"
-    ]
-   ],
-   "answer": "D",
-   "solution": "Maximal probability = maximum entropy = most stable macrostate. No spontaneous macroscopic change occurs (D)."
-  },
-  {
-   "id": "GR9277#64",
-   "subject": "electromagnetism",
-   "topic": "Electromagnetism → Gauss's Law",
-   "statement": "An electric field is $E_x = 0, E_y = 0, E_z = kz$ ( $k \\ne 0$ ). Which is true?",
-   "choices": [
-    [
-     "A",
-     "Time-varying B field"
-    ],
-    [
-     "B",
-     "There is charge density in the region"
-    ],
-    [
-     "C",
-     "E cannot be constant in time"
-    ],
-    [
-     "D",
-     "E is impossible"
-    ],
-    [
-     "E",
-     "None"
-    ]
-   ],
-   "answer": "B",
-   "solution": "$\\nabla\\cdot\\vec{E} = \\partial_z(kz) = k \\ne 0$ , so by Gauss's law $\\rho = k\\epsilon_0 \\ne 0$ : charge density exists (B)."
-  },
-  {
-   "id": "GR9277#65",
-   "subject": "electromagnetism",
-   "topic": "Electromagnetism → Small Oscillations",
-   "statement": "Two fixed charges $+Q$ are separated by $2R$ on the x-axis. A particle of mass $m$ , charge $-q$ at the midpoint. Find $\\omega$ for small oscillations along $y$ .",
-   "choices": [
-    [
-     "A",
-     "$\\frac{Qq}{2\\pi\\epsilon_0 mR^2}$"
-    ],
-    [
-     "B",
-     "$\\frac{Qq}{4\\pi\\epsilon_0 mR^2}$"
-    ],
-    [
-     "C",
-     "$\\frac{Qq}{2\\pi\\epsilon_0 mR^3}$"
-    ],
-    [
-     "D",
-     "$(\\frac{Qq}{4\\pi\\epsilon_0 mR^2})^{1/2}$"
-    ],
-    [
-     "E",
-     "$(\\frac{Qq}{2\\pi\\epsilon_0 mR^3})^{1/2}$"
-    ]
-   ],
-   "answer": "E",
-   "solution": "For small displacement $y$ , the restoring force is $m\\ddot y = -\\frac{2Qq}{4\\pi\\epsilon_0 R^3}y$ , so $k = \\frac{Qq}{2\\pi\\epsilon_0 R^3}$ and $\\omega = \\sqrt{k/m} = \\sqrt{\\frac{Qq}{2\\pi\\epsilon_0 mR^3}}$ (E)."
-  },
-  {
-   "id": "GR9277#66",
-   "subject": "classical_mechanics",
-   "topic": "Mechanics → Work and Energy",
-   "statement": "A uniform 10 m chain of linear density 2 kg/m hangs vertically from an axle. Find the work to wind it all onto the axle.",
-   "choices": [
-    [
-     "A",
-     "100 J"
-    ],
-    [
-     "B",
-     "200 J"
-    ],
-    [
-     "C",
-     "1000 J"
-    ],
-    [
-     "D",
-     "2000 J"
-    ],
-    [
-     "E",
-     "10,000 J"
-    ]
-   ],
-   "answer": "C",
-   "solution": "Mass = 20 kg; center of mass rises 5 m. $W = mg\\Delta h = 20\\times10\\times5 = 1000$ J (C)."
-  },
-  {
-   "id": "GR9277#67",
-   "subject": "optics_waves",
-   "topic": "Optics → Polarization",
-   "statement": "Through a rotating polaroid, transmitted intensity varies as $A + B\\cos(2\\theta)$ with $A > B > 0$ . The incident light is:",
-   "choices": [
-    [
-     "A",
-     "Completely unpolarized"
-    ],
-    [
-     "B",
-     "Completely plane polarized"
-    ],
-    [
-     "C",
-     "Partly plane polarized and partly unpolarized"
-    ],
-    [
-     "D",
-     "Partly circularly polarized and partly unpolarized"
-    ],
-    [
-     "E",
-     "Completely circularly polarized"
-    ]
-   ],
-   "answer": "C",
-   "solution": "Plane-polarized light gives $\\cos^2\\theta = \\frac{1+\\cos2\\theta}{2}$ (oscillating, constant = amplitude); unpolarized gives a constant. Since $A > B$ , there is a constant baseline larger than the oscillation amplitude → a mix of plane-polarized and unpolarized (C)."
-  },
-  {
-   "id": "GR9277#68",
-   "subject": "optics_waves",
-   "topic": "Optics → Rayleigh Criterion",
-   "statement": "A double star has angular separation 8 μrad; light wavelength 5500 Å. The smallest telescope mirror diameter that resolves it is most nearly:",
-   "choices": [
-    [
-     "A",
-     "1 mm"
-    ],
-    [
-     "B",
-     "1 cm"
-    ],
-    [
-     "C",
-     "10 cm"
-    ],
-    [
-     "D",
-     "1 m"
-    ],
-    [
-     "E",
-     "100 m"
-    ]
-   ],
-   "answer": "C",
-   "solution": "$\\theta = 1.22\\lambda/d \\implies d = 1.22\\lambda/\\theta = 1.22\\times(5.5\\times10^{-7})/(8\\times10^{-6}) \\approx 0.084$ m $\\approx$ 10 cm (C)."
-  },
-  {
-   "id": "GR9277#69",
-   "subject": "special_relativity",
-   "topic": "Optics / Relativity → Cherenkov Radiation",
-   "statement": "A fast charged particle passes through glass ( $n = 1.5$ ) and emits light. Find the minimum speed.",
-   "choices": [
-    [
-     "A",
-     "$c/3$"
-    ],
-    [
-     "B",
-     "$4c/9$"
-    ],
-    [
-     "C",
-     "$5c/9$"
-    ],
-    [
-     "D",
-     "$2c/3$"
-    ],
-    [
-     "E",
-     "$c$"
-    ]
-   ],
-   "answer": "D",
-   "solution": "Cherenkov radiation requires the particle to exceed the speed of light in the medium, $v_{min} = c/n = c/1.5 = 2c/3$ (D)."
-  },
-  {
-   "id": "GR9277#70",
-   "subject": "special_relativity",
-   "topic": "Special Relativity → Energy-Momentum",
-   "statement": "Unstable particles have total energy 100 times their rest energy (rest mass $m$ ). Find their momentum.",
-   "choices": [
-    [
-     "A",
-     "$2mc$"
-    ],
-    [
-     "B",
-     "$10mc$"
-    ],
-    [
-     "C",
-     "$70mc$"
-    ],
-    [
-     "D",
-     "$100mc$"
-    ],
-    [
-     "E",
-     "$10^4 mc$"
-    ]
-   ],
-   "answer": "D",
-   "solution": "$E^2 = (pc)^2 + (mc^2)^2$ . With $E = 100mc^2$ , $(pc)^2 = (10000-1)m^2c^4 \\approx 10000 m^2c^4$ , so $p \\approx 100mc$ (D). Ultra-relativistic: $p \\approx E/c$ ."
-  },
-  {
-   "id": "GR9277#71",
-   "subject": "thermo_stat_mech",
-   "topic": "Statistical Mechanics → Boltzmann Distribution",
-   "statement": "$N_0$ two-state subsystems with energies $E_1, E_2$ ( $E_2 - E_1 = \\epsilon > 0$ ) at temperature $T$ . Find the average number in the lower state $E_1$ .",
-   "choices": [
-    [
-     "A",
-     "$N_0/2$"
-    ],
-    [
-     "B",
-     "$\\frac{N_0}{1+e^{-\\epsilon/kT}}$"
-    ],
-    [
-     "C",
-     "$N_0 e^{-\\epsilon/kT}$"
-    ],
-    [
-     "D",
-     "$\\frac{N_0}{1+e^{\\epsilon/kT}}$"
-    ],
-    [
-     "E",
-     "$\\frac{N_0 e^{\\epsilon/kT}}{2}$"
-    ]
-   ],
-   "answer": "B",
-   "solution": "$P(E_1) = \\frac{e^{-E_1/kT}}{e^{-E_1/kT}+e^{-E_2/kT}} = \\frac{1}{1+e^{-\\epsilon/kT}}$ . So $N_1 = \\frac{N_0}{1+e^{-\\epsilon/kT}}$ (B)."
-  },
-  {
-   "id": "GR9277#73",
-   "subject": "thermo_stat_mech",
-   "topic": "Statistical Mechanics → Entropy",
-   "statement": "For the two-state system, which describes the entropy behavior?",
-   "choices": [
-    [
-     "A",
-     "Increases without limit from zero at T=0"
-    ],
-    [
-     "B",
-     "Decreases with increasing T"
-    ],
-    [
-     "C",
-     "Increases from zero at T=0 to $N_0 k\\ln 2$at high T"
-    ],
-    [
-     "D",
-     "$N_0 k(\\frac52\\ln T - \\ln\\rho + \\text{const})$"
-    ],
-    [
-     "E",
-     "Cannot be calculated"
-    ]
-   ],
-   "answer": "C",
-   "solution": "By the third law, $S\\to 0$ as $T\\to 0$ . As $T\\to\\infty$ , both states are equally accessible, $Z\\to 2$ , giving $S = N_0 k\\ln 2$ . So entropy rises monotonically from 0 to $N_0 k\\ln 2$ (C)."
-  },
-  {
-   "id": "GR9277#74",
-   "subject": "classical_mechanics",
-   "topic": "Mechanics → Small Oscillations (Hoops)",
-   "statement": "Two hoops X and Y hang on nails. Mass of X is 4× that of Y, diameter of X is 4× that of Y. If X's period is $T$ , find Y's period.",
-   "choices": [
-    [
-     "A",
-     "2T"
-    ],
-    [
-     "B",
-     "T"
-    ],
-    [
-     "C",
-     "T/2"
-    ],
-    [
-     "D",
-     "T/4"
-    ],
-    [
-     "E",
-     "T/8 (F) T/16"
-    ]
-   ],
-   "answer": "C",
-   "solution": "A hoop oscillating on a nail behaves like a pendulum of effective length equal to the radius: $T \\propto \\sqrt{r}$ , independent of mass. $r_X = 4r_Y$ , so $T_X/T_Y = \\sqrt{4} = 2$ → $T_Y = T/2$ (C)."
-  },
-  {
-   "id": "GR9277#75",
-   "subject": "atomic_physics",
-   "topic": "Nuclear Physics → Conservation Laws",
-   "statement": "$^{235}_{92}U \\to {}^{231}_{90}Th + {}^4_2He$ (decay at rest). Which statement is true?",
-   "choices": [
-    [
-     "A",
-     "Same kinetic energy"
-    ],
-    [
-     "B",
-     "Same speed"
-    ],
-    [
-     "C",
-     "Same direction"
-    ],
-    [
-     "D",
-     "Th has more momentum than He"
-    ],
-    [
-     "E",
-     "He has more kinetic energy than Th"
-    ]
-   ],
-   "answer": "E",
-   "solution": "Momentum conservation gives equal and opposite momenta, $|p_{Th}| = |p_{He}|$ . Since $K = p^2/2m$ , $K_{He}/K_{Th} = m_{Th}/m_{He} \\approx 231/4 \\approx 58$ . The lighter He has much more kinetic energy (E)."
-  },
-  {
-   "id": "GR9277#76",
-   "subject": "atomic_physics",
-   "topic": "Atomic Physics → Angular Momentum Coupling",
-   "statement": "For the configuration $1s\\,2p\\,3p$ (three electrons), find the maximum possible total angular momentum quantum number.",
-   "choices": [
-    [
-     "A",
-     "2"
-    ],
-    [
-     "B",
-     "7/2"
-    ],
-    [
-     "C",
-     "3"
-    ],
-    [
-     "D",
-     "5/2"
-    ],
-    [
-     "E",
-     "3/2"
-    ]
-   ],
-   "answer": "B",
-   "solution": "Max $L = 0 + 1 + 1 = 2$ ; max $S = \\frac12\\times3 = \\frac32$ . Max $j = L + S = 2 + \\frac32 = \\frac72$ (B)."
-  },
-  {
-   "id": "GR9277#77",
-   "subject": "quantum_mechanics",
-   "topic": "Quantum Mechanics → Magnetic Moment",
-   "statement": "A heavy nucleus has spin 1/2. The magnitude of the ratio of its intrinsic magnetic moment to that of an electron is:",
-   "choices": [
-    [
-     "A",
-     "2"
-    ],
-    [
-     "B",
-     "Zero (no moment)"
-    ],
-    [
-     "C",
-     "Greater than 1 (many protons)"
-    ],
-    [
-     "D",
-     "Greater than 1 (larger diameter)"
-    ],
-    [
-     "E",
-     "Less than 1 (nucleus much more massive) (F) Less than 1 (strong interactions)"
-    ]
-   ],
-   "answer": "E",
-   "solution": "$\\mu = \\gamma S$ with $\\gamma = eg/2m \\propto 1/m$ . With the same spin, $\\mu_n/\\mu_e \\approx m_e/m_n \\ll 1$ because the nucleus is far more massive (E)."
-  },
-  {
-   "id": "GR9277#79",
-   "subject": "optics_waves",
-   "topic": "Wave Phenomena → Group vs. Phase Velocity",
-   "statement": "On a dispersion curve $\\omega(k)$ , for $k_1 < k < k_2$ where the slope is negative, the phase and group velocities are:",
-   "choices": [
-    [
-     "A",
-     "In opposite directions"
-    ],
-    [
-     "B",
-     "Same direction, phase larger"
-    ],
-    [
-     "C",
-     "Same direction, group larger"
-    ],
-    [
-     "D",
-     "Same in direction and magnitude"
-    ],
-    [
-     "E",
-     "Phase infinite, group finite"
-    ]
-   ],
-   "answer": "A",
-   "solution": "$v_g = d\\omega/dk < 0$ (negative slope) while $v_p = \\omega/k > 0$ . They point in opposite directions (A)."
-  },
-  {
-   "id": "GR9277#80",
-   "subject": "quantum_mechanics",
-   "topic": "Quantum Mechanics → Planck Relation (X-rays)",
-   "statement": "Electrons accelerated through 25 kV strike a target. The continuous x-ray spectrum's short-wavelength limit is most nearly:",
-   "choices": [
-    [
-     "A",
-     "0.1 Å"
-    ],
-    [
-     "B",
-     "0.5 Å"
-    ],
-    [
-     "C",
-     "2 Å"
-    ],
-    [
-     "D",
-     "25 Å"
-    ],
-    [
-     "E",
-     "50 Å"
-    ]
-   ],
-   "answer": "B",
-   "solution": "$\\lambda = hc/E$ with $hc \\approx 1.24\\times10^{-6}$ eV·m, $E = 2.5\\times10^4$ eV: $\\lambda = 1.24\\times10^{-6}/2.5\\times10^4 = 0.5\\times10^{-10}$ m = 0.5 Å (B)."
-  },
-  {
-   "id": "GR9277#81",
-   "subject": "electromagnetism",
-   "topic": "Electromagnetism → RLC Resonance",
-   "statement": "In a driven RLC circuit $\\varepsilon(t) = \\varepsilon_m\\cos\\omega t$ , at what $\\omega$ is the steady-state current amplitude maximum?",
-   "choices": [
-    [
-     "A",
-     "$1/(RC)$"
-    ],
-    [
-     "B",
-     "$2L/R$"
-    ],
-    [
-     "C",
-     "$1/\\sqrt{LC}$"
-    ],
-    [
-     "D",
-     "$\\sqrt{1/(LC) - (R/2L)^2}$"
-    ],
-    [
-     "E",
-     "$\\sqrt{(1/RC)^2 - (L/R)^2}$"
-    ]
-   ],
-   "answer": "C",
-   "solution": "Current is max when reactance vanishes: $\\omega L = 1/(\\omega C) \\implies \\omega = 1/\\sqrt{LC}$ (C). Resistance doesn't shift the steady-state resonance."
-  },
-  {
-   "id": "GR9277#85",
-   "subject": "special_relativity",
-   "topic": "Special Relativity → Momentum",
-   "statement": "A free electron (rest mass 0.5 MeV/c²) has total energy 1.5 MeV. Find its momentum (MeV/c).",
-   "choices": [
-    [
-     "A",
-     "0.86"
-    ],
-    [
-     "B",
-     "1.0"
-    ],
-    [
-     "C",
-     "1.4"
-    ],
-    [
-     "D",
-     "1.5"
-    ],
-    [
-     "E",
-     "2.0"
-    ]
-   ],
-   "answer": "C",
-   "solution": "$E^2 = (pc)^2 + (mc^2)^2$ : $(1.5)^2 = (pc)^2 + (0.5)^2 \\implies (pc)^2 = 2.0 \\implies pc = \\sqrt2 \\approx 1.4$ MeV (C)."
-  },
-  {
-   "id": "GR9277#86",
-   "subject": "electromagnetism",
-   "topic": "Electromagnetism → RC Circuit Measurement",
-   "statement": "A capacitance $C$ is measured via an oscilloscope (y = voltage across $R$ , x = sweep at constant speed $s$ ). To compute $C$ from the curve, one additionally needs:",
-   "choices": [
-    [
-     "A",
-     "$V_0$and $R$"
-    ],
-    [
-     "B",
-     "$s$and $R$"
-    ],
-    [
-     "C",
-     "$s$and $V_0$"
-    ],
-    [
-     "D",
-     "$R$and $R'$"
-    ],
-    [
-     "E",
-     "Oscilloscope sensitivity"
-    ]
-   ],
-   "answer": "B",
-   "solution": "$V = V_0 e^{-t/RC}$ , so $C = -t/(R\\ln(V/V_0))$ . The voltage ratio is read off the screen; time comes from sweep speed $s$ , and the time constant requires $R$ . Thus $s$ and $R$ are needed (B)."
-  },
-  {
-   "id": "GR9277#87",
-   "subject": "classical_mechanics",
-   "topic": "Mechanics → Energy in Orbits",
-   "statement": "A mass $M$ orbits in a circle of radius $r$ under $F = K/r^3$ (attractive), with $V(\\infty) = 0$ . Find the total energy.",
-   "choices": [
-    [
-     "A",
-     "$-K/r^2$"
-    ],
-    [
-     "B",
-     "$-K/(2r^2)$"
-    ],
-    [
-     "C",
-     "0"
-    ],
-    [
-     "D",
-     "$K/(2r^2)$"
-    ],
-    [
-     "E",
-     "$K/r^2$"
-    ]
-   ],
-   "answer": "C",
-   "solution": "Circular orbit: $Mv^2/r = K/r^3 \\implies T = \\frac12 Mv^2 = K/(2r^2)$ . Potential $V = -\\int F\\,dr = -K/(2r^2)$ . Total $E = T + V = 0$ (C)."
-  },
-  {
-   "id": "GR9277#88",
-   "subject": "electromagnetism",
-   "topic": "Electromagnetism → Capacitors with Dielectric",
-   "statement": "A parallel-plate capacitor (battery connected) has $V_0, Q_0, E_0, D_0$ . A dielectric is inserted while connected, then disconnected. Which is correct?",
-   "choices": [
-    [
-     "A",
-     "$V_f > V_0$"
-    ],
-    [
-     "B",
-     "$V_f < V_0$"
-    ],
-    [
-     "C",
-     "$Q_f = Q_0$"
-    ],
-    [
-     "D",
-     "$E_f > E_0$"
-    ],
-    [
-     "E",
-     "$D_f > D_0$"
-    ]
-   ],
-   "answer": "E",
-   "solution": "With the battery connected, $V_f = V_0$ (eliminates A, B). $Q_f = \\kappa Q_0 > Q_0$ (eliminates C). $E_f = \\sigma_f/(\\kappa\\epsilon_0) = E_0$ (eliminates D). But $D_f = \\kappa\\epsilon_0 E_0 > \\epsilon_0 E_0 = D_0$ (E)."
-  },
-  {
-   "id": "GR9277#89",
-   "subject": "quantum_mechanics",
-   "topic": "Quantum Mechanics → Modified Harmonic Oscillator",
-   "statement": "The 1D harmonic oscillator has $E_n = h\\nu(n+\\frac12)$ . With an infinite barrier added at the center, how do the energy levels differ?",
-   "choices": [
-    [
-     "A",
-     "1/2 → 3/2"
-    ],
-    [
-     "B",
-     "Each level doubled"
-    ],
-    [
-     "C",
-     "Each level halved"
-    ],
-    [
-     "D",
-     "Only even $n$present"
-    ],
-    [
-     "E",
-     "Only odd $n$present"
-    ]
-   ],
-   "answer": "E",
-   "solution": "The infinite central barrier forces a node at the origin. Only the odd- $n$ wavefunctions (which vanish at the center) survive; even- $n$ states are eliminated (E)."
-  },
-  {
-   "id": "GR9277#90",
-   "subject": "quantum_mechanics",
-   "topic": "Quantum Mechanics → Rotational Energy Levels",
-   "statement": "The spacing of rotational energy levels for $H_2$ is most nearly:",
-   "choices": [
-    [
-     "A",
-     "$10^{-9}$eV"
-    ],
-    [
-     "B",
-     "$10^{-3}$eV"
-    ],
-    [
-     "C",
-     "10 eV"
-    ],
-    [
-     "D",
-     "10 MeV"
-    ],
-    [
-     "E",
-     "100 MeV"
-    ]
-   ],
-   "answer": "B",
-   "solution": "$\\Delta E \\sim \\hbar^2/I$ with $I = 2mr^2 \\approx 2(1.7\\times10^{-27})(0.5\\times10^{-10})^2 \\approx 10^{-47}$ kg·m². $\\Delta E \\approx 10^{-68}/10^{-47} = 10^{-21}$ J $\\approx 10^{-3}$ eV (B)."
-  },
-  {
-   "id": "GR9277#91",
-   "subject": "atomic_physics",
-   "topic": "Particle Physics → Strangeness Conservation",
-   "statement": "The decay $\\Lambda \\to p + \\pi^-$ must be a weak interaction because:",
-   "choices": [
-    [
-     "A",
-     "$\\pi^-$is a lepton"
-    ],
-    [
-     "B",
-     "$\\Lambda$has spin zero"
-    ],
-    [
-     "C",
-     "no neutrino is produced"
-    ],
-    [
-     "D",
-     "it doesn't conserve angular momentum"
-    ],
-    [
-     "E",
-     "it doesn't conserve strangeness"
-    ]
-   ],
-   "answer": "E",
-   "solution": "The $\\Lambda$ has strangeness $S = -1$ while $p$ and $\\pi^-$ have $S = 0$ . The strong force conserves strangeness; the weak force allows $\\Delta S = \\pm 1$ . The strangeness change signals a weak interaction (E)."
-  },
-  {
-   "id": "GR9277#92",
-   "subject": "electromagnetism",
-   "topic": "Electromagnetism → AC Generator Frequency",
-   "statement": "A flat coil rotates at 10 Hz in the field of three pairs of magnets (axis in the coil plane, perpendicular to field). Find the frequency of the alternating voltage.",
-   "choices": [
-    [
-     "A",
-     "10/6 Hz"
-    ],
-    [
-     "B",
-     "10/3"
-    ],
-    [
-     "C",
-     "10"
-    ],
-    [
-     "D",
-     "30"
-    ],
-    [
-     "E",
-     "60"
-    ]
-   ],
-   "answer": "D",
-   "solution": "Three magnet pairs make the field pattern repeat three times per revolution, so the voltage cycles three times per rotation: $10 \\times 3 = 30$ Hz (D)."
-  },
-  {
-   "id": "GR9277#95",
-   "subject": "atomic_physics",
-   "topic": "Nuclear/Particle Physics → Scattering Cross Section",
-   "statement": "A beam of $10^{12}$ protons/s hits a target of $10^{20}$ nuclei/cm². At 10°, $10^2$ protons/s scatter into a detector subtending $10^{-4}$ sr. Find the differential cross section (cm²/sr).",
-   "choices": [
-    [
-     "A",
-     "$10^{-24}$"
-    ],
-    [
-     "B",
-     "$10^{-25}$"
-    ],
-    [
-     "C",
-     "$10^{-26}$"
-    ],
-    [
-     "D",
-     "$10^{-27}$"
-    ],
-    [
-     "E",
-     "$10^{-28}$"
-    ]
-   ],
-   "answer": "C",
-   "solution": "$$\\frac{d\\sigma}{d\\Omega} = \\frac{N_S}{N_I\\,n_T\\,\\Delta\\Omega} = \\frac{10^2}{10^{12}\\cdot10^{20}\\cdot10^{-4}} = \\frac{10^2}{10^{28}} = 10^{-26}\\ \\text{cm}^2/\\text{sr}$$(C)."
-  },
-  {
-   "id": "GR9277#96",
-   "subject": "optics_waves",
-   "topic": "Optics → Michelson Interferometer",
-   "statement": "A 5 cm gas cell in one arm of a Michelson interferometer (500 nm light) shows 40 fringes crossing as the gas is evacuated. Find the refractive index of the gas.",
-   "choices": [
-    [
-     "A",
-     "2"
-    ],
-    [
-     "B",
-     "1.02"
-    ],
-    [
-     "C",
-     "1.002"
-    ],
-    [
-     "D",
-     "1.0002"
-    ],
-    [
-     "E",
-     "1.00002 (F) 0.98"
-    ]
-   ],
-   "answer": "D",
-   "solution": "$m = \\frac{2d}{\\lambda}(n-1) \\implies n = 1 + \\frac{m\\lambda}{2d} = 1 + \\frac{40\\times500\\times10^{-9}}{2\\times0.05} = 1 + 0.0002 = 1.0002$ (D)."
-  },
-  {
-   "id": "GR9277#97",
-   "subject": "specialized_topics",
-   "topic": "Solid State Physics → Effective Mass",
-   "statement": "Which defines the effective mass $m^*$ accounting for lattice effects?",
-   "choices": [
-    [
-     "A",
-     "$\\frac12\\hbar^2 k(dk/dE)$"
-    ],
-    [
-     "B",
-     "$\\hbar^2 k/(dk/dE)$"
-    ],
-    [
-     "C",
-     "$\\hbar^2 k(d^2E/dk^2)^{1/3}$"
-    ],
-    [
-     "D",
-     "$\\hbar^2/(d^2E/dk^2)$"
-    ],
-    [
-     "E",
-     "$\\frac12\\hbar^2 m^2(d^2E/dk^2)$"
-    ]
-   ],
-   "answer": "D",
-   "solution": "From $E = \\hbar^2 k^2/(2m)$ , $d^2E/dk^2 = \\hbar^2/m$ , so $m^* = \\hbar^2/(d^2E/dk^2)$ (D). Effective mass is inversely proportional to band curvature."
-  },
-  {
-   "id": "GR9277#98",
-   "subject": "specialized_topics",
-   "topic": "Math Methods → Eigenvalues (Cube Roots of Unity)",
-   "statement": "For a matrix with characteristic equation $\\lambda^3 = 1$ , which statement is NOT true?",
-   "choices": [
-    [
-     "A",
-     "$\\lambda_1+\\lambda_2+\\lambda_3 = 0$"
-    ],
-    [
-     "B",
-     "all $\\lambda_i$real"
-    ],
-    [
-     "C",
-     "$\\lambda_2\\lambda_3 = +1$for some pair"
-    ],
-    [
-     "D",
-     "$\\lambda_1\\lambda_2 + \\lambda_2\\lambda_3 + \\lambda_3\\lambda_1 = 0$"
-    ],
-    [
-     "E",
-     "$\\lambda_i^3 = 1$"
-    ]
-   ],
-   "answer": "B",
-   "solution": "The roots are the cube roots of unity: $1, e^{\\pm 2\\pi i/3}$ . Two are complex, so \"all real\" is false (B). Statements A, C, D, E all hold."
-  },
-  {
-   "id": "GR9277#99",
-   "subject": "quantum_mechanics",
-   "topic": "Quantum Mechanics → Perturbation Theory (Stark Effect)",
-   "statement": "In perturbation theory, the first-order correction to the hydrogen ground-state energy due to a static electric field $E$ is:",
-   "choices": [
-    [
-     "A",
-     "(blank)"
-    ],
-    [
-     "B",
-     "0"
-    ],
-    [
-     "C",
-     "$eEa_0$"
-    ],
-    [
-     "D",
-     "$3eEa_0$"
-    ],
-    [
-     "E",
-     "$\\frac{8e^2Ea_0^3}{3}$(F) $\\frac{8e^2E^2a_0^3}{3}$"
-    ]
-   ],
-   "answer": "B",
-   "solution": "$\\Delta H = eEz = eEr\\cos\\theta$ . The first-order correction $\\langle\\psi_0|\\Delta H|\\psi_0\\rangle = 0$ because the spherically symmetric (even-parity) ground state integrated against the odd-parity $\\cos\\theta$ vanishes (B). No linear Stark effect for the ground state."
-  },
-  {
-   "id": "GR9277#100",
-   "subject": "classical_mechanics",
-   "topic": "Mechanics → Torque Equilibrium",
-   "statement": "A uniform rod (length 10 m, mass 20 kg) balances on a fulcrum with a 40 kg mass on one end and a 20 kg mass on the other. How far is the fulcrum from the rod's center?",
-   "choices": [
-    [
-     "A",
-     "0 m"
-    ],
-    [
-     "B",
-     "1 m"
-    ],
-    [
-     "C",
-     "1.25 m"
-    ],
-    [
-     "D",
-     "1.5 m"
-    ],
-    [
-     "E",
-     "2 m"
-    ]
-   ],
-   "answer": "C",
-   "solution": "Using the center of mass of the two end masses (origin at rod center, ends at $\\pm 5$ m):\n$$x_{cm} = \\frac{20(-5) + 40(5)}{60} = \\frac{150}{60}$$More precisely, balancing about the fulcrum with the rod's own weight at center gives $1.25$ m from the center (C)."
-  }
- ]
 }

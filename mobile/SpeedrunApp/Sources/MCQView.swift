@@ -67,8 +67,15 @@ private struct MCQWebView: UIViewRepresentable {
         }
 
         private static func loadQuestions() -> [QuizQuestion] {
+            // Real released GR9277 questions, then the AI-generated (Phase-2) bank
+            // (`pgre_mcq_generated.json`) appended to the same pool. Missing files
+            // are skipped so the screen still renders the real questions.
+            decodeQuestions(resource: "pgre_mcq") + decodeQuestions(resource: "pgre_mcq_generated")
+        }
+
+        private static func decodeQuestions(resource: String) -> [QuizQuestion] {
             struct Root: Codable { let questions: [QuizQuestion] }
-            guard let url = Bundle.main.url(forResource: "pgre_mcq", withExtension: "json"),
+            guard let url = Bundle.main.url(forResource: resource, withExtension: "json"),
                   let data = try? Data(contentsOf: url),
                   let root = try? JSONDecoder().decode(Root.self, from: data) else { return [] }
             return root.questions
@@ -78,10 +85,12 @@ private struct MCQWebView: UIViewRepresentable {
         /// explanation (from the key) and the global `ai_on` flag.
         func embeddedJSON() -> String {
             let fallback = "{\"questions\":[],\"ai_on\":false}"
-            guard let url = Bundle.main.url(forResource: "pgre_mcq", withExtension: "json"),
-                  let data = try? Data(contentsOf: url),
-                  let root = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
-                  var questions = root["questions"] as? [[String: Any]] else { return fallback }
+            // Real released questions plus the AI-generated (Phase-2) bank, so the
+            // page renders both pools (each generated item carries `source` +
+            // `seed_id`, which flow through verbatim to `window.QUIZ`).
+            var questions = Self.rawQuestions(resource: "pgre_mcq")
+                + Self.rawQuestions(resource: "pgre_mcq_generated")
+            if questions.isEmpty { return fallback }
             for i in questions.indices {
                 if let id = questions[i]["id"] as? String,
                    let expl = coach.optimalFor(id)?.studentExplanation, !expl.isEmpty {
@@ -92,6 +101,17 @@ private struct MCQWebView: UIViewRepresentable {
             guard let d = try? JSONSerialization.data(withJSONObject: out),
                   let s = String(data: d, encoding: .utf8) else { return fallback }
             return s
+        }
+
+        /// The raw `questions` array from a bundled MCQ JSON resource (untyped, so
+        /// extra keys like `source`/`seed_id` pass straight through). Empty if the
+        /// resource is missing.
+        private static func rawQuestions(resource: String) -> [[String: Any]] {
+            guard let url = Bundle.main.url(forResource: resource, withExtension: "json"),
+                  let data = try? Data(contentsOf: url),
+                  let root = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
+                  let questions = root["questions"] as? [[String: Any]] else { return [] }
+            return questions
         }
 
         func userContentController(_ uc: WKUserContentController, didReceive message: WKScriptMessage) {
@@ -132,6 +152,8 @@ private struct MCQWebView: UIViewRepresentable {
           #hdr { display: flex; justify-content: space-between; align-items: baseline;
                  font-size: 13px; opacity: 0.7; margin-bottom: 6px; }
           #subject { font-size: 12px; opacity: 0.6; margin-bottom: 10px; }
+          #aigen { display: none; margin-bottom: 10px; padding: 3px 10px; border-radius: 999px;
+                   font-size: 12px; font-weight: 600; background: rgba(46,108,224,0.18); color: inherit; }
           #stmt { font-size: 19px; line-height: 1.5; margin-bottom: 14px; overflow-wrap: anywhere; }
           #frqLabel { font-size: 13px; opacity: 0.75; margin: 4px 0 6px; }
           #reason { width: 100%; box-sizing: border-box; min-height: 66px; font: inherit;
@@ -165,6 +187,7 @@ private struct MCQWebView: UIViewRepresentable {
         <body>
         <div id="hdr"><span id="progress"></span><span id="score"></span></div>
         <div id="subject"></div>
+        <div id="aigen">⚛ AI-generated</div>
         <div id="stmt"></div>
         <div id="frq"><div id="frqLabel"></div><textarea id="reason" placeholder="e.g. cross off impossible choices, then estimate…"></textarea></div>
         <div id="choices"></div>
@@ -201,6 +224,8 @@ private struct MCQWebView: UIViewRepresentable {
             document.getElementById("progress").textContent = "Question " + (idx+1) + " / " + DATA.length;
             score();
             document.getElementById("subject").textContent = q.subject || "";
+            // Badge AI-generated (Phase-2) items only; real questions have no source.
+            document.getElementById("aigen").style.display = (q.source === "generated") ? "inline-block" : "none";
             document.getElementById("stmt").innerHTML = mathify(q.statement);
             var box = document.getElementById("choices"); box.innerHTML = "";
             q.choices.forEach(function(c){
@@ -275,6 +300,7 @@ private struct MCQWebView: UIViewRepresentable {
             document.getElementById("choices").innerHTML = "";
             document.getElementById("feedback").innerHTML = "";
             document.getElementById("subject").textContent = "";
+            document.getElementById("aigen").style.display = "none";
             document.getElementById("progress").textContent = "Finished";
             document.getElementById("score").textContent = "";
             var sm = document.getElementById("summary"); sm.style.display = "block";

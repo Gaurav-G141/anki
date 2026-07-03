@@ -20,6 +20,7 @@ the card reviewer).
 from __future__ import annotations
 
 import json
+import os
 import re
 from typing import Any
 
@@ -41,11 +42,25 @@ def _default_data_path() -> str:
 def load_questions(path: str | None = None) -> list[dict[str, Any]]:
     """Load the bundled MCQ questions (list of dicts). Each has ``id``,
     ``subject``, ``topic``, ``statement``, ``choices`` (``[[letter, text], …]``),
-    ``answer`` (letter), and ``solution``."""
+    ``answer`` (letter), and ``solution``.
+
+    In addition to the released-exam bank (``pgre_mcq.json``), this also appends
+    the AI-generated Phase-2 questions from ``pgre_mcq_generated.json`` in the
+    same directory, when that file is present (missing => skipped silently)."""
     if path is None:
         path = _default_data_path()
     with open(path, encoding="utf-8") as f:
-        return json.load(f)["questions"]
+        questions: list[dict[str, Any]] = json.load(f)["questions"]
+
+    # Also fold in the AI-generated Phase-2 bank sitting next to the main file.
+    generated = os.path.join(os.path.dirname(path), "pgre_mcq_generated.json")
+    try:
+        with open(generated, encoding="utf-8") as f:
+            questions.extend(json.load(f).get("questions", []))
+    except (OSError, ValueError):
+        pass  # missing/unreadable/malformed -> ship the released bank alone
+
+    return questions
 
 
 class QuizSession:
@@ -174,10 +189,13 @@ class MCQQuiz(QDialog):
             {
                 "id": q["id"],
                 "statement": to_mathjax(q["statement"]),
-                "choices": [[letter, to_mathjax(text)] for letter, text in q["choices"]],
+                "choices": [
+                    [letter, to_mathjax(text)] for letter, text in q["choices"]
+                ],
                 "answer": q["answer"],
                 "solution": to_mathjax(q.get("solution", "")),
                 "subject": q.get("topic") or q.get("subject", ""),
+                "source": q.get("source", ""),
                 "optimal": optimal(q),
             }
             for q in questions
@@ -264,6 +282,9 @@ _QUIZ_PAGE = """
   #hdr { display: flex; justify-content: space-between; align-items: baseline;
          font-size: 13px; opacity: 0.75; margin-bottom: 6px; }
   #subject { font-size: 12px; opacity: 0.6; margin-bottom: 10px; }
+  #genPill { display: none; margin-left: 8px; opacity: 1; vertical-align: middle;
+             font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 999px;
+             background: rgba(46,108,224,0.18); color: #2e6ce0; }
   #stmt { font-size: 19px; line-height: 1.5; margin-bottom: 18px; }
   .choice { display: block; width: 100%; text-align: left; margin: 8px 0; padding: 12px 14px;
             border-radius: 10px; border: 1px solid rgba(128,128,128,0.4);
@@ -300,7 +321,7 @@ _QUIZ_PAGE = """
   mjx-container { font-size: 108% !important; max-width: 100%; overflow-x: auto; }
 </style>
 <div id="hdr"><span id="progress"></span><span id="score"></span></div>
-<div id="subject"></div>
+<div id="subject"><span id="subjectText"></span><span id="genPill">⚛ AI-generated</span></div>
 <div id="stmt"></div>
 <div id="choices"></div>
 <div id="frq">
@@ -346,7 +367,10 @@ _QUIZ_PAGE = """
     ta.value = ""; ta.disabled = false;
     document.getElementById("progress").textContent = "Question " + (idx + 1) + " / " + DATA.length;
     score();
-    document.getElementById("subject").textContent = q.subject || "";
+    document.getElementById("subjectText").textContent = q.subject || "";
+    // Badge AI-generated items only (real released questions have no pill).
+    document.getElementById("genPill").style.display =
+      q.source === "generated" ? "inline-block" : "none";
     document.getElementById("stmt").innerHTML = q.statement;
     var box = document.getElementById("choices");
     box.innerHTML = "";
@@ -427,7 +451,8 @@ _QUIZ_PAGE = """
     document.getElementById("choices").innerHTML = "";
     document.getElementById("feedback").innerHTML = "";
     document.getElementById("frq").style.display = "none";
-    document.getElementById("subject").textContent = "";
+    document.getElementById("subjectText").textContent = "";
+    document.getElementById("genPill").style.display = "none";
     document.getElementById("progress").textContent = "Finished";
     document.getElementById("score").textContent = "";
     var sm = document.getElementById("summary");

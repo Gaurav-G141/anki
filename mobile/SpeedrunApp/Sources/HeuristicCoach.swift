@@ -29,6 +29,15 @@ struct QuizQuestion: Codable {
     let solution: String?
     let subject: String?
     let topic: String?
+    // Present on AI-generated (Phase-2) items (`pgre_mcq_generated.json`); absent
+    // on the real released questions. `source == "generated"` drives the badge.
+    let source: String?
+    let seedId: String?
+
+    enum CodingKeys: String, CodingKey {
+        case id, statement, choices, answer, solution, subject, topic, source
+        case seedId = "seed_id"
+    }
 }
 
 /// One record of the Stage-1 optimal-approach key (`optimal_approaches.jsonl`).
@@ -113,11 +122,21 @@ final class HeuristicCoach {
     // MARK: optimal-approach key (fallback + grading reference)
 
     static func loadApproaches() -> [String: Approach] {
-        guard let url = Bundle.main.url(forResource: "optimal_approaches", withExtension: "jsonl"),
-              let text = try? String(contentsOf: url, encoding: .utf8) else { return [:] }
+        var out: [String: Approach] = [:]
+        // Real released questions' key, then the AI-generated (Phase-2) companions
+        // (`optimal_approaches_generated.jsonl`), so `GEN#…` ids also resolve for
+        // the fastest-approach fallback + AI grading. Missing files are skipped.
+        for resource in ["optimal_approaches", "optimal_approaches_generated"] {
+            mergeApproaches(resource: resource, into: &out)
+        }
+        return out
+    }
+
+    private static func mergeApproaches(resource: String, into out: inout [String: Approach]) {
+        guard let url = Bundle.main.url(forResource: resource, withExtension: "jsonl"),
+              let text = try? String(contentsOf: url, encoding: .utf8) else { return }
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .convertFromSnakeCase
-        var out: [String: Approach] = [:]
         for line in text.split(separator: "\n") {
             let trimmed = line.trimmingCharacters(in: .whitespaces)
             if trimmed.isEmpty { continue }
@@ -126,7 +145,6 @@ final class HeuristicCoach {
                 out[rec.id] = rec
             }
         }
-        return out
     }
 
     func optimalFor(_ id: String) -> Approach? { approaches[id] }

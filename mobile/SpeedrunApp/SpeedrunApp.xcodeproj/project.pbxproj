@@ -12,6 +12,7 @@
 		09C55D4FCDC7ED88682FDFF6 /* ReviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74004647ED7E4726EDCBFC6 /* ReviewView.swift */; };
 		32124D702644D8C984D7CE96 /* deck_config.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = C49C8459CD6FFFF15EFB34A9 /* deck_config.pb.swift */; };
 		383C1FCD4BB2AD78E4DF657E /* speedrun.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6411D22FEA6D2BDA806BDA1D /* speedrun.pb.swift */; };
+		3C59FE77E0FDEBD5E2BFCBBF /* optimal_approaches_generated.jsonl in Resources */ = {isa = PBXBuildFile; fileRef = 9189313E5EB9AE9020335660 /* optimal_approaches_generated.jsonl */; };
 		44D0B6F84CEE5FCD78959611 /* 04_Atomic_Physics.apkg in Resources */ = {isa = PBXBuildFile; fileRef = 39D593BF6ED38C725329CA3B /* 04_Atomic_Physics.apkg */; };
 		476015C1E4757C9E3A909B5D /* SpeedrunApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0CD4FA934F1AEA465F11896 /* SpeedrunApp.swift */; };
 		4EB6F91C9610351A47649842 /* 05_Thermodynamics_Statistical_Mechanics.apkg in Resources */ = {isa = PBXBuildFile; fileRef = 09427C715141E991F74A158C /* 05_Thermodynamics_Statistical_Mechanics.apkg */; };
@@ -26,6 +27,7 @@
 		5EB88B5A9313C14ABAD639C2 /* CollectionStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C9DE2102D04AE7317EA295B /* CollectionStore.swift */; };
 		64C9E3274BBDAD74E7B8BC37 /* mathjax in Resources */ = {isa = PBXBuildFile; fileRef = F0A2774A40B38D3738AE4F6A /* mathjax */; };
 		6A3E7691DD27F5B4FECF0B28 /* HeuristicCoach.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5BF004BA79CB1EC3E1BEA64 /* HeuristicCoach.swift */; };
+		6BD4FF66F58860BC95EF1C43 /* pgre_mcq_generated.json in Resources */ = {isa = PBXBuildFile; fileRef = C88350B6293785CA3E1D2BA1 /* pgre_mcq_generated.json */; };
 		70CE61277F9154AB7DAFD712 /* SwiftProtobuf in Frameworks */ = {isa = PBXBuildFile; productRef = 58F1D384620E30C99EF63CCD /* SwiftProtobuf */; };
 		75D44CA7F1D1ABE2C9A08E23 /* notetypes.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3209D8DE6896FF4E7E8F092F /* notetypes.pb.swift */; };
 		7A3D7BF9B460A1000803010B /* ReviewFlowUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA402D7CC58F59A635BDE545 /* ReviewFlowUITests.swift */; };
@@ -92,6 +94,7 @@
 		7F50E10B02EF0AAB7F5B2F2C /* sync.pb.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = sync.pb.swift; sourceTree = "<group>"; };
 		80C486204719B63819EA11F1 /* AnkiEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnkiEngine.swift; sourceTree = "<group>"; };
 		86636657DD3F0E7BFE1942E9 /* MCQView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MCQView.swift; sourceTree = "<group>"; };
+		9189313E5EB9AE9020335660 /* optimal_approaches_generated.jsonl */ = {isa = PBXFileReference; path = optimal_approaches_generated.jsonl; sourceTree = "<group>"; };
 		95655EE9CBCECBA81F2AED7B /* 09_Laboratory_Methods.apkg */ = {isa = PBXFileReference; path = 09_Laboratory_Methods.apkg; sourceTree = "<group>"; };
 		9ACB6387FE4EB53C0F59C6C4 /* ScoresView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoresView.swift; sourceTree = "<group>"; };
 		9C9DE2102D04AE7317EA295B /* CollectionStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionStore.swift; sourceTree = "<group>"; };
@@ -109,6 +112,7 @@
 		C1EA751BF434F430868895C9 /* ReviewSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewSession.swift; sourceTree = "<group>"; };
 		C49C8459CD6FFFF15EFB34A9 /* deck_config.pb.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = deck_config.pb.swift; sourceTree = "<group>"; };
 		C5BF004BA79CB1EC3E1BEA64 /* HeuristicCoach.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeuristicCoach.swift; sourceTree = "<group>"; };
+		C88350B6293785CA3E1D2BA1 /* pgre_mcq_generated.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = pgre_mcq_generated.json; sourceTree = "<group>"; };
 		C90650C1F2BF75D9A88495AF /* generic.pb.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = generic.pb.swift; sourceTree = "<group>"; };
 		CEB8348F594655883C40C8A2 /* links.pb.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = links.pb.swift; sourceTree = "<group>"; };
 		D2C7D5F9AF0D2C233C012ACA /* ScoresScreenUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoresScreenUITests.swift; sourceTree = "<group>"; };
@@ -145,8 +149,10 @@
 			isa = PBXGroup;
 			children = (
 				F0A2774A40B38D3738AE4F6A /* mathjax */,
+				9189313E5EB9AE9020335660 /* optimal_approaches_generated.jsonl */,
 				A28BD943963B335C008AFDE6 /* optimal_approaches.jsonl */,
 				020FBDD971592C305687982E /* pgre_exam.anki2 */,
+				C88350B6293785CA3E1D2BA1 /* pgre_mcq_generated.json */,
 				0DE319773B6C5E8D73B5F7F4 /* pgre_mcq.json */,
 				5A36D18DE80B57CCC96A84D5 /* decks */,
 			);
@@ -379,8 +385,10 @@
 				517D6FD04F0873AC46CE6BB8 /* 09_Laboratory_Methods.apkg in Resources */,
 				64C9E3274BBDAD74E7B8BC37 /* mathjax in Resources */,
 				F0EE7349670BB8E16ECBD52D /* optimal_approaches.jsonl in Resources */,
+				3C59FE77E0FDEBD5E2BFCBBF /* optimal_approaches_generated.jsonl in Resources */,
 				573CF4592B70CA1312729517 /* pgre_exam.anki2 in Resources */,
 				93DEB3D8EFEC8E48E4A354F2 /* pgre_mcq.json in Resources */,
+				6BD4FF66F58860BC95EF1C43 /* pgre_mcq_generated.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -385,6 +385,141 @@ async fn revlogs_are_never_lost_or_double_counted() -> Result<()> {
     .await
 }
 
+/// Speedrun §7b, part 1: review 10 cards offline on the phone and 10
+/// *different* cards offline on the desktop, reconnect, and prove all 20 land
+/// in one place with none lost and none double-counted. (The engine is shared
+/// by both apps, so this is the guarantee behind the iOS<->desktop offline
+/// flow.)
+#[tokio::test]
+async fn offline_reviews_on_both_devices_merge_none_lost() -> Result<()> {
+    with_active_server(|client| async move {
+        let ctx = SyncTestContext::new(client);
+        upload_download(&ctx).await?; // both start on the same collection
+
+        fn revlog_count(col: &mut Collection) -> Result<u32> {
+            col.storage.db_scalar::<u32>("select count() from revlog")
+        }
+        // Distinct revlog ids model distinct reviews; usn=-1 = pending (unsynced,
+        // i.e. done "offline"). set_modified so a normal sync fires; the 5ms sleep
+        // keeps each batch's ms-granular mtime after the previous sync finalize.
+        fn review_offline(col: &mut Collection, base: i64, n: i64) -> Result<()> {
+            std::thread::sleep(std::time::Duration::from_millis(5));
+            for i in 0..n {
+                col.storage.add_revlog_entry(
+                    &RevlogEntry {
+                        id: RevlogId(base + i),
+                        cid: CardId(1),
+                        usn: Usn(-1),
+                        interval: 10,
+                        ..Default::default()
+                    },
+                    false,
+                )?;
+            }
+            col.set_modified()?;
+            Ok(())
+        }
+
+        let mut phone = ctx.col1();
+        let mut desktop = ctx.col2();
+
+        // Both devices offline at the same time: 10 reviews each, disjoint ids.
+        review_offline(&mut phone, 1000, 10)?; // phone: 1000..1009
+        review_offline(&mut desktop, 2000, 10)?; // desktop: 2000..2009
+
+        // Reconnect + sync: push phone, then desktop pushes its own + pulls
+        // phone's, then phone pulls desktop's.
+        ctx.normal_sync(&mut phone).await;
+        ctx.normal_sync(&mut desktop).await;
+        ctx.normal_sync(&mut phone).await;
+
+        // All 20 present exactly once on both sides (count = union, no dup).
+        assert_eq!(revlog_count(&mut phone)?, 20, "phone: no loss/dup");
+        assert_eq!(revlog_count(&mut desktop)?, 20, "desktop: no loss/dup");
+        for id in (1000..1010).chain(2000..2010) {
+            assert!(
+                phone.storage.get_revlog_entry(RevlogId(id))?.is_some(),
+                "phone missing review {id}"
+            );
+            assert!(
+                desktop.storage.get_revlog_entry(RevlogId(id))?.is_some(),
+                "desktop missing review {id}"
+            );
+        }
+        Ok(())
+    })
+    .await
+}
+
+/// Speedrun §7b, part 2: the SAME card is edited offline on both devices, then
+/// synced. The conflict rule must pick a single clear winner — both sides
+/// converge on one value (no split-brain), the winner is a genuinely-submitted
+/// value, and nothing is corrupted. Anki's rule is last-writer-wins: the last
+/// device to sync its pending change overwrites, and the other pulls that
+/// value.
+#[tokio::test]
+async fn conflicting_offline_edit_to_same_card_picks_one_winner() -> Result<()> {
+    with_active_server(|client| async move {
+        let ctx = SyncTestContext::new(client);
+        upload_download(&ctx).await?;
+
+        fn card_ivl(col: &mut Collection, cid: CardId) -> u32 {
+            col.storage.get_card(cid).unwrap().unwrap().interval
+        }
+        // Edit the card's interval offline (usn=-1 = pending); set_modified so the
+        // next sync sends it. The explicit mtime is the conflict tiebreaker —
+        // Anki resolves same-object conflicts by last-modified (mtime is
+        // second-granular, and two real reviews are always seconds apart).
+        fn edit_offline(
+            col: &mut Collection,
+            cid: CardId,
+            ivl: u32,
+            mtime: TimestampSecs,
+        ) -> Result<()> {
+            let mut card = col.storage.get_card(cid)?.unwrap();
+            card.interval = ivl;
+            card.usn = Usn(-1);
+            card.mtime = mtime;
+            col.storage.update_card(&card)?;
+            col.set_modified()?;
+            std::thread::sleep(std::time::Duration::from_millis(5));
+            Ok(())
+        }
+
+        let mut phone = ctx.col1();
+        let mut desktop = ctx.col2();
+        // The bootstrap collection has exactly one card; both devices edit IT.
+        let cid = phone.storage.get_all_cards().first().unwrap().id;
+
+        let base = TimestampSecs::now();
+        edit_offline(&mut phone, cid, 111, base)?; // phone offline: ivl 111
+        edit_offline(&mut desktop, cid, 222, base.adding_secs(10))?; // desktop: newer + syncs last
+
+        ctx.normal_sync(&mut phone).await; // push phone's 111
+        ctx.normal_sync(&mut desktop).await; // push desktop's 222 (overwrites) + pull
+        ctx.normal_sync(&mut phone).await; // phone pulls the winner
+
+        let on_phone = card_ivl(&mut phone, cid);
+        let on_desktop = card_ivl(&mut desktop, cid);
+        assert_eq!(
+            on_phone, on_desktop,
+            "conflict must converge (no split-brain)"
+        );
+        assert!(on_phone == 111 || on_phone == 222, "winner is a real value");
+        assert_eq!(on_phone, 222, "last device to sync (desktop) wins");
+        // Not corrupted: the card still reads back and the collection is queryable.
+        assert!(desktop.storage.get_card(cid)?.is_some());
+        assert_eq!(
+            desktop
+                .storage
+                .db_scalar::<u32>("select count() from cards")?,
+            1
+        );
+        Ok(())
+    })
+    .await
+}
+
 #[tokio::test]
 async fn sanity_check_should_roll_back_and_force_full_sync() -> Result<()> {
     with_active_server(|client| async move {

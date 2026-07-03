@@ -12,6 +12,7 @@ from __future__ import annotations
 import os
 import re
 
+from aqt import heuristic_coach
 from aqt.pgre_quiz import QuizSession, load_questions, to_mathjax
 
 DATA = os.path.normpath(
@@ -21,6 +22,10 @@ DATA = os.path.normpath(
 
 def _questions():
     return load_questions(DATA)
+
+
+def _generated(qs):
+    return [q for q in qs if str(q.get("id", "")).startswith("GEN#")]
 
 
 def test_bundled_questions_are_wellformed_and_gradeable():
@@ -39,7 +44,9 @@ def test_bundled_questions_are_wellformed_and_gradeable():
                 f"{q['id']} degenerate choice {text!r}"
             )
         # The scraped markdown separator must not leak into the solution.
-        assert not q["solution"].rstrip().endswith("---"), f"{q['id']} solution has trailing ---"
+        assert not q["solution"].rstrip().endswith("---"), (
+            f"{q['id']} solution has trailing ---"
+        )
 
 
 def test_session_grades_correct_and_incorrect():
@@ -83,6 +90,35 @@ def test_accuracy_zero_when_nothing_answered():
     assert s.accuracy == 0.0
     assert s.current() is not None
     assert s.done is False
+
+
+def test_generated_questions_are_in_the_pool():
+    qs = _questions()
+    gen = _generated(qs)
+    assert gen, "expected the AI-generated (GEN#…) bank to be folded into the pool"
+
+
+def test_generated_questions_are_wellformed():
+    # A generated question is gradeable like a real one: 5 A–E choices, and its
+    # answer key is one of them.
+    for q in _generated(_questions()):
+        letters = {c[0] for c in q["choices"]}
+        assert letters == set("ABCDE"), f"{q['id']} choices not A–E: {letters}"
+        assert len(q["choices"]) == 5, f"{q['id']} does not have exactly 5 choices"
+        assert q["answer"] in letters, f"{q['id']} answer not among choices"
+
+
+def test_generated_questions_have_resolvable_companions():
+    # Every generated item resolves to an optimal-approach companion (so the
+    # Coach + "Fastest approach" card work for generated questions too).
+    gen = _generated(_questions())
+    assert gen, "no generated questions to check"
+    for q in gen:
+        rec = heuristic_coach.optimal_for(q["id"])
+        assert rec is not None, f"{q['id']} has no optimal-approach companion"
+        assert rec.get("student_explanation", "").strip(), (
+            f"{q['id']} companion missing student_explanation"
+        )
 
 
 def test_to_mathjax_converts_dollar_delimiters():

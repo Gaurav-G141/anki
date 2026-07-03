@@ -21,7 +21,9 @@ final class HeuristicCoachTests: XCTestCase {
             answer: "C",
             solution: "Apply the momentum operator.",
             subject: "quantum_mechanics",
-            topic: "Quantum Mechanics → Momentum"
+            topic: "Quantum Mechanics → Momentum",
+            source: nil,
+            seedId: nil
         )
     }
 

@@ -23,10 +23,10 @@ from __future__ import annotations
 
 import json
 import os
-import re
 import shutil
 
 import pgre_problems as pp
+from mcq_schema import clean_solution, references_other_problem, space_math, well_formed
 
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 QT_DEST = os.path.join(REPO, "qt", "aqt", "data", "pgre_mcq.json")
@@ -37,38 +37,20 @@ IOS_DEST = os.path.join(REPO, "mobile", "SpeedrunApp", "Resources", "pgre_mcq.js
 QT_KEY = os.path.join(REPO, "qt", "aqt", "data", "pgre_optimal_approaches.jsonl")
 IOS_KEY = os.path.join(REPO, "mobile", "SpeedrunApp", "Resources", "optimal_approaches.jsonl")
 
-_INLINE = re.compile(r"(?<!\$)\$([^$\n]+?)\$(?!\$)")
-
-
-def space_math(text: str) -> str:
-    """Ensure inline ``$…$`` is space-separated from adjacent words, then collapse
-    runs of spaces. Leaves display ``$$…$$`` and newlines alone."""
-    text = _INLINE.sub(r" $\1$ ", text)
-    text = re.sub(r"[ \t]{2,}", " ", text)
-    return text.strip()
-
-
-def clean_solution(text: str) -> str:
-    text = re.sub(r"\s*-{3,}\s*$", "", text)  # drop trailing markdown separator
-    return space_math(text).strip()
-
-
-def is_degenerate(choice_text: str) -> bool:
-    """A choice with neither an alphanumeric nor any math ($) is a bad parse."""
-    return not re.search(r"[A-Za-z0-9]", choice_text) and "$" not in choice_text
-
 
 def build() -> list[dict]:
     out = []
     for p in pp.load_gr9277_with_choices():
-        letters = {letter for letter, _ in p.choices}
-        if len(p.choices) != 5 or letters != set("ABCDE") or p.answer not in letters:
+        if not well_formed(p.choices, p.answer):
             continue
         choices = [[letter, text.strip()] for letter, text in p.choices]
-        if any(is_degenerate(text) for _, text in choices):
-            continue
         statement = space_math(p.statement.strip())
         if not statement:
+            continue
+        # Drop problems that reference another problem (e.g. GR9277 #5 "Same setup
+        # as Problem 4."): they aren't self-contained, so they're ungradeable when
+        # shown individually/shuffled in the quiz.
+        if references_other_problem(statement):
             continue
         out.append(
             {

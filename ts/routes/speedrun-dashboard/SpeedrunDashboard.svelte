@@ -127,10 +127,9 @@ License: GNU AGPL, version 3 or later; http://www.gnu.org/licenses/agpl.html
                     </dd>
                 </dl>
                 <p class="explain">
-                    How often you answer studied cards correctly (graded Good or
-                    Easy). These are cards you've already seen — not new, unseen exam
-                    questions — so this likely runs higher than your real exam
-                    accuracy.
+                    How often you answer studied cards correctly (graded Good or Easy).
+                    These are cards you've already seen — not new, unseen exam questions
+                    — so this likely runs higher than your real exam accuracy.
                 </p>
             {/if}
         </div>
@@ -164,10 +163,10 @@ License: GNU AGPL, version 3 or later; http://www.gnu.org/licenses/agpl.html
                     </dd>
                 </dl>
                 <p class="explain">
-                    An estimate of your PGRE scaled score (200–990), converted from
-                    your Performance score. The fewer of the exam's topics you've
-                    studied, the wider and less certain this range. A model estimate
-                    — not an actual exam score.
+                    An estimate of your PGRE scaled score (200–990), converted from your
+                    Performance score. The fewer of the exam's topics you've studied,
+                    the wider and less certain this range. A model estimate — not an
+                    actual exam score.
                 </p>
             {/if}
         </div>

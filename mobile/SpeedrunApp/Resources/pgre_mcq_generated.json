@@ -1,0 +1,486 @@
+{
+    "exam": "GENERATED",
+    "source": "ai-generated (Phase 2)",
+    "questions": [
+        {
+            "id": "GEN#GR9277.1-1",
+            "subject": "quantum_mechanics",
+            "topic": "Quantum Mechanics → Momentum Operator",
+            "statement": "A particle in one-dimensional space has a wave function given by $\\psi(x, t) = e^{i(qx - \nu t)} $, where $ q $ and $ \\nu $ are positive real constants. Determine the expected value of the momentum of the particle in the $ x$-direction.",
+            "choices": [
+                [
+                    "A",
+                    "0"
+                ],
+                [
+                    "B",
+                    "$\\hbar\\nu$"
+                ],
+                [
+                    "C",
+                    "$\\hbar q$"
+                ],
+                [
+                    "D",
+                    "$\\frac{\\hbar\\nu}{c}$"
+                ],
+                [
+                    "E",
+                    "$\\frac{\\hbar}{q}$"
+                ]
+            ],
+            "answer": "C",
+            "solution": "The expectation value of the momentum for a wave function $\\psi(x, t) = e^{i(qx - \\nu t)}$ is found by applying the momentum operator $\\hat{p}_x = -i\\hbar \\frac{\\partial}{\\partial x}$ to the wave function. Applying the operator, we have $$\\hat{p}_x \\psi(x, t) = -i\\hbar \\frac{\\partial}{\\partial x} e^{i(qx - \\nu t)} = -i\\hbar (iq) e^{i(qx - \\nu t)} = \\hbar q e^{i(qx - \\nu t)}.$$ Therefore, the expected value of the momentum $p_x$ is $\\hbar q$ .",
+            "source": "generated",
+            "seed_id": "GR9277#1"
+        },
+        {
+            "id": "GEN#GR9277.5-1",
+            "subject": "classical_mechanics",
+            "topic": "Mechanics → Gauss's Law (Gravitational)",
+            "statement": "A planet of uniform density has a spherical cavity of radius $r$ at its center. A small mass $m$ is placed inside this cavity at a distance $r/3$ from the center of the planet. If $F(r)$ is the gravitational force on $m$ when it is at the surface of the cavity, and $F(0)$ is the gravitational force on $m$ when it is at the center of the cavity, find the ratio $F(0)/F(r)$ .",
+            "choices": [
+                [
+                    "A",
+                    "0"
+                ],
+                [
+                    "B",
+                    "1/3"
+                ],
+                [
+                    "C",
+                    "1/9"
+                ],
+                [
+                    "D",
+                    "9"
+                ],
+                [
+                    "E",
+                    "3"
+                ]
+            ],
+            "answer": "A",
+            "solution": "Inside the cavity, the gravitational force on a mass $m$ is zero at any point because the gravitational effect of the spherical shell outside the cavity cancels out due to symmetry (Gauss's Law for gravity). Thus, $F(0) = 0$ . At any point $r/3$ within the cavity, including the center, this remains true. Therefore, the ratio $F(0)/F(r) = 0/\\text{anything} = 0$ . Hence, the correct answer is $0$ , corresponding to choice A.",
+            "source": "generated",
+            "seed_id": "GR9277#5"
+        },
+        {
+            "id": "GEN#GR9277.9-1",
+            "subject": "electromagnetism",
+            "topic": "Electromagnetism → Ampère's Law (Coaxial Cable)",
+            "statement": "A long hollow cylindrical conductor with inner radius $a$ and outer radius $b$ carries a current $I$ uniformly distributed over its cross-section. A wire carrying current $I$ in the opposite direction is placed along the axis of the cylinder. Determine the magnitude of the magnetic field at a point $P$ located at a distance $r$ from the axis, where $r > b$ .",
+            "choices": [
+                [
+                    "A",
+                    "Zero"
+                ],
+                [
+                    "B",
+                    "$\\frac{\\mu_0 I}{2\\pi r}$"
+                ],
+                [
+                    "C",
+                    "$\\frac{\\mu_0 I (r^2 - a^2)}{2\\pi r (b^2 - a^2)}$"
+                ],
+                [
+                    "D",
+                    "$\\frac{\\mu_0 I (b^2 - r^2)}{2\\pi r (b^2 - a^2)}$"
+                ],
+                [
+                    "E",
+                    "$\\frac{\\mu_0 I b}{2\\pi r}$"
+                ]
+            ],
+            "answer": "A",
+            "solution": "By using Ampère's Law, the line integral of the magnetic field around a closed loop is equal to $\\mu_0$ times the enclosed current. Consider a loop at radius $r > b$ . The current in the wire is $I$ and the current in the cylinder is $-I$ (since they are in opposite directions). Thus, the net enclosed current is $I - I = 0$ . Therefore, the magnetic field at $r > b$ is zero.",
+            "source": "generated",
+            "seed_id": "GR9277#9"
+        },
+        {
+            "id": "GEN#GR9277.10-1",
+            "subject": "electromagnetism",
+            "topic": "Electromagnetism → Image Charges",
+            "statement": "A point charge $q$ is placed at $(0, 0, 0.2a)$ and another point charge $-2q$ is placed at $(0, 0, 0.8a)$ . An infinite grounded conducting plane is located at $z = 0$ . Find the magnitude of the net force on the charge $q$ due to the induced charges on the plane.",
+            "choices": [
+                [
+                    "A",
+                    "$\\frac{1}{4\\pi\\epsilon_0}\\frac{q^2}{a^2}$"
+                ],
+                [
+                    "B",
+                    "$\\frac{1}{4\\pi\\epsilon_0}\\frac{3q^2}{4a^2}$"
+                ],
+                [
+                    "C",
+                    "$\\frac{1}{4\\pi\\epsilon_0}\\frac{7q^2}{4a^2}$"
+                ],
+                [
+                    "D",
+                    "$\\frac{1}{4\\pi\\epsilon_0}\\frac{5q^2}{2a^2}$"
+                ],
+                [
+                    "E",
+                    "$\\frac{1}{4\\pi\\epsilon_0}\\frac{9q^2}{4a^2}$"
+                ]
+            ],
+            "answer": "C",
+            "solution": "To solve this, we use the method of image charges. For a grounded conducting plane at $z=0$ , the image charge of $q$ at $(0, 0, 0.2a)$ is $-q$ at $(0, 0, -0.2a)$ . The image charge of $-2q$ at $(0, 0, 0.8a)$ is $2q$ at $(0, 0, -0.8a)$ . \n\nThe force on $q$ due to its image is given by:\n\\[ F_{qq'} = \\frac{1}{4\\pi\\epsilon_0} \\frac{q^2}{(0.4a)^2} = \\frac{1}{4\\pi\\epsilon_0} \\frac{q^2}{0.16a^2}. \\]\n\nThe force on $q$ due to the image of $-2q$ is:\n\\[ F_{q(-2q)'} = \\frac{1}{4\\pi\\epsilon_0} \\frac{2q^2}{(1.0a)^2} = \\frac{1}{4\\pi\\epsilon_0} \\frac{2q^2}{a^2}. \\]\n\nThe total force is the sum of these forces:\n\\[ F_{net} = \\frac{1}{4\\pi\\epsilon_0} \\left( \\frac{q^2}{0.16a^2} + \\frac{2q^2}{a^2} \\right) = \\frac{1}{4\\pi\\epsilon_0} \\left( \\frac{6.25q^2}{a^2} + \\frac{2q^2}{a^2} \\right) = \\frac{1}{4\\pi\\epsilon_0} \\frac{7q^2}{4a^2}. \\]\nThus, the correct choice is C.",
+            "source": "generated",
+            "seed_id": "GR9277#10"
+        },
+        {
+            "id": "GEN#GR9277.11-1",
+            "subject": "electromagnetism",
+            "topic": "Electromagnetism → RC Circuit",
+            "statement": "A capacitor with capacitance $C$ is initially charged to a potential difference $V_0$ . It is then connected across a resistor of resistance $R$ . How much time elapses until the voltage across the capacitor is reduced to $V_0/2$ ?",
+            "choices": [
+                [
+                    "A",
+                    "$RC$"
+                ],
+                [
+                    "B",
+                    "$2RC$"
+                ],
+                [
+                    "C",
+                    "$RC/2$"
+                ],
+                [
+                    "D",
+                    "$RC\\frac{\\text{ln}(2)}{2}$"
+                ],
+                [
+                    "E",
+                    "$RC\\text{ln}(2)$"
+                ]
+            ],
+            "answer": "E",
+            "solution": "The voltage across a discharging capacitor is given by $V(t) = V_0 e^{-t/(RC)}$ . We need to find the time $t$ when $V(t) = V_0/2$ . Setting $V_0/2 = V_0 e^{-t/(RC)}$ and solving for $t$ , we get:\n$$\\frac{1}{2} = e^{-t/(RC)}$$\nTaking the natural logarithm of both sides:\n$$\\ln(1/2) = -t/(RC)$$\nThus, $$t = -RC \\ln(1/2) = RC \\ln(2)$$\nTherefore, the correct answer is $RC\\ln(2)$ .",
+            "source": "generated",
+            "seed_id": "GR9277#11"
+        },
+        {
+            "id": "GEN#GR9277.12-1",
+            "subject": "electromagnetism",
+            "topic": "Electromagnetism → Laplace's Equation",
+            "statement": "Two infinite conducting planes intersect at an angle $\\beta$ . One plane is held at potential $V_1$ , while the other is at potential $V_2$ . Find the potential at a point between the planes as a function of angle $\\theta$ , assuming the potential is independent of distance $r$ and height $z$ .",
+            "choices": [
+                [
+                    "A",
+                    "$V_1 + \\frac{(V_2 - V_1)\\theta}{\\beta}$"
+                ],
+                [
+                    "B",
+                    "$V_1 + \\frac{(V_2 - V_1)\\beta}{\\theta}$"
+                ],
+                [
+                    "C",
+                    "$V_1 + \\frac{(V_2 - V_1)\\theta^2}{\\beta}$"
+                ],
+                [
+                    "D",
+                    "$\\frac{(V_2 - V_1)\\theta}{2\\beta}$"
+                ],
+                [
+                    "E",
+                    "$V_1 + \\frac{(V_2 - V_1)}{\\beta}$"
+                ]
+            ],
+            "answer": "A",
+            "solution": "The potential between two conducting planes intersecting at an angle $\\beta$ , with boundary conditions $V(0) = V_1$ and $V(\\beta) = V_2$ , can be found using the method of separation of variables for Laplace's equation in polar coordinates. The potential $V(\\theta)$ is linear in $\\theta$ due to the constant boundary conditions and the absence of $r$ and $z$ dependence. Thus, we hypothesize $V(\\theta) = A + B\\theta$ . Applying the boundary conditions: $$ \\begin{align*} V(0) &= A = V_1, \\\\ V(\\beta) &= A + B\\beta = V_2. \\end{align*} $$ Solving these equations, we find $A = V_1$ and $B = \\frac{(V_2 - V_1)}{\\beta}$ . Therefore, $$ V(\\theta) = V_1 + \\frac{(V_2 - V_1)\\theta}{\\beta}. $$",
+            "source": "generated",
+            "seed_id": "GR9277#12"
+        },
+        {
+            "id": "GEN#GR9277.13-1",
+            "subject": "electromagnetism",
+            "topic": "Electromagnetism → Maxwell's Equations",
+            "statement": "Consider a hypothetical universe where electric dipoles are the fundamental units instead of electric charges. In this universe, which of Maxwell's equations would require modification to remain consistent with the observed laws of electromagnetism?",
+            "choices": [
+                [
+                    "A",
+                    "Gauss's Law for Electricity"
+                ],
+                [
+                    "B",
+                    "Gauss's Law for Magnetism"
+                ],
+                [
+                    "C",
+                    "Faraday's Law of Induction"
+                ],
+                [
+                    "D",
+                    "Ampère's Law with Maxwell's Addition"
+                ],
+                [
+                    "E",
+                    "None of these, they all remain unchanged"
+                ]
+            ],
+            "answer": "A",
+            "solution": "In the standard form of Maxwell's equations, Gauss's Law for Electricity ( $\\nabla \\cdot \\mathbf{E} = \\frac{\\rho}{\\varepsilon_0}$ ) describes how electric charges produce an electric field. If electric dipoles were the fundamental entities instead of charges, this law would need modification because it is based on the concept of point charges producing fields. The other equations either involve magnetic fields or changes in magnetic/electric fields over time, and these would remain unchanged in their structure.",
+            "source": "generated",
+            "seed_id": "GR9277#13"
+        },
+        {
+            "id": "GEN#GR9277.16-1",
+            "subject": "thermo_stat_mech",
+            "topic": "Thermodynamics → Carnot Engine",
+            "statement": "A Carnot engine operates between a hot reservoir at 600 K and a cold reservoir at 300 K. If the engine receives 1500 J of heat from the hot reservoir, how much work does the engine perform?",
+            "choices": [
+                [
+                    "A",
+                    "750 J"
+                ],
+                [
+                    "B",
+                    "500 J"
+                ],
+                [
+                    "C",
+                    "1000 J"
+                ],
+                [
+                    "D",
+                    "1500 J"
+                ],
+                [
+                    "E",
+                    "3000 J"
+                ]
+            ],
+            "answer": "A",
+            "solution": "The efficiency $\\eta$ of a Carnot engine is given by $\\eta = 1 - \\frac{T_C}{T_H}$ , where $T_H$ is the temperature of the hot reservoir and $T_C$ is the temperature of the cold reservoir. Here, $T_H = 600 \\text{ K}$ and $T_C = 300 \\text{ K}$ . Thus, $$\\eta = 1 - \\frac{300}{600} = 1 - 0.5 = 0.5.$$ The work done by the engine is the product of the efficiency and the heat absorbed: $$W = \\eta Q_H = 0.5 \\times 1500 \\text{ J} = 750 \\text{ J}.$$ Therefore, the work performed by the engine is 750 J.",
+            "source": "generated",
+            "seed_id": "GR9277#16"
+        },
+        {
+            "id": "GEN#GR9277.17-1",
+            "subject": "lab_methods",
+            "topic": "Lab Methods → Oscilloscope (Lissajous Figures)",
+            "statement": "An oscilloscope is set to X-Y mode. An oscillator with frequency $f_X$ is connected to the X-input, and an oscillator with frequency $f_Y$ is connected to the Y-input. If $f_Y$ is three times $f_X$ , which pattern is expected on the oscilloscope screen?",
+            "choices": [
+                [
+                    "A",
+                    "A figure with one hump (parabolic-like)"
+                ],
+                [
+                    "B",
+                    "A figure with three humps"
+                ],
+                [
+                    "C",
+                    "A simple sinusoid"
+                ],
+                [
+                    "D",
+                    "An elliptical pattern"
+                ],
+                [
+                    "E",
+                    "A straight line"
+                ]
+            ],
+            "answer": "B",
+            "solution": "When the oscilloscope is in X-Y mode, the pattern seen is determined by the ratio of the frequencies of the signals connected to the X and Y inputs. The figure formed is a Lissajous figure, which depends on the frequency ratio $f_Y/f_X$ . If $f_Y = 3f_X$ , the pattern will complete a cycle every time the Y oscillator completes three cycles while the X oscillator completes one cycle. This results in a figure with three humps. Thus, the correct answer is B.",
+            "source": "generated",
+            "seed_id": "GR9277#17"
+        },
+        {
+            "id": "GEN#GR9277.18-1",
+            "subject": "electromagnetism",
+            "topic": "Electromagnetism → Transmission Lines",
+            "statement": "A signal is transmitted through a twisted pair cable with a characteristic impedance of $100\\, \\Omega$ . To ensure maximum power transfer and minimize signal distortion, the cable should be terminated with:",
+            "choices": [
+                [
+                    "A",
+                    "$50\\, \\Omega$ resistor"
+                ],
+                [
+                    "B",
+                    "An open circuit"
+                ],
+                [
+                    "C",
+                    "$100\\, \\Omega$ resistor"
+                ],
+                [
+                    "D",
+                    "A short circuit"
+                ],
+                [
+                    "E",
+                    "$200\\, \\Omega$ resistor"
+                ]
+            ],
+            "answer": "C",
+            "solution": "To ensure maximum power transfer and avoid reflections at the end of a transmission line, the line should be terminated with its characteristic impedance. In this case, the twisted pair cable has a characteristic impedance of $100\\, \\Omega$ . Hence, it should be terminated with a $100\\, \\Omega$ resistor to match the impedance and prevent signal reflection.",
+            "source": "generated",
+            "seed_id": "GR9277#18"
+        },
+        {
+            "id": "GEN#GR9277.19-1",
+            "subject": "classical_mechanics",
+            "topic": "Mechanics → Mass of Earth (Estimation)",
+            "statement": "What is the approximate mass of Jupiter if its radius is about $7.1 \\times 10^7$ m and its gravitational field at the surface is approximately $24.8 \\text{ m/s}^2$ ?",
+            "choices": [
+                [
+                    "A",
+                    "$1.9 \\times 10^{27}$ kg"
+                ],
+                [
+                    "B",
+                    "$1.9 \\times 10^{30}$ kg"
+                ],
+                [
+                    "C",
+                    "$1.9 \\times 10^{33}$ kg"
+                ],
+                [
+                    "D",
+                    "$1.9 \\times 10^{36}$ kg"
+                ],
+                [
+                    "E",
+                    "$1.9 \\times 10^{39}$ kg"
+                ]
+            ],
+            "answer": "A",
+            "solution": "Using the gravitational field formula $g = \\frac{G M}{r^2}$ , where $g = 24.8 \\text{ m/s}^2$ , $r = 7.1 \\times 10^7 \\text{ m}$ , and $G = 6.67 \\times 10^{-11} \\text{ N m}^2/\\text{kg}^2$ . Solving for $M$ , we have:\n$$ M = \\frac{g r^2}{G} = \\frac{24.8 \\times (7.1 \\times 10^7)^2}{6.67 \\times 10^{-11}} $$\nCalculating the above gives:\n$$ M \\approx 1.9 \\times 10^{27} \\text{ kg} $$\nThus, the mass of Jupiter is most nearly $1.9 \\times 10^{27}$ kg.",
+            "source": "generated",
+            "seed_id": "GR9277#19"
+        },
+        {
+            "id": "GEN#GR9277.24-1",
+            "subject": "atomic_physics",
+            "topic": "Atomic Bonding",
+            "statement": "What type of force is primarily responsible for holding solid xenon at low temperatures?",
+            "choices": [
+                [
+                    "A",
+                    "Ionic"
+                ],
+                [
+                    "B",
+                    "Covalent"
+                ],
+                [
+                    "C",
+                    "Partly covalent/ionic"
+                ],
+                [
+                    "D",
+                    "Metallic"
+                ],
+                [
+                    "E",
+                    "van der Waals"
+                ]
+            ],
+            "answer": "E",
+            "solution": "Solid xenon, like other noble gases, forms a lattice structure at low temperatures due to weak intermolecular forces. Since xenon atoms are non-polar and do not form bonds like ionic or covalent, the primary force responsible for the cohesion of solid xenon is the van der Waals force, which is due to temporary dipoles and induced dipoles in the atoms.",
+            "source": "generated",
+            "seed_id": "GR9277#24"
+        },
+        {
+            "id": "GEN#GR9277.25-1",
+            "subject": "atomic_physics",
+            "topic": "Particle/Cosmic Ray Physics",
+            "statement": "In a high-altitude balloon experiment designed to study cosmic rays, researchers find that the particles most frequently detected are those with enough penetrating power to traverse the atmosphere and reach ground level. Which two types of particles are most likely being detected?",
+            "choices": [
+                [
+                    "A",
+                    "Protons and neutrons"
+                ],
+                [
+                    "B",
+                    "Electrons and positrons"
+                ],
+                [
+                    "C",
+                    "Alpha particles and gamma rays"
+                ],
+                [
+                    "D",
+                    "Muons and neutrinos"
+                ],
+                [
+                    "E",
+                    "Neutrons and photons"
+                ]
+            ],
+            "answer": "D",
+            "solution": "Cosmic rays interact with the atmosphere, producing a variety of secondary particles. Among these, muons and neutrinos are known for their high penetrating power. Muons can travel through significant amounts of matter before decaying, while neutrinos interact very rarely with matter. Therefore, these two types of particles are the most likely to be detected at ground level in a balloon experiment.",
+            "source": "generated",
+            "seed_id": "GR9277#25"
+        },
+        {
+            "id": "GEN#GR9277.26-1",
+            "subject": "atomic_physics",
+            "topic": "Nuclear Physics → Radioactive Decay",
+            "statement": "A radioactive substance has a decay constant $\\lambda = 0.1 \\, \\text{min}^{-1}$ . Determine its half-life.",
+            "choices": [
+                [
+                    "A",
+                    "6.9 min"
+                ],
+                [
+                    "B",
+                    "7.3 min"
+                ],
+                [
+                    "C",
+                    "8.0 min"
+                ],
+                [
+                    "D",
+                    "9.2 min"
+                ],
+                [
+                    "E",
+                    "10.0 min"
+                ]
+            ],
+            "answer": "A",
+            "solution": "The half-life $T_{1/2}$ is related to the decay constant $\\lambda$ by the equation $T_{1/2} = \\frac{\\ln(2)}{\\lambda}$ . Substituting $\\lambda = 0.1 \\, \\text{min}^{-1}$ , we have:\n$$ T_{1/2} = \\frac{\\ln(2)}{0.1} \\approx \\frac{0.693}{0.1} = 6.93 \\, \\text{min}. $$\nThus, the half-life is approximately $6.9 \\, \\text{min}$ .",
+            "source": "generated",
+            "seed_id": "GR9277#26"
+        },
+        {
+            "id": "GEN#GR9277.27-1",
+            "subject": "quantum_mechanics",
+            "topic": "Quantum Mechanics → Uncertainty / Fourier",
+            "statement": "A quantum particle is described by a wave packet $\\phi(y, t) = \\int e^{i(ky - \\nu t)}g(k)\\,dk$ , where $g(k)$ is sharply peaked around $k_1$ . If the spatial spread of the wave packet is characterized by $\\Delta y_0$ , the width of the peak in $k$ is most nearly:",
+            "choices": [
+                [
+                    "A",
+                    "$\\Delta k = \\Delta y_0 / y_0^2$"
+                ],
+                [
+                    "B",
+                    "$\\Delta k = 1 / \\Delta y_0$"
+                ],
+                [
+                    "C",
+                    "$\\Delta k = 1 / y_0$"
+                ],
+                [
+                    "D",
+                    "$\\Delta k = k_1^2 / \\Delta y_0$"
+                ],
+                [
+                    "E",
+                    "$\\Delta k = \\sqrt{k_1^2 + (1/y_0)^2}$"
+                ]
+            ],
+            "answer": "B",
+            "solution": "The uncertainty principle for wave packets states that the product of the uncertainties in position $\\Delta y_0$ and wave number $\\Delta k$ is approximately constant: $\\Delta y_0 \\Delta k \\approx 1$ . Solving for $\\Delta k$ , we get $\\Delta k = 1 / \\Delta y_0$ . Thus, the width of the peak in $k$ is most nearly $\\Delta k = 1 / \\Delta y_0$ .",
+            "source": "generated",
+            "seed_id": "GR9277#27"
+        }
+    ]
+}

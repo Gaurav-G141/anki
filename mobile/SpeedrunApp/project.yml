@@ -32,10 +32,18 @@ targets:
       # phone's Practice-MCQs (Performance) screen. See MCQView.swift.
       - path: Resources/pgre_mcq.json
         buildPhase: resources
+      # AI-generated (Phase-2) MCQ bank, appended to the same practice pool.
+      # Same schema as pgre_mcq.json plus `source` + `seed_id`. See MCQView.swift.
+      - path: Resources/pgre_mcq_generated.json
+        buildPhase: resources
       # Stage-1 optimal-approach key: the AI coach's grading reference + the
       # AI-off fallback ("⚡ Fastest approach"). Byte-identical to the desktop's
       # qt/aqt/data/pgre_optimal_approaches.jsonl. See HeuristicCoach.swift.
       - path: Resources/optimal_approaches.jsonl
+        buildPhase: resources
+      # Optimal-approach companions for the AI-generated (Phase-2) bank, merged
+      # into the same id-keyed lookup so GEN#… ids resolve. See HeuristicCoach.swift.
+      - path: Resources/optimal_approaches_generated.jsonl
         buildPhase: resources
       # Bundle a trimmed MathJax (tex-chtml + web fonts) so the card WebView can
       # typeset the formula LaTeX offline. `type: folder` = a folder reference,
