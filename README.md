@@ -20,6 +20,10 @@
 > [BUILD_INSTALLERS.md](./BUILD_INSTALLERS.md) for step-by-step instructions to
 > build the macOS `.dmg` installer and the iOS Simulator app from source
 > (including how to run the iOS app in the emulator).
+>
+> **See the full app with realistic progress:** [dummy_account.md](./dummy_account.md)
+> loads a pre-seeded "moderate progress" learner so all three scores (Memory /
+> Performance / Readiness) render at once — no grinding reviews first.
 
 ---
 

@@ -107,6 +107,11 @@ def build(path: str, cards_per: int, reviews_per: int) -> Collection:
             revlog_rows,
         )
 
+    # Mark the fork's first-run bundled-deck import as already done, so opening this
+    # collection in the desktop app does NOT add ~166 un-mastered formula cards that
+    # would dilute the seeded scores (see qt/aqt/pgre.py maybe_import_default_decks).
+    col.set_config("pgreDefaultDecksImported", True)
+
     # Bump the collection mod stamp (raw) so a later sync sees the seeded state.
     col.db.execute("update col set mod = ?", int(time.time() * 1000))
     return col
