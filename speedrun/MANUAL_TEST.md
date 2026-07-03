@@ -265,6 +265,66 @@ URL.)
 
 ---
 
+## iOS testing — quickstart (the whole loop)
+
+The consolidated, tested command sequence. §S6/§S7 below have the detailed
+narrative; this is the at-a-glance reference. Run from the repo root.
+
+```bash
+# 0. PATH + one-time tools (see §0 for Xcode + Simulator runtime)
+export PATH="$HOME/.cargo/bin:/opt/homebrew/bin:$PATH"
+rustup target add aarch64-apple-ios aarch64-apple-ios-sim
+cargo install cbindgen
+brew install xcodegen
+
+# 1. Build the shared Rust engine — ONLY when rslib/ or proto/ changed
+mobile/build-xcframework.sh          # → mobile/AnkiCore.xcframework (device + sim)
+
+# 2. Regenerate the Xcode project — ONLY when you add files or edit project.yml
+cd mobile/SpeedrunApp && xcodegen generate && cd -
+
+# 3. Build the app for the Simulator (Release — see note)
+xcodebuild -project mobile/SpeedrunApp/SpeedrunApp.xcodeproj -scheme SpeedrunApp \
+  -configuration Release -sdk iphonesimulator \
+  -destination 'generic/platform=iOS Simulator' -derivedDataPath out/ios build
+# → out/ios/Build/Products/Release-iphonesimulator/SpeedrunApp.app
+
+# 4. Run it in the Simulator (clean install)
+xcrun simctl boot "iPhone 17" 2>/dev/null; open -a Simulator
+xcrun simctl uninstall booted net.ankiweb.speedrun          # wipe old app + data → fresh
+xcrun simctl install  booted out/ios/Build/Products/Release-iphonesimulator/SpeedrunApp.app
+xcrun simctl launch   booted net.ankiweb.speedrun
+xcrun simctl io booted screenshot ~/Desktop/speedrun.png
+
+# 5. Automated UI test (deck list → enter deck → 20 graded answers)
+xcodebuild -project mobile/SpeedrunApp/SpeedrunApp.xcodeproj -scheme SpeedrunApp \
+  -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 17' \
+  -derivedDataPath out/ios test
+
+# 6. Verify / inspect
+cargo test -p anki-ffi                                       # engine-parity + FFI tests
+xcrun simctl get_app_container "iPhone 17" net.ankiweb.speedrun data   # on-device collection.anki2
+```
+
+> **Use the Release build for standalone `simctl launch`.** A Debug build fails
+> the Simulator's preflight ("Application failed preflight checks") because it
+> needs Xcode's debugger attached; the `xcodebuild … test` harness (step 5)
+> launches Debug fine on its own.
+
+**Which loop for which change:**
+
+- Swift-only edit (UI, e.g. `MCQView`/`DeckListView`) → **3 → 4**.
+- Added a Swift file or a bundled resource (`Resources/*`) → **2 → 3 → 4**.
+- Changed the engine (`rslib`/`proto`) → **1 → 3 → 4** (keeps iOS on the _same_
+  engine as desktop).
+
+**Smoke-test in the running app:** the home screen is the **deck list** — tap a
+deck to review; tap **🎯 Practice MCQs** (Performance section row, or the target
+toolbar button) for the real-exam MCQ quiz; tap the **person / sync** button to
+log in and sync. The chart-bar button opens the three **Scores**.
+
+---
+
 ## S6 — iOS C-FFI (proves iOS runs the _same_ engine)
 
 ```bash

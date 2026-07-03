@@ -128,6 +128,18 @@ fn build_decks(build: &mut Build) -> Result<()> {
             inputs: inputs![glob!["qt/aqt/data/decks/*.apkg"]],
             output_folder: "qt/_aqt/data/decks",
         },
+    )?;
+    // Bundled Physics-GRE data (fork), resolved at runtime via `aqt_data_path()`:
+    // `pgre_mcq.json` (the Performance quiz questions) and
+    // `pgre_optimal_approaches.jsonl` (the Stage-1 optimal-approach key the AI
+    // heuristic grader + AI-off fallback use). See qt/aqt/pgre_quiz.py and
+    // qt/aqt/heuristic_coach.py.
+    build.add_action(
+        "qt:aqt:data:mcq",
+        CopyFiles {
+            inputs: inputs![glob!["qt/aqt/data/pgre_*"]],
+            output_folder: "qt/_aqt/data",
+        },
     )
 }
 

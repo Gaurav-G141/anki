@@ -69,6 +69,23 @@ struct DeckListView: View {
                 }
             }
             ToolbarItem(placement: .navigationBarTrailing) {
+                NavigationLink {
+                    ScoresView(store: store)
+                } label: {
+                    Image(systemName: "chart.bar")
+                }
+                .accessibilityIdentifier("scores")
+                .disabled(store.phase != .ready)
+            }
+            ToolbarItem(placement: .navigationBarTrailing) {
+                NavigationLink {
+                    MCQView()
+                } label: {
+                    Image(systemName: "target")
+                }
+                .accessibilityIdentifier("openMCQ")
+            }
+            ToolbarItem(placement: .navigationBarTrailing) {
                 Menu {
                     Button {
                         newDeckName = ""
@@ -129,17 +146,27 @@ struct DeckListView: View {
 
     private var deckList: some View {
         List {
-            if store.decks.isEmpty {
-                Text("No decks yet. Tap + to create or import one.")
-                    .foregroundColor(.secondary)
-            }
-            ForEach(store.decks) { node in
+            Section("Performance") {
                 NavigationLink {
-                    ReviewView(store: store, deckId: node.id, deckName: node.name)
+                    MCQView()
                 } label: {
-                    deckRow(node)
+                    Label("Practice MCQs — real exam questions", systemImage: "target")
                 }
-                .accessibilityIdentifier("deck_\(node.name)")
+                .accessibilityIdentifier("openMCQrow")
+            }
+            Section("Decks") {
+                if store.decks.isEmpty {
+                    Text("No decks yet. Tap + to create or import one.")
+                        .foregroundColor(.secondary)
+                }
+                ForEach(store.decks) { node in
+                    NavigationLink {
+                        ReviewView(store: store, deckId: node.id, deckName: node.name)
+                    } label: {
+                        deckRow(node)
+                    }
+                    .accessibilityIdentifier("deck_\(node.name)")
+                }
             }
         }
         .refreshable { store.reloadDeckTree() }

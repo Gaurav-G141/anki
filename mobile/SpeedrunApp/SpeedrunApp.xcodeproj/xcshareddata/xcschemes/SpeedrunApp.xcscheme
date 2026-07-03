@@ -29,6 +29,20 @@
             buildForAnalyzing = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
+               BlueprintIdentifier = "D5566AD8D7F791CF6ADE1558"
+               BuildableName = "SpeedrunAppTests.xctest"
+               BlueprintName = "SpeedrunAppTests"
+               ReferencedContainer = "container:SpeedrunApp.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "NO"
+            buildForProfiling = "NO"
+            buildForArchiving = "NO"
+            buildForAnalyzing = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
                BlueprintIdentifier = "73EF752400A9AD70343D3CE2"
                BuildableName = "SpeedrunAppUITests.xctest"
                BlueprintName = "SpeedrunAppUITests"
@@ -53,6 +67,17 @@
          </BuildableReference>
       </MacroExpansion>
       <Testables>
+         <TestableReference
+            skipped = "NO"
+            parallelizable = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "D5566AD8D7F791CF6ADE1558"
+               BuildableName = "SpeedrunAppTests.xctest"
+               BlueprintName = "SpeedrunAppTests"
+               ReferencedContainer = "container:SpeedrunApp.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
          <TestableReference
             skipped = "NO"
             parallelizable = "NO">

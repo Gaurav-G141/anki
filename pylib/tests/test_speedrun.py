@@ -121,6 +121,110 @@ def test_deck_mastery_groups_by_deck():
     assert by_name["Alpha"].cards_with_state == 0
 
 
+def _add_tagged_cards(col, key, n, deck_root="PGRE"):
+    """Add `n` Basic notes tagged pgre::<key> in a subject deck; return card ids."""
+    basic = col.models.by_name("Basic")
+    assert basic is not None
+    deck_id = col.decks.id(f"{deck_root}::{key}")
+    cids = []
+    note_ids = []
+    for i in range(n):
+        note = col.new_note(basic)
+        note["Front"] = f"[{key}] q{i}"
+        note["Back"] = f"a{i}"
+        col.add_note(note, deck_id)
+        note_ids.append(note.id)
+        cids.append(note.card_ids()[0])
+    col.tags.bulk_add(note_ids, f"pgre::{key}")
+    return cids
+
+
+def _review(col, cid, ease):
+    card = col.get_card(cid)
+    card.start_timer()
+    col.sched.answerCard(card, ease)
+
+
+def test_three_scores_shape():
+    # Every score ships as its own sub-block with a range + confidence + abstain.
+    col = getEmptyCol()
+    r = _topic_mastery(col)
+    for field in ("performance_abstain", "readiness_abstain"):
+        assert isinstance(getattr(r, field), bool)
+    assert isinstance(r.performance_score, float)
+    assert isinstance(r.performance_low, float)
+    assert isinstance(r.performance_high, float)
+    assert isinstance(r.performance_confidence, str)
+    assert isinstance(list(r.performance_reasons), list)
+    assert isinstance(r.readiness_score, float)
+    assert isinstance(r.readiness_low, float)
+    assert isinstance(r.readiness_high, float)
+    assert isinstance(r.readiness_confidence, str)
+    # per-topic accuracy field
+    assert all(isinstance(t.accuracy, float) for t in r.topics)
+
+
+def test_performance_independent_of_memory_abstain():
+    # Tag all subjects and review (default SM2 scheduler, so NO FSRS memory
+    # state). Memory must abstain (no state) while Performance + Readiness score
+    # from the grade history — per-score independent abstain.
+    col = getEmptyCol()
+    for key in SUBJECT_KEYS:
+        for cid in _add_tagged_cards(col, key, 2):
+            _review(col, cid, 3)  # Good
+            _review(col, cid, 3)
+    r = _topic_mastery(col)
+    assert r.abstain is True, "memory should abstain without FSRS state"
+    assert any("fsrs" in reason.lower() for reason in r.abstain_reasons)
+    assert r.performance_abstain is False, "performance should score from grades"
+    assert r.readiness_abstain is False
+    assert r.performance_low <= r.performance_score <= r.performance_high
+    assert 200.0 <= r.readiness_score <= 990.0
+    assert r.readiness_low <= r.readiness_score <= r.readiness_high
+
+
+def test_dummy_account_moderate_progress():
+    """A 'dummy account' with moderate progress: FSRS on, all subjects covered,
+    a realistic mix of grades. All three scores must be shown honestly — each
+    with a range, none abstaining — and readiness must land on the 200–990
+    scale in 10-point increments."""
+    col = getEmptyCol()
+    col.set_config("fsrs", True)
+    for key in SUBJECT_KEYS:
+        cids = _add_tagged_cards(col, key, 4)
+        # 3 answered Good, 1 answered Again -> 75% accuracy, all get FSRS state.
+        for cid in cids[:3]:
+            _review(col, cid, 3)
+        _review(col, cids[3], 1)
+
+    r = _topic_mastery(col)
+
+    # Memory: real, ranged, not abstaining.
+    assert r.abstain is False, f"memory abstained: {list(r.abstain_reasons)}"
+    assert 0.0 <= r.memory_score <= 1.0
+    assert r.score_low <= r.memory_score <= r.score_high
+    assert r.confidence
+    # some card actually carries FSRS state
+    assert sum(t.cards_with_state for t in r.topics) > 0
+
+    # Performance: real, ranged.
+    assert r.performance_abstain is False, list(r.performance_abstain_reasons)
+    assert 0.0 <= r.performance_score <= 1.0
+    assert r.performance_low <= r.performance_score <= r.performance_high
+    assert r.performance_confidence
+
+    # Readiness: projected onto the ETS scale, ranged, 10-pt increments.
+    assert r.readiness_abstain is False, list(r.readiness_abstain_reasons)
+    assert 200.0 <= r.readiness_score <= 990.0
+    assert r.readiness_low <= r.readiness_score <= r.readiness_high
+    assert r.readiness_low >= 200.0 and r.readiness_high <= 990.0
+    assert r.readiness_score % 10 == 0
+    assert r.readiness_confidence and r.readiness_confidence != "high"
+
+    # Full coverage since every subject has cards.
+    assert r.coverage > 0.99
+
+
 def test_honesty_shape():
     col = getEmptyCol()
     r = _topic_mastery(col)

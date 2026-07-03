@@ -37,10 +37,25 @@ function validScored(): TopicMasteryResponse {
             coverageFloor: 0.4,
         },
         topics: NINE_TOPICS,
+        // Performance + Readiness (Cannot-break rule #3): each scored + ranged.
+        performanceAbstain: false,
+        performanceAbstainReasons: [],
+        performanceScore: 0.75,
+        performanceLow: 0.68,
+        performanceHigh: 0.82,
+        performanceConfidence: "medium",
+        performanceReasons: ["Subject 3: 40% accuracy"],
+        readinessAbstain: false,
+        readinessAbstainReasons: [],
+        readinessScore: 790,
+        readinessLow: 700,
+        readinessHigh: 860,
+        readinessConfidence: "medium",
+        readinessReasons: ["Subject 3: 40% accuracy"],
     });
 }
 
-/** An abstaining response. */
+/** An abstaining response (all three scores abstain). */
 function abstaining(): TopicMasteryResponse {
     return new TopicMasteryResponse({
         abstain: true,
@@ -53,6 +68,10 @@ function abstaining(): TopicMasteryResponse {
             coverageFloor: 0.4,
         },
         topics: NINE_TOPICS,
+        performanceAbstain: true,
+        performanceAbstainReasons: ["Only 4 graded reviews (need 20)"],
+        readinessAbstain: true,
+        readinessAbstainReasons: ["Only 4 graded reviews (need 20)"],
     });
 }
 
@@ -122,5 +141,88 @@ describe("S5-T02 honesty guard", () => {
 
     test("control: untouched valid proto still scores", () => {
         expect(toViewModel(validScored()).kind).toBe("score");
+    });
+});
+
+describe("three separate scores, each with a range (Cannot-break rule #3)", () => {
+    test("valid proto maps all three scores with ranges", () => {
+        const view = toViewModel(validScored());
+        // Memory
+        expect(view.kind).toBe("score");
+        // Performance
+        expect(view.performance.kind).toBe("score");
+        if (view.performance.kind !== "score") {
+            throw new Error("expected performance score");
+        }
+        expect(view.performance.scorePct).toBe(75);
+        expect(view.performance.lowPct).toBe(68);
+        expect(view.performance.highPct).toBe(82);
+        expect(view.performance.confidence).toBe("medium");
+        // Readiness (200–990 scale, not a %)
+        expect(view.readiness.kind).toBe("score");
+        if (view.readiness.kind !== "score") {
+            throw new Error("expected readiness score");
+        }
+        expect(view.readiness.score).toBe(790);
+        expect(view.readiness.low).toBe(700);
+        expect(view.readiness.high).toBe(860);
+    });
+
+    test("abstaining proto abstains on all three", () => {
+        const view = toViewModel(abstaining());
+        expect(view.kind).toBe("abstain");
+        expect(view.performance.kind).toBe("abstain");
+        expect(view.readiness.kind).toBe("abstain");
+        if (view.performance.kind !== "abstain") {
+            throw new Error("expected abstain");
+        }
+        expect(view.performance.reasons).toEqual(["Only 4 graded reviews (need 20)"]);
+    });
+
+    test("independent abstain: memory scores while performance abstains", () => {
+        const r = validScored();
+        r.performanceAbstain = true;
+        r.performanceAbstainReasons = ["no exam-style-question data yet"];
+        const view = toViewModel(r);
+        expect(view.kind).toBe("score"); // memory unaffected
+        expect(view.performance.kind).toBe("abstain");
+        expect(view.readiness.kind).toBe("score"); // readiness fields still valid
+    });
+
+    describe("performance honesty guard", () => {
+        const breakers: Array<[string, (r: TopicMasteryResponse) => void]> = [
+            ["score not finite", (r) => (r.performanceScore = NaN)],
+            ["score out of [0,1]", (r) => (r.performanceScore = 2)],
+            ["low > score", (r) => (r.performanceLow = 0.99)],
+            ["high < score", (r) => (r.performanceHigh = 0.1)],
+            ["confidence empty", (r) => (r.performanceConfidence = "")],
+        ];
+        for (const [label, mutate] of breakers) {
+            test(`performanceAbstain:false but ${label} → abstain`, () => {
+                const r = validScored();
+                mutate(r);
+                expect(r.performanceAbstain).toBe(false);
+                expect(toViewModel(r).performance.kind).toBe("abstain");
+            });
+        }
+    });
+
+    describe("readiness honesty guard", () => {
+        const breakers: Array<[string, (r: TopicMasteryResponse) => void]> = [
+            ["score not finite", (r) => (r.readinessScore = Infinity)],
+            ["score below 200", (r) => (r.readinessScore = 150)],
+            ["score above 990", (r) => (r.readinessScore = 1200)],
+            ["low > score", (r) => (r.readinessLow = 900)],
+            ["high < score", (r) => (r.readinessHigh = 400)],
+            ["confidence empty", (r) => (r.readinessConfidence = "")],
+        ];
+        for (const [label, mutate] of breakers) {
+            test(`readinessAbstain:false but ${label} → abstain`, () => {
+                const r = validScored();
+                mutate(r);
+                expect(r.readinessAbstain).toBe(false);
+                expect(toViewModel(r).readiness.kind).toBe("abstain");
+            });
+        }
     });
 });

@@ -21,6 +21,10 @@ ts/.svelte-kit
 .claude/settings.local.json
 .claude/user.md
 .venv
+.env
+# Baked-in OpenAI key for local Heuristic-Coach testing (never commit the secret).
+qt/aqt/data/pgre_ai_key.txt
+*_ai_key.txt
 docs/_build/
 docs/autoapi/
 .complexipy_cache

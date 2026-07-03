@@ -70,6 +70,15 @@ final class CollectionStore: ObservableObject {
     /// "unsynced" indicator and auto-sync when the connection returns.
     @Published private(set) var needsSync = false
 
+    // Three-score mastery (Memory / Performance / Readiness), from the shared
+    // SpeedrunService.TopicMastery RPC — the same engine + honesty rules the
+    // desktop dashboard uses. nil until first fetched.
+    @Published private(set) var mastery: Anki_Speedrun_TopicMasteryResponse?
+    /// True while the mastery RPC is in flight (drives a spinner on the Scores screen).
+    @Published private(set) var masteryLoading = false
+    /// Last mastery fetch error, if any.
+    @Published var masteryError: String?
+
     /// The single serial queue every FFI call runs on. `ReviewSession` reuses it
     /// so review and deck ops never touch the (non-thread-safe) engine at once.
     let queue = DispatchQueue(label: "net.ankiweb.speedrun.engine")
@@ -165,6 +174,36 @@ final class CollectionStore: ObservableObject {
                 DispatchQueue.main.async { self.decks = nodes }
             } catch {
                 DispatchQueue.main.async { self.phase = .error(String(describing: error)) }
+            }
+        }
+    }
+
+    /// Fetches the three-score mastery report (Memory / Performance / Readiness)
+    /// via the shared SpeedrunService.TopicMastery RPC. Empty request → the
+    /// backend's documented defaults (mastered 0.9, review floor 20, coverage 0.40).
+    /// Off the main thread on the serial queue; assigns on main.
+    func fetchMastery() {
+        DispatchQueue.main.async { self.masteryLoading = true; self.masteryError = nil }
+        queue.async { [weak self] in
+            guard let self, let engine = self.engine else {
+                DispatchQueue.main.async { self?.masteryLoading = false }
+                return
+            }
+            do {
+                let resp = try engine.command(
+                    service: AnkiService.speedrun, method: AnkiMethod.topicMastery,
+                    request: Anki_Speedrun_TopicMasteryRequest(),
+                    response: Anki_Speedrun_TopicMasteryResponse.self
+                )
+                DispatchQueue.main.async {
+                    self.mastery = resp
+                    self.masteryLoading = false
+                }
+            } catch {
+                DispatchQueue.main.async {
+                    self.masteryError = String(describing: error)
+                    self.masteryLoading = false
+                }
             }
         }
     }

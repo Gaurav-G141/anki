@@ -197,6 +197,15 @@ speedrun-demo:
 speedrun-crash-test rounds="50":
     PYTHONPATH=out/pylib out/pyenv/bin/python speedrun/crash_test.py {{rounds}}
 
+# Stress + speed test the shared engine on a large deck; times every hot path vs PRD targets (macOS/Linux)
+stress deck="/Users/gaurav/Downloads/Cities_of_Your_Country.apkg" *args:
+    {{ ninja }} pylib
+    PYTHONPATH=out/pylib out/pyenv/bin/python speedrun/stress_test.py --deck "{{deck}}" {{args}}
+
+# Copy the OpenAI key from .env into the git-ignored bundled file so the built app can AI-grade FRQs (TESTING ONLY — key ships plaintext in the artifact) (macOS/Linux)
+bake-ai-key:
+    out/pyenv/bin/python speedrun/bake_ai_key.py
+
 # One-command benchmark (Speedrun §7h): topic_mastery scan latency (p50/p95/p99) on a 50k deck, release build
 bench:
     cargo test -p anki --release speedrun::tests_perf -- --ignored --nocapture

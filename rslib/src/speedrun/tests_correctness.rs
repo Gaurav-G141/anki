@@ -95,11 +95,18 @@ fn add_card_in_deck(
 }
 
 fn add_reviews(col: &mut Collection, cid: CardId, n: u32, taken_millis: u32) {
+    add_reviews_graded(col, cid, n, taken_millis, 3);
+}
+
+/// Add `n` review-log rows for `cid` with an explicit grade button
+/// (1=Again, 2=Hard, 3=Good, 4=Easy). Grade >= 3 counts as a "correct" recall
+/// for the Performance accuracy score.
+fn add_reviews_graded(col: &mut Collection, cid: CardId, n: u32, taken_millis: u32, button: u8) {
     for _ in 0..n {
         let entry = RevlogEntry {
             cid,
             taken_millis,
-            button_chosen: 3,
+            button_chosen: button,
             review_kind: RevlogReviewKind::Review,
             ..Default::default()
         };
@@ -423,4 +430,200 @@ fn wilson_fuzz_invariants() {
     let (l_big, h_big) = wilson_95(100, 200);
     let (l_small, h_small) = wilson_95(5, 10);
     assert!((h_small - l_small) > (h_big - l_big));
+}
+
+// ------------------------------------ three-score (Performance + Readiness)
+
+/// A collection covering all five high-weight subjects with graded reviews (no
+/// FSRS memory state required for Performance/Readiness). `correct_per` of the
+/// `reviews_per` reviews on each subject are answered Good; the rest Again.
+fn graded_collection(reviews_per: u32, correct_per: u32) -> Collection {
+    assert!(correct_per <= reviews_per);
+    let mut col = Collection::new();
+    for key in HIGH_WEIGHT_KEYS {
+        let c = add_card_no_state(&mut col, key);
+        add_reviews_graded(&mut col, c, correct_per, 4_000, 3); // Good
+        add_reviews_graded(&mut col, c, reviews_per - correct_per, 8_000, 1); // Again
+    }
+    col
+}
+
+#[test]
+fn performance_scores_from_grade_history() -> Result<()> {
+    let mut col = scored_collection(); // all Good reviews
+    let r = col.topic_mastery_report(TopicMasteryRequest::default())?;
+    assert!(
+        !r.performance_abstain,
+        "performance should score: {:?}",
+        r.performance_abstain_reasons
+    );
+    assert!(r.performance_score >= 0.0 && r.performance_score <= 1.0);
+    assert!(r.performance_low <= r.performance_score && r.performance_score <= r.performance_high);
+    assert!(!r.performance_confidence.is_empty());
+    // scored_collection answers everything Good -> 100% accuracy.
+    assert!(
+        (r.performance_score - 1.0).abs() < 1e-6,
+        "acc={}",
+        r.performance_score
+    );
+    Ok(())
+}
+
+#[test]
+fn performance_accuracy_matches_grade_ratio() -> Result<()> {
+    // 5 subjects x 4 reviews = 20 total. classical: 0/4 correct; others 4/4.
+    // => 16/20 = 0.80 aggregate accuracy.
+    let mut col = Collection::new();
+    for key in HIGH_WEIGHT_KEYS {
+        let c = add_card_no_state(&mut col, key);
+        if key == "classical_mechanics" {
+            add_reviews_graded(&mut col, c, 4, 5_000, 1); // all Again
+        } else {
+            add_reviews_graded(&mut col, c, 4, 5_000, 3); // all Good
+        }
+    }
+    let r = col.topic_mastery_report(TopicMasteryRequest::default())?;
+    assert!(
+        !r.performance_abstain,
+        "{:?}",
+        r.performance_abstain_reasons
+    );
+    assert!(
+        (r.performance_score - 0.8).abs() < 1e-6,
+        "expected 0.80, got {}",
+        r.performance_score
+    );
+    // Hard=2 must NOT count as correct.
+    assert_eq!(topic(&r, "classical_mechanics").accuracy, 0.0);
+    assert_eq!(topic(&r, "electromagnetism").accuracy, 1.0);
+    Ok(())
+}
+
+#[test]
+fn hard_grade_is_not_correct() -> Result<()> {
+    // All reviews are "Hard" (button 2) -> recalled-with-difficulty, but our
+    // conservative accuracy counts only Good/Easy, so accuracy is 0.
+    let mut col = Collection::new();
+    for key in HIGH_WEIGHT_KEYS {
+        let c = add_card_no_state(&mut col, key);
+        add_reviews_graded(&mut col, c, 5, 5_000, 2); // Hard
+    }
+    let r = col.topic_mastery_report(TopicMasteryRequest::default())?;
+    assert!(!r.performance_abstain);
+    assert_eq!(r.performance_score, 0.0, "Hard must not count as correct");
+    Ok(())
+}
+
+#[test]
+fn performance_independent_abstain_without_fsrs_state() -> Result<()> {
+    // All high-weight subjects covered with 20 graded reviews but NO FSRS memory
+    // state anywhere: Memory must abstain (needs state) while Performance and
+    // Readiness score from grade history. This is the per-score independent
+    // abstain the handoff requires.
+    let col_reviews = 4;
+    let mut col = graded_collection(col_reviews, col_reviews); // all Good
+    let r = col.topic_mastery_report(TopicMasteryRequest::default())?;
+    assert!(r.abstain, "memory should abstain (no FSRS state)");
+    assert!(
+        r.abstain_reasons
+            .iter()
+            .any(|s| s.to_lowercase().contains("fsrs")),
+        "memory reason should mention FSRS: {:?}",
+        r.abstain_reasons
+    );
+    assert!(
+        !r.performance_abstain,
+        "performance should score from grades"
+    );
+    assert!(
+        !r.readiness_abstain,
+        "readiness should score from performance"
+    );
+    assert!(r.performance_low <= r.performance_score && r.performance_score <= r.performance_high);
+    Ok(())
+}
+
+#[test]
+fn readiness_maps_to_200_990_and_brackets() -> Result<()> {
+    let mut col = scored_collection();
+    let r = col.topic_mastery_report(TopicMasteryRequest::default())?;
+    assert!(!r.readiness_abstain, "{:?}", r.readiness_abstain_reasons);
+    assert!(
+        r.readiness_score >= 200.0 && r.readiness_score <= 990.0,
+        "readiness {} out of [200,990]",
+        r.readiness_score
+    );
+    assert!(r.readiness_low >= 200.0 && r.readiness_high <= 990.0);
+    assert!(r.readiness_low <= r.readiness_score && r.readiness_score <= r.readiness_high);
+    // 10-point increments.
+    assert_eq!(
+        r.readiness_score % 10.0,
+        0.0,
+        "not a 10-multiple: {}",
+        r.readiness_score
+    );
+    assert_eq!(r.readiness_low % 10.0, 0.0);
+    assert_eq!(r.readiness_high % 10.0, 0.0);
+    // Readiness confidence is capped below "high" (it is a projection).
+    assert_ne!(r.readiness_confidence, "high");
+    Ok(())
+}
+
+#[test]
+fn readiness_range_widens_at_lower_coverage() -> Result<()> {
+    // Full coverage (all 9 subjects) vs partial (5 high-weight only), both at
+    // ~50% accuracy. Lower coverage must yield a wider readiness range.
+    let mut full = Collection::new();
+    for s in [
+        "classical_mechanics",
+        "electromagnetism",
+        "quantum_mechanics",
+        "atomic_physics",
+        "thermo_stat_mech",
+        "optics_waves",
+        "specialized_topics",
+        "special_relativity",
+        "lab_methods",
+    ] {
+        let c = add_card_no_state(&mut full, s);
+        add_reviews_graded(&mut full, c, 5, 5_000, 3);
+        add_reviews_graded(&mut full, c, 5, 5_000, 1);
+    }
+    let rf = full.topic_mastery_report(TopicMasteryRequest::default())?;
+
+    let mut partial = graded_collection(10, 5); // 5 subjects, 50% accuracy
+    let rp = partial.topic_mastery_report(TopicMasteryRequest::default())?;
+
+    assert!(!rf.readiness_abstain && !rp.readiness_abstain);
+    let width_full = rf.readiness_high - rf.readiness_low;
+    let width_partial = rp.readiness_high - rp.readiness_low;
+    assert!(
+        width_partial > width_full,
+        "partial width {width_partial} should exceed full width {width_full}"
+    );
+    Ok(())
+}
+
+#[test]
+fn all_three_scores_abstain_on_empty() -> Result<()> {
+    let mut col = Collection::new();
+    let r = col.topic_mastery_report(TopicMasteryRequest::default())?;
+    assert!(r.abstain && r.performance_abstain && r.readiness_abstain);
+    assert!(!r.performance_abstain_reasons.is_empty());
+    assert!(!r.readiness_abstain_reasons.is_empty());
+    Ok(())
+}
+
+#[test]
+fn three_scores_deterministic_across_calls() -> Result<()> {
+    let mut col = scored_collection();
+    let a = col.topic_mastery_report(TopicMasteryRequest::default())?;
+    let b = col.topic_mastery_report(TopicMasteryRequest::default())?;
+    assert_eq!(a.performance_score, b.performance_score);
+    assert_eq!(a.performance_low, b.performance_low);
+    assert_eq!(a.performance_high, b.performance_high);
+    assert_eq!(a.readiness_score, b.readiness_score);
+    assert_eq!(a.readiness_low, b.readiness_low);
+    assert_eq!(a.readiness_high, b.readiness_high);
+    Ok(())
 }

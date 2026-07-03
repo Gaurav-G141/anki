@@ -96,14 +96,80 @@ License: GNU AGPL, version 3 or later; http://www.gnu.org/licenses/agpl.html
             </div>
         {/if}
 
-        <!-- Placeholders so the 3-score layout exists -->
-        <div class="card placeholder" aria-disabled="true">
+        <!-- Performance (demonstrated recall accuracy on graded reviews) -->
+        <div class="card score-card">
             <div class="card-title">Performance</div>
-            <div class="big-stat muted">Coming soon</div>
+            {#if view.performance.kind === "abstain"}
+                <div class="big-stat muted" data-testid="performance-abstain">
+                    No score yet
+                </div>
+                <p class="explain">
+                    Not enough evidence for an honest accuracy estimate.
+                </p>
+                {#if view.performance.reasons.length > 0}
+                    <ul class="reasons">
+                        {#each view.performance.reasons as reason}
+                            <li>{reason}</li>
+                        {/each}
+                    </ul>
+                {/if}
+            {:else}
+                <div class="big-stat" data-testid="performance-score">
+                    {view.performance.scorePct}%
+                </div>
+                <div class="range">
+                    95% range: {view.performance.lowPct}% – {view.performance.highPct}%
+                </div>
+                <dl class="meta">
+                    <dt>Confidence</dt>
+                    <dd class="confidence conf-{view.performance.confidence}">
+                        {view.performance.confidence}
+                    </dd>
+                </dl>
+                <p class="explain">
+                    How often you answer studied cards correctly (graded Good or
+                    Easy). These are cards you've already seen — not new, unseen exam
+                    questions — so this likely runs higher than your real exam
+                    accuracy.
+                </p>
+            {/if}
         </div>
-        <div class="card placeholder" aria-disabled="true">
+
+        <!-- Readiness (projected PGRE scaled score, 200–990) -->
+        <div class="card score-card">
             <div class="card-title">Readiness</div>
-            <div class="big-stat muted">Coming soon</div>
+            {#if view.readiness.kind === "abstain"}
+                <div class="big-stat muted" data-testid="readiness-abstain">
+                    No score yet
+                </div>
+                <p class="explain">Not enough evidence to project an exam score.</p>
+                {#if view.readiness.reasons.length > 0}
+                    <ul class="reasons">
+                        {#each view.readiness.reasons as reason}
+                            <li>{reason}</li>
+                        {/each}
+                    </ul>
+                {/if}
+            {:else}
+                <div class="big-stat" data-testid="readiness-score">
+                    {view.readiness.score}
+                </div>
+                <div class="range">
+                    range: {view.readiness.low} – {view.readiness.high}
+                </div>
+                <dl class="meta">
+                    <dt>Confidence</dt>
+                    <dd class="confidence conf-{view.readiness.confidence}">
+                        {view.readiness.confidence}
+                    </dd>
+                </dl>
+                <p class="explain">
+                    An estimate of your PGRE scaled score (200–990), converted from
+                    your Performance score. The fewer of the exam's topics you've
+                    studied, the wider and less certain this range. A model estimate
+                    — not an actual exam score.
+                </p>
+            {/if}
         </div>
     </div>
 
@@ -163,11 +229,6 @@ License: GNU AGPL, version 3 or later; http://www.gnu.org/licenses/agpl.html
         border-radius: var(--border-radius, 6px);
         padding: 1em;
         background: var(--canvas-elevated, transparent);
-    }
-
-    .card.placeholder {
-        opacity: 0.5;
-        pointer-events: none;
     }
 
     .card-title {

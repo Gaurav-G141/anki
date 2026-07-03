@@ -60,6 +60,7 @@ class AnkiWebViewKind(Enum):
     IMPORT_LOG = "import log"
     IMPORT_ANKI_PACKAGE = "anki package import"
     SPEEDRUN_DASHBOARD = "speedrun dashboard"  # PGRE fork: memory-score dashboard
+    PGRE_QUIZ = "pgre quiz"  # PGRE fork: real exam-question MCQ quiz (Performance)
 
 
 class AuthInterceptor(QWebEngineUrlRequestInterceptor):

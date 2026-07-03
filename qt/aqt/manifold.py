@@ -22,6 +22,7 @@ import aqt
 from anki.collection import OpChanges
 from anki.decks import DeckId
 from aqt import AnkiQt, gui_hooks
+from aqt.dialog_reuse import should_reuse_dialog
 from aqt.operations.deck import add_deck_dialog, set_current_deck
 from aqt.pgre import build_manifold_html
 from aqt.sound import av_player
@@ -106,6 +107,8 @@ class Manifold:
             self.mw.moveToState("speedRecall")
         elif cmd == "memory":
             self._open_memory_dashboard()
+        elif cmd == "mcq":
+            self._open_mcq_quiz()
         elif cmd == "login":
             self._on_login()
         elif cmd == "logout":
@@ -115,13 +118,29 @@ class Manifold:
     def _open_memory_dashboard(self) -> None:
         from aqt.memorydash import MemoryDashboard
 
-        # Re-focus an existing window instead of stacking duplicates.
+        # Re-focus an existing window instead of stacking duplicates — but only
+        # if it's still a live dialog. Once closed, `garbage_collect_on_dialog_finish`
+        # calls `deleteLater()`, so the stored reference points at a deleted C++
+        # object; reusing it (or even calling `.isVisible()`) would raise and the
+        # dashboard would never reopen. `_should_reuse_dialog` handles that.
         existing = getattr(self.mw, "_memory_dashboard", None)
-        if existing is not None and existing.isVisible():
+        if should_reuse_dialog(existing):
             existing.raise_()
             existing.activateWindow()
             return
         setattr(self.mw, "_memory_dashboard", MemoryDashboard(self.mw))
+
+    def _open_mcq_quiz(self) -> None:
+        from aqt.pgre_quiz import MCQQuiz
+
+        # Same singleton-reuse guard as the memory dashboard: a stale reference to
+        # a closed (deleted) dialog must not block reopening.
+        existing = getattr(self.mw, "_mcq_quiz", None)
+        if should_reuse_dialog(existing):
+            existing.raise_()
+            existing.activateWindow()
+            return
+        setattr(self.mw, "_mcq_quiz", MCQQuiz(self.mw))
 
     # Sync login / logout
     ##########################################################################

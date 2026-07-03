@@ -29,6 +29,7 @@ enum AnkiService {
     static let scheduler: UInt32 = 13
     static let cardRendering: UInt32 = 27
     static let importExport: UInt32 = 39
+    static let speedrun: UInt32 = 43
 }
 
 enum AnkiMethod {
@@ -50,6 +51,8 @@ enum AnkiMethod {
     static let abortSync: UInt32 = 7
     // ImportExport service (39).
     static let importAnkiPackage: UInt32 = 2
+    // Speedrun service (43): the fork-specific three-score mastery RPC.
+    static let topicMastery: UInt32 = 0
 }
 
 enum AnkiEngineError: Error, CustomStringConvertible {

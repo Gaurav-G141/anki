@@ -97,6 +97,15 @@ const DEFAULT_COVERAGE_FLOOR: f32 = 0.40;
 /// Latency outliers are capped before taking the median.
 const LATENCY_CAP_MS: u32 = 60_000;
 
+/// Readiness maps performance onto the ETS 200–990 scaled-score range.
+const READINESS_MIN: f32 = 200.0;
+const READINESS_MAX: f32 = 990.0;
+const READINESS_SPAN: f32 = READINESS_MAX - READINESS_MIN; // 790
+/// Half-width (scaled points) added to each side of the readiness range at zero
+/// coverage, shrinking linearly to 0 at full coverage: "we've only seen part of
+/// the exam, so widen the projection." Keeps the range honestly wide when thin.
+const READINESS_COVERAGE_WIDEN: f32 = 150.0;
+
 impl Subject {
     fn tag(&self) -> String {
         format!("pgre::{}", self.key)
@@ -113,6 +122,9 @@ struct Accum {
     sum_r: f64,
     sum_stability: f64,
     reviews: u32,
+    /// Graded reviews answered with grade >= Good (button_chosen >= 3) — the
+    /// "correct" count for the Performance accuracy score.
+    correct: u32,
     latencies: Vec<u32>,
 }
 
@@ -145,6 +157,11 @@ pub(crate) fn confidence(total_reviews: u32, coverage: f32) -> &'static str {
     } else {
         "low"
     }
+}
+
+/// Round to the nearest 10 (ETS scaled scores come in 10-point increments).
+fn round_to_10(x: f32) -> f32 {
+    (x / 10.0).round() * 10.0
 }
 
 /// Median of latencies in ms via O(n) selection; 0 when empty.
@@ -256,6 +273,11 @@ impl Collection {
             ) {
                 let acc = &mut accums[idx];
                 acc.reviews += 1;
+                // Grade >= Good (Good=3, Easy=4) counts as a correct recall;
+                // Again(1)/Hard(2) do not. Conservative on purpose (honesty).
+                if e.button_chosen >= 3 {
+                    acc.correct += 1;
+                }
                 if e.taken_millis > 0 {
                     acc.latencies.push(e.taken_millis.min(LATENCY_CAP_MS));
                 }
@@ -267,12 +289,14 @@ impl Collection {
         let mut covered_weight = 0.0f32;
         let mut missing_high_weight: Vec<&str> = Vec::new();
         let mut total_reviews = 0u32;
+        let mut total_correct = 0u64;
         let mut mastered_total = 0u64;
         let mut with_state_total = 0u64;
 
         for (i, subject) in SUBJECTS.iter().enumerate() {
             let acc = &mut accums[i];
             total_reviews += acc.reviews;
+            total_correct += acc.correct as u64;
             mastered_total += acc.mastered as u64;
             with_state_total += acc.cards_with_state as u64;
             if acc.total_cards > 0 {
@@ -290,6 +314,11 @@ impl Collection {
             } else {
                 0.0
             };
+            let accuracy = if acc.reviews > 0 {
+                acc.correct as f32 / acc.reviews as f32
+            } else {
+                0.0
+            };
             topics.push(TopicMastery {
                 tag: subject.tag(),
                 name: subject.name.to_string(),
@@ -300,35 +329,38 @@ impl Collection {
                 mean_retrievability: mean_r,
                 mean_stability,
                 median_latency_ms: median_ms(&mut acc.latencies),
+                accuracy,
             });
         }
 
         // Weights sum to 1.0, so covered_weight is already the weighted coverage.
         let coverage = covered_weight;
 
-        // Give-up rule.
-        let mut abstain_reasons: Vec<String> = Vec::new();
+        // ---- Give-up rule --------------------------------------------------
+        // `base_reasons` are the shared honesty gates that apply to ALL three
+        // scores (too few reviews, too little coverage, a high-weight subject
+        // missing). Each score then adds its own extra gate (e.g. Memory also
+        // needs FSRS state). This is the "per-score independent abstain" the
+        // handoff calls for: Performance can score from grade history even when
+        // Memory abstains for lack of FSRS state.
+        let mut base_reasons: Vec<String> = Vec::new();
         if total_reviews < review_floor {
-            abstain_reasons.push(format!(
+            base_reasons.push(format!(
                 "only {total_reviews} graded reviews (need {review_floor})"
             ));
         }
         if coverage < coverage_floor {
-            abstain_reasons.push(format!(
+            base_reasons.push(format!(
                 "topic coverage {:.0}% (need {:.0}%)",
                 coverage * 100.0,
                 coverage_floor * 100.0
             ));
         }
         if !missing_high_weight.is_empty() {
-            abstain_reasons.push(format!(
+            base_reasons.push(format!(
                 "missing high-weight subject(s): {}",
                 missing_high_weight.join(", ")
             ));
-        }
-        if with_state_total == 0 {
-            abstain_reasons
-                .push("no FSRS memory-state data yet (enable FSRS and review)".to_string());
         }
 
         let thresholds = Some(AppliedThresholds {
@@ -338,40 +370,127 @@ impl Collection {
         });
         let updated_at_millis = TimestampMillis::now().0;
 
-        if !abstain_reasons.is_empty() {
-            return Ok(TopicMasteryResponse {
-                abstain: true,
-                abstain_reasons,
-                memory_score: 0.0,
-                score_low: 0.0,
-                score_high: 0.0,
-                coverage,
-                total_reviews,
-                confidence: "low".to_string(),
-                reasons: Vec::new(),
-                updated_at_millis,
-                thresholds,
-                topics,
-            });
+        // ---- Memory: mastered fraction (also requires FSRS memory-state) ----
+        let mut memory_reasons = base_reasons.clone();
+        if with_state_total == 0 {
+            memory_reasons
+                .push("no FSRS memory-state data yet (enable FSRS and review)".to_string());
         }
+        let memory_abstain = !memory_reasons.is_empty();
+        let (memory_score, score_low, score_high, memory_confidence, reasons) = if memory_abstain {
+            (0.0f32, 0.0f32, 0.0f32, "low".to_string(), Vec::new())
+        } else {
+            let (low, high) = wilson_95(mastered_total, with_state_total);
+            (
+                mastered_total as f32 / with_state_total as f32,
+                low as f32,
+                high as f32,
+                confidence(total_reviews, coverage).to_string(),
+                weakest_reasons(&topics),
+            )
+        };
 
-        let (low, high) = wilson_95(mastered_total, with_state_total);
-        let memory_score = mastered_total as f32 / with_state_total as f32;
-        let reasons = weakest_reasons(&topics);
+        // ---- Performance: recall accuracy on graded reviews (no FSRS needed) --
+        let performance_abstain = !base_reasons.is_empty();
+        let (
+            performance_score,
+            performance_low,
+            performance_high,
+            performance_confidence,
+            performance_reasons,
+        ) = if performance_abstain {
+            (0.0f32, 0.0f32, 0.0f32, "low".to_string(), Vec::new())
+        } else {
+            let (low, high) = wilson_95(total_correct, total_reviews as u64);
+            // Weakest covered subjects by accuracy (only those with reviews).
+            let mut by_acc: Vec<(&str, f32)> = SUBJECTS
+                .iter()
+                .enumerate()
+                .filter(|(i, _)| accums[*i].reviews > 0)
+                .map(|(i, s)| (s.name, accums[i].correct as f32 / accums[i].reviews as f32))
+                .collect();
+            by_acc.sort_by(|a, b| a.1.partial_cmp(&b.1).unwrap_or(std::cmp::Ordering::Equal));
+            let reasons = by_acc
+                .iter()
+                .take(3)
+                .map(|(n, a)| format!("{}: {:.0}% accuracy", n, a * 100.0))
+                .collect::<Vec<_>>();
+            (
+                total_correct as f32 / total_reviews as f32,
+                low as f32,
+                high as f32,
+                confidence(total_reviews, coverage).to_string(),
+                reasons,
+            )
+        };
+
+        // ---- Readiness: project performance onto the 200–990 exam scale ------
+        // Documented linear anchor (`200 + accuracy·790`); the range is the
+        // Wilson-mapped performance band widened by a coverage penalty (we've
+        // only seen part of the exam), and confidence is capped below "high"
+        // since this is a projection, not a validated exam result.
+        let readiness_abstain = performance_abstain;
+        let (
+            readiness_score,
+            readiness_low,
+            readiness_high,
+            readiness_confidence,
+            readiness_reasons,
+        ) = if readiness_abstain {
+            (0.0f32, 0.0f32, 0.0f32, "low".to_string(), Vec::new())
+        } else {
+            let widen = (1.0 - coverage) * READINESS_COVERAGE_WIDEN;
+            let mid = READINESS_MIN + performance_score * READINESS_SPAN;
+            let low = READINESS_MIN + performance_low * READINESS_SPAN - widen;
+            let high = READINESS_MIN + performance_high * READINESS_SPAN + widen;
+            let conf = match performance_confidence.as_str() {
+                "high" => "medium",
+                other => other,
+            };
+            (
+                round_to_10(mid.clamp(READINESS_MIN, READINESS_MAX)),
+                round_to_10(low.clamp(READINESS_MIN, READINESS_MAX)),
+                round_to_10(high.clamp(READINESS_MIN, READINESS_MAX)),
+                conf.to_string(),
+                performance_reasons.clone(),
+            )
+        };
 
         Ok(TopicMasteryResponse {
-            abstain: false,
-            abstain_reasons: Vec::new(),
+            abstain: memory_abstain,
+            abstain_reasons: memory_reasons,
             memory_score,
-            score_low: low as f32,
-            score_high: high as f32,
+            score_low,
+            score_high,
             coverage,
             total_reviews,
-            confidence: confidence(total_reviews, coverage).to_string(),
+            confidence: memory_confidence,
             reasons,
             updated_at_millis,
             thresholds,
             topics,
+            performance_abstain,
+            performance_abstain_reasons: if performance_abstain {
+                base_reasons.clone()
+            } else {
+                Vec::new()
+            },
+            performance_score,
+            performance_low,
+            performance_high,
+            performance_confidence,
+            performance_reasons,
+            readiness_abstain,
+            readiness_abstain_reasons: if readiness_abstain {
+                base_reasons.clone()
+            } else {
+                Vec::new()
+            },
+            readiness_score,
+            readiness_low,
+            readiness_high,
+            readiness_confidence,
+            readiness_reasons,
         })
     }
 

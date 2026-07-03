@@ -46,6 +46,9 @@ message TopicMastery {
   float mean_retrievability = 7;
   float mean_stability = 8;  // days
   uint32 median_latency_ms = 9;
+  // Demonstrated recall accuracy for this subject: graded reviews with grade
+  // >= Good over all graded reviews (0 when the subject has no reviews).
+  float accuracy = 10;
 }
 
 message TopicMasteryResponse {
@@ -68,6 +71,37 @@ message TopicMasteryResponse {
   AppliedThresholds thresholds = 11;
 
   repeated TopicMastery topics = 12;
+
+  // ---- Three-score honesty (Cannot-break rule #3): each score is separate and
+  // carries its own range + confidence + independent abstain. Field numbers are
+  // additive (never reused/reordered).
+
+  // Performance = demonstrated recall accuracy on graded reviews (grade >=
+  // Good), as an aggregate fraction in [0,1] with a Wilson 95% range. This
+  // measures accuracy on *reviewed* material, NOT held-out generalization (the
+  // AI paraphrase test is the Sunday proof). Independent abstain: needs graded
+  // reviews + coverage, but NOT FSRS memory state.
+  bool performance_abstain = 13;
+  repeated string performance_abstain_reasons = 14;
+  float performance_score = 15;  // [0,1], valid only when !performance_abstain
+  float performance_low = 16;
+  float performance_high = 17;
+  string performance_confidence = 18;  // "low" | "medium" | "high"
+  repeated string performance_reasons =
+      19;  // weakest covered subjects by accuracy
+
+  // Readiness = projected PGRE scaled score in [200,990] (10-pt increments),
+  // mapped from performance via a documented linear anchor; the range widens as
+  // coverage shrinks and confidence is capped below "high" (it is a projection,
+  // not a validated exam result). Derived from performance (abstains when it
+  // does).
+  bool readiness_abstain = 20;
+  repeated string readiness_abstain_reasons = 21;
+  float readiness_score = 22;  // [200,990], valid only when !readiness_abstain
+  float readiness_low = 23;
+  float readiness_high = 24;
+  string readiness_confidence = 25;
+  repeated string readiness_reasons = 26;
 }
 
 message DeckMasteryRequest {

@@ -609,6 +609,19 @@ _MANIFOLD_BODY = """
   .cy-more:hover {{ background: rgba(46, 108, 224, 0.95); }}
   #cy-classic {{ margin-top: 14px; }}
   #cy-classic a {{ cursor: pointer; text-decoration: underline; opacity: 0.85; }}
+  /* Centre button: launches the real-exam MCQ (Performance) quiz. It carries
+     data-cx/cy=50 so the orbit script pivots it about the centre — i.e. it stays
+     put while the manifold spins. */
+  .cy-center {{
+    max-width: none;
+    padding: 10px 18px;
+    font-size: 14px;
+    font-weight: 700;
+    background: rgba(224, 108, 46, 0.92);
+    border-color: rgba(255, 200, 160, 0.9);
+    box-shadow: 0 3px 14px rgba(0, 0, 0, 0.5);
+  }}
+  .cy-center:hover {{ background: rgba(240, 130, 60, 1); }}
 </style>
 <div id="cy-wrap">
   <div id="cy-title">Ankimatter</div>
@@ -617,6 +630,9 @@ _MANIFOLD_BODY = """
   <div id="cy-stage">
     {svg}
     {buttons}
+    <button class="cy-point cy-center" style="left:50%;top:50%"
+            data-cx="50" data-cy="50" onclick="pycmd('mcq')"
+            title="Practice real Physics GRE exam questions with AI heuristic coaching">⚛️ Practice MCQs</button>
   </div>
   <div id="cy-classic">
     <a onclick="pycmd('classic')">Classic deck list</a>
