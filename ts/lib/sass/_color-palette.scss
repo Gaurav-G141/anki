@@ -18,17 +18,21 @@ $color-palette: (
         8: #999999,
         9: #858585,
     ),
+    // Observatory: cosmic blue-black ramp (0 = lightest, 9 = darkest). Retinted
+    // from Anki's neutral grays so every dark-mode surface, button, scrollbar and
+    // shadow derived from `darkgray` reads as deep space. Kept monotonic in
+    // lightness so container/canvas/code relationships are preserved.
     darkgray: (
-        0: #737373,
-        1: #636363,
-        2: #545454,
-        3: #454545,
-        4: #363636,
-        5: #2c2c2c,
-        6: #252525,
-        7: #202020,
-        8: #141414,
-        9: #020202,
+        0: #3a4257,
+        1: #313949,
+        2: #29303f,
+        3: #212736,
+        4: #171b28,
+        5: #0b0e17,
+        6: #080a12,
+        7: #06080f,
+        8: #04050b,
+        9: #010204,
     ),
     red: (
         0: #fef2f2,

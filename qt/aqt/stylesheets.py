@@ -134,7 +134,8 @@ class CustomStyles:
         border-radius: {tm.var(props.BORDER_RADIUS)};
     }}
     QMenuBar::item:selected {{
-        background-color: {tm.var(colors.CANVAS_ELEVATED)};
+        background-color: {tm.var(colors.HIGHLIGHT_BG)};
+        color: {tm.var(colors.HIGHLIGHT_FG)};
     }}
     QMenu {{
         background-color: {tm.var(colors.CANVAS_OVERLAY)};
@@ -148,6 +149,7 @@ class CustomStyles:
     }}
     QMenu::item:selected {{
         background-color: {tm.var(colors.HIGHLIGHT_BG)};
+        color: {tm.var(colors.HIGHLIGHT_FG)};
         border-radius: {tm.var(props.BORDER_RADIUS)};
     }}
     QMenu::separator {{
@@ -242,7 +244,8 @@ class CustomStyles:
     QComboBox {{
         padding: {"1px 6px 2px 4px" if tm.rtl() else "1px 4px 2px 6px"};
     }}
-    QComboBox:focus {{
+    QComboBox:focus,
+    QComboBox:hover {{
         border-color: {tm.var(colors.BORDER_FOCUS)};
     }}
     QComboBox:editable:on,
@@ -338,6 +341,7 @@ class CustomStyles:
     QTabBar::tab:selected {{
         color: white;
         background: {tm.var(colors.BUTTON_PRIMARY_BG)};
+        border-color: {tm.var(colors.BORDER_FOCUS)};
     }}
     QTabBar::tab:selected:hover {{
         background: {
@@ -370,8 +374,9 @@ class CustomStyles:
         border-bottom-left-radius: 0;
         border-bottom-right-radius: 0;
         gridline-color: {tm.var(colors.BORDER_SUBTLE)};
-        selection-background-color: {tm.var(colors.SELECTED_BG)};
-        selection-color: {tm.var(colors.SELECTED_FG)};
+        selection-background-color: {tm.var(colors.HIGHLIGHT_BG)};
+        selection-color: {tm.var(colors.HIGHLIGHT_FG)};
+        alternate-background-color: {tm.var(colors.CANVAS_ELEVATED)};
         background: {tm.var(colors.CANVAS_CODE)};
     }}
     QHeaderView {{
@@ -437,6 +442,10 @@ class CustomStyles:
 
     def spinbox(self, tm: ThemeManager) -> str:
         return f"""
+    QSpinBox:hover,
+    QDateTimeEdit:hover {{
+        border-color: {tm.var(colors.BORDER_FOCUS)};
+    }}
     QSpinBox::up-button,
     QSpinBox::down-button,
     QDateTimeEdit::up-button,

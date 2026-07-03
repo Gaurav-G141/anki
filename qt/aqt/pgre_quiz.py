@@ -218,6 +218,7 @@ class MCQQuiz(QDialog):
         self.web.stdHtml(
             _QUIZ_PAGE,
             head=head,
+            css=["css/pgre.css"],
             js=["js/mathjax.js", "js/vendor/mathjax/tex-chtml-full.js"],
             context=self,
         )
@@ -277,52 +278,79 @@ class MCQQuiz(QDialog):
 #: ``window.showCoach`` with warm, specific coaching on their *approach*.
 _QUIZ_PAGE = """
 <style>
-  :root { color-scheme: light dark; }
-  body { font-family: -apple-system, system-ui, sans-serif; margin: 0; padding: 18px 20px 28px; }
-  #hdr { display: flex; justify-content: space-between; align-items: baseline;
-         font-size: 13px; opacity: 0.75; margin-bottom: 6px; }
-  #subject { font-size: 12px; opacity: 0.6; margin-bottom: 10px; }
-  #genPill { display: none; margin-left: 8px; opacity: 1; vertical-align: middle;
-             font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 999px;
-             background: rgba(46,108,224,0.18); color: #2e6ce0; }
-  #stmt { font-size: 19px; line-height: 1.5; margin-bottom: 18px; }
-  .choice { display: block; width: 100%; text-align: left; margin: 8px 0; padding: 12px 14px;
-            border-radius: 10px; border: 1px solid rgba(128,128,128,0.4);
-            background: rgba(128,128,128,0.06); color: inherit; font: inherit; font-size: 17px;
-            cursor: pointer; }
-  .choice:hover:not(:disabled) { background: rgba(46,108,224,0.15); }
-  .choice .lab { font-weight: 700; margin-right: 8px; }
-  .choice.correct { background: rgba(40,170,90,0.25); border-color: rgba(40,170,90,0.9); }
-  .choice.wrong   { background: rgba(220,60,60,0.22); border-color: rgba(220,60,60,0.9); }
+  /* Observatory MCQ console. Dark-always; tokens from css/pgre.css. */
+  :root { color-scheme: dark; }
+  body { margin: 0; padding: 20px 22px 32px; }
+  #hdr { display: flex; justify-content: space-between; align-items: center;
+         gap: 16px; margin-bottom: 16px; }
+  #progressWrap { flex: 1; min-width: 0; }
+  #progress { display: block; margin-bottom: 6px; }
+  /* thin cyan focus meter under the mono "Q n / N" */
+  #progressMeter { height: 3px; border-radius: var(--pg-pill); background: var(--pg-line);
+                   overflow: hidden; }
+  #progressFill { height: 100%; width: 0; border-radius: var(--pg-pill);
+                  background: var(--pg-accent); box-shadow: var(--pg-glow);
+                  transition: width 220ms ease; }
+  #score { color: var(--pg-text-dim); font-size: 13px; white-space: nowrap; }
+  #subject { display: flex; align-items: center; gap: 9px; margin-bottom: 12px; }
+  #subjectText { font-family: var(--pg-mono); text-transform: uppercase;
+                 letter-spacing: 0.14em; font-size: 11px; color: var(--pg-text-dim); }
+  /* AI-generated pill: cyan variant of the shared badge (JS toggles display) */
+  #genPill { display: none; }
+  #genPill.pg-badge { border-color: color-mix(in srgb, var(--pg-accent) 55%, transparent);
+                      color: var(--pg-accent);
+                      background: color-mix(in srgb, var(--pg-accent) 14%, transparent); }
+  #stmt { font-size: 19px; line-height: 1.55; padding: 18px 20px; margin-bottom: 18px; }
+  /* .choice styling comes from .pg-choice in css/pgre.css */
+  .choice { font-size: 17px; }
   #frq { margin: 16px 0 4px; }
-  #frq label { display:block; font-size: 13px; opacity: 0.7; margin-bottom: 6px; }
+  #frq label { display: block; font-size: 13px; color: var(--pg-text-dim); margin-bottom: 6px; }
+  /* console input */
   #reason { width: 100%; box-sizing: border-box; min-height: 74px; resize: vertical;
-            border-radius: 10px; border: 1px solid rgba(128,128,128,0.4);
-            background: rgba(128,128,128,0.06); color: inherit; font: inherit; font-size: 15px;
-            padding: 10px 12px; }
-  #verdict { font-size: 17px; font-weight: 600; margin: 16px 0 6px; }
-  #solution { font-size: 15px; line-height: 1.5; opacity: 0.9;
-              border-left: 3px solid rgba(128,128,128,0.4); padding-left: 12px; }
-  .card { margin-top: 14px; padding: 12px 14px; border-radius: 10px;
-          border: 1px solid rgba(128,128,128,0.35); background: rgba(128,128,128,0.06); }
-  .card .t { font-weight: 700; font-size: 14px; margin-bottom: 6px; }
-  #fast .t { color: #d98a2b; }
-  #coach .t { color: #2e8b57; }
-  .badge { display:inline-block; font-size: 12px; font-weight: 700; padding: 2px 8px;
-           border-radius: 999px; margin-bottom: 6px; }
-  .missed { margin: 6px 0 0 1em; padding: 0; font-size: 14px; opacity: 0.9; }
-  .muted { opacity: 0.7; font-size: 13px; }
-  .btn { margin-top: 18px; padding: 11px 20px; font-size: 16px; font-weight: 600;
-         border-radius: 10px; border: none; background: #2e6ce0; color: #fff; cursor: pointer; }
-  #summary { text-align: center; padding-top: 40px; }
-  #summary .big { font-size: 46px; font-weight: 700; }
-  #stmt, #solution, .card { overflow-wrap: anywhere; }
+            border-radius: var(--pg-radius-sm); border: 1px solid var(--pg-line);
+            background: var(--pg-panel); color: var(--pg-text);
+            font-family: var(--pg-mono); font-size: 14px; padding: 11px 13px; }
+  #reason:focus { outline: none;
+                  border-color: color-mix(in srgb, var(--pg-accent) 55%, transparent);
+                  box-shadow: 0 0 0 1px color-mix(in srgb, var(--pg-accent) 40%, transparent); }
+  #verdict { font-size: 17px; font-weight: 600; margin: 18px 0 8px; }
+  #solution { font-size: 15px; line-height: 1.55; color: var(--pg-text-dim);
+              border-left: 2px solid color-mix(in srgb, var(--pg-accent) 45%, transparent);
+              padding-left: 13px; }
+  /* .pg-card / .pg-card--fast / .pg-card--coach edges come from css/pgre.css */
+  .pg-card .t { font-weight: 700; font-size: 14px; margin-bottom: 6px;
+                font-family: var(--pg-mono); letter-spacing: 0.04em; }
+  #fast .t { color: var(--pg-accent); }
+  #coach .t { color: var(--pg-accent-2); }
+  .missed { margin: 8px 0 0 1em; padding: 0; font-size: 14px; color: var(--pg-text-dim); }
+  .muted { color: var(--pg-text-dim); font-size: 13px; }
+  #summary { text-align: center; padding-top: 46px; }
+  #summary .big { font-size: 54px; font-weight: 700; color: var(--pg-accent);
+                  text-shadow: 0 0 20px var(--pg-accent-glow); margin: 6px 0;
+                  animation: pg-bloom 3.2s ease-in-out infinite; }
+  @keyframes pg-bloom {
+    0%, 100% { text-shadow: 0 0 14px var(--pg-accent-glow); }
+    50%      { text-shadow: 0 0 28px var(--pg-accent-glow); }
+  }
+  #wm { position: fixed; bottom: 14px; right: 18px; }
+  #stmt, #solution, .pg-card { overflow-wrap: anywhere; }
   /* Wide display equations scroll instead of clipping. */
   mjx-container { font-size: 108% !important; max-width: 100%; overflow-x: auto; }
+  @media (prefers-reduced-motion: reduce) {
+    #summary .big { animation: none; }
+    #progressFill { transition: none; }
+  }
 </style>
-<div id="hdr"><span id="progress"></span><span id="score"></span></div>
-<div id="subject"><span id="subjectText"></span><span id="genPill">⚛ AI-generated</span></div>
-<div id="stmt"></div>
+<div class="pg-watermark" id="wm">ℏ ∮ ∇ ψ λ ∂</div>
+<div id="hdr">
+  <div id="progressWrap">
+    <span id="progress" class="pg-eyebrow"></span>
+    <div id="progressMeter"><div id="progressFill"></div></div>
+  </div>
+  <span id="score" class="pg-num"></span>
+</div>
+<div id="subject"><span id="subjectText"></span><span id="genPill" class="pg-badge">⚛ AI-generated</span></div>
+<div id="stmt" class="pg-panel"></div>
 <div id="choices"></div>
 <div id="frq">
   <label id="frqLabel"></label>
@@ -332,6 +360,7 @@ _QUIZ_PAGE = """
 <div id="summary" style="display:none"></div>
 <script>
 (function () {
+  document.body.classList.add("pg-observatory");
   var DATA = (window.QUIZ_DATA || []).slice();
   var AI_ON = !!window.AI_ON;
   function shuffle(a) {
@@ -365,7 +394,9 @@ _QUIZ_PAGE = """
             : "How would you solve this? (jot your approach, then check it against the fastest route)";
     var ta = document.getElementById("reason");
     ta.value = ""; ta.disabled = false;
-    document.getElementById("progress").textContent = "Question " + (idx + 1) + " / " + DATA.length;
+    document.getElementById("progress").textContent = "Q " + (idx + 1) + " / " + DATA.length;
+    var pf = document.getElementById("progressFill");
+    if (pf) { pf.style.width = (DATA.length ? ((idx + 1) / DATA.length) * 100 : 0) + "%"; }
     score();
     document.getElementById("subjectText").textContent = q.subject || "";
     // Badge AI-generated items only (real released questions have no pill).
@@ -376,7 +407,7 @@ _QUIZ_PAGE = """
     box.innerHTML = "";
     q.choices.forEach(function (c) {
       var b = document.createElement("button");
-      b.className = "choice"; b.dataset.letter = c[0];
+      b.className = "choice pg-choice"; b.dataset.letter = c[0];
       b.innerHTML = "<span class='lab'>" + c[0] + "</span>" + c[1];
       b.onclick = function () { choose(c[0]); };
       box.appendChild(b);
@@ -402,15 +433,15 @@ _QUIZ_PAGE = """
       (q.solution ? "<div id='solution'>" + q.solution + "</div>" : "");
     // Always show the fastest expert approach (from the key; no network needed).
     if (q.optimal && q.optimal.explanation) {
-      html += "<div class='card' id='fast'><div class='t'>⚡ Fastest approach</div>" +
+      html += "<div class='pg-card pg-card--fast' id='fast'><div class='t'>⚡ Fastest approach</div>" +
               "<div>" + q.optimal.explanation + "</div></div>";
     }
     // Personalised AI coaching only when a key is present AND the student wrote something.
     if (AI_ON && reasoning) {
-      html += "<div class='card' id='coach'><div class='t'>🧠 Coaching your approach…</div>" +
+      html += "<div class='pg-card pg-card--coach' id='coach'><div class='t'>🧠 Coaching your approach…</div>" +
               "<div class='muted'>Grading how you tackled it…</div></div>";
     }
-    html += "<button class='btn' id='nextBtn'>Next question →</button>";
+    html += "<button class='pg-btn pg-btn--primary' id='nextBtn'>Next question →</button>";
     var fb = document.getElementById("feedback");
     fb.innerHTML = html;
     document.getElementById("nextBtn").onclick = function () { idx++; render(); };
@@ -428,15 +459,15 @@ _QUIZ_PAGE = """
       return;
     }
     var badges = {
-      optimal:      ["⚡ Optimal approach", "rgba(40,170,90,0.25)"],
-      valid_slower: ["✅ Valid — a faster route exists", "rgba(46,108,224,0.2)"],
-      overcomputed: ["🧮 You over-solved it", "rgba(224,160,46,0.25)"],
-      guessed:      ["🎲 Let's make it rigorous", "rgba(224,160,46,0.25)"],
-      flawed:       ["⚠️ Reasoning slip", "rgba(220,60,60,0.2)"]
+      optimal:      ["⚡ Optimal approach", "pg-badge--optimal"],
+      valid_slower: ["✅ Valid — a faster route exists", "pg-badge--valid"],
+      overcomputed: ["🧮 You over-solved it", "pg-badge--over"],
+      guessed:      ["🎲 Let's make it rigorous", "pg-badge--guess"],
+      flawed:       ["⚠️ Reasoning slip", "pg-badge--flaw"]
     };
     var b = badges[res.verdict];
     var inner = "<div class='t'>🧠 Your approach</div>";
-    if (b) { inner += "<span class='badge' style='background:" + b[1] + "'>" + b[0] + "</span>"; }
+    if (b) { inner += "<span class='pg-badge " + b[1] + "'>" + b[0] + "</span>"; }
     inner += "<div>" + esc(res.feedback) + "</div>";
     if (res.missed && res.missed.length) {
       inner += "<ul class='missed'>";
@@ -454,15 +485,17 @@ _QUIZ_PAGE = """
     document.getElementById("subjectText").textContent = "";
     document.getElementById("genPill").style.display = "none";
     document.getElementById("progress").textContent = "Finished";
+    var pf = document.getElementById("progressFill");
+    if (pf) { pf.style.width = "100%"; }
     document.getElementById("score").textContent = "";
     var sm = document.getElementById("summary");
     sm.style.display = "block";
     var pct = answered ? Math.round(100 * correct / answered) : 0;
     sm.innerHTML =
-      "<div>Performance on real GR9277 questions</div>" +
-      "<div class='big'>" + pct + "%</div>" +
+      "<div class='pg-eyebrow'>Performance on real GR9277 questions</div>" +
+      "<div class='big pg-num'>" + pct + "%</div>" +
       "<div>" + correct + " / " + answered + " correct</div>" +
-      "<button class='btn' id='againBtn'>Try again</button>";
+      "<button class='pg-btn pg-btn--primary' id='againBtn'>Try again</button>";
     document.getElementById("againBtn").onclick = function () {
       shuffle(DATA); idx = 0; answered = 0; correct = 0; render();
     };

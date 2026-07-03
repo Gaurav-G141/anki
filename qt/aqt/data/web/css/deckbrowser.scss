@@ -29,6 +29,7 @@ a.deck {
 
 a.deck:hover {
     text-decoration: underline;
+    color: color(fg-link);
 }
 
 th {
@@ -139,6 +140,15 @@ tr:hover:not(.top-level-drag-row) {
 .nightMode {
     .gears {
         filter: invert(180);
+    }
+
+    // Observatory: cosmic rows with a faint cyan hover wash instead of a flat
+    // grey fill. Hairline separators come from the shared border-subtle token.
+    .current,
+    tr:hover:not(.top-level-drag-row) {
+        td {
+            background: color-mix(in srgb, var(--fg-link) 9%, transparent);
+        }
     }
 }
 

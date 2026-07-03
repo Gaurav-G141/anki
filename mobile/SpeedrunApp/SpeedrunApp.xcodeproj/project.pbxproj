@@ -8,10 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		0286400539FB965AAE5369EE /* backend.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9BA8A4E538A1B75C947572C /* backend.pb.swift */; };
+		0408F11A44B18864B5448210 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 540AE2E2BEE510EA4E785B0F /* Assets.xcassets */; };
 		07AFAD93BACF2CF777F0B383 /* collection.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8653DF280C7ECDCE21E8280 /* collection.pb.swift */; };
 		09C55D4FCDC7ED88682FDFF6 /* ReviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74004647ED7E4726EDCBFC6 /* ReviewView.swift */; };
 		32124D702644D8C984D7CE96 /* deck_config.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = C49C8459CD6FFFF15EFB34A9 /* deck_config.pb.swift */; };
 		383C1FCD4BB2AD78E4DF657E /* speedrun.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6411D22FEA6D2BDA806BDA1D /* speedrun.pb.swift */; };
+		3BF94A8A45C16C9232E39D71 /* SpeedrunWeb.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4EA5067147DC25F5AAFC957 /* SpeedrunWeb.swift */; };
 		3C59FE77E0FDEBD5E2BFCBBF /* optimal_approaches_generated.jsonl in Resources */ = {isa = PBXBuildFile; fileRef = 9189313E5EB9AE9020335660 /* optimal_approaches_generated.jsonl */; };
 		44D0B6F84CEE5FCD78959611 /* 04_Atomic_Physics.apkg in Resources */ = {isa = PBXBuildFile; fileRef = 39D593BF6ED38C725329CA3B /* 04_Atomic_Physics.apkg */; };
 		476015C1E4757C9E3A909B5D /* SpeedrunApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0CD4FA934F1AEA465F11896 /* SpeedrunApp.swift */; };
@@ -20,6 +22,7 @@
 		517D6FD04F0873AC46CE6BB8 /* 09_Laboratory_Methods.apkg in Resources */ = {isa = PBXBuildFile; fileRef = 95655EE9CBCECBA81F2AED7B /* 09_Laboratory_Methods.apkg */; };
 		52252E04A29D5810AB1853B9 /* card_rendering.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A5DE14B9B5A7085B3A7E858 /* card_rendering.pb.swift */; };
 		531B73A98A337D9B39069A4F /* HeuristicCoachTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571071B14893E85951D5638D /* HeuristicCoachTests.swift */; };
+		54B3802444CA22835C50DE2D /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98AFB59A100326E6B39FD07A /* Theme.swift */; };
 		573CF4592B70CA1312729517 /* pgre_exam.anki2 in Resources */ = {isa = PBXBuildFile; fileRef = 020FBDD971592C305687982E /* pgre_exam.anki2 */; };
 		5AC79BF826CD72334EBAE7CE /* 06_Optics_Waves.apkg in Resources */ = {isa = PBXBuildFile; fileRef = D534E77B30601DBA8DD4FA59 /* 06_Optics_Waves.apkg */; };
 		5D7596D4CCA245BF19116C28 /* generic.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90650C1F2BF75D9A88495AF /* generic.pb.swift */; };
@@ -82,6 +85,7 @@
 		39D593BF6ED38C725329CA3B /* 04_Atomic_Physics.apkg */ = {isa = PBXFileReference; path = 04_Atomic_Physics.apkg; sourceTree = "<group>"; };
 		3A2B0D33BE6B02E3FFA90D6F /* SpeedrunAppTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = SpeedrunAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4A5DE14B9B5A7085B3A7E858 /* card_rendering.pb.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = card_rendering.pb.swift; sourceTree = "<group>"; };
+		540AE2E2BEE510EA4E785B0F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		56C5B2A40545270F52DDEC0E /* 08_Special_Relativity.apkg */ = {isa = PBXFileReference; path = 08_Special_Relativity.apkg; sourceTree = "<group>"; };
 		571071B14893E85951D5638D /* HeuristicCoachTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeuristicCoachTests.swift; sourceTree = "<group>"; };
 		5AAED1622343D85FBD2C3B9A /* DeckListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeckListView.swift; sourceTree = "<group>"; };
@@ -96,6 +100,7 @@
 		86636657DD3F0E7BFE1942E9 /* MCQView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MCQView.swift; sourceTree = "<group>"; };
 		9189313E5EB9AE9020335660 /* optimal_approaches_generated.jsonl */ = {isa = PBXFileReference; path = optimal_approaches_generated.jsonl; sourceTree = "<group>"; };
 		95655EE9CBCECBA81F2AED7B /* 09_Laboratory_Methods.apkg */ = {isa = PBXFileReference; path = 09_Laboratory_Methods.apkg; sourceTree = "<group>"; };
+		98AFB59A100326E6B39FD07A /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		9ACB6387FE4EB53C0F59C6C4 /* ScoresView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoresView.swift; sourceTree = "<group>"; };
 		9C9DE2102D04AE7317EA295B /* CollectionStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionStore.swift; sourceTree = "<group>"; };
 		A28BD943963B335C008AFDE6 /* optimal_approaches.jsonl */ = {isa = PBXFileReference; path = optimal_approaches.jsonl; sourceTree = "<group>"; };
@@ -117,6 +122,7 @@
 		CEB8348F594655883C40C8A2 /* links.pb.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = links.pb.swift; sourceTree = "<group>"; };
 		D2C7D5F9AF0D2C233C012ACA /* ScoresScreenUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoresScreenUITests.swift; sourceTree = "<group>"; };
 		D534E77B30601DBA8DD4FA59 /* 06_Optics_Waves.apkg */ = {isa = PBXFileReference; path = 06_Optics_Waves.apkg; sourceTree = "<group>"; };
+		E4EA5067147DC25F5AAFC957 /* SpeedrunWeb.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeedrunWeb.swift; sourceTree = "<group>"; };
 		E63620C9B800E9AD1C059400 /* 03_Quantum_Mechanics.apkg */ = {isa = PBXFileReference; path = 03_Quantum_Mechanics.apkg; sourceTree = "<group>"; };
 		E9BA8A4E538A1B75C947572C /* backend.pb.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = backend.pb.swift; sourceTree = "<group>"; };
 		EC0449C9B59A15ED6DA653AB /* 01_Classical_Mechanics.apkg */ = {isa = PBXFileReference; path = 01_Classical_Mechanics.apkg; sourceTree = "<group>"; };
@@ -148,6 +154,7 @@
 		2A823AC83A7C34C27A5EF257 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				540AE2E2BEE510EA4E785B0F /* Assets.xcassets */,
 				F0A2774A40B38D3738AE4F6A /* mathjax */,
 				9189313E5EB9AE9020335660 /* optimal_approaches_generated.jsonl */,
 				A28BD943963B335C008AFDE6 /* optimal_approaches.jsonl */,
@@ -237,6 +244,8 @@
 				A74004647ED7E4726EDCBFC6 /* ReviewView.swift */,
 				9ACB6387FE4EB53C0F59C6C4 /* ScoresView.swift */,
 				C0CD4FA934F1AEA465F11896 /* SpeedrunApp.swift */,
+				E4EA5067147DC25F5AAFC957 /* SpeedrunWeb.swift */,
+				98AFB59A100326E6B39FD07A /* Theme.swift */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -383,6 +392,7 @@
 				BB0CB510167F9E522F113594 /* 07_Specialized_Topics.apkg in Resources */,
 				DBE68AC7120EC600CE3A5691 /* 08_Special_Relativity.apkg in Resources */,
 				517D6FD04F0873AC46CE6BB8 /* 09_Laboratory_Methods.apkg in Resources */,
+				0408F11A44B18864B5448210 /* Assets.xcassets in Resources */,
 				64C9E3274BBDAD74E7B8BC37 /* mathjax in Resources */,
 				F0EE7349670BB8E16ECBD52D /* optimal_approaches.jsonl in Resources */,
 				3C59FE77E0FDEBD5E2BFCBBF /* optimal_approaches_generated.jsonl in Resources */,
@@ -448,6 +458,8 @@
 				09C55D4FCDC7ED88682FDFF6 /* ReviewView.swift in Sources */,
 				FFEB0928D93A64E8B1049EC9 /* ScoresView.swift in Sources */,
 				476015C1E4757C9E3A909B5D /* SpeedrunApp.swift in Sources */,
+				3BF94A8A45C16C9232E39D71 /* SpeedrunWeb.swift in Sources */,
+				54B3802444CA22835C50DE2D /* Theme.swift in Sources */,
 				0286400539FB965AAE5369EE /* backend.pb.swift in Sources */,
 				52252E04A29D5810AB1853B9 /* card_rendering.pb.swift in Sources */,
 				BFB9749DC930E51780D9BCD7 /* cards.pb.swift in Sources */,
@@ -541,7 +553,8 @@
 		436B932645BB7B47FDE7E5DC /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "";
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGNING_ALLOWED = NO;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
@@ -618,7 +631,8 @@
 		97CF92C451CB451D38ECBB11 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "";
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGNING_ALLOWED = NO;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;

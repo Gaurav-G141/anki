@@ -9,4 +9,13 @@ body {
     border-bottom: 0;
     margin-top: 0;
     padding: 9px;
+
+    // Cosmic glass, closed with a single blue hairline along the TOP edge —
+    // this is the bottom bar, so the seam sits above it. Light foreground keeps
+    // the buttons legible against the near-black canvas.
+    color: var(--fg);
+    background: color-mix(in srgb, var(--canvas) 85%, transparent);
+    backdrop-filter: blur(var(--blur));
+    -webkit-backdrop-filter: blur(var(--blur));
+    border-top: 1px solid var(--border);
 }

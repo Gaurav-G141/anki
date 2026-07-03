@@ -40,10 +40,10 @@ enum Rating: Int, CaseIterable, Identifiable {
 
     var color: Color {
         switch self {
-        case .again: return .red
-        case .hard: return .orange
-        case .good: return .green
-        case .easy: return .blue
+        case .again: return Palette.bad
+        case .hard: return Palette.warn
+        case .good: return Palette.ok
+        case .easy: return Palette.info
         }
     }
 }

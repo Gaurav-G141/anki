@@ -600,7 +600,7 @@ button {
     box-shadow: 0px 1px 3px var(--border-subtle);
     font-family: Helvetica
 }
-.night-mode button { --canvas: #606060; --fg: #eee; }
+.night-mode button { --canvas: #171b28; --fg: #eaf0ff; }
 """
         else:
             family = self.font().family()

@@ -550,10 +550,41 @@ def build_manifold_html(col: Collection, depth: int = 0) -> str:
 #: extra build rule (scss compile) is needed for the home screen.
 _MANIFOLD_BODY = """
 <style>
-  #cy-wrap {{ text-align: center; }}
-  #cy-title {{ font-size: 26px; font-weight: 700; margin: 12px 0 2px; }}
-  #cy-sub {{ font-size: 13px; opacity: 0.7; margin-bottom: 2px; }}
-  #cy-page {{ font-size: 12px; opacity: 0.55; margin-bottom: 6px; min-height: 1em; }}
+  #cy-wrap {{ text-align: center; position: relative; padding-top: 6px; }}
+  /* faint physics-operator watermark behind the header (.pg-watermark supplies
+     the mono font / faint colour; we only position it here). */
+  #cy-headmark {{
+    top: 2px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 46px;
+    white-space: nowrap;
+    z-index: 0;
+  }}
+  #cy-eyebrow {{ position: relative; z-index: 1; margin: 14px 0 6px; }}
+  #cy-title {{
+    position: relative;
+    z-index: 1;
+    font-size: 30px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin: 2px 0 4px;
+    color: var(--pg-text);
+  }}
+  #cy-sub {{
+    position: relative;
+    z-index: 1;
+    font-size: 13px;
+    color: var(--pg-text-dim);
+    margin-bottom: 2px;
+  }}
+  #cy-page {{
+    font-family: var(--pg-mono);
+    font-size: 12px;
+    color: var(--pg-text-faint);
+    margin-bottom: 6px;
+    min-height: 1em;
+  }}
   #cy-stage {{
     position: relative;
     width: min(84vmin, 820px);
@@ -562,6 +593,19 @@ _MANIFOLD_BODY = """
     overflow: visible;
     cursor: grab;
     touch-action: none;
+    z-index: 1;
+  }}
+  /* soft procedural bloom halo behind the manifold (no image) */
+  #cy-stage::before {{
+    content: "";
+    position: absolute;
+    inset: 6%;
+    border-radius: 50%;
+    background: radial-gradient(circle at 50% 50%, var(--pg-accent-glow) 0%, transparent 62%);
+    filter: blur(28px);
+    opacity: 0.45;
+    z-index: -1;
+    pointer-events: none;
   }}
   #cy-stage.cy-drag {{ cursor: grabbing; }}
   #cy-svg {{
@@ -574,56 +618,89 @@ _MANIFOLD_BODY = """
     user-select: none;
     pointer-events: none;
   }}
+  /* Spikes are dim luminous nodes by default; only :hover / .cy-active lights
+     up cyan with a halo. */
   .cy-point {{
     position: absolute;
     transform: translate(-50%, -50%);
     max-width: 132px;
     padding: 6px 11px;
-    border-radius: 999px;
-    border: 1px solid rgba(255, 255, 255, 0.35);
-    background: rgba(20, 20, 28, 0.82);
-    color: #fff;
+    border-radius: var(--pg-pill);
+    border: 1px solid var(--pg-line);
+    background: var(--pg-panel);
+    color: var(--pg-text);
     font: inherit;
     font-size: 12.5px;
     line-height: 1.15;
     cursor: pointer;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
-    transition: transform 0.08s ease, background 0.08s ease;
+    -webkit-backdrop-filter: blur(6px);
+    backdrop-filter: blur(6px);
+    transition: transform 0.12s ease, background 0.12s ease,
+      border-color 0.12s ease, box-shadow 0.12s ease;
   }}
-  .cy-point:hover {{
-    background: rgba(46, 108, 224, 0.95);
+  .cy-point:hover,
+  .cy-point.cy-active {{
+    background: color-mix(in srgb, var(--pg-accent) 22%, var(--pg-panel-2));
+    border-color: var(--pg-accent);
+    box-shadow: var(--pg-glow);
     transform: translate(-50%, -50%) scale(1.06);
   }}
   .cy-num {{
     display: inline-block;
     min-width: 1.2em;
     margin-right: 5px;
+    font-family: var(--pg-mono);
     font-weight: 700;
-    opacity: 0.75;
+    color: var(--pg-text-dim);
   }}
   .cy-more {{
-    background: rgba(46, 108, 224, 0.6);
     border-style: dashed;
-    border-color: rgba(160, 195, 255, 0.8);
+    border-color: var(--pg-line-strong);
+    color: var(--pg-text-dim);
   }}
-  .cy-more:hover {{ background: rgba(46, 108, 224, 0.95); }}
+  .cy-more:hover {{
+    background: color-mix(in srgb, var(--pg-accent) 18%, var(--pg-panel-2));
+    border-color: var(--pg-accent);
+    color: var(--pg-text);
+  }}
   #cy-classic {{ margin-top: 14px; }}
-  #cy-classic a {{ cursor: pointer; text-decoration: underline; opacity: 0.85; }}
+  #cy-classic a {{
+    cursor: pointer;
+    text-decoration: underline;
+    color: var(--pg-text-dim);
+  }}
+  #cy-classic a:hover {{ color: var(--pg-text); }}
   /* Centre button: launches the real-exam MCQ (Performance) quiz. It carries
      data-cx/cy=50 so the orbit script pivots it about the centre — i.e. it stays
-     put while the manifold spins. */
+     put while the manifold spins. This is the ONE glowing cyan core: the single
+     loud element on the screen. */
   .cy-center {{
     max-width: none;
-    padding: 10px 18px;
+    padding: 11px 20px;
     font-size: 14px;
     font-weight: 700;
-    background: rgba(224, 108, 46, 0.92);
-    border-color: rgba(255, 200, 160, 0.9);
-    box-shadow: 0 3px 14px rgba(0, 0, 0, 0.5);
+    background: color-mix(in srgb, var(--pg-accent) 20%, var(--pg-panel-2));
+    border-color: var(--pg-accent);
+    color: var(--pg-text);
+    box-shadow: var(--pg-glow);
+    animation: cy-core-pulse 3.6s ease-in-out infinite;
   }}
-  .cy-center:hover {{ background: rgba(240, 130, 60, 1); }}
+  .cy-center:hover {{
+    background: color-mix(in srgb, var(--pg-accent) 32%, var(--pg-panel-2));
+    box-shadow: 0 0 30px var(--pg-accent-glow);
+  }}
+  @keyframes cy-core-pulse {{
+    0%, 100% {{ box-shadow: 0 0 16px var(--pg-accent-glow); }}
+    50% {{ box-shadow: 0 0 30px var(--pg-accent-glow); }}
+  }}
+  @media (prefers-reduced-motion: reduce) {{
+    .cy-center {{ animation: none; }}
+  }}
 </style>
 <div id="cy-wrap">
+  <div id="cy-headmark" class="pg-watermark" aria-hidden="true">ℏ ∮ ∇ ψ ∂ℒ/∂q</div>
+  <div id="cy-eyebrow" class="pg-eyebrow">ANKIMATTER · CALABI–YAU</div>
   <div id="cy-title">Ankimatter</div>
   <div id="cy-sub">Making the physics GRE as easy as \\(\\sum \\vec{{F}} = 0 \\Rightarrow \\Delta\\vec{{v}} = 0\\), \\(\\vec{{F}} = m\\vec{{a}}\\), \\(\\vec{{F}}_{{12}} = -\\vec{{F}}_{{21}}\\)</div>
   <div id="cy-page">{page_info}</div>
@@ -648,6 +725,11 @@ _MANIFOLD_BODY = """
 #: the deck buttons still fall through to open the deck.
 _MANIFOLD_SCRIPT = """
 <script>
+// Opt this page into the Observatory cosmic backdrop (pgre.css styles
+// body.pg-observatory). stdHtml sets the <body> class itself, so we add ours
+// here rather than in the body markup.
+document.body.classList.add("pg-observatory");
+
 (function () {
   var stage = document.getElementById("cy-stage");
   var svg = document.getElementById("cy-svg");

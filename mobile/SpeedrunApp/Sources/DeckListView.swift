@@ -20,7 +20,7 @@ struct DeckListView: View {
         Group {
             switch store.phase {
             case .loading:
-                ProgressView("Opening collection…")
+                StatusState(kind: .loading("Opening collection…"))
             case let .error(message):
                 errorView(message)
             case .ready:
@@ -63,6 +63,7 @@ struct DeckListView: View {
                         showLogin = true
                     } label: {
                         Image(systemName: "person.crop.circle.badge.plus")
+                            .foregroundColor(Palette.accent)
                     }
                     .accessibilityIdentifier("syncButton")
                     .disabled(store.phase != .ready)
@@ -73,6 +74,7 @@ struct DeckListView: View {
                     ScoresView(store: store)
                 } label: {
                     Image(systemName: "chart.bar")
+                        .foregroundColor(Palette.accent)
                 }
                 .accessibilityIdentifier("scores")
                 .disabled(store.phase != .ready)
@@ -82,6 +84,7 @@ struct DeckListView: View {
                     MCQView()
                 } label: {
                     Image(systemName: "target")
+                        .foregroundColor(Palette.accent)
                 }
                 .accessibilityIdentifier("openMCQ")
             }
@@ -100,6 +103,7 @@ struct DeckListView: View {
                     }
                 } label: {
                     Image(systemName: "plus")
+                        .foregroundColor(Palette.accent)
                 }
                 .accessibilityIdentifier("addDeck")
                 .disabled(store.isBusy || store.phase != .ready)
@@ -130,13 +134,14 @@ struct DeckListView: View {
         }
     }
 
-    /// The logged-in toolbar icon: a sync glyph with an orange dot when there are
+    /// The logged-in toolbar icon: a sync glyph with an amber dot when there are
     /// local reviews not yet pushed (e.g. done offline).
     private var accountIcon: some View {
         Image(systemName: "arrow.triangle.2.circlepath")
+            .foregroundColor(Palette.accent)
             .overlay(alignment: .topTrailing) {
                 if store.needsSync {
-                    Circle().fill(.orange)
+                    Circle().fill(Palette.warn)
                         .frame(width: 8, height: 8)
                         .offset(x: 5, y: -5)
                         .accessibilityIdentifier("unsyncedDot")
@@ -146,68 +151,122 @@ struct DeckListView: View {
 
     private var deckList: some View {
         List {
-            Section("Performance") {
+            Section {
                 NavigationLink {
                     MCQView()
                 } label: {
-                    Label("Practice MCQs — real exam questions", systemImage: "target")
+                    heroMCQRow
                 }
                 .accessibilityIdentifier("openMCQrow")
+                .listRowBackground(Color.clear)
+                .listRowSeparator(.hidden)
+            } header: {
+                Eyebrow("Performance")
             }
-            Section("Decks") {
+            Section {
                 if store.decks.isEmpty {
-                    Text("No decks yet. Tap + to create or import one.")
-                        .foregroundColor(.secondary)
-                }
-                ForEach(store.decks) { node in
-                    NavigationLink {
-                        ReviewView(store: store, deckId: node.id, deckName: node.name)
-                    } label: {
-                        deckRow(node)
+                    StatusState(kind: .empty("✧", "No decks yet. Tap + to create or import one."))
+                        .frame(minHeight: 160)
+                        .listRowBackground(Color.clear)
+                        .listRowSeparator(.hidden)
+                } else {
+                    ForEach(store.decks) { node in
+                        NavigationLink {
+                            ReviewView(store: store, deckId: node.id, deckName: node.name)
+                        } label: {
+                            deckRow(node)
+                        }
+                        .accessibilityIdentifier("deck_\(node.name)")
+                        .listRowBackground(Color.clear)
+                        .listRowSeparator(.hidden)
                     }
-                    .accessibilityIdentifier("deck_\(node.name)")
                 }
+            } header: {
+                Eyebrow("Decks")
             }
         }
+        .listStyle(.plain)
         .refreshable { store.reloadDeckTree() }
         .overlay {
             if store.isBusy {
-                ProgressView().padding().background(.thinMaterial).cornerRadius(10)
+                ProgressView()
+                    .tint(Palette.accent)
+                    .padding(22)
+                    .background(
+                        RoundedRectangle(cornerRadius: 14, style: .continuous)
+                            .fill(Palette.panel2))
             }
         }
+    }
+
+    /// The prominent cyan hero row that launches the MCQ practice flow.
+    private var heroMCQRow: some View {
+        HStack(spacing: 14) {
+            Image(systemName: "atom")
+                .font(.title2)
+                .foregroundColor(Palette.accent)
+            VStack(alignment: .leading, spacing: 3) {
+                Text("Practice MCQs")
+                    .font(.pgTitle)
+                    .foregroundColor(Palette.text)
+                Text("Real exam questions")
+                    .font(.pgMono(11))
+                    .tracking(1.2)
+                    .foregroundColor(Palette.textDim)
+            }
+            Spacer()
+            Image(systemName: "chevron.right")
+                .font(.footnote.weight(.semibold))
+                .foregroundColor(Palette.accent.opacity(0.8))
+        }
+        .glassCard(glow: Palette.accent)
+    }
+
+    /// A cosmetic mastery fraction for the ring: how much of a deck's pending
+    /// workload is mature review material vs new/learning. Purely decorative —
+    /// there is no real "mastery %" behind it, so the ring carries no label.
+    private func masteryPct(_ node: DeckNode) -> Double {
+        let total = node.newCount + node.learnCount + node.reviewCount
+        guard total > 0 else { return 0 }
+        return Double(node.reviewCount) / Double(total)
     }
 
     private func deckRow(_ node: DeckNode) -> some View {
-        HStack {
+        HStack(spacing: 12) {
+            MasteryRing(pct: masteryPct(node))
             Text(node.name)
+                .font(.pgBody)
+                .foregroundColor(Palette.text)
                 .padding(.leading, CGFloat(node.level) * 16)
             Spacer()
-            HStack(spacing: 8) {
-                countPill(node.newCount, .blue)
-                countPill(node.learnCount, .red)
-                countPill(node.reviewCount, .green)
+            HStack(spacing: 10) {
+                CountChip(count: node.newCount, kind: .new)
+                CountChip(count: node.learnCount, kind: .learn)
+                CountChip(count: node.reviewCount, kind: .review)
             }
-            .font(.caption.monospacedDigit())
         }
-    }
-
-    private func countPill(_ n: Int, _ color: Color) -> some View {
-        Text("\(n)").foregroundColor(color)
+        .glassCard(padding: 12)
     }
 
     private func errorView(_ message: String) -> some View {
-        VStack(spacing: 8) {
+        VStack(spacing: 12) {
             Image(systemName: "exclamationmark.triangle.fill")
-                .font(.largeTitle).foregroundColor(.orange)
-            Text("Couldn't open the collection").font(.headline)
+                .font(.largeTitle)
+                .foregroundColor(Palette.warn)
+            Text("Couldn't open the collection")
+                .font(.pgTitle)
+                .foregroundColor(Palette.text)
             ScrollView {
                 Text(message)
-                    .font(.footnote.monospaced())
+                    .font(.pgMono(12))
+                    .foregroundColor(Palette.textDim)
                     .multilineTextAlignment(.leading)
                     .padding()
             }
+            .glassCard(padding: 4)
         }
         .padding()
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
         .accessibilityIdentifier("error")
     }
 }
@@ -229,10 +288,10 @@ private struct ImportDeckSheet: View {
                         Spacer()
                         if store.importedPackages.contains(deck.id) {
                             Image(systemName: "checkmark.circle.fill")
-                                .foregroundColor(.green)
+                                .foregroundColor(Palette.ok)
                         } else {
                             Image(systemName: "square.and.arrow.down")
-                                .foregroundColor(.accentColor)
+                                .foregroundColor(Palette.accent)
                         }
                     }
                 }

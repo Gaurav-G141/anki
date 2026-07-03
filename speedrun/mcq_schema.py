@@ -76,7 +76,18 @@ def is_degenerate(choice_text: str) -> bool:
 # ungradeable on its own. Catches scraped exam cross-references AND any generated
 # candidate that references its seed.
 _CROSS_REF = re.compile(
-    r"\b(same (setup|configuration|system|situation|arrangement) as"
+    # Statement LEADS with a back-reference to a carried-over object from a prior
+    # part of a multi-part problem, e.g. "Same cylinder slows from 80 to 40 rad/s"
+    # or "For the same circuit, find the voltage across R_4". Multi-part
+    # continuations essentially always open this way, so anchoring on a leading
+    # "same" is both robust and low-false-positive (a self-contained "of the same
+    # mass" appears mid-sentence, never at the start).
+    r"^\s*same\b"
+    r"|^\s*(for|in|with|using|on|from|consider|take|assume|now|again)\s+(the\s+)?same\b"
+    # Mid-sentence explicit cross-references.
+    r"|\b(same (setup|configuration|system|situation|arrangement|circuit|cylinder"
+    r"|apparatus|network|capacitor|conductor|particle|gas|rod|beam|wire|loop|coil"
+    r"|disk|sphere|block|spring|pendulum) as"
     r"|as in (the )?(previous|preceding|earlier|prior|above) problem"
     r"|as in problem|see problem|refer to problem|from problem"
     r"|(previous|preceding|earlier|prior) problem"

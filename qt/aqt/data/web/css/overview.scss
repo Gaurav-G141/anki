@@ -12,11 +12,13 @@
 
 h3 {
     margin-bottom: 0;
+    letter-spacing: -0.01em;
 }
 
 .descfont {
     padding: 1em;
     color: color(fg-subtle);
+    line-height: 1.6;
 }
 
 .description {
@@ -39,4 +41,29 @@ h3 {
 
 #study {
     @include button.base($primary: true);
+
+    // Observatory: the sole focal CTA on this screen — a cyan-teal pill that
+    // glows against the near-black canvas.
+    padding: 0.55em 1.6em;
+    border-radius: var(--border-radius-large);
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    box-shadow: 0 0 18px -4px var(--fg-link);
+    transition:
+        box-shadow var(--transition) ease,
+        transform var(--transition) ease;
+
+    &:hover {
+        box-shadow: 0 0 26px -3px var(--fg-link);
+    }
+
+    &:active {
+        transform: translateY(1px);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    #study {
+        transition: none;
+    }
 }

@@ -1,0 +1,329 @@
+// Copyright: Ankitects Pty Ltd and contributors
+// License: GNU AGPL, version 3 or later; http://www.gnu.org/licenses/agpl.html
+//
+// Ankimatter Observatory — shared design system for the Speedrun (Physics GRE)
+// fork's "hero" web pages: the manifold home (pgre.py), the MCQ console
+// (pgre_quiz.py) and Speed Recall (speedrecall.py). Auto-compiled to
+// css/pgre.css by the build_css glob (build/configure/src/aqt.rs) and injected
+// via AnkiWebView.stdHtml(css=["css/pgre.css"]).
+//
+// Design intent (see speedrun/UI_OBSERVATORY.md): a calm, dark, physics
+// observatory. Bright cyan/violet and motion are reserved for the ONE focal
+// element on each screen; everywhere else is hairlines and dim text. All
+// cosmic decoration is procedural (no raster sprites, offline-safe).
+
+@use "sass:math";
+
+:root {
+    // ---- surfaces ----
+    --pg-space: #07080d; // deepest background
+    --pg-space-2: #0c1020; // gradient companion (top glow)
+    --pg-panel: rgba(18, 21, 32, 0.72); // glass panel fill
+    --pg-panel-2: rgba(24, 28, 42, 0.92); // solid-ish panel
+    --pg-line: rgba(150, 170, 220, 0.16); // hairline border
+    --pg-line-strong: rgba(150, 170, 220, 0.34);
+
+    // ---- text ----
+    --pg-text: #eaf0ff;
+    --pg-text-dim: rgba(234, 240, 255, 0.62);
+    --pg-text-faint: rgba(234, 240, 255, 0.36);
+
+    // ---- focus accents (used sparingly) ----
+    --pg-accent: #4ce0ff; // electric cyan — FOCUS ONLY
+    --pg-accent-2: #8a7cff; // violet — AI coaching / secondary
+    --pg-accent-glow: rgba(76, 224, 255, 0.45);
+    --pg-violet-glow: rgba(138, 124, 255, 0.4);
+
+    // ---- semantic (grade / correctness) ----
+    --pg-ok: #3dd68c; // aurora green
+    --pg-warn: #f5b14c; // amber
+    --pg-bad: #ff5c6c; // warm red
+    --pg-info: #6aa8ff; // soft blue
+
+    // ---- mastery emission ramp (mirrors pgre.py HSV faces) ----
+    --pg-mastery-0: #ff4c4c;
+    --pg-mastery-50: #f5b14c;
+    --pg-mastery-100: #3dd68c;
+
+    // ---- shape / depth ----
+    --pg-radius: 14px;
+    --pg-radius-sm: 10px;
+    --pg-pill: 999px;
+    --pg-shadow: 0 10px 34px rgba(0, 0, 0, 0.55);
+    --pg-glow: 0 0 22px var(--pg-accent-glow);
+    --pg-glow-violet: 0 0 22px var(--pg-violet-glow);
+
+    // ---- type ----
+    --pg-font: system-ui, -apple-system, "Segoe UI", sans-serif;
+    --pg-mono: ui-monospace, "SF Mono", "JetBrains Mono", "Cascadia Code", monospace;
+}
+
+// ---------------------------------------------------------------------------
+// Starfield — procedural, offline. A 1px node whose box-shadow is stamped into
+// a pseudo-random field of stars, generated once at compile time. Two layers
+// (faint small + brighter sparse) plus a top glow and a single faint violet
+// nebula. Kept deliberately dim so it never competes with content.
+// ---------------------------------------------------------------------------
+@function stars($n, $w, $h, $alpha) {
+    $shadow: null;
+    @for $i from 1 through $n {
+        $x: math.random($w);
+        $y: math.random($h);
+        $s: #{$x}px #{$y}px rgba(234, 240, 255, $alpha);
+        @if $shadow == null {
+            $shadow: $s;
+        } @else {
+            $shadow: #{$shadow}, #{$s};
+        }
+    }
+    @return #{$shadow};
+}
+
+body.pg-observatory {
+    background: var(--pg-space);
+    color: var(--pg-text);
+    font-family: var(--pg-font);
+    letter-spacing: -0.01em;
+    font-feature-settings: "tnum" 1;
+    min-height: 100vh;
+    position: relative;
+    overflow-x: hidden;
+}
+
+// base glow + nebula sit on a fixed backdrop layer
+body.pg-observatory::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -2;
+    pointer-events: none;
+    background:
+        radial-gradient(140% 90% at 50% -12%, var(--pg-space-2) 0%, var(--pg-space) 58%),
+        radial-gradient(60% 50% at 88% 8%, var(--pg-violet-glow) 0%, transparent 60%);
+    background-blend-mode: screen;
+}
+
+// the star field itself, drifting almost imperceptibly
+body.pg-observatory::after {
+    content: "";
+    position: fixed;
+    top: -2px;
+    left: -2px;
+    width: 2px;
+    height: 2px;
+    z-index: -1;
+    border-radius: 50%;
+    pointer-events: none;
+    background: transparent;
+    box-shadow: stars(130, 2000, 1500, 0.55);
+    animation: pg-drift 120s linear infinite alternate;
+}
+
+@keyframes pg-drift {
+    from {
+        transform: translate3d(0, 0, 0);
+    }
+    to {
+        transform: translate3d(-24px, -18px, 0);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    body.pg-observatory::after {
+        animation: none;
+    }
+}
+
+// ---------------------------------------------------------------------------
+// Building blocks
+// ---------------------------------------------------------------------------
+
+// physics eyebrow: mono, uppercase, wide tracking, dim
+.pg-eyebrow {
+    font-family: var(--pg-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    font-size: 11px;
+    color: var(--pg-text-dim);
+}
+
+// faint physics-glyph / equation watermark
+.pg-watermark {
+    position: absolute;
+    font-family: var(--pg-mono);
+    color: var(--pg-text-faint);
+    opacity: 0.18;
+    pointer-events: none;
+    user-select: none;
+    font-size: 22px;
+    letter-spacing: 0.2em;
+}
+
+// glass panel
+.pg-panel {
+    background: var(--pg-panel);
+    border: 1px solid var(--pg-line);
+    border-radius: var(--pg-radius);
+    box-shadow: var(--pg-shadow);
+    backdrop-filter: blur(10px) saturate(120%);
+    -webkit-backdrop-filter: blur(10px) saturate(120%);
+}
+
+// tabular numerals for any figure
+.pg-num {
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum" 1;
+}
+
+// buttons
+.pg-btn {
+    font: inherit;
+    font-family: var(--pg-font);
+    border-radius: var(--pg-radius-sm);
+    border: 1px solid var(--pg-line-strong);
+    background: var(--pg-panel);
+    color: var(--pg-text);
+    padding: 11px 18px;
+    cursor: pointer;
+    transition: border-color 160ms ease, box-shadow 160ms ease, background 160ms ease;
+}
+.pg-btn:hover {
+    border-color: var(--pg-line-strong);
+    background: var(--pg-panel-2);
+}
+// the single loud CTA — cyan core with glow
+.pg-btn--primary {
+    border-color: color-mix(in srgb, var(--pg-accent) 60%, transparent);
+    background: color-mix(in srgb, var(--pg-accent) 16%, var(--pg-panel-2));
+    color: var(--pg-text);
+}
+.pg-btn--primary:hover {
+    border-color: var(--pg-accent);
+    box-shadow: var(--pg-glow);
+}
+.pg-btn--ghost {
+    background: transparent;
+    border-color: var(--pg-line);
+    color: var(--pg-text-dim);
+}
+
+// choices (MCQ console rows)
+.pg-choice {
+    display: block;
+    width: 100%;
+    text-align: left;
+    margin: 9px 0;
+    padding: 13px 15px;
+    border-radius: var(--pg-radius-sm);
+    border: 1px solid var(--pg-line);
+    background: var(--pg-panel);
+    color: var(--pg-text);
+    font: inherit;
+    font-family: var(--pg-font);
+    cursor: pointer;
+    transition: border-color 160ms ease, background 160ms ease, box-shadow 160ms ease;
+}
+.pg-choice:hover {
+    border-color: var(--pg-line-strong);
+}
+.pg-choice .lab {
+    font-family: var(--pg-mono);
+    font-weight: 700;
+    margin-right: 10px;
+    color: var(--pg-text-dim);
+}
+.pg-choice.correct {
+    border-color: var(--pg-ok);
+    background: color-mix(in srgb, var(--pg-ok) 20%, var(--pg-panel));
+    box-shadow: 0 0 18px color-mix(in srgb, var(--pg-ok) 40%, transparent);
+}
+.pg-choice.correct .lab {
+    color: var(--pg-ok);
+}
+.pg-choice.wrong {
+    border-color: color-mix(in srgb, var(--pg-bad) 60%, transparent);
+    background: color-mix(in srgb, var(--pg-bad) 14%, var(--pg-panel));
+    opacity: 0.72;
+}
+.pg-choice.wrong .lab {
+    color: var(--pg-bad);
+}
+
+// verdict / status badge
+.pg-badge {
+    display: inline-block;
+    font-family: var(--pg-mono);
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    padding: 4px 11px;
+    border-radius: var(--pg-pill);
+    border: 1px solid var(--pg-line-strong);
+    background: var(--pg-panel);
+    color: var(--pg-text);
+}
+.pg-badge--optimal {
+    border-color: var(--pg-ok);
+    color: var(--pg-ok);
+    background: color-mix(in srgb, var(--pg-ok) 14%, transparent);
+}
+.pg-badge--valid {
+    border-color: var(--pg-info);
+    color: var(--pg-info);
+    background: color-mix(in srgb, var(--pg-info) 14%, transparent);
+}
+.pg-badge--over,
+.pg-badge--guess {
+    border-color: var(--pg-warn);
+    color: var(--pg-warn);
+    background: color-mix(in srgb, var(--pg-warn) 14%, transparent);
+}
+.pg-badge--flaw {
+    border-color: var(--pg-bad);
+    color: var(--pg-bad);
+    background: color-mix(in srgb, var(--pg-bad) 14%, transparent);
+}
+
+// coaching cards
+.pg-card {
+    margin-top: 14px;
+    padding: 13px 15px;
+    border-radius: var(--pg-radius-sm);
+    background: var(--pg-panel);
+    border: 1px solid var(--pg-line);
+}
+.pg-card--coach {
+    border-color: color-mix(in srgb, var(--pg-accent-2) 55%, transparent);
+    box-shadow: var(--pg-glow-violet);
+}
+.pg-card--fast {
+    border-color: color-mix(in srgb, var(--pg-accent) 45%, transparent);
+}
+
+// mastery / progress ring (conic). Set --pg-ring-pct (0-100) and
+// --pg-ring-color; size via --pg-ring-size.
+.pg-ring {
+    --pg-ring-pct: 0;
+    --pg-ring-color: var(--pg-accent);
+    --pg-ring-size: 44px;
+    width: var(--pg-ring-size);
+    height: var(--pg-ring-size);
+    border-radius: 50%;
+    background:
+        conic-gradient(
+            var(--pg-ring-color) calc(var(--pg-ring-pct) * 1%),
+            var(--pg-line) 0
+        );
+    -webkit-mask: radial-gradient(farthest-side, transparent calc(50% - 5px), #000 calc(50% - 4px));
+    mask: radial-gradient(farthest-side, transparent calc(50% - 5px), #000 calc(50% - 4px));
+}
+
+// confidence pips (dashboard hooks that ship unstyled today)
+.conf-high {
+    color: var(--pg-ok);
+}
+.conf-medium {
+    color: var(--pg-warn);
+}
+.conf-low {
+    color: var(--pg-text-dim);
+}

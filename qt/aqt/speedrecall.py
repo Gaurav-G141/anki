@@ -271,7 +271,7 @@ class SpeedRecall:
     def _init_web(self) -> None:
         self.web.stdHtml(
             _PAGE_HTML,
-            css=["css/reviewer.css"],
+            css=["css/reviewer.css", "css/pgre.css"],
             js=[
                 "js/mathjax.js",
                 "js/vendor/mathjax/tex-chtml-full.js",
@@ -358,38 +358,94 @@ class SpeedRecall:
 # button, and four grade buttons. Keyboard: Space = show / then Good; 1-4 = grade.
 _PAGE_HTML = r"""
 <style>
-  #sr-wrap { max-width: 700px; margin: 0 auto; padding: 12px; text-align: center;
-             font-family: var(--font, sans-serif); }
+  /* Observatory Speed Recall. Dark-always; tokens from css/pgre.css. */
+  :root { color-scheme: dark; }
+  #sr-wrap { max-width: 700px; margin: 0 auto; padding: 16px 14px 24px; text-align: center;
+             font-family: var(--pg-font); }
   #sr-head { display: flex; justify-content: space-between; align-items: center;
-             font-size: 13px; opacity: 0.8; margin-bottom: 8px; }
-  #sr-timer { font-variant-numeric: tabular-nums; font-weight: 600; }
-  #sr-subject { font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em;
-                opacity: 0.7; margin-bottom: 6px; }
-  #sr-card { min-height: 140px; font-size: 22px; display: flex; align-items: center;
-             justify-content: center; padding: 16px; }
-  #sr-controls { margin-top: 18px; }
-  #sr-controls button { font-size: 15px; padding: 8px 14px; margin: 0 4px; cursor: pointer; }
-  .sr-grade small { display:block; opacity:0.7; font-size:11px; }
-  #sr-close { position: fixed; top: 8px; right: 12px; opacity: 0.6; font-size: 12px; }
-  .sr-hr { border:0; border-top:1px solid rgba(128,128,128,0.3); margin:14px 0; }
+             gap: 12px; margin-bottom: 14px; }
+  #sr-progress { font-family: var(--pg-mono); text-transform: uppercase;
+                 letter-spacing: 0.14em; font-size: 11px; color: var(--pg-text-dim);
+                 text-align: left; }
+  #sr-headline { font-family: var(--pg-mono); text-transform: uppercase;
+                 letter-spacing: 0.1em; font-size: 11px; color: var(--pg-text-dim); }
+  /* latency ring: fills + intensifies (cyan→amber→red) as recall time grows —
+     purely visual, anchored to the drill's own 5s/60s thresholds. */
+  #sr-ring { --pg-ring-size: 58px; --pg-ring-color: var(--pg-accent); --pg-ring-pct: 0;
+             --sr-glow: 5px; position: relative; display: inline-flex;
+             align-items: center; justify-content: center;
+             filter: drop-shadow(0 0 var(--sr-glow) var(--pg-ring-color));
+             transition: filter 120ms linear; }
+  #sr-timer { position: absolute; font-family: var(--pg-mono);
+              font-variant-numeric: tabular-nums; font-feature-settings: "tnum" 1;
+              font-size: 12px; font-weight: 600; color: var(--pg-text); }
+  #sr-subject { font-family: var(--pg-mono); font-size: 11px; text-transform: uppercase;
+                letter-spacing: 0.14em; color: var(--pg-text-dim); margin-bottom: 10px; }
+  #sr-card { min-height: 150px; font-size: 22px; display: flex; align-items: center;
+             justify-content: center; padding: 22px; }
+  #sr-controls { margin-top: 20px; }
+  #sr-controls button { font: inherit; font-family: var(--pg-font); font-size: 15px;
+                        padding: 11px 18px; margin: 0 5px; cursor: pointer; }
+  /* grade palette: Again bad · Hard warn · Good ok · Easy info */
+  .sr-grade { border-radius: var(--pg-radius-sm); border: 1px solid var(--pg-line-strong);
+              background: var(--pg-panel); color: var(--pg-text);
+              transition: border-color 160ms ease, box-shadow 160ms ease; }
+  .sr-grade small { display: block; font-family: var(--pg-mono); font-size: 10px;
+                    letter-spacing: 0.06em; color: var(--pg-text-dim); margin-top: 2px; }
+  .sr-g1 { border-color: color-mix(in srgb, var(--pg-bad) 55%, transparent);  color: var(--pg-bad); }
+  .sr-g2 { border-color: color-mix(in srgb, var(--pg-warn) 55%, transparent); color: var(--pg-warn); }
+  .sr-g3 { border-color: color-mix(in srgb, var(--pg-ok) 55%, transparent);   color: var(--pg-ok); }
+  .sr-g4 { border-color: color-mix(in srgb, var(--pg-info) 55%, transparent); color: var(--pg-info); }
+  .sr-g1:hover { border-color: var(--pg-bad);  box-shadow: 0 0 16px color-mix(in srgb, var(--pg-bad) 38%, transparent); }
+  .sr-g2:hover { border-color: var(--pg-warn); box-shadow: 0 0 16px color-mix(in srgb, var(--pg-warn) 38%, transparent); }
+  .sr-g3:hover { border-color: var(--pg-ok);   box-shadow: 0 0 16px color-mix(in srgb, var(--pg-ok) 38%, transparent); }
+  .sr-g4:hover { border-color: var(--pg-info); box-shadow: 0 0 16px color-mix(in srgb, var(--pg-info) 38%, transparent); }
+  #sr-close { position: fixed; top: 10px; right: 14px; font-family: var(--pg-mono);
+              text-transform: uppercase; letter-spacing: 0.1em; font-size: 11px;
+              color: var(--pg-text-dim); text-decoration: none; z-index: 5; }
+  #sr-close:hover { color: var(--pg-text); }
+  #wm { position: fixed; bottom: 14px; left: 18px; }
+  .sr-hr { border: 0; border-top: 1px solid var(--pg-line); margin: 14px 0; }
+  mjx-container { max-width: 100%; overflow-x: auto; }
+  @media (prefers-reduced-motion: reduce) {
+    #sr-ring { transition: none; }
+    .sr-grade { transition: none; }
+  }
 </style>
 <a id="sr-close" href="#" onclick="pycmd('close');return false;">✕ Done (Esc)</a>
+<div class="pg-watermark" id="wm">∮ ∇ ψ λ ∂ ℏ</div>
 <div id="sr-wrap">
   <div id="sr-head">
     <span id="sr-progress"></span>
-    <span>⚡ Speed Recall — recall the formula fast!</span>
-    <span id="sr-timer">0.0s</span>
+    <span id="sr-headline">⚡ Speed Recall — recall the formula fast</span>
+    <span id="sr-ring" class="pg-ring"><span id="sr-timer">0.0s</span></span>
   </div>
   <div id="sr-subject"></div>
-  <div id="sr-card">Loading…</div>
+  <div id="sr-card" class="pg-panel">Loading…</div>
   <div id="sr-controls"></div>
 </div>
 <script>
+document.body.classList.add('pg-observatory');
 let srStart = 0, srTimerId = null, srElapsedMs = 0, srRevealed = false;
+
+// Drive the latency ring purely from the display timer. Anchored to the drill's
+// own FAST_SECONDS (5s) / SLOW_SECONDS (60s) thresholds — visual only, no bearing
+// on scheduling. Fills toward 60s; cyan → amber → red as recall drags.
+function srSetRing(ms) {
+  const ring = document.getElementById('sr-ring');
+  if (!ring) return;
+  const frac = Math.min(1, ms / 60000);
+  const col = ms < 5000 ? 'var(--pg-accent)'
+            : (ms < 60000 ? 'var(--pg-warn)' : 'var(--pg-bad)');
+  ring.style.setProperty('--pg-ring-pct', (frac * 100).toFixed(1));
+  ring.style.setProperty('--pg-ring-color', col);
+  ring.style.setProperty('--sr-glow', (4 + frac * 14).toFixed(1) + 'px');
+}
 
 function srTick() {
   const ms = performance.now() - srStart;
   document.getElementById('sr-timer').textContent = (ms/1000).toFixed(1) + 's';
+  srSetRing(ms);
 }
 function srStopTimer() { if (srTimerId) { clearInterval(srTimerId); srTimerId = null; } }
 
@@ -404,7 +460,8 @@ function speedShowFront(p) {
   document.getElementById('sr-subject').textContent = p.subject;
   document.getElementById('sr-card').innerHTML = '<div class="card">' + p.front + '</div>';
   document.getElementById('sr-controls').innerHTML =
-      '<button onclick="srReveal()">Show Answer <small>(space)</small></button>';
+      '<button class="pg-btn pg-btn--primary" onclick="srReveal()">Show Answer <small>(space)</small></button>';
+  srSetRing(0);
   srTypeset();
   srStart = performance.now();
   srStopTimer();
@@ -417,6 +474,7 @@ function srReveal() {
   srElapsedMs = performance.now() - srStart;
   srStopTimer();
   document.getElementById('sr-timer').textContent = (srElapsedMs/1000).toFixed(1) + 's';
+  srSetRing(srElapsedMs);
   pycmd('show:' + Math.round(srElapsedMs));
 }
 
@@ -426,7 +484,7 @@ function speedShowBack(answerHtml, labels) {
   const g = [[1,'Again'],[2,'Hard'],[3,'Good'],[4,'Easy']];
   let buf = '';
   for (const [n,name] of g) {
-    buf += '<button class="sr-grade" onclick="srRate('+n+')">'+name+
+    buf += '<button class="sr-grade sr-g'+n+'" onclick="srRate('+n+')">'+name+
            '<small>'+labels[n]+' ('+n+')</small></button>';
   }
   document.getElementById('sr-controls').innerHTML = buf;
@@ -440,6 +498,7 @@ function srRate(n) {
 
 function speedFinish(done) {
   srStopTimer();
+  srSetRing(0);
   document.getElementById('sr-subject').textContent = '';
   document.getElementById('sr-timer').textContent = '';
   document.getElementById('sr-progress').textContent = '';
@@ -447,7 +506,7 @@ function speedFinish(done) {
       '<div><h2>Session complete ⚡</h2><p>You drilled ' + done +
       ' formula' + (done===1?'':'s') + '.</p></div>';
   document.getElementById('sr-controls').innerHTML =
-      '<button onclick="pycmd(\'close\')">Back to home</button>';
+      '<button class="pg-btn pg-btn--primary" onclick="pycmd(\'close\')">Back to home</button>';
 }
 
 document.addEventListener('keydown', (e) => {

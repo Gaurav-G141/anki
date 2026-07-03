@@ -1,9 +1,39 @@
 /* Copyright: Ankitects Pty Ltd and contributors
  * License: GNU AGPL, version 3 or later; http://www.gnu.org/licenses/agpl.html */
 
+@use "sass:color";
 @use "../../../../../ts/lib/sass/root-vars";
 @use "../../../../../ts/lib/sass/vars" as *;
 @use "../../../../../ts/lib/sass/card-counts";
+
+// Observatory grade palette — meaningful, distinct hues for the four grades.
+// These are the design-contract values (no matching global token exists).
+$grade-again: #ff5c6c; // warm red
+$grade-hard: #f5b14c; // amber
+$grade-good: #3dd68c; // aurora green
+$grade-easy: #6aa8ff; // soft blue
+
+// Neon-outlined pill sitting on the near-black cosmic bar. $c drives the hue.
+@mixin grade-pill($c) {
+    color: $c;
+    border-color: rgba($c, 0.55);
+    background: rgba($c, 0.12);
+
+    &:hover {
+        background: rgba($c, 0.22);
+        border-color: rgba($c, 0.85);
+        box-shadow: 0 0 12px -2px rgba($c, 0.55);
+    }
+
+    &:active {
+        background: rgba($c, 0.3);
+    }
+
+    &:focus-visible {
+        outline: none;
+        box-shadow: 0 0 0 2px rgba($c, 0.7);
+    }
+}
 
 :root {
     --focus-color: #{palette-of(border-focus)};
@@ -24,10 +54,79 @@ body {
 }
 
 button {
-    min-width: 60px;
+    min-width: 64px;
     white-space: nowrap;
     margin: 9px;
     position: relative;
+
+    // Observatory pill treatment for the answer bar.
+    -webkit-appearance: none;
+    padding: 0.4em 1.1em;
+    border: 1px solid var(--border);
+    border-radius: var(--border-radius-large);
+    background: var(--canvas-elevated);
+    color: var(--fg);
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    cursor: pointer;
+    transition:
+        background var(--transition) ease,
+        border-color var(--transition) ease,
+        box-shadow var(--transition) ease;
+}
+
+// Answer grades, keyed on data-ease (1=Again, 2=Hard, 3=Good, 4=Easy in the
+// four-button layout). Fewer-button layouts still read coherently: Again stays
+// the warm-red 1.
+button[data-ease="1"] {
+    @include grade-pill($grade-again);
+}
+
+button[data-ease="2"] {
+    @include grade-pill($grade-hard);
+}
+
+button[data-ease="3"] {
+    @include grade-pill($grade-good);
+}
+
+button[data-ease="4"] {
+    @include grade-pill($grade-easy);
+}
+
+// Default grade gets a subtle emphasis ring so it stays discoverable.
+button#defease {
+    border-width: 1px;
+    box-shadow: 0 0 0 1px rgba($grade-good, 0.4);
+}
+
+// Show-answer button is the single focal action before the reveal: cyan CTA.
+button#ansbut {
+    color: var(--canvas);
+    background: var(--button-primary-bg);
+    border-color: transparent;
+    box-shadow: 0 0 14px -3px var(--fg-link);
+
+    &:hover {
+        box-shadow: 0 0 18px -2px var(--fg-link);
+    }
+
+    &:focus-visible {
+        outline: none;
+        box-shadow: 0 0 0 2px var(--fg-link);
+    }
+}
+
+// Interval / ease estimate labels: dim but legible, tabular figures.
+.nobold {
+    color: var(--fg-subtle);
+    font-feature-settings: "tnum" 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    button {
+        transition: none;
+    }
 }
 
 .hitem {

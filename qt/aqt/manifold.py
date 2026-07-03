@@ -57,6 +57,7 @@ class Manifold:
     def refresh(self) -> None:
         self.web.stdHtml(
             build_manifold_html(self.mw.col, self.depth),
+            css=["css/pgre.css"],
             js=[
                 "js/vendor/jquery.min.js",
                 "js/mathjax.js",
@@ -208,8 +209,35 @@ class Manifold:
         ["Ctrl+Shift+M", "memory", "📊 Memory"],
     ]
 
+    #: Observatory glass restyle for the bottom bar. Scoped to the bottom-bar
+    #: webview (which loads toolbar.css/toolbar-bottom.css, NOT pgre.css), so the
+    #: token values are inlined here as literals rather than var(--pg-*). Only the
+    #: appearance changes; every button's pycmd/label/emoji is untouched.
+    _BOTTOM_STYLE = """
+<style>
+  #header { background: transparent; }
+  #header button {
+    font-family: ui-monospace, "SF Mono", "JetBrains Mono", "Cascadia Code", monospace;
+    letter-spacing: 0.02em;
+    color: #eaf0ff;
+    background: rgba(18, 21, 32, 0.72);
+    border: 1px solid rgba(150, 170, 220, 0.16);
+    border-radius: 10px;
+    padding: 6px 12px;
+    margin: 0 3px;
+    transition: border-color 160ms ease, background 160ms ease, box-shadow 160ms ease;
+  }
+  #header button:hover {
+    color: #4ce0ff;
+    background: rgba(24, 28, 42, 0.92);
+    border-color: rgba(76, 224, 255, 0.5);
+    box-shadow: 0 0 14px rgba(76, 224, 255, 0.25);
+  }
+</style>
+"""
+
     def _draw_buttons(self) -> None:
-        buf = ""
+        buf = self._BOTTOM_STYLE
         for keys, cmd, label in deepcopy(self.drawLinks):
             title = tr.actions_shortcut_key(val=shortcut(keys)) if keys else ""
             buf += (

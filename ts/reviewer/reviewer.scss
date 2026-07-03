@@ -78,6 +78,28 @@ pre {
     line-height: 1.75;
 }
 
+// Observatory: the type-answer input is reviewer chrome (not user card
+// content), so it gets a hairline border and a cyan focus ring. Scoped to the
+// editable <input> so the answer-comparison markup (code#typeans) is untouched.
+input#typeans {
+    padding: 0.35em 0.6em;
+    border: 1px solid var(--border);
+    border-radius: var(--border-radius);
+    background: var(--canvas-inset);
+    color: var(--fg);
+    transition:
+        border-color var(--transition) ease,
+        box-shadow var(--transition) ease;
+
+    &:focus {
+        outline: none;
+        border-color: var(--border-focus);
+        box-shadow:
+            0 0 0 1px var(--border-focus),
+            0 0 12px -2px var(--fg-link);
+    }
+}
+
 code#typeans {
     white-space: pre-wrap;
     font-variant-ligatures: none;
@@ -126,6 +148,36 @@ button {
 .nightMode {
     .latex {
         filter: invert(100%);
+    }
+
+    // Observatory: the replay-audio control is chrome; retint its stock
+    // white disc to sit calmly on the cosmic canvas, cyan on hover.
+    .replay-button svg {
+        circle {
+            fill: var(--canvas-elevated);
+            stroke: var(--border);
+        }
+
+        path {
+            fill: var(--fg-subtle);
+        }
+
+        &:hover {
+            circle {
+                stroke: var(--border-focus);
+            }
+
+            path {
+                fill: var(--fg-link);
+            }
+        }
+    }
+}
+
+// Reduce-motion: drop the focus transitions on reviewer chrome.
+@media (prefers-reduced-motion: reduce) {
+    input#typeans {
+        transition: none;
     }
 }
 

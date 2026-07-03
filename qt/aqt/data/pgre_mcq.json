@@ -903,36 +903,6 @@
             "solution": "$P = I^2 R$ . $R_1$ carries the full main current from the battery while the others are in parallel branches sharing reduced current. With the largest current, $R_1$ dissipates the most power (A)."
         },
         {
-            "id": "GR9277#33",
-            "subject": "electromagnetism",
-            "topic": "Electromagnetism → Circuits",
-            "statement": "For the same circuit, find the voltage across resistor $R_4$ .",
-            "choices": [
-                [
-                    "A",
-                    "0.4 V"
-                ],
-                [
-                    "B",
-                    "0.6 V"
-                ],
-                [
-                    "C",
-                    "1.2 V"
-                ],
-                [
-                    "D",
-                    "1.5 V"
-                ],
-                [
-                    "E",
-                    "3.0 V"
-                ]
-            ],
-            "answer": "A",
-            "solution": "Reducing the network (e.g., $R_3 \\parallel R_4 \\approx 20\\,\\Omega$ , total $\\approx 75\\,\\Omega$ , total current 0.04 A), the branch current through the $R_4$ path is $1/50$ A, giving $V_4 = 1\\,\\text{V} - (1/50)(30) = 0.4$ V."
-        },
-        {
             "id": "GR9277#34",
             "subject": "electromagnetism",
             "topic": "Electromagnetism → Cavity Boundary Conditions",
@@ -1141,36 +1111,6 @@
             ],
             "answer": "D",
             "solution": "$K = \\frac12 I\\omega^2$ . $K_0 = \\frac12(4)(80)^2 = 12800$ J; $K_f = \\frac12(4)(40)^2 = 3200$ J. Loss $= 9600$ J (D)."
-        },
-        {
-            "id": "GR9277#42",
-            "subject": "classical_mechanics",
-            "topic": "Mechanics → Angular Kinematics",
-            "statement": "Same cylinder slows from 80 to 40 rad/s in 10 s. Find the magnitude of the applied torque.",
-            "choices": [
-                [
-                    "A",
-                    "80 N·m"
-                ],
-                [
-                    "B",
-                    "40"
-                ],
-                [
-                    "C",
-                    "32"
-                ],
-                [
-                    "D",
-                    "16"
-                ],
-                [
-                    "E",
-                    "8"
-                ]
-            ],
-            "answer": "D",
-            "solution": "$\\alpha = (40-80)/10 = -4$ rad/s². $\\tau = I\\alpha = 4\\times4 = 16$ N·m in magnitude (D)."
         },
         {
             "id": "GR9277#43",

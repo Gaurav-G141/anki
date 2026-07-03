@@ -9,6 +9,14 @@ import SwiftUI
 
 @main
 struct SpeedrunApp: App {
+    init() {
+        // iOS 15 has no scrollContentBackground(.hidden); clear the list/table
+        // chrome app-wide so screens float over the ObservatoryBackground. Rows
+        // still opt in per-screen via .listRowBackground(Color.clear).
+        UITableView.appearance().backgroundColor = .clear
+        UICollectionView.appearance().backgroundColor = .clear
+    }
+
     var body: some Scene {
         WindowGroup {
             RootView()
@@ -26,6 +34,11 @@ struct RootView: View {
             DeckListView(store: store)
         }
         .navigationViewStyle(.stack)
+        // Observatory is a dark cosmic instrument: fix the scheme, tint focal
+        // controls cyan, and float every screen over the procedural starfield.
+        .tint(Palette.accent)
+        .preferredColorScheme(.dark)
+        .background(ObservatoryBackground())
         .onAppear { store.open() }
         .onChange(of: scenePhase) { newPhase in
             // Checkpoint graded progress into collection.anki2 when the app

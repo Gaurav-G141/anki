@@ -73,7 +73,7 @@ $vars: (
                 "Default text/icon color",
                 (
                     light: palette(darkgray, 9),
-                    dark: palette(lightgray, 0),
+                    dark: #eaf0ff, // Observatory blue-white
                 ),
             ),
             subtle: (
@@ -101,7 +101,7 @@ $vars: (
                 "Hyperlink foreground color",
                 (
                     light: palette(blue, 7),
-                    dark: palette(blue, 2),
+                    dark: #4ce0ff, // Observatory cyan
                 ),
             ),
         ),
@@ -154,28 +154,28 @@ $vars: (
                 "Border color with medium contrast against window background",
                 (
                     light: palette(lightgray, 6),
-                    dark: palette(darkgray, 7),
+                    dark: #2a3145, // Observatory hairline (visible on near-black)
                 ),
             ),
             subtle: (
                 "Border color with low contrast against window background",
                 (
                     light: palette(lightgray, 4),
-                    dark: palette(darkgray, 6),
+                    dark: #1c2230, // Observatory subtle hairline
                 ),
             ),
             strong: (
                 "Border color with high contrast against window background",
                 (
                     light: palette(lightgray, 9),
-                    dark: palette(darkgray, 9),
+                    dark: #3a4257, // Observatory strong hairline
                 ),
             ),
             focus: (
                 "Border color of focused input elements",
                 (
                     light: palette(blue, 5),
-                    dark: palette(blue, 5),
+                    dark: #4ce0ff, // Observatory cyan focus
                 ),
             ),
         ),
@@ -224,7 +224,7 @@ $vars: (
                     "Background color of primary button",
                     (
                         light: color.scale(palette(blue, 6), $lightness: 5%),
-                        dark: color.scale(palette(blue, 7), $saturation: -10%),
+                        dark: palette(cyan, 7), // Observatory cyan-teal
                     ),
                 ),
                 gradient: (
@@ -232,14 +232,14 @@ $vars: (
                         "Start value of primary button gradient",
                         (
                             light: palette(blue, 5),
-                            dark: color.scale(palette(blue, 6), $saturation: -10%),
+                            dark: palette(cyan, 6), // Observatory cyan-teal
                         ),
                     ),
                     end: (
                         "End value of primary button gradient",
                         (
                             light: color.scale(palette(blue, 6), $lightness: 5%),
-                            dark: color.scale(palette(blue, 7), $saturation: -10%),
+                            dark: palette(cyan, 7), // Observatory cyan-teal
                         ),
                     ),
                 ),
@@ -247,7 +247,7 @@ $vars: (
                     "Background color of primary button in disabled state",
                     (
                         light: palette(blue, 3),
-                        dark: color.scale(palette(blue, 5), $saturation: -10%),
+                        dark: palette(cyan, 8), // Observatory cyan-teal (muted)
                     ),
                 ),
             ),
@@ -311,7 +311,7 @@ $vars: (
                 "Accent color for cards",
                 (
                     light: palette(blue, 4),
-                    dark: palette(blue, 3),
+                    dark: #4ce0ff, // Observatory cyan
                 ),
             ),
             note: (

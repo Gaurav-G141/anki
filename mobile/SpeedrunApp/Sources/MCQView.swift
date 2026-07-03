@@ -135,59 +135,43 @@ private struct MCQWebView: UIViewRepresentable {
     // MARK: - Page
 
     static func page(embeddedJSON: String) -> String {
+        // Screen-specific chrome layered on the shared token block + component CSS
+        // (SpeedrunWeb.componentCSS supplies .choice/.correct/.wrong, .card.coach,
+        // .card.fast, .badge). Body is transparent over the SwiftUI starfield.
+        let screenCSS = """
+        body { padding: 16px 16px 44px; }
+        #hdr { display: flex; justify-content: space-between; align-items: baseline;
+               font-family: var(--pg-mono); text-transform: uppercase; letter-spacing: 0.12em;
+               font-size: 12px; color: var(--pg-text-dim); margin-bottom: 8px; }
+        #progress { color: var(--pg-accent); }
+        #score { color: var(--pg-text); font-variant-numeric: tabular-nums; font-feature-settings: "tnum" 1; }
+        #subject { font-family: var(--pg-mono); text-transform: uppercase; letter-spacing: 0.14em;
+                   font-size: 11px; color: var(--pg-text-faint); margin-bottom: 12px; }
+        #aigen { display: none; color: var(--pg-accent); border-color: rgba(76,224,255,0.5);
+                 background: rgba(76,224,255,0.12); margin-bottom: 10px; }
+        #stmt { font-size: 19px; line-height: 1.5; margin-bottom: 16px; overflow-wrap: anywhere; color: var(--pg-text); }
+        #frq { margin-bottom: 4px; }
+        #frqLabel { font-size: 13px; color: var(--pg-text-dim); margin: 6px 0 8px; }
+        #reason { width: 100%; box-sizing: border-box; min-height: 66px; font-family: var(--pg-font);
+                  font-size: 16px; padding: 11px 12px; border-radius: var(--pg-radius-sm); margin-bottom: 6px;
+                  border: 1px solid var(--pg-line); background: var(--pg-panel); color: var(--pg-text);
+                  -webkit-tap-highlight-color: transparent; }
+        #reason::placeholder { color: var(--pg-text-faint); }
+        #reason:focus { outline: none; border-color: var(--pg-accent); box-shadow: 0 0 0 1px rgba(76,224,255,0.4); }
+        #verdict { font-size: 17px; font-weight: 700; margin: 18px 0 8px; color: var(--pg-text); }
+        #solution { font-size: 15px; line-height: 1.5; color: var(--pg-text-dim); overflow-wrap: anywhere;
+                    border-left: 2px solid var(--pg-line-strong); padding-left: 12px; }
+        .btn { margin-top: 18px; padding: 13px 24px; font-size: 16px; font-weight: 600; font-family: var(--pg-font);
+               border-radius: var(--pg-radius-sm); border: 1px solid var(--pg-accent); background: rgba(76,224,255,0.14);
+               color: var(--pg-accent); box-shadow: 0 0 18px rgba(76,224,255,0.28); -webkit-tap-highlight-color: transparent; }
+        #summary { text-align: center; padding-top: 44px; }
+        #summary .big { font-size: 46px; font-weight: 800; font-variant-numeric: tabular-nums;
+                        font-feature-settings: "tnum" 1; color: var(--pg-accent); margin: 6px 0; }
         """
-        <!doctype html>
-        <html>
-        <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <!-- No custom MathJax config: the defaults already typeset \\(…\\) / \\[…\\],
-             exactly like the review card webview. -->
-        <script src="mathjax/tex-chtml-full.js" async></script>
-        <style>
-          :root { color-scheme: light dark; }
-          body { font-family: -apple-system, system-ui, sans-serif; margin: 0;
-                 padding: 14px 16px 40px; color: #111; }
-          @media (prefers-color-scheme: dark) { body { color: #eee; } }
-          #hdr { display: flex; justify-content: space-between; align-items: baseline;
-                 font-size: 13px; opacity: 0.7; margin-bottom: 6px; }
-          #subject { font-size: 12px; opacity: 0.6; margin-bottom: 10px; }
-          #aigen { display: none; margin-bottom: 10px; padding: 3px 10px; border-radius: 999px;
-                   font-size: 12px; font-weight: 600; background: rgba(46,108,224,0.18); color: inherit; }
-          #stmt { font-size: 19px; line-height: 1.5; margin-bottom: 14px; overflow-wrap: anywhere; }
-          #frqLabel { font-size: 13px; opacity: 0.75; margin: 4px 0 6px; }
-          #reason { width: 100%; box-sizing: border-box; min-height: 66px; font: inherit;
-                    font-size: 16px; padding: 10px; border-radius: 10px; margin-bottom: 6px;
-                    border: 1px solid rgba(128,128,128,0.4); background: rgba(128,128,128,0.06);
-                    color: inherit; -webkit-tap-highlight-color: transparent; }
-          .choice { display: block; width: 100%; text-align: left; margin: 8px 0; padding: 13px 14px;
-                    border-radius: 10px; border: 1px solid rgba(128,128,128,0.4);
-                    background: rgba(128,128,128,0.08); color: inherit; font: inherit;
-                    font-size: 17px; -webkit-tap-highlight-color: transparent; }
-          .choice .lab { font-weight: 700; margin-right: 8px; }
-          .choice.correct { background: rgba(40,170,90,0.28); border-color: rgba(40,170,90,0.9); }
-          .choice.wrong   { background: rgba(220,60,60,0.24); border-color: rgba(220,60,60,0.9); }
-          #verdict { font-size: 17px; font-weight: 600; margin: 16px 0 6px; }
-          #solution { font-size: 15px; line-height: 1.5; opacity: 0.9; overflow-wrap: anywhere;
-                      border-left: 3px solid rgba(128,128,128,0.4); padding-left: 12px; }
-          .card { margin-top: 14px; padding: 12px 14px; border-radius: 10px;
-                  background: rgba(128,128,128,0.08); overflow-wrap: anywhere; }
-          .card .t { font-weight: 700; margin-bottom: 6px; }
-          .badge { display: inline-block; padding: 3px 10px; border-radius: 999px;
-                   font-size: 13px; font-weight: 600; margin-bottom: 8px; }
-          .muted { opacity: 0.6; }
-          .missed { margin: 8px 0 0 18px; }
-          .btn { margin-top: 18px; padding: 13px 22px; font-size: 16px; font-weight: 600;
-                 border-radius: 10px; border: none; background: #2e6ce0; color: #fff; }
-          #summary { text-align: center; padding-top: 40px; }
-          #summary .big { font-size: 46px; font-weight: 700; }
-          mjx-container { font-size: 108% !important; max-width: 100%; overflow-x: auto; }
-        </style>
-        </head>
-        <body>
+        let body = """
         <div id="hdr"><span id="progress"></span><span id="score"></span></div>
         <div id="subject"></div>
-        <div id="aigen">⚛ AI-generated</div>
+        <div id="aigen" class="badge">⚛ AI-generated</div>
         <div id="stmt"></div>
         <div id="frq"><div id="frqLabel"></div><textarea id="reason" placeholder="e.g. cross off impossible choices, then estimate…"></textarea></div>
         <div id="choices"></div>
@@ -255,12 +239,12 @@ private struct MCQWebView: UIViewRepresentable {
               (q.solution ? "<div id='solution'>" + mathify(q.solution) + "</div>" : "");
             // Always show the fastest expert approach (from the key; no network).
             if (q.optimal && q.optimal.explanation) {
-              html += "<div class='card' id='fast'><div class='t'>⚡ Fastest approach</div><div>" +
+              html += "<div class='card fast' id='fast'><div class='t'>⚡ Fastest approach</div><div>" +
                       mathify(q.optimal.explanation) + "</div></div>";
             }
             // Personalised AI coaching only when a key is baked in AND the student wrote something.
             if (AI_ON && reasoning) {
-              html += "<div class='card' id='coach'><div class='t'>🧠 Coaching your approach…</div>" +
+              html += "<div class='card coach' id='coach'><div class='t'>🧠 Coaching your approach…</div>" +
                       "<div class='muted'>Grading how you tackled it…</div></div>";
             }
             html += "<button class='btn' id='nextBtn'>Next question →</button>";
@@ -277,15 +261,15 @@ private struct MCQWebView: UIViewRepresentable {
             if (!coach) { return; }
             if (!res || !res.ok) { coach.parentNode.removeChild(coach); return; }
             var badges = {
-              optimal:      ["⚡ Optimal approach", "rgba(40,170,90,0.25)"],
-              valid_slower: ["✅ Valid — a faster route exists", "rgba(46,108,224,0.2)"],
-              overcomputed: ["🧮 You over-solved it", "rgba(224,160,46,0.25)"],
-              guessed:      ["🎲 Let's make it rigorous", "rgba(224,160,46,0.25)"],
-              flawed:       ["⚠️ Reasoning slip", "rgba(220,60,60,0.2)"]
+              optimal:      ["⚡ Optimal approach", "var(--pg-ok)"],
+              valid_slower: ["✅ Valid — a faster route exists", "var(--pg-info)"],
+              overcomputed: ["🧮 You over-solved it", "var(--pg-warn)"],
+              guessed:      ["🎲 Let's make it rigorous", "var(--pg-warn)"],
+              flawed:       ["⚠️ Reasoning slip", "var(--pg-bad)"]
             };
             var b = badges[res.verdict];
             var inner = "<div class='t'>🧠 Your approach</div>";
-            if (b) { inner += "<span class='badge' style='background:" + b[1] + "'>" + b[0] + "</span>"; }
+            if (b) { inner += "<span class='badge' style='color:" + b[1] + ";border-color:" + b[1] + "'>" + b[0] + "</span>"; }
             inner += "<div>" + esc(res.feedback) + "</div>";
             if (res.missed && res.missed.length) {
               inner += "<ul class='missed'>";
@@ -314,8 +298,10 @@ private struct MCQWebView: UIViewRepresentable {
           else { render(); }
         })();
         </script>
-        </body>
-        </html>
         """
+        return SpeedrunWeb.document(
+            bodyHTML: body,
+            css: SpeedrunWeb.componentCSS + "\n" + screenCSS,
+            mjxScale: 112)
     }
 }
