@@ -40,36 +40,49 @@ anki.lang.set_lang("en")
 DAY = 86_400
 
 
-def build(path: str, cards_per: int, reviews_per: int) -> Collection:
+def _import_bundled_decks(col: Collection, deck_dir: str) -> None:
+    """Import the real bundled PGRE subject decks (LaTeX formula cards, already
+    tagged ``pgre::<key>``) so the dummy account has genuine content, not
+    placeholders. Imports every ``*.apkg`` in ``deck_dir``."""
+    import glob
+
+    from anki.collection import ImportAnkiPackageRequest
+
+    apkgs = sorted(glob.glob(os.path.join(deck_dir, "*.apkg")))
+    if not apkgs:
+        raise SystemExit(
+            f"no .apkg decks in {deck_dir}. Run `just build` first, or pass "
+            f"--deck-dir pointing at the bundled decks."
+        )
+    for p in apkgs:
+        col.import_anki_package(ImportAnkiPackageRequest(package_path=p))
+
+
+def build(path: str, reviews_per: int, deck_dir: str) -> Collection:
     for suffix in ("", "-wal", "-shm"):
         if os.path.exists(path + suffix):
             os.remove(path + suffix)
     col = Collection(path)
-    basic = col.models.by_name("Basic")
-    assert basic is not None
     now = int(time.time())
     rev_id = now * 1000  # unique, increasing revlog ids
 
+    _import_bundled_decks(col, deck_dir)
+
     n_subjects = len(taxonomy.SUBJECTS)
     for si, subject in enumerate(taxonomy.SUBJECTS):
-        # Gradients across subjects: strongest first, weakest last.
+        # Gradients across subjects: strongest first, weakest last. Kept in a
+        # realistic "good progress" band so every area lands ~50-72% mastered
+        # with confident, non-abstaining scores.
         frac = si / max(n_subjects - 1, 1)
-        mastered_frac = 0.85 - 0.55 * frac  # 0.85 -> 0.30
-        correct_frac = 0.90 - 0.35 * frac  # 0.90 -> 0.55
+        mastered_frac = 0.72 - 0.22 * frac  # 0.72 -> 0.50
+        correct_frac = 0.88 - 0.20 * frac  # 0.88 -> 0.68
 
-        deck_id = col.decks.id(f"PGRE::{subject.name}")
-        note_ids = []
-        cids = []
-        for i in range(cards_per):
-            note = col.new_note(basic)
-            note["Front"] = f"[{subject.key}] q{i}"
-            note["Back"] = f"a{i}"
-            col.add_note(note, deck_id)
-            note_ids.append(note.id)
-            cids.append(note.card_ids()[0])
-        col.tags.bulk_add(note_ids, subject.tag)
+        # Real, pgre-tagged cards imported from the bundled deck for this subject.
+        cids = list(col.find_cards(f'tag:{subject.tag}'))
+        if not cids:
+            continue
 
-        n_mastered = round(cards_per * mastered_frac)
+        n_mastered = round(len(cids) * mastered_frac)
         revlog_rows = []
         for idx, cid in enumerate(cids):
             mastered = idx < n_mastered
@@ -155,12 +168,14 @@ def verify(col: Collection) -> bool:
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--out", required=True, help="collection.anki2 path to create")
-    ap.add_argument("--cards-per", type=int, default=14)
-    ap.add_argument("--reviews-per", type=int, default=6)
+    ap.add_argument("--reviews-per", type=int, default=3,
+                    help="graded reviews to synthesize per card (drives Performance)")
+    ap.add_argument("--deck-dir", default=os.path.join(REPO, "out/qt/_aqt/data/decks"),
+                    help="folder with the bundled *.apkg subject decks")
     args = ap.parse_args()
 
     os.makedirs(os.path.dirname(os.path.abspath(args.out)), exist_ok=True)
-    col = build(args.out, args.cards_per, args.reviews_per)
+    col = build(args.out, args.reviews_per, args.deck_dir)
     verify(col)
     col.close()
     print(f"\nSeeded collection: {args.out}")

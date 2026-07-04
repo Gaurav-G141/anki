@@ -226,7 +226,10 @@ def summarize(results: list[dict], label: str) -> dict:
     }
 
 
-def print_report(summaries: list[dict]):
+def print_report(summaries: list[dict]) -> bool:
+    """Print the per-split report; return True iff EVERY split met its cutoffs.
+    Callers should treat a False return as a hard gate (do not ship)."""
+    all_passed = True
     print("\n" + "=" * 70 + "\nHEURISTIC COACH — Stage 1 eval\n" + "=" * 70)
     for s in summaries:
         m = s["emitted"] or 1
@@ -246,10 +249,12 @@ def print_report(summaries: list[dict]):
             and s["_clear_frac"] >= CUTOFFS["student_clarity_min"]
             and s["malformed_json"] <= CUTOFFS["malformed_json_max"]
         )
+        all_passed = all_passed and passed
         print(f"  --> cutoff {'PASS' if passed else 'NOT MET'} "
               f"(eob>={CUTOFFS['equal_or_better_min']:.0%}, shipped-bad=0, "
               f"clear>={CUTOFFS['student_clarity_min']:.0%}, malformed=0)")
     print()
+    return all_passed
 
 
 # --- main --------------------------------------------------------------------
@@ -314,9 +319,12 @@ def main():
         dev_ids = {p.id for p in dev}
         dev_res = [r for r in results if r["id"] in dev_ids]
         held_res = [r for r in results if r["id"] not in dev_ids]
-        print_report([summarize(dev_res, "dev (tuning)"), summarize(held_res, "held-out (frozen)")])
+        ok = print_report([summarize(dev_res, "dev (tuning)"), summarize(held_res, "held-out (frozen)")])
     else:
-        print_report([summarize(results, args.split)])
+        ok = print_report([summarize(results, args.split)])
+    if not ok:
+        print("EVAL GATE: held-out cutoffs NOT met — the bank must not ship.", file=sys.stderr)
+        sys.exit(1)
 
 
 if __name__ == "__main__":

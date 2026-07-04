@@ -214,6 +214,12 @@ bench:
 baseline-eval *args:
     out/pyenv/bin/python speedrun/baseline_eval.py {{args}}
 
+# Refresh the grader dummy: seed a real-content collection from the CURRENT build's decks and upload it to the throwaway AnkiWeb account in .env (ANKIWEB_USER/PASS). Re-run after any app update so the login-based dummy stays current. (macOS/Linux)
+dummy-ankiweb:
+    {{ ninja }} pylib qt
+    PYTHONPATH=out/pylib out/pyenv/bin/python speedrun/seed_dummy_account.py --out out/speedrun/ankiweb_dummy/collection.anki2
+    PYTHONPATH=out/pylib out/pyenv/bin/python speedrun/ankiweb_upload.py --col out/speedrun/ankiweb_dummy/collection.anki2
+
 # Remove build outputs from out/ (pass keep-env to keep node_modules/pyenv); macOS/Linux
 clean *args:
     ./tools/clean {{ args }}

@@ -1,0 +1,1531 @@
+Command line invocation:
+    /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild test -project SpeedrunApp.xcodeproj -scheme SpeedrunApp -sdk iphonesimulator -destination "platform=iOS Simulator,name=iPhone 17"
+
+Build settings from command line:
+    SDKROOT = iphonesimulator26.5
+
+Resolve Package Graph
+
+Fetching from https://github.com/apple/swift-protobuf.git (cached)
+skipping cache due to an error: Couldn’t fetch updates from remote repositories:
+    fatal: cannot use bare repository '/Users/gaurav/Library/Caches/org.swift.swiftpm/repositories/swift-protobuf-88c150a7' (safe.bareRepository is 'explicit')
+
+Resolved source packages:
+  SwiftProtobuf: https://github.com/apple/swift-protobuf.git @ 1.38.1
+
+ComputePackagePrebuildTargetDependencyGraph
+
+Prepare packages
+
+CreateBuildRequest
+
+SendProjectDescription
+
+CreateBuildOperation
+
+ComputeTargetDependencyGraph
+note: Building targets in dependency order
+note: Target dependency graph (6 targets)
+    Target 'SpeedrunAppUITests' in project 'SpeedrunApp'
+        ➜ Explicit dependency on target 'SpeedrunApp' in project 'SpeedrunApp'
+    Target 'SpeedrunAppTests' in project 'SpeedrunApp'
+        ➜ Explicit dependency on target 'SpeedrunApp' in project 'SpeedrunApp'
+    Target 'SpeedrunApp' in project 'SpeedrunApp'
+        ➜ Explicit dependency on target 'SwiftProtobuf' in project 'SwiftProtobuf'
+    Target 'SwiftProtobuf' in project 'SwiftProtobuf'
+        ➜ Explicit dependency on target 'SwiftProtobuf' in project 'SwiftProtobuf'
+        ➜ Explicit dependency on target 'SwiftProtobuf_SwiftProtobuf' in project 'SwiftProtobuf'
+    Target 'SwiftProtobuf' in project 'SwiftProtobuf'
+        ➜ Explicit dependency on target 'SwiftProtobuf_SwiftProtobuf' in project 'SwiftProtobuf'
+    Target 'SwiftProtobuf_SwiftProtobuf' in project 'SwiftProtobuf' (no dependencies)
+
+GatherProvisioningInputs
+
+CreateBuildDescription
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -v -E -dM -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.5.sdk -x c -c /dev/null
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc --version
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/usr/bin/actool --print-asset-tag-combinations --output-format xml1 /Users/gaurav/Anki/mobile/SpeedrunApp/Resources/Assets.xcassets
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ld -version_details
+
+ReadFileContents /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/share/docc/features.json
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/usr/bin/actool --version --output-format xml1
+
+Build description signature: 048f146b3f91dffd7e02d82d8ffe7200
+Build description path: /Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Intermediates.noindex/XCBuildData/048f146b3f91dffd7e02d82d8ffe7200.xcbuilddata
+ClangStatCache /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang-stat-cache /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.5.sdk /Users/gaurav/Library/Developer/Xcode/DerivedData/SDKStatCaches.noindex/iphonesimulator26.5-23F81a-6cfe768891a92b912361537c460fe42b.sdkstatcache
+    cd /Users/gaurav/Anki/mobile/SpeedrunApp/SpeedrunApp.xcodeproj
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang-stat-cache /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.5.sdk -o /Users/gaurav/Library/Developer/Xcode/DerivedData/SDKStatCaches.noindex/iphonesimulator26.5-23F81a-6cfe768891a92b912361537c460fe42b.sdkstatcache
+
+ProcessInfoPlistFile /Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator/SwiftProtobuf_SwiftProtobuf.bundle/Info.plist /Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Intermediates.noindex/SwiftProtobuf.build/Debug-iphonesimulator/SwiftProtobuf_SwiftProtobuf.build/empty-SwiftProtobuf_SwiftProtobuf.plist (in target 'SwiftProtobuf_SwiftProtobuf' from project 'SwiftProtobuf')
+    cd /Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/SourcePackages/checkouts/swift-protobuf
+    builtin-infoPlistUtility /Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Intermediates.noindex/SwiftProtobuf.build/Debug-iphonesimulator/SwiftProtobuf_SwiftProtobuf.build/empty-SwiftProtobuf_SwiftProtobuf.plist -producttype com.apple.product-type.bundle -expandbuildsettings -format binary -platform iphonesimulator -o /Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator/SwiftProtobuf_SwiftProtobuf.bundle/Info.plist
+
+SwiftDriver SpeedrunApp normal arm64 com.apple.xcode.tools.swift.compiler (in target 'SpeedrunApp' from project 'SpeedrunApp')
+    cd /Users/gaurav/Anki/mobile/SpeedrunApp
+    builtin-SwiftDriver -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name SpeedrunApp -Onone @/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Intermediates.noindex/SpeedrunApp.build/Debug-iphonesimulator/SpeedrunApp.build/Objects-normal/arm64/SpeedrunApp.SwiftFileList -DDEBUG -enable-bare-slash-regex -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.5.sdk -target arm64-apple-ios15.0-simulator -g -module-cache-path /Users/gaurav/Library/Developer/Xcode/DerivedData/ModuleCache.noindex -Xfrontend -serialize-debugging-options -enable-testing -index-store-path /Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Index.noindex/DataStore -Xcc -D_LIBCPP_HARDENING_MODE\=_LIBCPP_HARDENING_MODE_DEBUG -swift-version 5 -I /Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator -I /Users/gaurav/Anki/mobile/SpeedrunApp/CAnkiFFI -F /Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator/PackageFrameworks -F /Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator -F .. -c -j10 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /Users/gaurav/Library/Developer/Xcode/DerivedData/SDKStatCaches.noindex/iphonesimulator26.5-23F81a-6cfe768891a92b912361537c460fe42b.sdkstatcache -output-file-map /Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Intermediates.noindex/SpeedrunApp.build/Debug-iphonesimulator/SpeedrunApp.build/Objects-normal/arm64/SpeedrunApp-OutputFileMap.json -use-frontend-parseable-output -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path /Users/gaurav/Library/Developer/Xcode/DerivedData/ModuleCache.noindex -sdk-module-cache-path /Users/gaurav/Library/Developer/Xcode/DerivedData/ModuleCache.noindex -serialize-diagnostics -emit-dependencies -emit-module -emit-module-path /Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Intermediates.noindex/SpeedrunApp.build/Debug-iphonesimulator/SpeedrunApp.build/Objects-normal/arm64/SpeedrunApp.swiftmodule -validate-clang-modules-once -clang-build-session-file /Users/gaurav/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/Session.modulevalidation -Xcc -I/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Intermediates.noindex/SpeedrunApp.build/Debug-iphonesimulator/SpeedrunApp.build/swift-overrides.hmap -emit-const-values -Xfrontend -const-gather-protocols-file -Xfrontend /Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Intermediates.noindex/SpeedrunApp.build/Debug-iphonesimulator/SpeedrunApp.build/Objects-normal/arm64/SpeedrunApp_const_extract_protocols.json -Xcc -iquote -Xcc /Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Intermediates.noindex/SpeedrunApp.build/Debug-iphonesimulator/SpeedrunApp.build/SpeedrunApp-generated-files.hmap -Xcc -I/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Intermediates.noindex/SpeedrunApp.build/Debug-iphonesimulator/SpeedrunApp.build/SpeedrunApp-own-target-headers.hmap -Xcc -I/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Intermediates.noindex/SpeedrunApp.build/Debug-iphonesimulator/SpeedrunApp.build/SpeedrunApp-all-non-framework-target-headers.hmap -Xcc -ivfsoverlay -Xcc /Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Intermediates.noindex/SpeedrunApp.build/Debug-iphonesimulator/SpeedrunApp-48dfbd77d74faf25ea572979957d74dc-VFS-iphonesimulator/all-product-headers.yaml -Xcc -iquote -Xcc /Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Intermediates.noindex/SpeedrunApp.build/Debug-iphonesimulator/SpeedrunApp.build/SpeedrunApp-project-headers.hmap -Xcc -I/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator/include -Xcc -I/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Intermediates.noindex/SpeedrunApp.build/Debug-iphonesimulator/SpeedrunApp.build/DerivedSources-normal/arm64 -Xcc -I/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Intermediates.noindex/SpeedrunApp.build/Debug-iphonesimulator/SpeedrunApp.build/DerivedSources/arm64 -Xcc -I/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Intermediates.noindex/SpeedrunApp.build/Debug-iphonesimulator/SpeedrunApp.build/DerivedSources -Xcc -DDEBUG\=1 -emit-objc-header -emit-objc-header-path /Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Intermediates.noindex/SpeedrunApp.build/Debug-iphonesimulator/SpeedrunApp.build/Objects-normal/arm64/SpeedrunApp-Swift.h -working-directory /Users/gaurav/Anki/mobile/SpeedrunApp -experimental-emit-module-separately -disable-cmo
+
+CpResource /Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator/SpeedrunApp.app/optimal_approaches.jsonl /Users/gaurav/Anki/mobile/SpeedrunApp/Resources/optimal_approaches.jsonl (in target 'SpeedrunApp' from project 'SpeedrunApp')
+    cd /Users/gaurav/Anki/mobile/SpeedrunApp
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks /Users/gaurav/Anki/mobile/SpeedrunApp/Resources/optimal_approaches.jsonl /Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator/SpeedrunApp.app
+
+CpResource /Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator/SpeedrunApp.app/pgre_mcq.json /Users/gaurav/Anki/mobile/SpeedrunApp/Resources/pgre_mcq.json (in target 'SpeedrunApp' from project 'SpeedrunApp')
+    cd /Users/gaurav/Anki/mobile/SpeedrunApp
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks /Users/gaurav/Anki/mobile/SpeedrunApp/Resources/pgre_mcq.json /Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator/SpeedrunApp.app
+
+CpResource /Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator/SpeedrunApp.app/pgre_mcq_generated.json /Users/gaurav/Anki/mobile/SpeedrunApp/Resources/pgre_mcq_generated.json (in target 'SpeedrunApp' from project 'SpeedrunApp')
+    cd /Users/gaurav/Anki/mobile/SpeedrunApp
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks /Users/gaurav/Anki/mobile/SpeedrunApp/Resources/pgre_mcq_generated.json /Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator/SpeedrunApp.app
+
+SwiftCompile normal arm64 Compiling\ ReviewView.swift /Users/gaurav/Anki/mobile/SpeedrunApp/Sources/ReviewView.swift (in target 'SpeedrunApp' from project 'SpeedrunApp')
+
+SwiftCompile normal arm64 /Users/gaurav/Anki/mobile/SpeedrunApp/Sources/ReviewView.swift (in target 'SpeedrunApp' from project 'SpeedrunApp')
+    cd /Users/gaurav/Anki/mobile/SpeedrunApp
+    
+
+SwiftCompile normal arm64 Compiling\ MCQView.swift /Users/gaurav/Anki/mobile/SpeedrunApp/Sources/MCQView.swift (in target 'SpeedrunApp' from project 'SpeedrunApp')
+
+SwiftCompile normal arm64 /Users/gaurav/Anki/mobile/SpeedrunApp/Sources/MCQView.swift (in target 'SpeedrunApp' from project 'SpeedrunApp')
+    cd /Users/gaurav/Anki/mobile/SpeedrunApp
+    
+
+SwiftCompile normal arm64 Compiling\ ReviewSession.swift /Users/gaurav/Anki/mobile/SpeedrunApp/Sources/ReviewSession.swift (in target 'SpeedrunApp' from project 'SpeedrunApp')
+
+SwiftCompile normal arm64 /Users/gaurav/Anki/mobile/SpeedrunApp/Sources/ReviewSession.swift (in target 'SpeedrunApp' from project 'SpeedrunApp')
+    cd /Users/gaurav/Anki/mobile/SpeedrunApp
+    
+/Users/gaurav/Anki/mobile/SpeedrunApp/Sources/ReviewSession.swift:91:43: warning: main actor-isolated property 'engine' can not be referenced from a Sendable closure
+            guard let engine = self.store.engine else {
+                                          ^
+/Users/gaurav/Anki/mobile/SpeedrunApp/Sources/CollectionStore.swift:87:22: note: property declared here
+    private(set) var engine: AnkiEngine?
+                     ^
+/Users/gaurav/Anki/mobile/SpeedrunApp/Sources/ReviewSession.swift:92:22: warning: call to main actor-isolated instance method 'publishError' in a synchronous nonisolated context
+                self.publishError(AnkiEngineError.usageError("engine not open"))
+                     ^
+/Users/gaurav/Anki/mobile/SpeedrunApp/Sources/ReviewSession.swift:218:18: note: calls to instance method 'publishError' from outside of its actor context are implicitly asynchronous
+    private func publishError(_ error: Error) {
+                 ^
+/Users/gaurav/Anki/mobile/SpeedrunApp/Sources/ReviewSession.swift:104:26: warning: call to main actor-isolated instance method 'fetchNextLocked(engine:)' in a synchronous nonisolated context
+                try self.fetchNextLocked(engine: engine)
+                         ^
+/Users/gaurav/Anki/mobile/SpeedrunApp/Sources/ReviewSession.swift:166:18: note: calls to instance method 'fetchNextLocked(engine:)' from outside of its actor context are implicitly asynchronous
+    private func fetchNextLocked(engine: AnkiEngine) throws {
+                 ^
+/Users/gaurav/Anki/mobile/SpeedrunApp/Sources/ReviewSession.swift:106:22: warning: call to main actor-isolated instance method 'publishError' in a synchronous nonisolated context
+                self.publishError(error)
+                     ^
+/Users/gaurav/Anki/mobile/SpeedrunApp/Sources/ReviewSession.swift:218:18: note: calls to instance method 'publishError' from outside of its actor context are implicitly asynchronous
+    private func publishError(_ error: Error) {
+                 ^
+/Users/gaurav/Anki/mobile/SpeedrunApp/Sources/ReviewSession.swift:124:53: warning: main actor-isolated property 'engine' can not be referenced from a Sendable closure
+            guard let self, let engine = self.store.engine, let card = self.currentCard else { return }
+                                                    ^
+/Users/gaurav/Anki/mobile/SpeedrunApp/Sources/CollectionStore.swift:87:22: note: property declared here
+    private(set) var engine: AnkiEngine?
+                     ^
+/Users/gaurav/Anki/mobile/SpeedrunApp/Sources/ReviewSession.swift:124:77: warning: main actor-isolated property 'currentCard' can not be referenced from a Sendable closure
+            guard let self, let engine = self.store.engine, let card = self.currentCard else { return }
+                                                                            ^
+/Users/gaurav/Anki/mobile/SpeedrunApp/Sources/ReviewSession.swift:75:17: note: property declared here
+    private var currentCard: Anki_Scheduler_QueuedCards.QueuedCard?
+                ^
+/Users/gaurav/Anki/mobile/SpeedrunApp/Sources/ReviewSession.swift:155:26: warning: call to main actor-isolated instance method 'fetchNextLocked(engine:)' in a synchronous nonisolated context
+                try self.fetchNextLocked(engine: engine)
+                         ^
+/Users/gaurav/Anki/mobile/SpeedrunApp/Sources/ReviewSession.swift:166:18: note: calls to instance method 'fetchNextLocked(engine:)' from outside of its actor context are implicitly asynchronous
+    private func fetchNextLocked(engine: AnkiEngine) throws {
+                 ^
+/Users/gaurav/Anki/mobile/SpeedrunApp/Sources/ReviewSession.swift:157:22: warning: call to main actor-isolated instance method 'publishError' in a synchronous nonisolated context
+                self.publishError(error)
+                     ^
+/Users/gaurav/Anki/mobile/SpeedrunApp/Sources/ReviewSession.swift:218:18: note: calls to instance method 'publishError' from outside of its actor context are implicitly asynchronous
+    private func publishError(_ error: Error) {
+                 ^
+
+SwiftCompile normal arm64 Compiling\ DeckListView.swift /Users/gaurav/Anki/mobile/SpeedrunApp/Sources/DeckListView.swift (in target 'SpeedrunApp' from project 'SpeedrunApp')
+SwiftCompile normal arm64 /Users/gaurav/Anki/mobile/SpeedrunApp/Sources/DeckListView.swift (in target 'SpeedrunApp' from project 'SpeedrunApp')
+    cd /Users/gaurav/Anki/mobile/SpeedrunApp
+    
+
+SwiftEmitModule normal arm64 Emitting\ module\ for\ SpeedrunApp (in target 'SpeedrunApp' from project 'SpeedrunApp')
+EmitSwiftModule normal arm64 (in target 'SpeedrunApp' from project 'SpeedrunApp')
+    cd /Users/gaurav/Anki/mobile/SpeedrunApp
+    
+
+SwiftCompile normal arm64 Compiling\ HeuristicCoach.swift /Users/gaurav/Anki/mobile/SpeedrunApp/Sources/HeuristicCoach.swift (in target 'SpeedrunApp' from project 'SpeedrunApp')
+
+SwiftCompile normal arm64 /Users/gaurav/Anki/mobile/SpeedrunApp/Sources/HeuristicCoach.swift (in target 'SpeedrunApp' from project 'SpeedrunApp')
+    cd /Users/gaurav/Anki/mobile/SpeedrunApp
+    
+
+SwiftCompile normal arm64 Compiling\ SpeedrunApp.swift /Users/gaurav/Anki/mobile/SpeedrunApp/Sources/SpeedrunApp.swift (in target 'SpeedrunApp' from project 'SpeedrunApp')
+
+SwiftCompile normal arm64 /Users/gaurav/Anki/mobile/SpeedrunApp/Sources/SpeedrunApp.swift (in target 'SpeedrunApp' from project 'SpeedrunApp')
+    cd /Users/gaurav/Anki/mobile/SpeedrunApp
+    
+
+SwiftCompile normal arm64 Compiling\ ScoresView.swift /Users/gaurav/Anki/mobile/SpeedrunApp/Sources/ScoresView.swift (in target 'SpeedrunApp' from project 'SpeedrunApp')
+
+SwiftCompile normal arm64 /Users/gaurav/Anki/mobile/SpeedrunApp/Sources/ScoresView.swift (in target 'SpeedrunApp' from project 'SpeedrunApp')
+    cd /Users/gaurav/Anki/mobile/SpeedrunApp
+    
+
+SwiftDriverJobDiscovery normal arm64 Compiling SpeedrunApp.swift (in target 'SpeedrunApp' from project 'SpeedrunApp')
+
+SwiftDriverJobDiscovery normal arm64 Compiling ReviewSession.swift (in target 'SpeedrunApp' from project 'SpeedrunApp')
+
+SwiftDriverJobDiscovery normal arm64 Compiling MCQView.swift (in target 'SpeedrunApp' from project 'SpeedrunApp')
+
+SwiftDriverJobDiscovery normal arm64 Compiling HeuristicCoach.swift (in target 'SpeedrunApp' from project 'SpeedrunApp')
+
+SwiftDriverJobDiscovery normal arm64 Compiling ScoresView.swift (in target 'SpeedrunApp' from project 'SpeedrunApp')
+
+SwiftDriverJobDiscovery normal arm64 Compiling ReviewView.swift (in target 'SpeedrunApp' from project 'SpeedrunApp')
+
+SwiftDriverJobDiscovery normal arm64 Compiling DeckListView.swift (in target 'SpeedrunApp' from project 'SpeedrunApp')
+
+SwiftDriverJobDiscovery normal arm64 Emitting module for SpeedrunApp (in target 'SpeedrunApp' from project 'SpeedrunApp')
+
+SwiftDriver\ Compilation\ Requirements SpeedrunApp normal arm64 com.apple.xcode.tools.swift.compiler (in target 'SpeedrunApp' from project 'SpeedrunApp')
+    cd /Users/gaurav/Anki/mobile/SpeedrunApp
+    builtin-Swift-Compilation-Requirements -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name SpeedrunApp -Onone @/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Intermediates.noindex/SpeedrunApp.build/Debug-iphonesimulator/SpeedrunApp.build/Objects-normal/arm64/SpeedrunApp.SwiftFileList -DDEBUG -enable-bare-slash-regex -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.5.sdk -target arm64-apple-ios15.0-simulator -g -module-cache-path /Users/gaurav/Library/Developer/Xcode/DerivedData/ModuleCache.noindex -Xfrontend -serialize-debugging-options -enable-testing -index-store-path /Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Index.noindex/DataStore -Xcc -D_LIBCPP_HARDENING_MODE\=_LIBCPP_HARDENING_MODE_DEBUG -swift-version 5 -I /Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator -I /Users/gaurav/Anki/mobile/SpeedrunApp/CAnkiFFI -F /Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator/PackageFrameworks -F /Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator -F .. -c -j10 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /Users/gaurav/Library/Developer/Xcode/DerivedData/SDKStatCaches.noindex/iphonesimulator26.5-23F81a-6cfe768891a92b912361537c460fe42b.sdkstatcache -output-file-map /Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Intermediates.noindex/SpeedrunApp.build/Debug-iphonesimulator/SpeedrunApp.build/Objects-normal/arm64/SpeedrunApp-OutputFileMap.json -use-frontend-parseable-output -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path /Users/gaurav/Library/Developer/Xcode/DerivedData/ModuleCache.noindex -sdk-module-cache-path /Users/gaurav/Library/Developer/Xcode/DerivedData/ModuleCache.noindex -serialize-diagnostics -emit-dependencies -emit-module -emit-module-path /Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Intermediates.noindex/SpeedrunApp.build/Debug-iphonesimulator/SpeedrunApp.build/Objects-normal/arm64/SpeedrunApp.swiftmodule -validate-clang-modules-once -clang-build-session-file /Users/gaurav/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/Session.modulevalidation -Xcc -I/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Intermediates.noindex/SpeedrunApp.build/Debug-iphonesimulator/SpeedrunApp.build/swift-overrides.hmap -emit-const-values -Xfrontend -const-gather-protocols-file -Xfrontend /Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Intermediates.noindex/SpeedrunApp.build/Debug-iphonesimulator/SpeedrunApp.build/Objects-normal/arm64/SpeedrunApp_const_extract_protocols.json -Xcc -iquote -Xcc /Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Intermediates.noindex/SpeedrunApp.build/Debug-iphonesimulator/SpeedrunApp.build/SpeedrunApp-generated-files.hmap -Xcc -I/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Intermediates.noindex/SpeedrunApp.build/Debug-iphonesimulator/SpeedrunApp.build/SpeedrunApp-own-target-headers.hmap -Xcc -I/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Intermediates.noindex/SpeedrunApp.build/Debug-iphonesimulator/SpeedrunApp.build/SpeedrunApp-all-non-framework-target-headers.hmap -Xcc -ivfsoverlay -Xcc /Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Intermediates.noindex/SpeedrunApp.build/Debug-iphonesimulator/SpeedrunApp-48dfbd77d74faf25ea572979957d74dc-VFS-iphonesimulator/all-product-headers.yaml -Xcc -iquote -Xcc /Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Intermediates.noindex/SpeedrunApp.build/Debug-iphonesimulator/SpeedrunApp.build/SpeedrunApp-project-headers.hmap -Xcc -I/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator/include -Xcc -I/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Intermediates.noindex/SpeedrunApp.build/Debug-iphonesimulator/SpeedrunApp.build/DerivedSources-normal/arm64 -Xcc -I/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Intermediates.noindex/SpeedrunApp.build/Debug-iphonesimulator/SpeedrunApp.build/DerivedSources/arm64 -Xcc -I/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Intermediates.noindex/SpeedrunApp.build/Debug-iphonesimulator/SpeedrunApp.build/DerivedSources -Xcc -DDEBUG\=1 -emit-objc-header -emit-objc-header-path /Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Intermediates.noindex/SpeedrunApp.build/Debug-iphonesimulator/SpeedrunApp.build/Objects-normal/arm64/SpeedrunApp-Swift.h -working-directory /Users/gaurav/Anki/mobile/SpeedrunApp -experimental-emit-module-separately -disable-cmo
+
+SwiftDriver\ Compilation SpeedrunApp normal arm64 com.apple.xcode.tools.swift.compiler (in target 'SpeedrunApp' from project 'SpeedrunApp')
+    cd /Users/gaurav/Anki/mobile/SpeedrunApp
+    builtin-Swift-Compilation -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name SpeedrunApp -Onone @/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Intermediates.noindex/SpeedrunApp.build/Debug-iphonesimulator/SpeedrunApp.build/Objects-normal/arm64/SpeedrunApp.SwiftFileList -DDEBUG -enable-bare-slash-regex -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.5.sdk -target arm64-apple-ios15.0-simulator -g -module-cache-path /Users/gaurav/Library/Developer/Xcode/DerivedData/ModuleCache.noindex -Xfrontend -serialize-debugging-options -enable-testing -index-store-path /Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Index.noindex/DataStore -Xcc -D_LIBCPP_HARDENING_MODE\=_LIBCPP_HARDENING_MODE_DEBUG -swift-version 5 -I /Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator -I /Users/gaurav/Anki/mobile/SpeedrunApp/CAnkiFFI -F /Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator/PackageFrameworks -F /Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator -F .. -c -j10 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /Users/gaurav/Library/Developer/Xcode/DerivedData/SDKStatCaches.noindex/iphonesimulator26.5-23F81a-6cfe768891a92b912361537c460fe42b.sdkstatcache -output-file-map /Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Intermediates.noindex/SpeedrunApp.build/Debug-iphonesimulator/SpeedrunApp.build/Objects-normal/arm64/SpeedrunApp-OutputFileMap.json -use-frontend-parseable-output -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path /Users/gaurav/Library/Developer/Xcode/DerivedData/ModuleCache.noindex -sdk-module-cache-path /Users/gaurav/Library/Developer/Xcode/DerivedData/ModuleCache.noindex -serialize-diagnostics -emit-dependencies -emit-module -emit-module-path /Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Intermediates.noindex/SpeedrunApp.build/Debug-iphonesimulator/SpeedrunApp.build/Objects-normal/arm64/SpeedrunApp.swiftmodule -validate-clang-modules-once -clang-build-session-file /Users/gaurav/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/Session.modulevalidation -Xcc -I/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Intermediates.noindex/SpeedrunApp.build/Debug-iphonesimulator/SpeedrunApp.build/swift-overrides.hmap -emit-const-values -Xfrontend -const-gather-protocols-file -Xfrontend /Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Intermediates.noindex/SpeedrunApp.build/Debug-iphonesimulator/SpeedrunApp.build/Objects-normal/arm64/SpeedrunApp_const_extract_protocols.json -Xcc -iquote -Xcc /Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Intermediates.noindex/SpeedrunApp.build/Debug-iphonesimulator/SpeedrunApp.build/SpeedrunApp-generated-files.hmap -Xcc -I/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Intermediates.noindex/SpeedrunApp.build/Debug-iphonesimulator/SpeedrunApp.build/SpeedrunApp-own-target-headers.hmap -Xcc -I/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Intermediates.noindex/SpeedrunApp.build/Debug-iphonesimulator/SpeedrunApp.build/SpeedrunApp-all-non-framework-target-headers.hmap -Xcc -ivfsoverlay -Xcc /Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Intermediates.noindex/SpeedrunApp.build/Debug-iphonesimulator/SpeedrunApp-48dfbd77d74faf25ea572979957d74dc-VFS-iphonesimulator/all-product-headers.yaml -Xcc -iquote -Xcc /Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Intermediates.noindex/SpeedrunApp.build/Debug-iphonesimulator/SpeedrunApp.build/SpeedrunApp-project-headers.hmap -Xcc -I/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator/include -Xcc -I/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Intermediates.noindex/SpeedrunApp.build/Debug-iphonesimulator/SpeedrunApp.build/DerivedSources-normal/arm64 -Xcc -I/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Intermediates.noindex/SpeedrunApp.build/Debug-iphonesimulator/SpeedrunApp.build/DerivedSources/arm64 -Xcc -I/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Intermediates.noindex/SpeedrunApp.build/Debug-iphonesimulator/SpeedrunApp.build/DerivedSources -Xcc -DDEBUG\=1 -emit-objc-header -emit-objc-header-path /Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Intermediates.noindex/SpeedrunApp.build/Debug-iphonesimulator/SpeedrunApp.build/Objects-normal/arm64/SpeedrunApp-Swift.h -working-directory /Users/gaurav/Anki/mobile/SpeedrunApp -experimental-emit-module-separately -disable-cmo
+
+Copy /Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator/SpeedrunApp.swiftmodule/Project/arm64-apple-ios-simulator.swiftsourceinfo /Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Intermediates.noindex/SpeedrunApp.build/Debug-iphonesimulator/SpeedrunApp.build/Objects-normal/arm64/SpeedrunApp.swiftsourceinfo (in target 'SpeedrunApp' from project 'SpeedrunApp')
+    cd /Users/gaurav/Anki/mobile/SpeedrunApp
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Intermediates.noindex/SpeedrunApp.build/Debug-iphonesimulator/SpeedrunApp.build/Objects-normal/arm64/SpeedrunApp.swiftsourceinfo /Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator/SpeedrunApp.swiftmodule/Project/arm64-apple-ios-simulator.swiftsourceinfo
+
+Copy /Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator/SpeedrunApp.swiftmodule/arm64-apple-ios-simulator.abi.json /Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Intermediates.noindex/SpeedrunApp.build/Debug-iphonesimulator/SpeedrunApp.build/Objects-normal/arm64/SpeedrunApp.abi.json (in target 'SpeedrunApp' from project 'SpeedrunApp')
+    cd /Users/gaurav/Anki/mobile/SpeedrunApp
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Intermediates.noindex/SpeedrunApp.build/Debug-iphonesimulator/SpeedrunApp.build/Objects-normal/arm64/SpeedrunApp.abi.json /Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator/SpeedrunApp.swiftmodule/arm64-apple-ios-simulator.abi.json
+
+Ld /Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator/SpeedrunApp.app/SpeedrunApp.debug.dylib normal (in target 'SpeedrunApp' from project 'SpeedrunApp')
+    cd /Users/gaurav/Anki/mobile/SpeedrunApp
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -Xlinker -reproducible -target arm64-apple-ios15.0-simulator -dynamiclib -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.5.sdk -O0 -L/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Intermediates.noindex/EagerLinkingTBDs/Debug-iphonesimulator -L/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator -F/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Intermediates.noindex/EagerLinkingTBDs/Debug-iphonesimulator -F/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator/PackageFrameworks -F/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator -F.. -filelist /Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Intermediates.noindex/SpeedrunApp.build/Debug-iphonesimulator/SpeedrunApp.build/Objects-normal/arm64/SpeedrunApp.LinkFileList -install_name @rpath/SpeedrunApp.debug.dylib -Xlinker -rpath -Xlinker /usr/lib/swift -Xlinker -rpath -Xlinker /Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator/PackageFrameworks -Xlinker -rpath -Xlinker @executable_path/Frameworks -Xlinker -dead_strip -Xlinker -object_path_lto -Xlinker /Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Intermediates.noindex/SpeedrunApp.build/Debug-iphonesimulator/SpeedrunApp.build/Objects-normal/arm64/SpeedrunApp_lto.o -rdynamic -Xlinker -no_deduplicate -Xlinker -objc_abi_version -Xlinker 2 -Xlinker -dependency_info -Xlinker /Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Intermediates.noindex/SpeedrunApp.build/Debug-iphonesimulator/SpeedrunApp.build/Objects-normal/arm64/SpeedrunApp_dependency_info.dat -fobjc-link-runtime -L/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator -L/usr/lib/swift -Xlinker -add_ast_path -Xlinker /Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Intermediates.noindex/SpeedrunApp.build/Debug-iphonesimulator/SpeedrunApp.build/Objects-normal/arm64/SpeedrunApp.swiftmodule @/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Intermediates.noindex/SpeedrunApp.build/Debug-iphonesimulator/SpeedrunApp.build/Objects-normal/arm64/SpeedrunApp-linker-args.resp -Wl,-no_warn_duplicate_libraries -lc++ -lz -Xlinker -alias -Xlinker _main -Xlinker ___debug_main_executable_dylib_entry_point -lanki_ffi -o /Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator/SpeedrunApp.app/SpeedrunApp.debug.dylib -Xlinker -add_ast_path -Xlinker /Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Intermediates.noindex/SwiftProtobuf.build/Debug-iphonesimulator/SwiftProtobuf.build/Objects-normal/arm64/SwiftProtobuf.swiftmodule @/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Intermediates.noindex/SwiftProtobuf.build/Debug-iphonesimulator/SwiftProtobuf.build/Objects-normal/arm64/SwiftProtobuf-linker-args.resp
+/Users/gaurav/Anki/mobile/SpeedrunApp/SpeedrunApp.xcodeproj: SpeedrunApp: ld: warning: object file (/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator/libanki_ffi.a[45](a1edd97dd51cd48d-blake3_neon.o)) was built for newer 'iOS-simulator' version (26.5) than being linked (15.0)
+/Users/gaurav/Anki/mobile/SpeedrunApp/SpeedrunApp.xcodeproj: SpeedrunApp: ld: warning: object file (/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator/libanki_ffi.a[204](44ff4c55aa9e5133-entropy_common.o)) was built for newer 'iOS-simulator' version (26.5) than being linked (15.0)
+/Users/gaurav/Anki/mobile/SpeedrunApp/SpeedrunApp.xcodeproj: SpeedrunApp: ld: warning: object file (/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator/libanki_ffi.a[205](44ff4c55aa9e5133-error_private.o)) was built for newer 'iOS-simulator' version (26.5) than being linked (15.0)
+/Users/gaurav/Anki/mobile/SpeedrunApp/SpeedrunApp.xcodeproj: SpeedrunApp: ld: warning: object file (/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator/libanki_ffi.a[206](44ff4c55aa9e5133-fse_decompress.o)) was built for newer 'iOS-simulator' version (26.5) than being linked (15.0)
+/Users/gaurav/Anki/mobile/SpeedrunApp/SpeedrunApp.xcodeproj: SpeedrunApp: ld: warning: object file (/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator/libanki_ffi.a[207](44ff4c55aa9e5133-pool.o)) was built for newer 'iOS-simulator' version (26.5) than being linked (15.0)
+/Users/gaurav/Anki/mobile/SpeedrunApp/SpeedrunApp.xcodeproj: SpeedrunApp: ld: warning: object file (/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator/libanki_ffi.a[209](44ff4c55aa9e5133-zstd_common.o)) was built for newer 'iOS-simulator' version (26.5) than being linked (15.0)
+/Users/gaurav/Anki/mobile/SpeedrunApp/SpeedrunApp.xcodeproj: SpeedrunApp: ld: warning: object file (/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator/libanki_ffi.a[210](fb80479a5fb81f6a-fse_compress.o)) was built for newer 'iOS-simulator' version (26.5) than being linked (15.0)
+/Users/gaurav/Anki/mobile/SpeedrunApp/SpeedrunApp.xcodeproj: SpeedrunApp: ld: warning: object file (/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator/libanki_ffi.a[211](fb80479a5fb81f6a-hist.o)) was built for newer 'iOS-simulator' version (26.5) than being linked (15.0)
+/Users/gaurav/Anki/mobile/SpeedrunApp/SpeedrunApp.xcodeproj: SpeedrunApp: ld: warning: object file (/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator/libanki_ffi.a[212](fb80479a5fb81f6a-huf_compress.o)) was built for newer 'iOS-simulator' version (26.5) than being linked (15.0)
+/Users/gaurav/Anki/mobile/SpeedrunApp/SpeedrunApp.xcodeproj: SpeedrunApp: ld: warning: object file (/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator/libanki_ffi.a[213](fb80479a5fb81f6a-zstd_compress.o)) was built for newer 'iOS-simulator' version (26.5) than being linked (15.0)
+/Users/gaurav/Anki/mobile/SpeedrunApp/SpeedrunApp.xcodeproj: SpeedrunApp: ld: warning: object file (/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator/libanki_ffi.a[214](fb80479a5fb81f6a-zstd_compress_literals.o)) was built for newer 'iOS-simulator' version (26.5) than being linked (15.0)
+/Users/gaurav/Anki/mobile/SpeedrunApp/SpeedrunApp.xcodeproj: SpeedrunApp: ld: warning: object file (/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator/libanki_ffi.a[215](fb80479a5fb81f6a-zstd_compress_sequences.o)) was built for newer 'iOS-simulator' version (26.5) than being linked (15.0)
+/Users/gaurav/Anki/mobile/SpeedrunApp/SpeedrunApp.xcodeproj: SpeedrunApp: ld: warning: object file (/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator/libanki_ffi.a[216](fb80479a5fb81f6a-zstd_compress_superblock.o)) was built for newer 'iOS-simulator' version (26.5) than being linked (15.0)
+/Users/gaurav/Anki/mobile/SpeedrunApp/SpeedrunApp.xcodeproj: SpeedrunApp: ld: warning: object file (/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator/libanki_ffi.a[217](fb80479a5fb81f6a-zstd_double_fast.o)) was built for newer 'iOS-simulator' version (26.5) than being linked (15.0)
+/Users/gaurav/Anki/mobile/SpeedrunApp/SpeedrunApp.xcodeproj: SpeedrunApp: ld: warning: object file (/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator/libanki_ffi.a[218](fb80479a5fb81f6a-zstd_fast.o)) was built for newer 'iOS-simulator' version (26.5) than being linked (15.0)
+/Users/gaurav/Anki/mobile/SpeedrunApp/SpeedrunApp.xcodeproj: SpeedrunApp: ld: warning: object file (/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator/libanki_ffi.a[219](fb80479a5fb81f6a-zstd_lazy.o)) was built for newer 'iOS-simulator' version (26.5) than being linked (15.0)
+/Users/gaurav/Anki/mobile/SpeedrunApp/SpeedrunApp.xcodeproj: SpeedrunApp: ld: warning: object file (/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator/libanki_ffi.a[220](fb80479a5fb81f6a-zstd_ldm.o)) was built for newer 'iOS-simulator' version (26.5) than being linked (15.0)
+/Users/gaurav/Anki/mobile/SpeedrunApp/SpeedrunApp.xcodeproj: SpeedrunApp: ld: warning: object file (/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator/libanki_ffi.a[221](fb80479a5fb81f6a-zstd_opt.o)) was built for newer 'iOS-simulator' version (26.5) than being linked (15.0)
+/Users/gaurav/Anki/mobile/SpeedrunApp/SpeedrunApp.xcodeproj: SpeedrunApp: ld: warning: object file (/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator/libanki_ffi.a[222](fb80479a5fb81f6a-zstd_preSplit.o)) was built for newer 'iOS-simulator' version (26.5) than being linked (15.0)
+/Users/gaurav/Anki/mobile/SpeedrunApp/SpeedrunApp.xcodeproj: SpeedrunApp: ld: warning: object file (/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator/libanki_ffi.a[223](fb80479a5fb81f6a-zstdmt_compress.o)) was built for newer 'iOS-simulator' version (26.5) than being linked (15.0)
+/Users/gaurav/Anki/mobile/SpeedrunApp/SpeedrunApp.xcodeproj: SpeedrunApp: ld: warning: object file (/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator/libanki_ffi.a[224](88f362f13b0528ed-huf_decompress.o)) was built for newer 'iOS-simulator' version (26.5) than being linked (15.0)
+/Users/gaurav/Anki/mobile/SpeedrunApp/SpeedrunApp.xcodeproj: SpeedrunApp: ld: warning: object file (/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator/libanki_ffi.a[225](88f362f13b0528ed-zstd_ddict.o)) was built for newer 'iOS-simulator' version (26.5) than being linked (15.0)
+/Users/gaurav/Anki/mobile/SpeedrunApp/SpeedrunApp.xcodeproj: SpeedrunApp: ld: warning: object file (/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator/libanki_ffi.a[226](88f362f13b0528ed-zstd_decompress.o)) was built for newer 'iOS-simulator' version (26.5) than being linked (15.0)
+/Users/gaurav/Anki/mobile/SpeedrunApp/SpeedrunApp.xcodeproj: SpeedrunApp: ld: warning: object file (/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator/libanki_ffi.a[227](88f362f13b0528ed-zstd_decompress_block.o)) was built for newer 'iOS-simulator' version (26.5) than being linked (15.0)
+/Users/gaurav/Anki/mobile/SpeedrunApp/SpeedrunApp.xcodeproj: SpeedrunApp: ld: warning: object file (/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator/libanki_ffi.a[228](a6c81c75fc82913a-cover.o)) was built for newer 'iOS-simulator' version (26.5) than being linked (15.0)
+/Users/gaurav/Anki/mobile/SpeedrunApp/SpeedrunApp.xcodeproj: SpeedrunApp: ld: warning: object file (/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator/libanki_ffi.a[229](a6c81c75fc82913a-divsufsort.o)) was built for newer 'iOS-simulator' version (26.5) than being linked (15.0)
+/Users/gaurav/Anki/mobile/SpeedrunApp/SpeedrunApp.xcodeproj: SpeedrunApp: ld: warning: object file (/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator/libanki_ffi.a[230](a6c81c75fc82913a-fastcover.o)) was built for newer 'iOS-simulator' version (26.5) than being linked (15.0)
+/Users/gaurav/Anki/mobile/SpeedrunApp/SpeedrunApp.xcodeproj: SpeedrunApp: ld: warning: object file (/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator/libanki_ffi.a[231](a6c81c75fc82913a-zdict.o)) was built for newer 'iOS-simulator' version (26.5) than being linked (15.0)
+/Users/gaurav/Anki/mobile/SpeedrunApp/SpeedrunApp.xcodeproj: SpeedrunApp: ld: warning: object file (/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator/libanki_ffi.a[232](3f451b2306bc13c8-zstd_v01.o)) was built for newer 'iOS-simulator' version (26.5) than being linked (15.0)
+/Users/gaurav/Anki/mobile/SpeedrunApp/SpeedrunApp.xcodeproj: SpeedrunApp: ld: warning: object file (/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator/libanki_ffi.a[233](3f451b2306bc13c8-zstd_v02.o)) was built for newer 'iOS-simulator' version (26.5) than being linked (15.0)
+/Users/gaurav/Anki/mobile/SpeedrunApp/SpeedrunApp.xcodeproj: SpeedrunApp: ld: warning: object file (/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator/libanki_ffi.a[234](3f451b2306bc13c8-zstd_v03.o)) was built for newer 'iOS-simulator' version (26.5) than being linked (15.0)
+/Users/gaurav/Anki/mobile/SpeedrunApp/SpeedrunApp.xcodeproj: SpeedrunApp: ld: warning: object file (/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator/libanki_ffi.a[235](3f451b2306bc13c8-zstd_v04.o)) was built for newer 'iOS-simulator' version (26.5) than being linked (15.0)
+/Users/gaurav/Anki/mobile/SpeedrunApp/SpeedrunApp.xcodeproj: SpeedrunApp: ld: warning: object file (/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator/libanki_ffi.a[236](3f451b2306bc13c8-zstd_v05.o)) was built for newer 'iOS-simulator' version (26.5) than being linked (15.0)
+/Users/gaurav/Anki/mobile/SpeedrunApp/SpeedrunApp.xcodeproj: SpeedrunApp: ld: warning: object file (/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator/libanki_ffi.a[237](3f451b2306bc13c8-zstd_v06.o)) was built for newer 'iOS-simulator' version (26.5) than being linked (15.0)
+/Users/gaurav/Anki/mobile/SpeedrunApp/SpeedrunApp.xcodeproj: SpeedrunApp: ld: warning: object file (/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator/libanki_ffi.a[238](3f451b2306bc13c8-zstd_v07.o)) was built for newer 'iOS-simulator' version (26.5) than being linked (15.0)
+/Users/gaurav/Anki/mobile/SpeedrunApp/SpeedrunApp.xcodeproj: SpeedrunApp: ld: warning: object file (/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator/libanki_ffi.a[801](25ac62e5b3c53843-curve25519.o)) was built for newer 'iOS-simulator' version (26.5) than being linked (15.0)
+/Users/gaurav/Anki/mobile/SpeedrunApp/SpeedrunApp.xcodeproj: SpeedrunApp: ld: warning: object file (/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator/libanki_ffi.a[802](0bbbd18bda93c05b-aes_nohw.o)) was built for newer 'iOS-simulator' version (26.5) than being linked (15.0)
+/Users/gaurav/Anki/mobile/SpeedrunApp/SpeedrunApp.xcodeproj: SpeedrunApp: ld: warning: object file (/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator/libanki_ffi.a[803](00c879ee3285a50d-montgomery.o)) was built for newer 'iOS-simulator' version (26.5) than being linked (15.0)
+/Users/gaurav/Anki/mobile/SpeedrunApp/SpeedrunApp.xcodeproj: SpeedrunApp: ld: warning: object file (/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator/libanki_ffi.a[804](00c879ee3285a50d-montgomery_inv.o)) was built for newer 'iOS-simulator' version (26.5) than being linked (15.0)
+/Users/gaurav/Anki/mobile/SpeedrunApp/SpeedrunApp.xcodeproj: SpeedrunApp: ld: warning: object file (/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator/libanki_ffi.a[805](a0330e891e733f4e-ecp_nistz.o)) was built for newer 'iOS-simulator' version (26.5) than being linked (15.0)
+/Users/gaurav/Anki/mobile/SpeedrunApp/SpeedrunApp.xcodeproj: SpeedrunApp: ld: warning: object file (/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator/libanki_ffi.a[807](a0330e891e733f4e-gfp_p384.o)) was built for newer 'iOS-simulator' version (26.5) than being linked (15.0)
+/Users/gaurav/Anki/mobile/SpeedrunApp/SpeedrunApp.xcodeproj: SpeedrunApp: ld: warning: object file (/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator/libanki_ffi.a[809](aaa1ba3e455ee2e1-limbs.o)) was built for newer 'iOS-simulator' version (26.5) than being linked (15.0)
+/Users/gaurav/Anki/mobile/SpeedrunApp/SpeedrunApp.xcodeproj: SpeedrunApp: ld: warning: object file (/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator/libanki_ffi.a[810](a4019cc0736b0423-mem.o)) was built for newer 'iOS-simulator' version (26.5) than being linked (15.0)
+/Users/gaurav/Anki/mobile/SpeedrunApp/SpeedrunApp.xcodeproj: SpeedrunApp: ld: warning: object file (/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator/libanki_ffi.a[811](d5a9841f3dc6e253-poly1305.o)) was built for newer 'iOS-simulator' version (26.5) than being linked (15.0)
+/Users/gaurav/Anki/mobile/SpeedrunApp/SpeedrunApp.xcodeproj: SpeedrunApp: ld: warning: object file (/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator/libanki_ffi.a[812](a0330e891e733f4e-p256-nistz.o)) was built for newer 'iOS-simulator' version (26.5) than being linked (15.0)
+/Users/gaurav/Anki/mobile/SpeedrunApp/SpeedrunApp.xcodeproj: SpeedrunApp: ld: warning: object file (/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator/libanki_ffi.a[813](c322a0bcc369f531-chacha-armv8-ios64.o)) was built for newer 'iOS-simulator' version (26.5) than being linked (15.0)
+/Users/gaurav/Anki/mobile/SpeedrunApp/SpeedrunApp.xcodeproj: SpeedrunApp: ld: warning: object file (/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator/libanki_ffi.a[814](c322a0bcc369f531-chacha20_poly1305_armv8-ios64.o)) was built for newer 'iOS-simulator' version (26.5) than being linked (15.0)
+/Users/gaurav/Anki/mobile/SpeedrunApp/SpeedrunApp.xcodeproj: SpeedrunApp: ld: warning: object file (/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator/libanki_ffi.a[815](c322a0bcc369f531-aesv8-armx-ios64.o)) was built for newer 'iOS-simulator' version (26.5) than being linked (15.0)
+/Users/gaurav/Anki/mobile/SpeedrunApp/SpeedrunApp.xcodeproj: SpeedrunApp: ld: warning: object file (/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator/libanki_ffi.a[816](c322a0bcc369f531-aesv8-gcm-armv8-ios64.o)) was built for newer 'iOS-simulator' version (26.5) than being linked (15.0)
+/Users/gaurav/Anki/mobile/SpeedrunApp/SpeedrunApp.xcodeproj: SpeedrunApp: ld: warning: object file (/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator/libanki_ffi.a[817](c322a0bcc369f531-ghash-neon-armv8-ios64.o)) was built for newer 'iOS-simulator' version (26.5) than being linked (15.0)
+/Users/gaurav/Anki/mobile/SpeedrunApp/SpeedrunApp.xcodeproj: SpeedrunApp: ld: warning: object file (/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator/libanki_ffi.a[818](c322a0bcc369f531-ghashv8-armx-ios64.o)) was built for newer 'iOS-simulator' version (26.5) than being linked (15.0)
+/Users/gaurav/Anki/mobile/SpeedrunApp/SpeedrunApp.xcodeproj: SpeedrunApp: ld: warning: object file (/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator/libanki_ffi.a[819](c322a0bcc369f531-vpaes-armv8-ios64.o)) was built for newer 'iOS-simulator' version (26.5) than being linked (15.0)
+/Users/gaurav/Anki/mobile/SpeedrunApp/SpeedrunApp.xcodeproj: SpeedrunApp: ld: warning: object file (/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator/libanki_ffi.a[820](c322a0bcc369f531-armv8-mont-ios64.o)) was built for newer 'iOS-simulator' version (26.5) than being linked (15.0)
+/Users/gaurav/Anki/mobile/SpeedrunApp/SpeedrunApp.xcodeproj: SpeedrunApp: ld: warning: object file (/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator/libanki_ffi.a[821](c322a0bcc369f531-p256-armv8-asm-ios64.o)) was built for newer 'iOS-simulator' version (26.5) than being linked (15.0)
+/Users/gaurav/Anki/mobile/SpeedrunApp/SpeedrunApp.xcodeproj: SpeedrunApp: ld: warning: object file (/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator/libanki_ffi.a[822](c322a0bcc369f531-sha512-armv8-ios64.o)) was built for newer 'iOS-simulator' version (26.5) than being linked (15.0)
+/Users/gaurav/Anki/mobile/SpeedrunApp/SpeedrunApp.xcodeproj: SpeedrunApp: ld: warning: object file (/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator/libanki_ffi.a[823](c322a0bcc369f531-sha256-armv8-ios64.o)) was built for newer 'iOS-simulator' version (26.5) than being linked (15.0)
+/Users/gaurav/Anki/mobile/SpeedrunApp/SpeedrunApp.xcodeproj: SpeedrunApp: ld: warning: object file (/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator/libanki_ffi.a[1077](c877a2978823c39d-sqlite3.o)) was built for newer 'iOS-simulator' version (26.5) than being linked (15.0)
+
+ConstructStubExecutorLinkFileList /Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Intermediates.noindex/SpeedrunApp.build/Debug-iphonesimulator/SpeedrunApp.build/SpeedrunApp-ExecutorLinkFileList-normal-arm64.txt (in target 'SpeedrunApp' from project 'SpeedrunApp')
+    cd /Users/gaurav/Anki/mobile/SpeedrunApp
+    construct-stub-executor-link-file-list /Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator/SpeedrunApp.app/SpeedrunApp.debug.dylib /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib/libPreviewsJITStubExecutor_no_swift_entry_point.a /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib/libPreviewsJITStubExecutor.a --output /Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Intermediates.noindex/SpeedrunApp.build/Debug-iphonesimulator/SpeedrunApp.build/SpeedrunApp-ExecutorLinkFileList-normal-arm64.txt
+note: Using stub executor library with Swift entry point. (in target 'SpeedrunApp' from project 'SpeedrunApp')
+
+Ld /Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator/SpeedrunApp.app/SpeedrunApp normal (in target 'SpeedrunApp' from project 'SpeedrunApp')
+    cd /Users/gaurav/Anki/mobile/SpeedrunApp
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -Xlinker -reproducible -target arm64-apple-ios15.0-simulator -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.5.sdk -O0 -L/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator -F/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator/PackageFrameworks -F/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator -F.. -Xlinker -rpath -Xlinker @executable_path -Xlinker -rpath -Xlinker /Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator/PackageFrameworks -Xlinker -rpath -Xlinker @executable_path/Frameworks -rdynamic -Xlinker -no_deduplicate -Xlinker -objc_abi_version -Xlinker 2 -e ___debug_blank_executor_main -Xlinker -sectcreate -Xlinker __TEXT -Xlinker __debug_dylib -Xlinker /Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Intermediates.noindex/SpeedrunApp.build/Debug-iphonesimulator/SpeedrunApp.build/SpeedrunApp-DebugDylibPath-normal-arm64.txt -Xlinker -sectcreate -Xlinker __TEXT -Xlinker __debug_instlnm -Xlinker /Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Intermediates.noindex/SpeedrunApp.build/Debug-iphonesimulator/SpeedrunApp.build/SpeedrunApp-DebugDylibInstallName-normal-arm64.txt -Xlinker -filelist -Xlinker /Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Intermediates.noindex/SpeedrunApp.build/Debug-iphonesimulator/SpeedrunApp.build/SpeedrunApp-ExecutorLinkFileList-normal-arm64.txt /Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator/SpeedrunApp.app/SpeedrunApp.debug.dylib -o /Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator/SpeedrunApp.app/SpeedrunApp
+
+PhaseScriptExecution Bake\ OpenAI\ key /Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Intermediates.noindex/SpeedrunApp.build/Debug-iphonesimulator/SpeedrunApp.build/Script-E4229D6DE40D7F598C379E9E.sh (in target 'SpeedrunApp' from project 'SpeedrunApp')
+    cd /Users/gaurav/Anki/mobile/SpeedrunApp
+    export ACTION\=build
+    export AD_HOC_CODE_SIGNING_ALLOWED\=YES
+    export AGGREGATE_TRACKED_DOMAINS\=YES
+    export ALLOW_BUILD_REQUEST_OVERRIDES\=NO
+    export ALLOW_TARGET_PLATFORM_SPECIALIZATION\=NO
+    export ALTERNATE_GROUP\=staff
+    export ALTERNATE_MODE\=u+w,go-w,a+rX
+    export ALTERNATE_OWNER\=gaurav
+    export ALTERNATIVE_DISTRIBUTION_WEB\=NO
+    export ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES\=NO
+    export ALWAYS_SEARCH_USER_PATHS\=NO
+    export ALWAYS_USE_SEPARATE_HEADERMAPS\=NO
+    export APPLICATION_EXTENSION_API_ONLY\=NO
+    export APPLY_RULES_IN_COPY_FILES\=NO
+    export APPLY_RULES_IN_COPY_HEADERS\=NO
+    export APP_SHORTCUTS_ENABLE_FLEXIBLE_MATCHING\=YES
+    export ARCHS\=arm64
+    export ARCHS_BASE\=arm64
+    export ARCHS_STANDARD\=arm64\ x86_64
+    export ARCHS_STANDARD_32_64_BIT\=arm64\ x86_64
+    export ARCHS_STANDARD_64_BIT\=arm64\ x86_64
+    export ARCHS_STANDARD_INCLUDING_64_BIT\=arm64\ x86_64
+    export ARCHS_UNIVERSAL_IPHONE_OS\=arm64\ x86_64
+    export ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME\=AccentColor
+    export ASSETCATALOG_FILTER_FOR_DEVICE_MODEL\=iPhone18,3
+    export ASSETCATALOG_FILTER_FOR_DEVICE_OS_VERSION\=26.5
+    export ASSETCATALOG_FILTER_FOR_THINNING_DEVICE_CONFIGURATION\=iPhone18,3
+    export AUTOMATICALLY_MERGE_DEPENDENCIES\=NO
+    export AUTOMATION_APPLE_EVENTS\=NO
+    export AVAILABLE_PLATFORMS\=android\ appletvos\ appletvsimulator\ driverkit\ freebsd\ iphoneos\ iphonesimulator\ linux\ macosx\ none\ openbsd\ qnx\ watchos\ watchsimulator\ webassembly\ xros\ xrsimulator
+    export BUILD_ACTIVE_RESOURCES_ONLY\=YES
+    export BUILD_COMPONENTS\=headers\ build
+    export BUILD_DIR\=/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products
+    export BUILD_LIBRARY_FOR_DISTRIBUTION\=NO
+    export BUILD_ONLY_KNOWN_LOCALIZATIONS\=NO
+    export BUILD_ROOT\=/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products
+    export BUILD_STYLE\=
+    export BUILD_VARIANTS\=normal
+    export BUILT_PRODUCTS_DIR\=/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator
+    export BUNDLE_CONTENTS_FOLDER_PATH_deep\=Contents/
+    export BUNDLE_EXECUTABLE_FOLDER_NAME_deep\=MacOS
+    export BUNDLE_EXTENSIONS_FOLDER_PATH\=Extensions
+    export BUNDLE_FORMAT\=shallow
+    export BUNDLE_FRAMEWORKS_FOLDER_PATH\=Frameworks
+    export BUNDLE_PLUGINS_FOLDER_PATH\=PlugIns
+    export BUNDLE_PRIVATE_HEADERS_FOLDER_PATH\=PrivateHeaders
+    export BUNDLE_PUBLIC_HEADERS_FOLDER_PATH\=Headers
+    export CACHE_ROOT\=/var/folders/gc/_53rg81x5clbncdj5x51525c0000gn/C/com.apple.DeveloperTools/26.6-17F113/Xcode
+    export CCHROOT\=/var/folders/gc/_53rg81x5clbncdj5x51525c0000gn/C/com.apple.DeveloperTools/26.6-17F113/Xcode
+    export CHMOD\=/bin/chmod
+    export CHOWN\=chown
+    export CLANG_ANALYZER_NONNULL\=YES
+    export CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION\=YES_AGGRESSIVE
+    export CLANG_CACHE_FINE_GRAINED_OUTPUTS\=YES
+    export CLANG_CXX_LANGUAGE_STANDARD\=gnu++14
+    export CLANG_CXX_LIBRARY\=libc++
+    export CLANG_ENABLE_EXPLICIT_MODULES\=YES
+    export CLANG_ENABLE_MODULES\=YES
+    export CLANG_ENABLE_OBJC_ARC\=YES
+    export CLANG_ENABLE_OBJC_WEAK\=YES
+    export CLANG_MODULES_BUILD_SESSION_FILE\=/Users/gaurav/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/Session.modulevalidation
+    export CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING\=YES
+    export CLANG_WARN_BOOL_CONVERSION\=YES
+    export CLANG_WARN_COMMA\=YES
+    export CLANG_WARN_CONSTANT_CONVERSION\=YES
+    export CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS\=YES
+    export CLANG_WARN_DIRECT_OBJC_ISA_USAGE\=YES_ERROR
+    export CLANG_WARN_DOCUMENTATION_COMMENTS\=YES
+    export CLANG_WARN_EMPTY_BODY\=YES
+    export CLANG_WARN_ENUM_CONVERSION\=YES
+    export CLANG_WARN_INFINITE_RECURSION\=YES
+    export CLANG_WARN_INT_CONVERSION\=YES
+    export CLANG_WARN_NON_LITERAL_NULL_CONVERSION\=YES
+    export CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF\=YES
+    export CLANG_WARN_OBJC_LITERAL_CONVERSION\=YES
+    export CLANG_WARN_OBJC_ROOT_CLASS\=YES_ERROR
+    export CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER\=YES
+    export CLANG_WARN_RANGE_LOOP_ANALYSIS\=YES
+    export CLANG_WARN_STRICT_PROTOTYPES\=YES
+    export CLANG_WARN_SUSPICIOUS_MOVE\=YES
+    export CLANG_WARN_UNGUARDED_AVAILABILITY\=YES_AGGRESSIVE
+    export CLANG_WARN_UNREACHABLE_CODE\=YES
+    export CLANG_WARN__DUPLICATE_METHOD_MATCH\=YES
+    export CLASS_FILE_DIR\=/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Intermediates.noindex/SpeedrunApp.build/Debug-iphonesimulator/SpeedrunApp.build/JavaClasses
+    export CLEAN_PRECOMPS\=YES
+    export CLONE_HEADERS\=NO
+    export CODESIGNING_FOLDER_PATH\=/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator/SpeedrunApp.app
+    export CODE_SIGNING_ALLOWED\=NO
+    export CODE_SIGNING_REQUIRED\=YES
+    export CODE_SIGN_CONTEXT_CLASS\=XCiPhoneSimulatorCodeSignContext
+    export CODE_SIGN_IDENTITY\=iPhone\ Developer
+    export CODE_SIGN_INJECT_BASE_ENTITLEMENTS\=YES
+    export COLOR_DIAGNOSTICS\=NO
+    export COMBINE_HIDPI_IMAGES\=NO
+    export COMPILATION_CACHE_CAS_PATH\=/Users/gaurav/Library/Developer/Xcode/DerivedData/CompilationCache.noindex
+    export COMPILATION_CACHE_KEEP_CAS_DIRECTORY\=YES
+    export COMPILER_INDEX_STORE_ENABLE\=Default
+    export COMPOSITE_SDK_DIRS\=/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Intermediates.noindex/CompositeSDKs
+    export COMPRESS_PNG_FILES\=YES
+    export CONFIGURATION\=Debug
+    export CONFIGURATION_BUILD_DIR\=/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator
+    export CONFIGURATION_TEMP_DIR\=/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Intermediates.noindex/SpeedrunApp.build/Debug-iphonesimulator
+    export CONTENTS_FOLDER_PATH\=SpeedrunApp.app
+    export CONTENTS_FOLDER_PATH_SHALLOW_BUNDLE_NO\=SpeedrunApp.app/Contents
+    export CONTENTS_FOLDER_PATH_SHALLOW_BUNDLE_YES\=SpeedrunApp.app
+    export COPYING_PRESERVES_HFS_DATA\=NO
+    export COPY_HEADERS_RUN_UNIFDEF\=NO
+    export COPY_PHASE_STRIP\=NO
+    export CORRESPONDING_DEVICE_PLATFORM_DIR\=/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform
+    export CORRESPONDING_DEVICE_PLATFORM_NAME\=iphoneos
+    export CORRESPONDING_DEVICE_SDK_DIR\=/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS26.5.sdk
+    export CORRESPONDING_DEVICE_SDK_NAME\=iphoneos26.5
+    export CP\=/bin/cp
+    export CREATE_INFOPLIST_SECTION_IN_BINARY\=NO
+    export CURRENT_ARCH\=undefined_arch
+    export CURRENT_PROJECT_VERSION\=1
+    export CURRENT_VARIANT\=normal
+    export DEAD_CODE_STRIPPING\=YES
+    export DEBUGGING_SYMBOLS\=YES
+    export DEBUG_INFORMATION_FORMAT\=dwarf
+    export DEBUG_INFORMATION_VERSION\=compiler-default
+    export DEFAULT_COMPILER\=com.apple.compilers.llvm.clang.1_0
+    export DEFAULT_DEXT_INSTALL_PATH\=/System/Library/DriverExtensions
+    export DEFAULT_KEXT_INSTALL_PATH\=/System/Library/Extensions
+    export DEFINES_MODULE\=NO
+    export DEPLOYMENT_LOCATION\=NO
+    export DEPLOYMENT_POSTPROCESSING\=NO
+    export DEPLOYMENT_TARGET_SETTING_NAME\=IPHONEOS_DEPLOYMENT_TARGET
+    export DEPLOYMENT_TARGET_SUGGESTED_VALUES\=12.0\ 12.1\ 12.2\ 12.3\ 12.4\ 13.0\ 13.1\ 13.2\ 13.3\ 13.4\ 13.5\ 13.6\ 14.0\ 14.1\ 14.2\ 14.3\ 14.4\ 14.5\ 14.6\ 14.7\ 15.0\ 15.1\ 15.2\ 15.3\ 15.4\ 15.5\ 15.6\ 16.0\ 16.1\ 16.2\ 16.3\ 16.4\ 16.5\ 16.6\ 17.0\ 17.1\ 17.2\ 17.3\ 17.4\ 17.5\ 17.6\ 18.0\ 18.1\ 18.2\ 18.3\ 18.4\ 18.5\ 18.6\ 26.0\ 26.2\ 26.3\ 26.4\ 26.5
+    export DERIVED_FILES_DIR\=/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Intermediates.noindex/SpeedrunApp.build/Debug-iphonesimulator/SpeedrunApp.build/DerivedSources
+    export DERIVED_FILE_DIR\=/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Intermediates.noindex/SpeedrunApp.build/Debug-iphonesimulator/SpeedrunApp.build/DerivedSources
+    export DERIVED_SOURCES_DIR\=/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Intermediates.noindex/SpeedrunApp.build/Debug-iphonesimulator/SpeedrunApp.build/DerivedSources
+    export DEVELOPER_APPLICATIONS_DIR\=/Applications/Xcode.app/Contents/Developer/Applications
+    export DEVELOPER_BIN_DIR\=/Applications/Xcode.app/Contents/Developer/usr/bin
+    export DEVELOPER_DIR\=/Applications/Xcode.app/Contents/Developer
+    export DEVELOPER_FRAMEWORKS_DIR\=/Applications/Xcode.app/Contents/Developer/Library/Frameworks
+    export DEVELOPER_FRAMEWORKS_DIR_QUOTED\=/Applications/Xcode.app/Contents/Developer/Library/Frameworks
+    export DEVELOPER_LIBRARY_DIR\=/Applications/Xcode.app/Contents/Developer/Library
+    export DEVELOPER_SDK_DIR\=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs
+    export DEVELOPER_TOOLS_DIR\=/Applications/Xcode.app/Contents/Developer/Tools
+    export DEVELOPER_USR_DIR\=/Applications/Xcode.app/Contents/Developer/usr
+    export DEVELOPMENT_LANGUAGE\=en
+    export DIAGNOSE_MISSING_TARGET_DEPENDENCIES\=YES
+    export DIFF\=/usr/bin/diff
+    export DOCUMENTATION_FOLDER_PATH\=SpeedrunApp.app/en.lproj/Documentation
+    export DONT_GENERATE_INFOPLIST_FILE\=NO
+    export DSTROOT\=/tmp/SpeedrunApp.dst
+    export DT_TOOLCHAIN_DIR\=/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain
+    export DUMP_DEPENDENCIES\=NO
+    export DUMP_DEPENDENCIES_OUTPUT_PATH\=/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Intermediates.noindex/SpeedrunApp.build/Debug-iphonesimulator/SpeedrunApp.build/SpeedrunApp-BuildDependencyInfo.json
+    export DWARF_DSYM_FILE_NAME\=SpeedrunApp.app.dSYM
+    export DWARF_DSYM_FILE_SHOULD_ACCOMPANY_PRODUCT\=NO
+    export DWARF_DSYM_FOLDER_PATH\=/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator
+    export DYNAMIC_LIBRARY_EXTENSION\=dylib
+    export EAGER_COMPILATION_ALLOW_SCRIPTS\=NO
+    export EAGER_LINKING\=NO
+    export EFFECTIVE_PLATFORM_NAME\=-iphonesimulator
+    export EFFECTIVE_SWIFT_VERSION\=5
+    export EMBEDDED_CONTENT_CONTAINS_SWIFT\=NO
+    export EMBED_ASSET_PACKS_IN_PRODUCT_BUNDLE\=NO
+    export EMBED_PACKAGE_RESOURCE_BUNDLE_NAMES\=\ SwiftProtobuf_SwiftProtobuf
+    export ENABLE_APP_SANDBOX\=NO
+    export ENABLE_CODE_COVERAGE\=YES
+    export ENABLE_COHORT_ARCHS\=NO
+    export ENABLE_CPLUSPLUS_BOUNDS_SAFE_BUFFERS\=NO
+    export ENABLE_C_BOUNDS_SAFETY\=NO
+    export ENABLE_DEBUG_DYLIB\=YES
+    export ENABLE_DEFAULT_HEADER_SEARCH_PATHS\=YES
+    export ENABLE_DEFAULT_SEARCH_PATHS\=YES
+    export ENABLE_ENHANCED_SECURITY\=NO
+    export ENABLE_HARDENED_RUNTIME\=NO
+    export ENABLE_HEADER_DEPENDENCIES\=YES
+    export ENABLE_INCOMING_NETWORK_CONNECTIONS\=NO
+    export ENABLE_ON_DEMAND_RESOURCES\=YES
+    export ENABLE_OUTGOING_NETWORK_CONNECTIONS\=NO
+    export ENABLE_POINTER_AUTHENTICATION\=NO
+    export ENABLE_PREVIEWS\=NO
+    export ENABLE_RESOURCE_ACCESS_AUDIO_INPUT\=NO
+    export ENABLE_RESOURCE_ACCESS_BLUETOOTH\=NO
+    export ENABLE_RESOURCE_ACCESS_CALENDARS\=NO
+    export ENABLE_RESOURCE_ACCESS_CAMERA\=NO
+    export ENABLE_RESOURCE_ACCESS_CONTACTS\=NO
+    export ENABLE_RESOURCE_ACCESS_LOCATION\=NO
+    export ENABLE_RESOURCE_ACCESS_PHOTO_LIBRARY\=NO
+    export ENABLE_RESOURCE_ACCESS_PRINTING\=NO
+    export ENABLE_RESOURCE_ACCESS_USB\=NO
+    export ENABLE_SDK_IMPORTS\=NO
+    export ENABLE_SECURITY_COMPILER_WARNINGS\=NO
+    export ENABLE_STRICT_OBJC_MSGSEND\=YES
+    export ENABLE_TESTABILITY\=YES
+    export ENABLE_TESTING_SEARCH_PATHS\=NO
+    export ENABLE_USER_SCRIPT_SANDBOXING\=NO
+    export ENABLE_XOJIT_PREVIEWS\=YES
+    export ENFORCE_VALID_ARCHS\=YES
+    export ENTITLEMENTS_ALLOWED\=NO
+    export ENTITLEMENTS_DESTINATION\=__entitlements
+    export ENTITLEMENTS_REQUIRED\=NO
+    export EXCLUDED_ARCHS\=x86_64
+    export EXCLUDED_INSTALLSRC_SUBDIRECTORY_PATTERNS\=.DS_Store\ .svn\ .git\ .hg\ CVS
+    export EXCLUDED_RECURSIVE_SEARCH_PATH_SUBDIRECTORIES\=\*.nib\ \*.lproj\ \*.framework\ \*.gch\ \*.xcode\*\ \*.xcassets\ \*.icon\ \(\*\)\ .DS_Store\ CVS\ .svn\ .git\ .hg\ \*.pbproj\ \*.pbxproj
+    export EXECUTABLES_FOLDER_PATH\=SpeedrunApp.app/Executables
+    export EXECUTABLE_BLANK_INJECTION_DYLIB_PATH\=SpeedrunApp.app/__preview.dylib
+    export EXECUTABLE_DEBUG_DYLIB_INSTALL_NAME\=@rpath/SpeedrunApp.debug.dylib
+    export EXECUTABLE_DEBUG_DYLIB_PATH\=SpeedrunApp.app/SpeedrunApp.debug.dylib
+    export EXECUTABLE_FOLDER_PATH\=SpeedrunApp.app
+    export EXECUTABLE_FOLDER_PATH_SHALLOW_BUNDLE_NO\=SpeedrunApp.app/MacOS
+    export EXECUTABLE_FOLDER_PATH_SHALLOW_BUNDLE_YES\=SpeedrunApp.app
+    export EXECUTABLE_NAME\=SpeedrunApp
+    export EXECUTABLE_PATH\=SpeedrunApp.app/SpeedrunApp
+    export EXTENSIONS_FOLDER_PATH\=SpeedrunApp.app/Extensions
+    export FILE_LIST\=/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Intermediates.noindex/SpeedrunApp.build/Debug-iphonesimulator/SpeedrunApp.build/Objects/LinkFileList
+    export FIXED_FILES_DIR\=/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Intermediates.noindex/SpeedrunApp.build/Debug-iphonesimulator/SpeedrunApp.build/FixedFiles
+    export FRAMEWORKS_FOLDER_PATH\=SpeedrunApp.app/Frameworks
+    export FRAMEWORK_FLAG_PREFIX\=-framework
+    export FRAMEWORK_SEARCH_PATHS\=/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator/PackageFrameworks\ /Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator\ \ \"..\"
+    export FRAMEWORK_VERSION\=A
+    export FULL_PRODUCT_NAME\=SpeedrunApp.app
+    export FUSE_BUILD_PHASES\=YES
+    export FUSE_BUILD_SCRIPT_PHASES\=NO
+    export GCC3_VERSION\=3.3
+    export GCC_C_LANGUAGE_STANDARD\=gnu11
+    export GCC_DYNAMIC_NO_PIC\=NO
+    export GCC_INLINES_ARE_PRIVATE_EXTERN\=YES
+    export GCC_NO_COMMON_BLOCKS\=YES
+    export GCC_OBJC_LEGACY_DISPATCH\=YES
+    export GCC_OPTIMIZATION_LEVEL\=0
+    export GCC_PFE_FILE_C_DIALECTS\=c\ objective-c\ c++\ objective-c++
+    export GCC_PREPROCESSOR_DEFINITIONS\=\ DEBUG\=1
+    export GCC_SYMBOLS_PRIVATE_EXTERN\=NO
+    export GCC_TREAT_WARNINGS_AS_ERRORS\=NO
+    export GCC_VERSION\=com.apple.compilers.llvm.clang.1_0
+    export GCC_VERSION_IDENTIFIER\=com_apple_compilers_llvm_clang_1_0
+    export GCC_WARN_64_TO_32_BIT_CONVERSION\=YES
+    export GCC_WARN_ABOUT_RETURN_TYPE\=YES_ERROR
+    export GCC_WARN_UNDECLARED_SELECTOR\=YES
+    export GCC_WARN_UNINITIALIZED_AUTOS\=YES_AGGRESSIVE
+    export GCC_WARN_UNUSED_FUNCTION\=YES
+    export GCC_WARN_UNUSED_VARIABLE\=YES
+    export GENERATED_MODULEMAP_DIR\=/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Intermediates.noindex/GeneratedModuleMaps-iphonesimulator
+    export GENERATE_INFOPLIST_FILE\=YES
+    export GENERATE_INTERMEDIATE_TEXT_BASED_STUBS\=YES
+    export GENERATE_PKGINFO_FILE\=YES
+    export GENERATE_PRELINK_OBJECT_FILE\=NO
+    export GENERATE_PROFILING_CODE\=NO
+    export GENERATE_TEXT_BASED_STUBS\=NO
+    export GID\=20
+    export GROUP\=staff
+    export HEADERMAP_INCLUDES_FLAT_ENTRIES_FOR_TARGET_BEING_BUILT\=YES
+    export HEADERMAP_INCLUDES_FRAMEWORK_ENTRIES_FOR_ALL_PRODUCT_TYPES\=YES
+    export HEADERMAP_INCLUDES_FRAMEWORK_ENTRIES_FOR_TARGETS_NOT_BEING_BUILT\=YES
+    export HEADERMAP_INCLUDES_NONPUBLIC_NONPRIVATE_HEADERS\=YES
+    export HEADERMAP_INCLUDES_PROJECT_HEADERS\=YES
+    export HEADERMAP_USES_FRAMEWORK_PREFIX_ENTRIES\=YES
+    export HEADERMAP_USES_VFS\=NO
+    export HEADER_SEARCH_PATHS\=/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator/include\ 
+    export HOME\=/Users/gaurav
+    export HOST_ARCH\=arm64
+    export HOST_PLATFORM\=macosx
+    export ICONV\=/usr/bin/iconv
+    export IMPLICIT_DEPENDENCY_DOMAIN\=default
+    export INDEX_STORE_COMPRESS\=NO
+    export INDEX_STORE_ONLY_PROJECT_FILES\=NO
+    export INFOPLIST_ENABLE_CFBUNDLEICONS_MERGE\=YES
+    export INFOPLIST_EXPAND_BUILD_SETTINGS\=YES
+    export INFOPLIST_KEY_CFBundleDisplayName\=Speedrun
+    export INFOPLIST_KEY_UILaunchScreen_Generation\=YES
+    export INFOPLIST_OUTPUT_FORMAT\=binary
+    export INFOPLIST_PATH\=SpeedrunApp.app/Info.plist
+    export INFOPLIST_PREPROCESS\=NO
+    export INFOSTRINGS_PATH\=SpeedrunApp.app/en.lproj/InfoPlist.strings
+    export INLINE_PRIVATE_FRAMEWORKS\=NO
+    export INSTALLAPI_IGNORE_SKIP_INSTALL\=YES
+    export INSTALLHDRS_COPY_PHASE\=NO
+    export INSTALLHDRS_SCRIPT_PHASE\=NO
+    export INSTALL_DIR\=/tmp/SpeedrunApp.dst/Applications
+    export INSTALL_GROUP\=staff
+    export INSTALL_MODE_FLAG\=u+w,go-w,a+rX
+    export INSTALL_OWNER\=gaurav
+    export INSTALL_PATH\=/Applications
+    export INSTALL_ROOT\=/tmp/SpeedrunApp.dst
+    export IPHONEOS_DEPLOYMENT_TARGET\=15.0
+    export IS_UNOPTIMIZED_BUILD\=YES
+    export JAVAC_DEFAULT_FLAGS\=-J-Xms64m\ -J-XX:NewSize\=4M\ -J-Dfile.encoding\=UTF8
+    export JAVA_APP_STUB\=/System/Library/Frameworks/JavaVM.framework/Resources/MacOS/JavaApplicationStub
+    export JAVA_ARCHIVE_CLASSES\=YES
+    export JAVA_ARCHIVE_TYPE\=JAR
+    export JAVA_COMPILER\=/usr/bin/javac
+    export JAVA_FOLDER_PATH\=SpeedrunApp.app/Java
+    export JAVA_FRAMEWORK_RESOURCES_DIRS\=Resources
+    export JAVA_JAR_FLAGS\=cv
+    export JAVA_SOURCE_SUBDIR\=.
+    export JAVA_USE_DEPENDENCIES\=YES
+    export JAVA_ZIP_FLAGS\=-urg
+    export JIKES_DEFAULT_FLAGS\=+E\ +OLDCSO
+    export KEEP_PRIVATE_EXTERNS\=NO
+    export LD_DEPENDENCY_INFO_FILE\=/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Intermediates.noindex/SpeedrunApp.build/Debug-iphonesimulator/SpeedrunApp.build/Objects-normal/undefined_arch/SpeedrunApp_dependency_info.dat
+    export LD_EXPORT_SYMBOLS\=YES
+    export LD_GENERATE_MAP_FILE\=NO
+    export LD_MAP_FILE_PATH\=/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Intermediates.noindex/SpeedrunApp.build/Debug-iphonesimulator/SpeedrunApp.build/SpeedrunApp-LinkMap-normal-undefined_arch.txt
+    export LD_NO_PIE\=NO
+    export LD_QUOTE_LINKER_ARGUMENTS_FOR_COMPILER_DRIVER\=YES
+    export LD_RUNPATH_SEARCH_PATHS\=/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator/PackageFrameworks\ \ @executable_path/Frameworks
+    export LD_RUNPATH_SEARCH_PATHS_YES\=@loader_path/../Frameworks
+    export LD_SHARED_CACHE_ELIGIBLE\=Automatic
+    export LD_WARN_DUPLICATE_LIBRARIES\=NO
+    export LD_WARN_UNUSED_DYLIBS\=NO
+    export LEGACY_DEVELOPER_DIR\=/Applications/Xcode.app/Contents/PlugIns/Xcode3Core.ideplugin/Contents/SharedSupport/Developer
+    export LEX\=lex
+    export LIBRARY_DEXT_INSTALL_PATH\=/Library/DriverExtensions
+    export LIBRARY_FLAG_NOSPACE\=YES
+    export LIBRARY_FLAG_PREFIX\=-l
+    export LIBRARY_KEXT_INSTALL_PATH\=/Library/Extensions
+    export LIBRARY_SEARCH_PATHS\=/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator\ 
+    export LINKER_DISPLAYS_MANGLED_NAMES\=NO
+    export LINK_FILE_LIST_normal_arm64\=/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Intermediates.noindex/SpeedrunApp.build/Debug-iphonesimulator/SpeedrunApp.build/Objects-normal/arm64/SpeedrunApp.LinkFileList
+    export LINK_OBJC_RUNTIME\=YES
+    export LINK_WITH_STANDARD_LIBRARIES\=YES
+    export LLVM_TARGET_TRIPLE_OS_VERSION\=ios15.0
+    export LLVM_TARGET_TRIPLE_SUFFIX\=-simulator
+    export LLVM_TARGET_TRIPLE_VENDOR\=apple
+    export LM_AUX_CONST_METADATA_LIST_PATH_normal_arm64\=/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Intermediates.noindex/SpeedrunApp.build/Debug-iphonesimulator/SpeedrunApp.build/Objects-normal/arm64/SpeedrunApp.SwiftConstValuesFileList
+    export LOCALIZATION_EXPORT_SUPPORTED\=YES
+    export LOCALIZATION_PREFERS_STRING_CATALOGS\=NO
+    export LOCALIZED_RESOURCES_FOLDER_PATH\=SpeedrunApp.app/en.lproj
+    export LOCALIZED_STRING_CODE_COMMENTS\=NO
+    export LOCALIZED_STRING_MACRO_NAMES\=NSLocalizedString\ CFCopyLocalizedString
+    export LOCALIZED_STRING_SWIFTUI_SUPPORT\=YES
+    export LOCAL_ADMIN_APPS_DIR\=/Applications/Utilities
+    export LOCAL_APPS_DIR\=/Applications
+    export LOCAL_DEVELOPER_DIR\=/Library/Developer
+    export LOCAL_LIBRARY_DIR\=/Library
+    export LOCROOT\=/Users/gaurav/Anki/mobile/SpeedrunApp
+    export LOCSYMROOT\=/Users/gaurav/Anki/mobile/SpeedrunApp
+    export MACH_O_TYPE\=mh_execute
+    export MAC_OS_X_PRODUCT_BUILD_VERSION\=25F80
+    export MAC_OS_X_VERSION_ACTUAL\=260501
+    export MAC_OS_X_VERSION_MAJOR\=260000
+    export MAC_OS_X_VERSION_MINOR\=260500
+    export MAKE_MERGEABLE\=NO
+    export MARKETING_VERSION\=0.1.0
+    export MERGEABLE_LIBRARY\=NO
+    export MERGED_BINARY_TYPE\=none
+    export MERGE_LINKED_LIBRARIES\=NO
+    export METAL_LIBRARY_FILE_BASE\=default
+    export METAL_LIBRARY_OUTPUT_DIR\=/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator/SpeedrunApp.app
+    export MODULES_FOLDER_PATH\=SpeedrunApp.app/Modules
+    export MODULE_CACHE_DIR\=/Users/gaurav/Library/Developer/Xcode/DerivedData/ModuleCache.noindex
+    export MTL_ENABLE_DEBUG_INFO\=INCLUDE_SOURCE
+    export MTL_FAST_MATH\=YES
+    export NATIVE_ARCH\=arm64
+    export NATIVE_ARCH_32_BIT\=arm
+    export NATIVE_ARCH_64_BIT\=arm64
+    export NATIVE_ARCH_ACTUAL\=arm64
+    export NO_COMMON\=YES
+    export OBJC_ABI_VERSION\=2
+    export OBJECT_FILE_DIR\=/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Intermediates.noindex/SpeedrunApp.build/Debug-iphonesimulator/SpeedrunApp.build/Objects
+    export OBJECT_FILE_DIR_normal\=/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Intermediates.noindex/SpeedrunApp.build/Debug-iphonesimulator/SpeedrunApp.build/Objects-normal
+    export OBJROOT\=/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Intermediates.noindex
+    export ONLY_ACTIVE_ARCH\=YES
+    export OS\=MACOS
+    export OSAC\=/usr/bin/osacompile
+    export OTHER_CFLAGS\=-fmodule-map-file\=/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Intermediates.noindex/GeneratedModuleMaps-iphonesimulator/SwiftProtobuf.modulemap\ 
+    export OTHER_CPLUSPLUSFLAGS\=-fmodule-map-file\=/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Intermediates.noindex/GeneratedModuleMaps-iphonesimulator/SwiftProtobuf.modulemap\ 
+    export OTHER_LDFLAGS\=-Wl,-no_warn_duplicate_libraries\ -lc++\ -lz
+    export PACKAGE_TYPE\=com.apple.package-type.wrapper.application
+    export PASCAL_STRINGS\=YES
+    export PATH\=/Applications/Xcode.app/Contents/SharedFrameworks/SwiftBuild.framework/Versions/A/PlugIns/SWBBuildService.bundle/Contents/PlugIns/SWBUniversalPlatformPlugin.bundle/Contents/Frameworks/SWBUniversalPlatform.framework/Resources:/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin:/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/local/bin:/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/libexec:/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/usr/bin:/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/usr/local/bin:/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/local/bin:/Applications/Xcode.app/Contents/Developer/usr/bin:/Applications/Xcode.app/Contents/Developer/usr/local/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/Users/gaurav/.nvm/versions/node/v22.23.1/bin:/Library/Frameworks/Python.framework/Versions/3.14/bin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin:/pkg/env/global/bin:/Library/Apple/usr/bin
+    export PATH_PREFIXES_EXCLUDED_FROM_HEADER_DEPENDENCIES\=/usr/include\ /usr/local/include\ /System/Library/Frameworks\ /System/Library/PrivateFrameworks\ /Applications/Xcode.app/Contents/Developer/Headers\ /Applications/Xcode.app/Contents/Developer/SDKs\ /Applications/Xcode.app/Contents/Developer/Platforms
+    export PBDEVELOPMENTPLIST_PATH\=SpeedrunApp.app/pbdevelopment.plist
+    export PER_ARCH_MODULE_FILE_DIR\=/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Intermediates.noindex/SpeedrunApp.build/Debug-iphonesimulator/SpeedrunApp.build/Objects-normal/undefined_arch
+    export PER_ARCH_OBJECT_FILE_DIR\=/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Intermediates.noindex/SpeedrunApp.build/Debug-iphonesimulator/SpeedrunApp.build/Objects-normal/undefined_arch
+    export PER_VARIANT_OBJECT_FILE_DIR\=/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Intermediates.noindex/SpeedrunApp.build/Debug-iphonesimulator/SpeedrunApp.build/Objects-normal
+    export PKGINFO_FILE_PATH\=/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Intermediates.noindex/SpeedrunApp.build/Debug-iphonesimulator/SpeedrunApp.build/PkgInfo
+    export PKGINFO_PATH\=SpeedrunApp.app/PkgInfo
+    export PLATFORM_DEVELOPER_APPLICATIONS_DIR\=/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Applications
+    export PLATFORM_DEVELOPER_BIN_DIR\=/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin
+    export PLATFORM_DEVELOPER_LIBRARY_DIR\=/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library
+    export PLATFORM_DEVELOPER_SDK_DIR\=/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs
+    export PLATFORM_DEVELOPER_TOOLS_DIR\=/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Tools
+    export PLATFORM_DEVELOPER_USR_DIR\=/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr
+    export PLATFORM_DIR\=/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform
+    export PLATFORM_DISPLAY_NAME\=iOS\ Simulator
+    export PLATFORM_FAMILY_NAME\=iOS
+    export PLATFORM_NAME\=iphonesimulator
+    export PLATFORM_PREFERRED_ARCH\=x86_64
+    export PLATFORM_PRODUCT_BUILD_VERSION\=23F81a
+    export PLATFORM_REQUIRES_SWIFT_AUTOLINK_EXTRACT\=NO
+    export PLATFORM_REQUIRES_SWIFT_MODULEWRAP\=NO
+    export PLATFORM_USES_DSYMS\=YES
+    export PLIST_FILE_OUTPUT_FORMAT\=binary
+    export PLUGINS_FOLDER_PATH\=SpeedrunApp.app/PlugIns
+    export PRECOMPS_INCLUDE_HEADERS_FROM_BUILT_PRODUCTS_DIR\=YES
+    export PRECOMP_DESTINATION_DIR\=/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Intermediates.noindex/SpeedrunApp.build/Debug-iphonesimulator/SpeedrunApp.build/PrefixHeaders
+    export PRIVATE_HEADERS_FOLDER_PATH\=SpeedrunApp.app/PrivateHeaders
+    export PROCESSED_INFOPLIST_PATH\=/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Intermediates.noindex/SpeedrunApp.build/Debug-iphonesimulator/SpeedrunApp.build/Objects-normal/undefined_arch/Processed-Info.plist
+    export PRODUCT_BUNDLE_IDENTIFIER\=net.ankiweb.speedrun
+    export PRODUCT_BUNDLE_PACKAGE_TYPE\=APPL
+    export PRODUCT_MODULE_NAME\=SpeedrunApp
+    export PRODUCT_NAME\=SpeedrunApp
+    export PRODUCT_SETTINGS_PATH\=
+    export PRODUCT_TYPE\=com.apple.product-type.application
+    export PROFILING_CODE\=NO
+    export PROJECT\=SpeedrunApp
+    export PROJECT_DERIVED_FILE_DIR\=/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Intermediates.noindex/SpeedrunApp.build/DerivedSources
+    export PROJECT_DIR\=/Users/gaurav/Anki/mobile/SpeedrunApp
+    export PROJECT_FILE_PATH\=/Users/gaurav/Anki/mobile/SpeedrunApp/SpeedrunApp.xcodeproj
+    export PROJECT_GUID\=48dfbd77d74faf25ea572979957d74dc
+    export PROJECT_NAME\=SpeedrunApp
+    export PROJECT_TEMP_DIR\=/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Intermediates.noindex/SpeedrunApp.build
+    export PROJECT_TEMP_ROOT\=/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Intermediates.noindex
+    export PROVISIONING_PROFILE_REQUIRED\=NO
+    export PROVISIONING_PROFILE_REQUIRED_YES_YES\=YES
+    export PROVISIONING_PROFILE_SUPPORTED\=YES
+    export PUBLIC_HEADERS_FOLDER_PATH\=SpeedrunApp.app/Headers
+    export RECOMMENDED_IPHONEOS_DEPLOYMENT_TARGET\=15.0
+    export RECURSIVE_SEARCH_PATHS_FOLLOW_SYMLINKS\=YES
+    export REMOVE_CVS_FROM_RESOURCES\=YES
+    export REMOVE_GIT_FROM_RESOURCES\=YES
+    export REMOVE_HEADERS_FROM_EMBEDDED_BUNDLES\=YES
+    export REMOVE_HG_FROM_RESOURCES\=YES
+    export REMOVE_STATIC_EXECUTABLES_FROM_EMBEDDED_BUNDLES\=YES
+    export REMOVE_SVN_FROM_RESOURCES\=YES
+    export RESCHEDULE_INDEPENDENT_HEADERS_PHASES\=YES
+    export REZ_COLLECTOR_DIR\=/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Intermediates.noindex/SpeedrunApp.build/Debug-iphonesimulator/SpeedrunApp.build/ResourceManagerResources
+    export REZ_OBJECTS_DIR\=/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Intermediates.noindex/SpeedrunApp.build/Debug-iphonesimulator/SpeedrunApp.build/ResourceManagerResources/Objects
+    export REZ_SEARCH_PATHS\=/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator\ 
+    export RPATH_ORIGIN\=@loader_path
+    export RUNTIME_EXCEPTION_ALLOW_DYLD_ENVIRONMENT_VARIABLES\=NO
+    export RUNTIME_EXCEPTION_ALLOW_JIT\=NO
+    export RUNTIME_EXCEPTION_ALLOW_UNSIGNED_EXECUTABLE_MEMORY\=NO
+    export RUNTIME_EXCEPTION_DEBUGGING_TOOL\=NO
+    export RUNTIME_EXCEPTION_DISABLE_EXECUTABLE_PAGE_PROTECTION\=NO
+    export RUNTIME_EXCEPTION_DISABLE_LIBRARY_VALIDATION\=NO
+    export SCANNING_PCM_KEEP_CACHE_DIRECTORY\=YES
+    export SCAN_ALL_SOURCE_FILES_FOR_INCLUDES\=NO
+    export SCRIPTS_FOLDER_PATH\=SpeedrunApp.app/Scripts
+    export SCRIPT_INPUT_FILE_COUNT\=0
+    export SCRIPT_INPUT_FILE_LIST_COUNT\=0
+    export SCRIPT_OUTPUT_FILE_COUNT\=0
+    export SCRIPT_OUTPUT_FILE_LIST_COUNT\=0
+    export SDKROOT\=/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.5.sdk
+    export SDK_DIR\=/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.5.sdk
+    export SDK_DIR_iphonesimulator\=/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.5.sdk
+    export SDK_DIR_iphonesimulator26_5\=/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.5.sdk
+    export SDK_NAME\=iphonesimulator26.5
+    export SDK_NAMES\=iphonesimulator26.5
+    export SDK_PRODUCT_BUILD_VERSION\=23F81a
+    export SDK_STAT_CACHE_DIR\=/Users/gaurav/Library/Developer/Xcode/DerivedData
+    export SDK_STAT_CACHE_ENABLE\=YES
+    export SDK_STAT_CACHE_PATH\=/Users/gaurav/Library/Developer/Xcode/DerivedData/SDKStatCaches.noindex/iphonesimulator26.5-23F81a-6cfe768891a92b912361537c460fe42b.sdkstatcache
+    export SDK_VERSION\=26.5
+    export SDK_VERSION_ACTUAL\=260500
+    export SDK_VERSION_MAJOR\=260000
+    export SDK_VERSION_MINOR\=260500
+    export SED\=/usr/bin/sed
+    export SEPARATE_STRIP\=NO
+    export SEPARATE_SYMBOL_EDIT\=NO
+    export SET_DIR_MODE_OWNER_GROUP\=YES
+    export SET_FILE_MODE_OWNER_GROUP\=NO
+    export SHALLOW_BUNDLE\=YES
+    export SHALLOW_BUNDLE_TRIPLE\=ios-simulator
+    export SHALLOW_BUNDLE_ios_macabi\=NO
+    export SHALLOW_BUNDLE_macos\=NO
+    export SHARED_DERIVED_FILE_DIR\=/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator/DerivedSources
+    export SHARED_FRAMEWORKS_FOLDER_PATH\=SpeedrunApp.app/SharedFrameworks
+    export SHARED_PRECOMPS_DIR\=/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Intermediates.noindex/PrecompiledHeaders
+    export SHARED_SUPPORT_FOLDER_PATH\=SpeedrunApp.app/SharedSupport
+    export SKIP_INSTALL\=NO
+    export SKIP_MERGEABLE_LIBRARY_BUNDLE_HOOK\=NO
+    export SOURCE_ROOT\=/Users/gaurav/Anki/mobile/SpeedrunApp
+    export SRCROOT\=/Users/gaurav/Anki/mobile/SpeedrunApp
+    export STRINGSDATA_DIR\=/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Intermediates.noindex/SpeedrunApp.build/Debug-iphonesimulator/SpeedrunApp.build/Objects-normal/undefined_arch
+    export STRINGSDATA_ROOT\=/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Intermediates.noindex/SpeedrunApp.build/Debug-iphonesimulator/SpeedrunApp.build
+    export STRINGS_FILE_INFOPLIST_RENAME\=YES
+    export STRINGS_FILE_OUTPUT_ENCODING\=binary
+    export STRING_CATALOG_GENERATE_SYMBOLS\=NO
+    export STRIP_BITCODE_FROM_COPIED_FILES\=NO
+    export STRIP_INSTALLED_PRODUCT\=NO
+    export STRIP_STYLE\=all
+    export STRIP_SWIFT_SYMBOLS\=YES
+    export SUPPORTED_DEVICE_FAMILIES\=1,2
+    export SUPPORTED_PLATFORMS\=iphoneos\ iphonesimulator
+    export SUPPORTS_MACCATALYST\=NO
+    export SUPPORTS_ON_DEMAND_RESOURCES\=YES
+    export SUPPORTS_TEXT_BASED_API\=NO
+    export SUPPRESS_WARNINGS\=NO
+    export SWIFT_ACTIVE_COMPILATION_CONDITIONS\=DEBUG
+    export SWIFT_EMIT_CONST_VALUE_PROTOCOLS\=AnyResolverProviding\ AppEntity\ AppEnum\ AppExtension\ AppIntent\ AppIntentsPackage\ AppShortcutProviding\ AppShortcutsProvider\ AppUnionValue\ AppUnionValueCasesProviding\ DynamicOptionsProvider\ EntityQuery\ ExtensionPointDefining\ IntentValueQuery\ Resolver\ TransientEntity\ _AssistantIntentsProvider\ _GenerativeFunctionExtractable\ _IntentValueRepresentable
+    export SWIFT_EMIT_LOC_STRINGS\=NO
+    export SWIFT_ENABLE_EXPLICIT_MODULES\=YES
+    export SWIFT_INCLUDE_PATHS\=/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator\ /Users/gaurav/Anki/mobile/SpeedrunApp/CAnkiFFI
+    export SWIFT_OPTIMIZATION_LEVEL\=-Onone
+    export SWIFT_PLATFORM_TARGET_PREFIX\=ios
+    export SWIFT_RESPONSE_FILE_PATH_normal_arm64\=/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Intermediates.noindex/SpeedrunApp.build/Debug-iphonesimulator/SpeedrunApp.build/Objects-normal/arm64/SpeedrunApp.SwiftFileList
+    export SWIFT_VERSION\=5.0
+    export SYMROOT\=/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products
+    export SYSTEM_ADMIN_APPS_DIR\=/Applications/Utilities
+    export SYSTEM_APPS_DIR\=/Applications
+    export SYSTEM_CORE_SERVICES_DIR\=/System/Library/CoreServices
+    export SYSTEM_DEMOS_DIR\=/Applications/Extras
+    export SYSTEM_DEVELOPER_APPS_DIR\=/Applications/Xcode.app/Contents/Developer/Applications
+    export SYSTEM_DEVELOPER_BIN_DIR\=/Applications/Xcode.app/Contents/Developer/usr/bin
+    export SYSTEM_DEVELOPER_DEMOS_DIR\=/Applications/Xcode.app/Contents/Developer/Applications/Utilities/Built\ Examples
+    export SYSTEM_DEVELOPER_DIR\=/Applications/Xcode.app/Contents/Developer
+    export SYSTEM_DEVELOPER_DOC_DIR\=/Applications/Xcode.app/Contents/Developer/ADC\ Reference\ Library
+    export SYSTEM_DEVELOPER_GRAPHICS_TOOLS_DIR\=/Applications/Xcode.app/Contents/Developer/Applications/Graphics\ Tools
+    export SYSTEM_DEVELOPER_JAVA_TOOLS_DIR\=/Applications/Xcode.app/Contents/Developer/Applications/Java\ Tools
+    export SYSTEM_DEVELOPER_PERFORMANCE_TOOLS_DIR\=/Applications/Xcode.app/Contents/Developer/Applications/Performance\ Tools
+    export SYSTEM_DEVELOPER_RELEASENOTES_DIR\=/Applications/Xcode.app/Contents/Developer/ADC\ Reference\ Library/releasenotes
+    export SYSTEM_DEVELOPER_TOOLS\=/Applications/Xcode.app/Contents/Developer/Tools
+    export SYSTEM_DEVELOPER_TOOLS_DOC_DIR\=/Applications/Xcode.app/Contents/Developer/ADC\ Reference\ Library/documentation/DeveloperTools
+    export SYSTEM_DEVELOPER_TOOLS_RELEASENOTES_DIR\=/Applications/Xcode.app/Contents/Developer/ADC\ Reference\ Library/releasenotes/DeveloperTools
+    export SYSTEM_DEVELOPER_USR_DIR\=/Applications/Xcode.app/Contents/Developer/usr
+    export SYSTEM_DEVELOPER_UTILITIES_DIR\=/Applications/Xcode.app/Contents/Developer/Applications/Utilities
+    export SYSTEM_DEXT_INSTALL_PATH\=/System/Library/DriverExtensions
+    export SYSTEM_DOCUMENTATION_DIR\=/Library/Documentation
+    export SYSTEM_EXTENSIONS_FOLDER_PATH\=SpeedrunApp.app/SystemExtensions
+    export SYSTEM_EXTENSIONS_FOLDER_PATH_SHALLOW_BUNDLE_NO\=SpeedrunApp.app/Library/SystemExtensions
+    export SYSTEM_EXTENSIONS_FOLDER_PATH_SHALLOW_BUNDLE_YES\=SpeedrunApp.app/SystemExtensions
+    export SYSTEM_KEXT_INSTALL_PATH\=/System/Library/Extensions
+    export SYSTEM_LIBRARY_DIR\=/System/Library
+    export TAPI_DEMANGLE\=YES
+    export TAPI_ENABLE_PROJECT_HEADERS\=NO
+    export TAPI_LANGUAGE\=objective-c
+    export TAPI_LANGUAGE_STANDARD\=compiler-default
+    export TAPI_USE_SRCROOT\=YES
+    export TAPI_VERIFY_MODE\=Pedantic
+    export TARGETED_DEVICE_FAMILY\=1,2
+    export TARGETNAME\=SpeedrunApp
+    export TARGET_BUILD_DIR\=/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator
+    export TARGET_DEVICE_IDENTIFIER\=0279A3B1-FAE4-4ACE-8FEB-1F11CB6DD290
+    export TARGET_DEVICE_MODEL\=iPhone18,3
+    export TARGET_DEVICE_OS_VERSION\=26.5
+    export TARGET_DEVICE_PLATFORM_NAME\=iphonesimulator
+    export TARGET_NAME\=SpeedrunApp
+    export TARGET_TEMP_DIR\=/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Intermediates.noindex/SpeedrunApp.build/Debug-iphonesimulator/SpeedrunApp.build
+    export TEMP_DIR\=/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Intermediates.noindex/SpeedrunApp.build/Debug-iphonesimulator/SpeedrunApp.build
+    export TEMP_FILES_DIR\=/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Intermediates.noindex/SpeedrunApp.build/Debug-iphonesimulator/SpeedrunApp.build
+    export TEMP_FILE_DIR\=/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Intermediates.noindex/SpeedrunApp.build/Debug-iphonesimulator/SpeedrunApp.build
+    export TEMP_ROOT\=/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Intermediates.noindex
+    export TEMP_SANDBOX_DIR\=/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Intermediates.noindex/TemporaryTaskSandboxes
+    export TEST_FRAMEWORK_SEARCH_PATHS\=\ /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks\ /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.5.sdk/Developer/Library/Frameworks
+    export TEST_LIBRARY_SEARCH_PATHS\=\ /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib
+    export TOOLCHAINS\=com.apple.dt.toolchain.XcodeDefault
+    export TOOLCHAIN_DIR\=/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain
+    export TREAT_MISSING_BASELINES_AS_TEST_FAILURES\=NO
+    export TREAT_MISSING_SCRIPT_PHASE_OUTPUTS_AS_ERRORS\=NO
+    export UID\=501
+    export UNINSTALLED_PRODUCTS_DIR\=/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Intermediates.noindex/UninstalledProducts
+    export UNLOCALIZED_RESOURCES_FOLDER_PATH\=SpeedrunApp.app
+    export UNLOCALIZED_RESOURCES_FOLDER_PATH_SHALLOW_BUNDLE_NO\=SpeedrunApp.app/Resources
+    export UNLOCALIZED_RESOURCES_FOLDER_PATH_SHALLOW_BUNDLE_YES\=SpeedrunApp.app
+    export UNSTRIPPED_PRODUCT\=NO
+    export USER\=gaurav
+    export USER_APPS_DIR\=/Users/gaurav/Applications
+    export USER_LIBRARY_DIR\=/Users/gaurav/Library
+    export USE_DYNAMIC_NO_PIC\=YES
+    export USE_HEADERMAP\=YES
+    export USE_HEADER_SYMLINKS\=NO
+    export VALIDATE_DEVELOPMENT_ASSET_PATHS\=YES_ERROR
+    export VALIDATE_PRODUCT\=NO
+    export VALID_ARCHS\=arm64\ x86_64
+    export VERBOSE_PBXCP\=NO
+    export VERSIONPLIST_PATH\=SpeedrunApp.app/version.plist
+    export VERSION_INFO_BUILDER\=gaurav
+    export VERSION_INFO_FILE\=SpeedrunApp_vers.c
+    export VERSION_INFO_STRING\=\"@\(\#\)PROGRAM:SpeedrunApp\ \ PROJECT:SpeedrunApp-1\"
+    export WORKSPACE_DIR\=/Users/gaurav/Anki/mobile/SpeedrunApp/SpeedrunApp.xcodeproj
+    export WRAPPER_EXTENSION\=app
+    export WRAPPER_NAME\=SpeedrunApp.app
+    export WRAPPER_SUFFIX\=.app
+    export WRAP_ASSET_PACKS_IN_SEPARATE_DIRECTORIES\=NO
+    export XCODE_APP_SUPPORT_DIR\=/Applications/Xcode.app/Contents/Developer/Library/Xcode
+    export XCODE_PRODUCT_BUILD_VERSION\=17F113
+    export XCODE_VERSION_ACTUAL\=2660
+    export XCODE_VERSION_MAJOR\=2600
+    export XCODE_VERSION_MINOR\=2660
+    export XPCSERVICES_FOLDER_PATH\=SpeedrunApp.app/XPCServices
+    export YACC\=yacc
+    export _DISCOVER_COMMAND_LINE_LINKER_INPUTS\=YES
+    export _DISCOVER_COMMAND_LINE_LINKER_INPUTS_INCLUDE_WL\=YES
+    export _LD_MULTIARCH\=YES
+    export _WRAPPER_CONTENTS_DIR_SHALLOW_BUNDLE_NO\=/Contents
+    export _WRAPPER_PARENT_PATH_SHALLOW_BUNDLE_NO\=/..
+    export _WRAPPER_RESOURCES_DIR_SHALLOW_BUNDLE_NO\=/Resources
+    export __DIAGNOSE_DEPRECATED_ARCHS\=YES
+    export __IS_NOT_MACOS\=YES
+    export __IS_NOT_MACOS_macosx\=NO
+    export __IS_NOT_SIMULATOR\=NO
+    export __IS_NOT_SIMULATOR_simulator\=NO
+    export __ORIGINAL_SDK_DEFINED_LLVM_TARGET_TRIPLE_SYS\=ios
+    export arch\=undefined_arch
+    export variant\=normal
+    /bin/sh -c /Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Intermediates.noindex/SpeedrunApp.build/Debug-iphonesimulator/SpeedrunApp.build/Script-E4229D6DE40D7F598C379E9E.sh
+
+ExtractAppIntentsMetadata (in target 'SpeedrunApp' from project 'SpeedrunApp')
+    cd /Users/gaurav/Anki/mobile/SpeedrunApp
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/appintentsmetadataprocessor --toolchain-dir /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --module-name SpeedrunApp --sdk-root /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.5.sdk --xcode-version 17F113 --platform-family iOS --deployment-target 15.0 --bundle-identifier net.ankiweb.speedrun --output /Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator/SpeedrunApp.app --target-triple arm64-apple-ios15.0-simulator --binary-file /Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator/SpeedrunApp.app/SpeedrunApp --dependency-file /Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Intermediates.noindex/SpeedrunApp.build/Debug-iphonesimulator/SpeedrunApp.build/Objects-normal/arm64/SpeedrunApp_dependency_info.dat --stringsdata-file /Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Intermediates.noindex/SpeedrunApp.build/Debug-iphonesimulator/SpeedrunApp.build/Objects-normal/arm64/ExtractedAppShortcutsMetadata.stringsdata --source-file-list /Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Intermediates.noindex/SpeedrunApp.build/Debug-iphonesimulator/SpeedrunApp.build/Objects-normal/arm64/SpeedrunApp.SwiftFileList --metadata-file-list /Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Intermediates.noindex/SpeedrunApp.build/Debug-iphonesimulator/SpeedrunApp.build/SpeedrunApp.DependencyMetadataFileList --static-metadata-file-list /Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Intermediates.noindex/SpeedrunApp.build/Debug-iphonesimulator/SpeedrunApp.build/SpeedrunApp.DependencyStaticMetadataFileList --swift-const-vals-list /Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Intermediates.noindex/SpeedrunApp.build/Debug-iphonesimulator/SpeedrunApp.build/Objects-normal/arm64/SpeedrunApp.SwiftConstValuesFileList --compile-time-extraction --deployment-aware-processing --validate-assistant-intents --no-app-shortcuts-localization
+2026-07-03 19:08:20.465 appintentsmetadataprocessor[25738:10979817] Starting appintentsmetadataprocessor export
+2026-07-03 19:08:20.471 appintentsmetadataprocessor[25738:10979817] warning: Metadata extraction skipped. No AppIntents.framework dependency found.
+
+CopySwiftLibs /Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator/SpeedrunApp.app (in target 'SpeedrunApp' from project 'SpeedrunApp')
+    cd /Users/gaurav/Anki/mobile/SpeedrunApp
+    builtin-swiftStdLibTool --copy --verbose --scan-executable /Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator/SpeedrunApp.app/SpeedrunApp.debug.dylib --scan-folder /Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator/SpeedrunApp.app/Frameworks --scan-folder /Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator/SpeedrunApp.app/PlugIns --scan-folder /Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator/SpeedrunApp.app/SystemExtensions --scan-folder /Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator/SpeedrunApp.app/Extensions --platform iphonesimulator --toolchain /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --destination /Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator/SpeedrunApp.app/Frameworks --strip-bitcode --strip-bitcode-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/bitcode_strip --emit-dependency-info /Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Intermediates.noindex/SpeedrunApp.build/Debug-iphonesimulator/SpeedrunApp.build/SwiftStdLibToolInputDependencies.dep --filter-for-swift-os
+Ignoring --strip-bitcode because --sign was not passed
+
+ProcessInfoPlistFile /Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator/SpeedrunApp.app/Info.plist /Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Intermediates.noindex/SpeedrunApp.build/Debug-iphonesimulator/SpeedrunApp.build/empty-SpeedrunApp.plist (in target 'SpeedrunApp' from project 'SpeedrunApp')
+    cd /Users/gaurav/Anki/mobile/SpeedrunApp
+    builtin-infoPlistUtility /Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Intermediates.noindex/SpeedrunApp.build/Debug-iphonesimulator/SpeedrunApp.build/empty-SpeedrunApp.plist -producttype com.apple.product-type.application -genpkginfo /Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator/SpeedrunApp.app/PkgInfo -expandbuildsettings -format binary -platform iphonesimulator -additionalcontentfile /Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Intermediates.noindex/SpeedrunApp.build/Debug-iphonesimulator/SpeedrunApp.build/assetcatalog_generated_info.plist -scanforprivacyfile /Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator/SpeedrunApp.app/SwiftProtobuf_SwiftProtobuf.bundle -o /Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator/SpeedrunApp.app/Info.plist
+
+ProcessInfoPlistFile /Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator/SpeedrunApp.app/PlugIns/SpeedrunAppTests.xctest/Info.plist /Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Intermediates.noindex/SpeedrunApp.build/Debug-iphonesimulator/SpeedrunAppTests.build/empty-SpeedrunAppTests.plist (in target 'SpeedrunAppTests' from project 'SpeedrunApp')
+    cd /Users/gaurav/Anki/mobile/SpeedrunApp
+    builtin-infoPlistUtility /Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Intermediates.noindex/SpeedrunApp.build/Debug-iphonesimulator/SpeedrunAppTests.build/empty-SpeedrunAppTests.plist -producttype com.apple.product-type.bundle.unit-test -expandbuildsettings -format binary -platform iphonesimulator -scanforprivacyfile /Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator/SpeedrunApp.app/PlugIns/SpeedrunAppTests.xctest/SwiftProtobuf_SwiftProtobuf.bundle -o /Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator/SpeedrunApp.app/PlugIns/SpeedrunAppTests.xctest/Info.plist
+
+Ld /Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator/SpeedrunApp.app/PlugIns/SpeedrunAppTests.xctest/SpeedrunAppTests normal (in target 'SpeedrunAppTests' from project 'SpeedrunApp')
+    cd /Users/gaurav/Anki/mobile/SpeedrunApp
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -Xlinker -reproducible -target arm64-apple-ios15.0-simulator -bundle -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.5.sdk -O0 -L/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Intermediates.noindex/EagerLinkingTBDs/Debug-iphonesimulator -L/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator -L/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib -F/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Intermediates.noindex/EagerLinkingTBDs/Debug-iphonesimulator -F/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator/PackageFrameworks -F/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator -iframework /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks -iframework /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.5.sdk/Developer/Library/Frameworks -filelist /Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Intermediates.noindex/SpeedrunApp.build/Debug-iphonesimulator/SpeedrunAppTests.build/Objects-normal/arm64/SpeedrunAppTests.LinkFileList -Xlinker -rpath -Xlinker /usr/lib/swift -Xlinker -rpath -Xlinker /Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator/PackageFrameworks -Xlinker -rpath -Xlinker @loader_path/Frameworks -Xlinker -rpath -Xlinker @executable_path/Frameworks -Xlinker -dead_strip -bundle_loader /Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator/SpeedrunApp.app/SpeedrunApp -Xlinker -object_path_lto -Xlinker /Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Intermediates.noindex/SpeedrunApp.build/Debug-iphonesimulator/SpeedrunAppTests.build/Objects-normal/arm64/SpeedrunAppTests_lto.o -rdynamic -Xlinker -no_deduplicate -Xlinker -objc_abi_version -Xlinker 2 -Xlinker -dependency_info -Xlinker /Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Intermediates.noindex/SpeedrunApp.build/Debug-iphonesimulator/SpeedrunAppTests.build/Objects-normal/arm64/SpeedrunAppTests_dependency_info.dat -fobjc-link-runtime -L/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator -L/usr/lib/swift -Xlinker -add_ast_path -Xlinker /Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Intermediates.noindex/SpeedrunApp.build/Debug-iphonesimulator/SpeedrunAppTests.build/Objects-normal/arm64/SpeedrunAppTests.swiftmodule @/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Intermediates.noindex/SpeedrunApp.build/Debug-iphonesimulator/SpeedrunAppTests.build/Objects-normal/arm64/SpeedrunAppTests-linker-args.resp -Wl,-no_warn_duplicate_libraries -Xlinker -needed_framework -Xlinker XCTest -framework XCTest -Xlinker -needed-lXCTestSwiftSupport -lXCTestSwiftSupport /Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator/SpeedrunApp.app/SpeedrunApp.debug.dylib -o /Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator/SpeedrunApp.app/PlugIns/SpeedrunAppTests.xctest/SpeedrunAppTests
+
+ExtractAppIntentsMetadata (in target 'SpeedrunAppTests' from project 'SpeedrunApp')
+    cd /Users/gaurav/Anki/mobile/SpeedrunApp
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/appintentsmetadataprocessor --toolchain-dir /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --module-name SpeedrunAppTests --sdk-root /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.5.sdk --xcode-version 17F113 --platform-family iOS --deployment-target 15.0 --bundle-identifier net.ankiweb.speedrun.tests --output /Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator/SpeedrunApp.app/PlugIns/SpeedrunAppTests.xctest --target-triple arm64-apple-ios15.0-simulator --binary-file /Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator/SpeedrunApp.app/PlugIns/SpeedrunAppTests.xctest/SpeedrunAppTests --dependency-file /Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Intermediates.noindex/SpeedrunApp.build/Debug-iphonesimulator/SpeedrunAppTests.build/Objects-normal/arm64/SpeedrunAppTests_dependency_info.dat --stringsdata-file /Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Intermediates.noindex/SpeedrunApp.build/Debug-iphonesimulator/SpeedrunAppTests.build/Objects-normal/arm64/ExtractedAppShortcutsMetadata.stringsdata --source-file-list /Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Intermediates.noindex/SpeedrunApp.build/Debug-iphonesimulator/SpeedrunAppTests.build/Objects-normal/arm64/SpeedrunAppTests.SwiftFileList --metadata-file-list /Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Intermediates.noindex/SpeedrunApp.build/Debug-iphonesimulator/SpeedrunAppTests.build/SpeedrunAppTests.DependencyMetadataFileList --static-metadata-file-list /Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Intermediates.noindex/SpeedrunApp.build/Debug-iphonesimulator/SpeedrunAppTests.build/SpeedrunAppTests.DependencyStaticMetadataFileList --swift-const-vals-list /Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Intermediates.noindex/SpeedrunApp.build/Debug-iphonesimulator/SpeedrunAppTests.build/Objects-normal/arm64/SpeedrunAppTests.SwiftConstValuesFileList --compile-time-extraction --deployment-aware-processing --validate-assistant-intents --no-app-shortcuts-localization
+2026-07-03 19:08:20.790 appintentsmetadataprocessor[25742:10979840] Starting appintentsmetadataprocessor export
+2026-07-03 19:08:20.792 appintentsmetadataprocessor[25742:10979840] warning: Metadata extraction skipped. No AppIntents.framework dependency found.
+
+CopySwiftLibs /Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator/SpeedrunApp.app/PlugIns/SpeedrunAppTests.xctest (in target 'SpeedrunAppTests' from project 'SpeedrunApp')
+    cd /Users/gaurav/Anki/mobile/SpeedrunApp
+    builtin-swiftStdLibTool --copy --verbose --scan-executable /Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator/SpeedrunApp.app/PlugIns/SpeedrunAppTests.xctest/SpeedrunAppTests --scan-folder /Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator/SpeedrunApp.app/PlugIns/SpeedrunAppTests.xctest/Frameworks --scan-folder /Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator/SpeedrunApp.app/PlugIns/SpeedrunAppTests.xctest/PlugIns --scan-folder /Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator/SpeedrunApp.app/PlugIns/SpeedrunAppTests.xctest/SystemExtensions --scan-folder /Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator/SpeedrunApp.app/PlugIns/SpeedrunAppTests.xctest/Extensions --platform iphonesimulator --toolchain /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --destination /Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator/SpeedrunApp.app/PlugIns/SpeedrunAppTests.xctest/Frameworks --strip-bitcode --scan-executable /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib/libXCTestSwiftSupport.dylib --strip-bitcode-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/bitcode_strip --emit-dependency-info /Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Intermediates.noindex/SpeedrunApp.build/Debug-iphonesimulator/SpeedrunAppTests.build/SwiftStdLibToolInputDependencies.dep --filter-for-swift-os
+Ignoring --strip-bitcode because --sign was not passed
+
+Validate /Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator/SpeedrunApp.app (in target 'SpeedrunApp' from project 'SpeedrunApp')
+    cd /Users/gaurav/Anki/mobile/SpeedrunApp
+    builtin-validationUtility /Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator/SpeedrunApp.app -shallow-bundle -infoplist-subpath Info.plist
+
+ProcessInfoPlistFile /Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator/SpeedrunAppUITests-Runner.app/PlugIns/SpeedrunAppUITests.xctest/Info.plist /Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Intermediates.noindex/SpeedrunApp.build/Debug-iphonesimulator/SpeedrunAppUITests.build/empty-SpeedrunAppUITests.plist (in target 'SpeedrunAppUITests' from project 'SpeedrunApp')
+    cd /Users/gaurav/Anki/mobile/SpeedrunApp
+    builtin-infoPlistUtility /Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Intermediates.noindex/SpeedrunApp.build/Debug-iphonesimulator/SpeedrunAppUITests.build/empty-SpeedrunAppUITests.plist -producttype com.apple.product-type.bundle.ui-testing -expandbuildsettings -format binary -platform iphonesimulator -additionalcontentfile /Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Intermediates.noindex/SpeedrunApp.build/Debug-iphonesimulator/SpeedrunAppUITests.build/ProductTypeInfoPlistAdditions.plist -o /Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator/SpeedrunAppUITests-Runner.app/PlugIns/SpeedrunAppUITests.xctest/Info.plist
+
+CopySwiftLibs /Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator/SpeedrunAppUITests-Runner.app/PlugIns/SpeedrunAppUITests.xctest (in target 'SpeedrunAppUITests' from project 'SpeedrunApp')
+    cd /Users/gaurav/Anki/mobile/SpeedrunApp
+    builtin-swiftStdLibTool --copy --verbose --scan-executable /Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator/SpeedrunAppUITests-Runner.app/PlugIns/SpeedrunAppUITests.xctest/SpeedrunAppUITests --scan-folder /Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator/SpeedrunAppUITests-Runner.app/PlugIns/SpeedrunAppUITests.xctest/Frameworks --scan-folder /Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator/SpeedrunAppUITests-Runner.app/PlugIns/SpeedrunAppUITests.xctest/PlugIns --scan-folder /Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator/SpeedrunAppUITests-Runner.app/PlugIns/SpeedrunAppUITests.xctest/SystemExtensions --scan-folder /Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator/SpeedrunAppUITests-Runner.app/PlugIns/SpeedrunAppUITests.xctest/Extensions --platform iphonesimulator --toolchain /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --destination /Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Products/Debug-iphonesimulator/SpeedrunAppUITests-Runner.app/PlugIns/SpeedrunAppUITests.xctest/Frameworks --strip-bitcode --scan-executable /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib/libXCTestSwiftSupport.dylib --strip-bitcode-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/bitcode_strip --emit-dependency-info /Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Build/Intermediates.noindex/SpeedrunApp.build/Debug-iphonesimulator/SpeedrunAppUITests.build/SwiftStdLibToolInputDependencies.dep --filter-for-swift-os
+Ignoring --strip-bitcode because --sign was not passed
+
+note: Run script build phase 'Bake OpenAI key' will be run during every build because the option to run the script phase "Based on dependency analysis" is unchecked. (in target 'SpeedrunApp' from project 'SpeedrunApp')
+IOSurfaceClientSetSurfaceNotify failed e00002c7
+2026-07-03 19:08:28.560010-0500 SpeedrunApp[25769:10980491] [General] Failed to send CA Event for app launch measurements for ca_event_type: 0 event_name: com.apple.app_launch_measurement.FirstFramePresentationMetric
+2026-07-03 19:08:28.768678-0500 SpeedrunApp[25769:10980492] [General] Failed to send CA Event for app launch measurements for ca_event_type: 1 event_name: com.apple.app_launch_measurement.ExtendedLaunchMetrics
+Test Suite 'All tests' started at 2026-07-03 19:08:28.980.
+Test Suite 'SpeedrunAppTests.xctest' started at 2026-07-03 19:08:28.980.
+Test Suite 'HeuristicCoachTests' started at 2026-07-03 19:08:28.980.
+Test Case '-[SpeedrunAppTests.HeuristicCoachTests testAnswerCorrect]' started.
+Test Case '-[SpeedrunAppTests.HeuristicCoachTests testAnswerCorrect]' passed (0.001 seconds).
+Test Case '-[SpeedrunAppTests.HeuristicCoachTests testEmptyReasoningIsLowEffort]' started.
+Test Case '-[SpeedrunAppTests.HeuristicCoachTests testEmptyReasoningIsLowEffort]' passed (0.001 seconds).
+Test Case '-[SpeedrunAppTests.HeuristicCoachTests testGradeMessagesAreFaithful]' started.
+Test Case '-[SpeedrunAppTests.HeuristicCoachTests testGradeMessagesAreFaithful]' passed (0.007 seconds).
+Test Case '-[SpeedrunAppTests.HeuristicCoachTests testInjectionIsCaught]' started.
+Test Case '-[SpeedrunAppTests.HeuristicCoachTests testInjectionIsCaught]' passed (0.001 seconds).
+Test Case '-[SpeedrunAppTests.HeuristicCoachTests testNoKeyFallsBack]' started.
+Test Case '-[SpeedrunAppTests.HeuristicCoachTests testNoKeyFallsBack]' passed (0.001 seconds).
+Test Case '-[SpeedrunAppTests.HeuristicCoachTests testOptimalKeyLoadsFromBundle]' started.
+Test Case '-[SpeedrunAppTests.HeuristicCoachTests testOptimalKeyLoadsFromBundle]' passed (0.012 seconds).
+Test Case '-[SpeedrunAppTests.HeuristicCoachTests testParseGradeResponse]' started.
+Test Case '-[SpeedrunAppTests.HeuristicCoachTests testParseGradeResponse]' passed (0.001 seconds).
+Test Suite 'HeuristicCoachTests' passed at 2026-07-03 19:08:29.005.
+	 Executed 7 tests, with 0 failures (0 unexpected) in 0.023 (0.024) seconds
+Test Suite 'SpeedrunAppTests.xctest' passed at 2026-07-03 19:08:29.005.
+	 Executed 7 tests, with 0 failures (0 unexpected) in 0.023 (0.025) seconds
+Test Suite 'All tests' passed at 2026-07-03 19:08:29.005.
+	 Executed 7 tests, with 0 failures (0 unexpected) in 0.023 (0.025) seconds
+Resolve Package Graph
+
+Fetching from https://github.com/apple/swift-protobuf.git (cached)
+skipping cache due to an error: Couldn’t fetch updates from remote repositories:
+    fatal: cannot use bare repository '/Users/gaurav/Library/Caches/org.swift.swiftpm/repositories/swift-protobuf-88c150a7' (safe.bareRepository is 'explicit')2026-07-03 19:08:30.028572-0500 SpeedrunAppUITests-Runner[25794:10980612] [Default] Running tests...
+objc[25794]: Class UIAccessibilityLoaderWebShared is implemented in both /Library/Developer/CoreSimulator/Volumes/iOS_23F77/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 26.5.simruntime/Contents/Resources/RuntimeRoot/System/Library/AccessibilityBundles/WebCore.axbundle/WebCore (0x1037cc310) and /Library/Developer/CoreSimulator/Volumes/iOS_23F77/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 26.5.simruntime/Contents/Resources/RuntimeRoot/System/Library/AccessibilityBundles/WebKit.axbundle/WebKit (0x106618398). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed.
+    t =      nans Interface orientation changed to Portrait
+Test Suite 'All tests' started at 2026-07-03 19:08:33.656.
+Test Suite 'SpeedrunAppUITests.xctest' started at 2026-07-03 19:08:33.657.
+Test Suite 'MCQScreenUITests' started at 2026-07-03 19:08:33.657.
+Test Case '-[SpeedrunAppUITests.MCQScreenUITests testMCQScreenOpens]' started.
+    t =     0.00s Start Test at 2026-07-03 19:08:33.660
+    t =     0.33s Set Up
+    t =     0.33s Open net.ankiweb.speedrun
+    t =     0.33s     Launch net.ankiweb.speedrun
+2026-07-03 19:08:34.252 xcodebuild[24321:10974993] [MT] IDELaunchParametersSnapshot: The operation couldn’t be completed. (DebuggerLLDB.DebuggerVersionStore.StoreError error 0.)
+2026-07-03 19:08:34.252 xcodebuild[24321:10974993] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =     1.01s         Setting up automation session
+    t =     1.89s         Wait for net.ankiweb.speedrun to idle
+    t =     3.27s Waiting 20.0s for "openMCQ" Any to exist
+    t =     4.30s     Checking `Expect predicate `existsNoRetry == 1` for object "openMCQ" Any`
+    t =     4.30s         Checking existence of `"openMCQ" Any`
+    t =     4.36s Tap "openMCQ" Any
+    t =     4.37s     Wait for net.ankiweb.speedrun to idle
+    t =     4.38s     Find the "openMCQ" Any
+    t =     4.40s     Check for interrupting elements affecting "openMCQ" Other
+    t =     4.49s     Synthesize event
+    t =     4.91s     Wait for net.ankiweb.speedrun to idle
+
+    t =     5.86s Waiting 20.0s for "Practice MCQs" NavigationBar to exist
+    t =     6.89s     Checking `Expect predicate `existsNoRetry == 1` for object "Practice MCQs" NavigationBar`
+    t =     6.89s         Checking existence of `"Practice MCQs" NavigationBar`
+    t =     6.94s Tear Down
+Test Case '-[SpeedrunAppUITests.MCQScreenUITests testMCQScreenOpens]' passed (7.167 seconds).
+Test Suite 'MCQScreenUITests' passed at 2026-07-03 19:08:40.826.
+	 Executed 1 test, with 0 failures (0 unexpected) in 7.167 (7.170) seconds
+Test Suite 'ReviewFlowUITests' started at 2026-07-03 19:08:40.827.
+Test Case '-[SpeedrunAppUITests.ReviewFlowUITests testTwentyReviews]' started.
+    t =     0.00s Start Test at 2026-07-03 19:08:40.827
+    t =     0.02s Set Up
+    t =     0.02s Open net.ankiweb.speedrun
+    t =     0.02s     Launch net.ankiweb.speedrun
+    t =     0.02s         Terminate net.ankiweb.speedrun:25865
+2026-07-03 19:08:41.867 xcodebuild[24321:10974993] [MT] IDELaunchParametersSnapshot: The operation couldn’t be completed. (DebuggerLLDB.DebuggerVersionStore.StoreError error 0.)
+2026-07-03 19:08:41.867 xcodebuild[24321:10974993] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =     1.48s         Setting up automation session
+    t =     2.25s         Wait for net.ankiweb.speedrun to idle
+    t =     3.77s Waiting 20.0s for "deck_Speed Recall" Any to exist
+    t =     4.80s     Checking `Expect predicate `existsNoRetry == 1` for object "deck_Speed Recall" Any`
+    t =     4.80s         Checking existence of `"deck_Speed Recall" Any`
+    t =     5.02s Tap "deck_Speed Recall" Any
+    t =     5.02s     Wait for net.ankiweb.speedrun to idle
+    t =     5.03s     Find the "deck_Speed Recall" Any
+    t =     5.18s     Check for interrupting elements affecting "deck_Speed Recall" Button
+    t =     5.24s     Synthesize event
+    t =     5.55s     Wait for net.ankiweb.speedrun to idle
+    t =     6.39s Checking existence of `"error" Other`
+    t =     6.50s Checking existence of `"finished" Other`
+    t =     6.54s Waiting 20.0s for "showAnswer" Button to exist
+    t =     7.57s     Checking `Expect predicate `existsNoRetry == 1` for object "showAnswer" Button`
+    t =     7.57s         Checking existence of `"showAnswer" Button`
+    t =     7.61s Tap "showAnswer" Button
+    t =     7.61s     Wait for net.ankiweb.speedrun to idle
+    t =     7.62s     Find the "showAnswer" Button
+    t =     7.64s     Check for interrupting elements affecting "showAnswer" Button
+    t =     7.67s     Synthesize event
+    t =     7.96s     Wait for net.ankiweb.speedrun to idle
+    t =     7.96s Waiting 20.0s for "grade_Again" Button to exist
+    t =     8.99s     Checking `Expect predicate `existsNoRetry == 1` for object "grade_Again" Button`
+    t =     8.99s         Checking existence of `"grade_Again" Button`
+    t =     9.12s Tap "grade_Again" Button
+    t =     9.12s     Wait for net.ankiweb.speedrun to idle
+    t =     9.12s     Find the "grade_Again" Button
+    t =     9.29s     Check for interrupting elements affecting "grade_Again" Button
+    t =     9.32s     Synthesize event
+    t =     9.61s     Wait for net.ankiweb.speedrun to idle
+    t =     9.61s Checking existence of `"error" Other`
+    t =     9.64s Checking existence of `"finished" Other`
+    t =     9.65s Waiting 20.0s for "showAnswer" Button to exist
+    t =    10.68s     Checking `Expect predicate `existsNoRetry == 1` for object "showAnswer" Button`
+    t =    10.68s         Checking existence of `"showAnswer" Button`
+    t =    10.73s Tap "showAnswer" Button
+    t =    10.73s     Wait for net.ankiweb.speedrun to idle
+    t =    10.73s     Find the "showAnswer" Button
+    t =    10.83s     Check for interrupting elements affecting "showAnswer" Button
+    t =    10.91s     Synthesize event
+    t =    11.21s     Wait for net.ankiweb.speedrun to idle
+    t =    11.21s Waiting 20.0s for "grade_Again" Button to exist
+    t =    12.24s     Checking `Expect predicate `existsNoRetry == 1` for object "grade_Again" Button`
+    t =    12.24s         Checking existence of `"grade_Again" Button`
+    t =    12.28s Tap "grade_Again" Button
+    t =    12.28s     Wait for net.ankiweb.speedrun to idle
+    t =    12.28s     Find the "grade_Again" Button
+    t =    12.31s     Check for interrupting elements affecting "grade_Again" Button
+    t =    12.34s     Synthesize event
+    t =    12.64s     Wait for net.ankiweb.speedrun to idle
+    t =    12.65s Checking existence of `"error" Other`
+    t =    12.68s Checking existence of `"finished" Other`
+    t =    12.70s Waiting 20.0s for "showAnswer" Button to exist
+    t =    13.73s     Checking `Expect predicate `existsNoRetry == 1` for object "showAnswer" Button`
+    t =    13.73s         Checking existence of `"showAnswer" Button`
+    t =    13.79s Tap "showAnswer" Button
+    t =    13.79s     Wait for net.ankiweb.speedrun to idle
+    t =    13.80s     Find the "showAnswer" Button
+    t =    13.89s     Check for interrupting elements affecting "showAnswer" Button
+    t =    13.96s     Synthesize event
+    t =    14.27s     Wait for net.ankiweb.speedrun to idle
+    t =    14.28s Waiting 20.0s for "grade_Again" Button to exist
+    t =    15.30s     Checking `Expect predicate `existsNoRetry == 1` for object "grade_Again" Button`
+    t =    15.30s         Checking existence of `"grade_Again" Button`
+    t =    15.34s Tap "grade_Again" Button
+    t =    15.34s     Wait for net.ankiweb.speedrun to idle
+    t =    15.34s     Find the "grade_Again" Button
+    t =    15.38s     Check for interrupting elements affecting "grade_Again" Button
+    t =    15.50s     Synthesize event
+    t =    15.81s     Wait for net.ankiweb.speedrun to idle
+    t =    15.81s Checking existence of `"error" Other`
+    t =    15.83s Checking existence of `"finished" Other`
+    t =    15.85s Waiting 20.0s for "showAnswer" Button to exist
+    t =    16.88s     Checking `Expect predicate `existsNoRetry == 1` for object "showAnswer" Button`
+    t =    16.88s         Checking existence of `"showAnswer" Button`
+    t =    16.94s Tap "showAnswer" Button
+    t =    16.94s     Wait for net.ankiweb.speedrun to idle
+    t =    16.94s     Find the "showAnswer" Button
+    t =    17.03s     Check for interrupting elements affecting "showAnswer" Button
+    t =    17.05s     Synthesize event
+    t =    17.34s     Wait for net.ankiweb.speedrun to idle
+    t =    17.34s Waiting 20.0s for "grade_Again" Button to exist
+    t =    18.38s     Checking `Expect predicate `existsNoRetry == 1` for object "grade_Again" Button`
+    t =    18.38s         Checking existence of `"grade_Again" Button`
+    t =    18.46s Tap "grade_Again" Button
+    t =    18.46s     Wait for net.ankiweb.speedrun to idle
+    t =    18.46s     Find the "grade_Again" Button
+    t =    18.50s     Check for interrupting elements affecting "grade_Again" Button
+    t =    18.53s     Synthesize event
+    t =    18.82s     Wait for net.ankiweb.speedrun to idle
+    t =    18.82s Checking existence of `"error" Other`
+    t =    18.87s Checking existence of `"finished" Other`
+    t =    18.89s Waiting 20.0s for "showAnswer" Button to exist
+    t =    19.92s     Checking `Expect predicate `existsNoRetry == 1` for object "showAnswer" Button`
+    t =    19.92s         Checking existence of `"showAnswer" Button`
+    t =    19.99s Tap "showAnswer" Button
+    t =    19.99s     Wait for net.ankiweb.speedrun to idle
+    t =    19.99s     Find the "showAnswer" Button
+    t =    20.03s     Check for interrupting elements affecting "showAnswer" Button
+    t =    20.05s     Synthesize event
+    t =    20.34s     Wait for net.ankiweb.speedrun to idle
+    t =    20.34s Waiting 20.0s for "grade_Again" Button to exist
+    t =    21.38s     Checking `Expect predicate `existsNoRetry == 1` for object "grade_Again" Button`
+    t =    21.38s         Checking existence of `"grade_Again" Button`
+    t =    21.48s Tap "grade_Again" Button
+    t =    21.48s     Wait for net.ankiweb.speedrun to idle
+    t =    21.49s     Find the "grade_Again" Button
+    t =    21.52s     Check for interrupting elements affecting "grade_Again" Button
+    t =    21.55s     Synthesize event
+    t =    21.85s     Wait for net.ankiweb.speedrun to idle
+    t =    21.85s Checking existence of `"error" Other`
+    t =    21.90s Checking existence of `"finished" Other`
+    t =    21.92s Waiting 20.0s for "showAnswer" Button to exist
+    t =    22.95s     Checking `Expect predicate `existsNoRetry == 1` for object "showAnswer" Button`
+    t =    22.95s         Checking existence of `"showAnswer" Button`
+    t =    23.03s Tap "showAnswer" Button
+    t =    23.03s     Wait for net.ankiweb.speedrun to idle
+    t =    23.03s     Find the "showAnswer" Button
+    t =    23.06s     Check for interrupting elements affecting "showAnswer" Button
+    t =    23.09s     Synthesize event
+    t =    23.38s     Wait for net.ankiweb.speedrun to idle
+    t =    23.38s Waiting 20.0s for "grade_Again" Button to exist
+    t =    24.46s     Checking `Expect predicate `existsNoRetry == 1` for object "grade_Again" Button`
+    t =    24.46s         Checking existence of `"grade_Again" Button`
+    t =    24.54s Tap "grade_Again" Button
+    t =    24.54s     Wait for net.ankiweb.speedrun to idle
+    t =    24.55s     Find the "grade_Again" Button
+    t =    24.63s     Check for interrupting elements affecting "grade_Again" Button
+    t =    24.71s     Synthesize event
+    t =    25.00s     Wait for net.ankiweb.speedrun to idle
+    t =    25.01s Checking existence of `"error" Other`
+    t =    25.03s Checking existence of `"finished" Other`
+    t =    25.05s Waiting 20.0s for "showAnswer" Button to exist
+    t =    26.09s     Checking `Expect predicate `existsNoRetry == 1` for object "showAnswer" Button`
+    t =    26.09s         Checking existence of `"showAnswer" Button`
+    t =    26.17s Tap "showAnswer" Button
+    t =    26.17s     Wait for net.ankiweb.speedrun to idle
+    t =    26.18s     Find the "showAnswer" Button
+    t =    26.28s     Check for interrupting elements affecting "showAnswer" Button
+    t =    26.31s     Synthesize event
+    t =    26.61s     Wait for net.ankiweb.speedrun to idle
+    t =    26.61s Waiting 20.0s for "grade_Again" Button to exist
+    t =    27.63s     Checking `Expect predicate `existsNoRetry == 1` for object "grade_Again" Button`
+    t =    27.63s         Checking existence of `"grade_Again" Button`
+    t =    27.71s Tap "grade_Again" Button
+    t =    27.71s     Wait for net.ankiweb.speedrun to idle
+    t =    27.71s     Find the "grade_Again" Button
+    t =    27.74s     Check for interrupting elements affecting "grade_Again" Button
+    t =    27.76s     Synthesize event
+    t =    28.06s     Wait for net.ankiweb.speedrun to idle
+    t =    28.06s Checking existence of `"error" Other`
+    t =    28.11s Checking existence of `"finished" Other`
+    t =    28.13s Waiting 20.0s for "showAnswer" Button to exist
+    t =    29.17s     Checking `Expect predicate `existsNoRetry == 1` for object "showAnswer" Button`
+    t =    29.17s         Checking existence of `"showAnswer" Button`
+    t =    29.26s Tap "showAnswer" Button
+    t =    29.26s     Wait for net.ankiweb.speedrun to idle
+    t =    29.26s     Find the "showAnswer" Button
+    t =    29.34s     Check for interrupting elements affecting "showAnswer" Button
+    t =    29.38s     Synthesize event
+    t =    29.69s     Wait for net.ankiweb.speedrun to idle
+    t =    29.69s Waiting 20.0s for "grade_Again" Button to exist
+    t =    30.71s     Checking `Expect predicate `existsNoRetry == 1` for object "grade_Again" Button`
+    t =    30.71s         Checking existence of `"grade_Again" Button`
+    t =    30.81s Tap "grade_Again" Button
+    t =    30.81s     Wait for net.ankiweb.speedrun to idle
+    t =    30.81s     Find the "grade_Again" Button
+    t =    30.84s     Check for interrupting elements affecting "grade_Again" Button
+    t =    30.88s     Synthesize event
+    t =    31.18s     Wait for net.ankiweb.speedrun to idle
+    t =    31.18s Checking existence of `"error" Other`
+    t =    31.25s Checking existence of `"finished" Other`
+    t =    31.26s Waiting 20.0s for "showAnswer" Button to exist
+    t =    32.30s     Checking `Expect predicate `existsNoRetry == 1` for object "showAnswer" Button`
+    t =    32.30s         Checking existence of `"showAnswer" Button`
+    t =    32.42s Tap "showAnswer" Button
+    t =    32.42s     Wait for net.ankiweb.speedrun to idle
+    t =    32.43s     Find the "showAnswer" Button
+    t =    32.50s     Check for interrupting elements affecting "showAnswer" Button
+    t =    32.53s     Synthesize event
+    t =    32.82s     Wait for net.ankiweb.speedrun to idle
+    t =    32.83s Waiting 20.0s for "grade_Again" Button to exist
+    t =    33.86s     Checking `Expect predicate `existsNoRetry == 1` for object "grade_Again" Button`
+    t =    33.86s         Checking existence of `"grade_Again" Button`
+    t =    33.93s Tap "grade_Again" Button
+    t =    33.93s     Wait for net.ankiweb.speedrun to idle
+    t =    33.93s     Find the "grade_Again" Button
+    t =    33.95s     Check for interrupting elements affecting "grade_Again" Button
+    t =    33.98s     Synthesize event
+    t =    34.27s     Wait for net.ankiweb.speedrun to idle
+    t =    34.28s Checking existence of `"error" Other`
+    t =    34.32s Checking existence of `"finished" Other`
+    t =    34.36s Waiting 20.0s for "showAnswer" Button to exist
+    t =    35.38s     Checking `Expect predicate `existsNoRetry == 1` for object "showAnswer" Button`
+    t =    35.38s         Checking existence of `"showAnswer" Button`
+    t =    35.50s Tap "showAnswer" Button
+    t =    35.50s     Wait for net.ankiweb.speedrun to idle
+    t =    35.51s     Find the "showAnswer" Button
+    t =    35.58s     Check for interrupting elements affecting "showAnswer" Button
+    t =    35.61s     Synthesize event
+    t =    35.90s     Wait for net.ankiweb.speedrun to idle
+    t =    35.90s Waiting 20.0s for "grade_Again" Button to exist
+    t =    36.92s     Checking `Expect predicate `existsNoRetry == 1` for object "grade_Again" Button`
+    t =    36.92s         Checking existence of `"grade_Again" Button`
+    t =    36.96s Tap "grade_Again" Button
+    t =    36.96s     Wait for net.ankiweb.speedrun to idle
+    t =    36.96s     Find the "grade_Again" Button
+    t =    36.99s     Check for interrupting elements affecting "grade_Again" Button
+    t =    37.04s     Synthesize event
+    t =    37.34s     Wait for net.ankiweb.speedrun to idle
+    t =    37.35s Checking existence of `"error" Other`
+    t =    37.40s Checking existence of `"finished" Other`
+    t =    37.42s Waiting 20.0s for "showAnswer" Button to exist
+    t =    38.44s     Checking `Expect predicate `existsNoRetry == 1` for object "showAnswer" Button`
+    t =    38.44s         Checking existence of `"showAnswer" Button`
+    t =    38.55s Tap "showAnswer" Button
+    t =    38.55s     Wait for net.ankiweb.speedrun to idle
+    t =    38.55s     Find the "showAnswer" Button
+    t =    38.64s     Check for interrupting elements affecting "showAnswer" Button
+    t =    38.66s     Synthesize event
+    t =    38.96s     Wait for net.ankiweb.speedrun to idle
+    t =    38.96s Waiting 20.0s for "grade_Again" Button to exist
+    t =    39.98s     Checking `Expect predicate `existsNoRetry == 1` for object "grade_Again" Button`
+    t =    39.98s         Checking existence of `"grade_Again" Button`
+    t =    40.06s Tap "grade_Again" Button
+    t =    40.06s     Wait for net.ankiweb.speedrun to idle
+    t =    40.07s     Find the "grade_Again" Button
+    t =    40.13s     Check for interrupting elements affecting "grade_Again" Button
+    t =    40.17s     Synthesize event
+    t =    40.48s     Wait for net.ankiweb.speedrun to idle
+    t =    40.48s Checking existence of `"error" Other`
+    t =    40.52s Checking existence of `"finished" Other`
+    t =    40.54s Waiting 20.0s for "showAnswer" Button to exist
+    t =    41.55s     Checking `Expect predicate `existsNoRetry == 1` for object "showAnswer" Button`
+    t =    41.56s         Checking existence of `"showAnswer" Button`
+    t =    41.69s Tap "showAnswer" Button
+    t =    41.69s     Wait for net.ankiweb.speedrun to idle
+    t =    41.69s     Find the "showAnswer" Button
+    t =    41.73s     Check for interrupting elements affecting "showAnswer" Button
+    t =    41.76s     Synthesize event
+    t =    42.06s     Wait for net.ankiweb.speedrun to idle
+    t =    42.06s Waiting 20.0s for "grade_Again" Button to exist
+    t =    43.08s     Checking `Expect predicate `existsNoRetry == 1` for object "grade_Again" Button`
+    t =    43.08s         Checking existence of `"grade_Again" Button`
+    t =    43.17s Tap "grade_Again" Button
+    t =    43.17s     Wait for net.ankiweb.speedrun to idle
+    t =    43.18s     Find the "grade_Again" Button
+    t =    43.26s     Check for interrupting elements affecting "grade_Again" Button
+    t =    43.29s     Synthesize event
+    t =    43.59s     Wait for net.ankiweb.speedrun to idle
+    t =    43.59s Checking existence of `"error" Other`
+    t =    43.62s Checking existence of `"finished" Other`
+    t =    43.63s Waiting 20.0s for "showAnswer" Button to exist
+    t =    44.65s     Checking `Expect predicate `existsNoRetry == 1` for object "showAnswer" Button`
+    t =    44.65s         Checking existence of `"showAnswer" Button`
+    t =    44.76s Tap "showAnswer" Button
+    t =    44.76s     Wait for net.ankiweb.speedrun to idle
+    t =    44.77s     Find the "showAnswer" Button
+    t =    44.79s     Check for interrupting elements affecting "showAnswer" Button
+    t =    44.88s     Synthesize event
+    t =    45.17s     Wait for net.ankiweb.speedrun to idle
+    t =    45.18s Waiting 20.0s for "grade_Again" Button to exist
+    t =    46.19s     Checking `Expect predicate `existsNoRetry == 1` for object "grade_Again" Button`
+    t =    46.19s         Checking existence of `"grade_Again" Button`
+    t =    46.32s Tap "grade_Again" Button
+    t =    46.32s     Wait for net.ankiweb.speedrun to idle
+    t =    46.32s     Find the "grade_Again" Button
+    t =    46.43s     Check for interrupting elements affecting "grade_Again" Button
+    t =    46.47s     Synthesize event
+    t =    46.77s     Wait for net.ankiweb.speedrun to idle
+    t =    46.77s Checking existence of `"error" Other`
+    t =    46.81s Checking existence of `"finished" Other`
+    t =    46.83s Waiting 20.0s for "showAnswer" Button to exist
+    t =    47.85s     Checking `Expect predicate `existsNoRetry == 1` for object "showAnswer" Button`
+    t =    47.85s         Checking existence of `"showAnswer" Button`
+    t =    47.92s Tap "showAnswer" Button
+    t =    47.92s     Wait for net.ankiweb.speedrun to idle
+    t =    47.92s     Find the "showAnswer" Button
+    t =    47.96s     Check for interrupting elements affecting "showAnswer" Button
+    t =    48.00s     Synthesize event
+    t =    48.30s     Wait for net.ankiweb.speedrun to idle
+    t =    48.30s Waiting 20.0s for "grade_Again" Button to exist
+    t =    49.31s     Checking `Expect predicate `existsNoRetry == 1` for object "grade_Again" Button`
+    t =    49.31s         Checking existence of `"grade_Again" Button`
+    t =    49.38s Tap "grade_Again" Button
+    t =    49.38s     Wait for net.ankiweb.speedrun to idle
+    t =    49.38s     Find the "grade_Again" Button
+    t =    49.40s     Check for interrupting elements affecting "grade_Again" Button
+    t =    49.46s     Synthesize event
+    t =    49.75s     Wait for net.ankiweb.speedrun to idle
+    t =    49.75s Checking existence of `"error" Other`
+    t =    49.78s Checking existence of `"finished" Other`
+    t =    49.80s Waiting 20.0s for "showAnswer" Button to exist
+    t =    50.82s     Checking `Expect predicate `existsNoRetry == 1` for object "showAnswer" Button`
+    t =    50.82s         Checking existence of `"showAnswer" Button`
+    t =    50.94s Tap "showAnswer" Button
+    t =    50.94s     Wait for net.ankiweb.speedrun to idle
+    t =    50.94s     Find the "showAnswer" Button
+    t =    51.01s     Check for interrupting elements affecting "showAnswer" Button
+    t =    51.04s     Synthesize event
+    t =    51.33s     Wait for net.ankiweb.speedrun to idle
+    t =    51.33s Waiting 20.0s for "grade_Again" Button to exist
+    t =    52.35s     Checking `Expect predicate `existsNoRetry == 1` for object "grade_Again" Button`
+    t =    52.35s         Checking existence of `"grade_Again" Button`
+    t =    52.41s Tap "grade_Again" Button
+    t =    52.41s     Wait for net.ankiweb.speedrun to idle
+    t =    52.41s     Find the "grade_Again" Button
+    t =    52.43s     Check for interrupting elements affecting "grade_Again" Button
+    t =    52.46s     Synthesize event
+    t =    52.75s     Wait for net.ankiweb.speedrun to idle
+    t =    52.75s Checking existence of `"error" Other`
+    t =    52.76s Checking existence of `"finished" Other`
+    t =    52.79s Waiting 20.0s for "showAnswer" Button to exist
+    t =    53.80s     Checking `Expect predicate `existsNoRetry == 1` for object "showAnswer" Button`
+    t =    53.80s         Checking existence of `"showAnswer" Button`
+    t =    53.82s Tap "showAnswer" Button
+    t =    53.82s     Wait for net.ankiweb.speedrun to idle
+    t =    53.82s     Find the "showAnswer" Button
+    t =    53.84s     Check for interrupting elements affecting "showAnswer" Button
+    t =    53.86s     Synthesize event
+    t =    54.14s     Wait for net.ankiweb.speedrun to idle
+    t =    54.15s Waiting 20.0s for "grade_Again" Button to exist
+    t =    55.16s     Checking `Expect predicate `existsNoRetry == 1` for object "grade_Again" Button`
+    t =    55.16s         Checking existence of `"grade_Again" Button`
+    t =    55.19s Tap "grade_Again" Button
+    t =    55.19s     Wait for net.ankiweb.speedrun to idle
+    t =    55.19s     Find the "grade_Again" Button
+    t =    55.21s     Check for interrupting elements affecting "grade_Again" Button
+    t =    55.23s     Synthesize event
+    t =    55.52s     Wait for net.ankiweb.speedrun to idle
+    t =    55.52s Checking existence of `"error" Other`
+    t =    55.55s Checking existence of `"finished" Other`
+    t =    55.57s Waiting 20.0s for "showAnswer" Button to exist
+    t =    56.58s     Checking `Expect predicate `existsNoRetry == 1` for object "showAnswer" Button`
+    t =    56.58s         Checking existence of `"showAnswer" Button`
+    t =    56.61s Tap "showAnswer" Button
+    t =    56.61s     Wait for net.ankiweb.speedrun to idle
+    t =    56.61s     Find the "showAnswer" Button
+    t =    56.63s     Check for interrupting elements affecting "showAnswer" Button
+    t =    56.65s     Synthesize event
+    t =    56.93s     Wait for net.ankiweb.speedrun to idle
+    t =    56.94s Waiting 20.0s for "grade_Again" Button to exist
+    t =    57.96s     Checking `Expect predicate `existsNoRetry == 1` for object "grade_Again" Button`
+    t =    57.96s         Checking existence of `"grade_Again" Button`
+    t =    58.08s Tap "grade_Again" Button
+    t =    58.08s     Wait for net.ankiweb.speedrun to idle
+    t =    58.08s     Find the "grade_Again" Button
+    t =    58.12s     Check for interrupting elements affecting "grade_Again" Button
+    t =    58.19s     Synthesize event
+    t =    58.48s     Wait for net.ankiweb.speedrun to idle
+    t =    58.48s Checking existence of `"error" Other`
+    t =    58.51s Checking existence of `"finished" Other`
+    t =    58.53s Waiting 20.0s for "showAnswer" Button to exist
+    t =    59.55s     Checking `Expect predicate `existsNoRetry == 1` for object "showAnswer" Button`
+    t =    59.56s         Checking existence of `"showAnswer" Button`
+    t =    59.62s Tap "showAnswer" Button
+    t =    59.62s     Wait for net.ankiweb.speedrun to idle
+    t =    59.63s     Find the "showAnswer" Button
+    t =    59.69s     Check for interrupting elements affecting "showAnswer" Button
+    t =    59.71s     Synthesize event
+    t =    60.00s     Wait for net.ankiweb.speedrun to idle
+    t =    60.01s Waiting 20.0s for "grade_Again" Button to exist
+    t =    61.04s     Checking `Expect predicate `existsNoRetry == 1` for object "grade_Again" Button`
+    t =    61.04s         Checking existence of `"grade_Again" Button`
+    t =    61.08s Tap "grade_Again" Button
+    t =    61.08s     Wait for net.ankiweb.speedrun to idle
+    t =    61.08s     Find the "grade_Again" Button
+    t =    61.10s     Check for interrupting elements affecting "grade_Again" Button
+    t =    61.12s     Synthesize event
+    t =    61.41s     Wait for net.ankiweb.speedrun to idle
+    t =    61.41s Checking existence of `"error" Other`
+    t =    61.43s Checking existence of `"finished" Other`
+    t =    61.44s Waiting 20.0s for "showAnswer" Button to exist
+    t =    62.45s     Checking `Expect predicate `existsNoRetry == 1` for object "showAnswer" Button`
+    t =    62.45s         Checking existence of `"showAnswer" Button`
+    t =    62.46s Tap "showAnswer" Button
+    t =    62.46s     Wait for net.ankiweb.speedrun to idle
+    t =    62.47s     Find the "showAnswer" Button
+    t =    62.48s     Check for interrupting elements affecting "showAnswer" Button
+    t =    62.49s     Synthesize event
+    t =    62.78s     Wait for net.ankiweb.speedrun to idle
+    t =    62.78s Waiting 20.0s for "grade_Again" Button to exist
+    t =    63.80s     Checking `Expect predicate `existsNoRetry == 1` for object "grade_Again" Button`
+    t =    63.80s         Checking existence of `"grade_Again" Button`
+    t =    63.82s Tap "grade_Again" Button
+    t =    63.82s     Wait for net.ankiweb.speedrun to idle
+    t =    63.83s     Find the "grade_Again" Button
+    t =    63.84s     Check for interrupting elements affecting "grade_Again" Button
+    t =    63.86s     Synthesize event
+    t =    64.14s     Wait for net.ankiweb.speedrun to idle
+    t =    64.14s Checking existence of `"error" Other`
+    t =    64.16s Checking existence of `"finished" Other`
+    t =    64.18s Waiting 20.0s for "showAnswer" Button to exist
+    t =    65.20s     Checking `Expect predicate `existsNoRetry == 1` for object "showAnswer" Button`
+    t =    65.20s         Checking existence of `"showAnswer" Button`
+    t =    65.22s Tap "showAnswer" Button
+    t =    65.22s     Wait for net.ankiweb.speedrun to idle
+    t =    65.22s     Find the "showAnswer" Button
+    t =    65.23s     Check for interrupting elements affecting "showAnswer" Button
+    t =    65.25s     Synthesize event
+    t =    65.54s     Wait for net.ankiweb.speedrun to idle
+    t =    65.54s Waiting 20.0s for "grade_Again" Button to exist
+    t =    66.55s     Checking `Expect predicate `existsNoRetry == 1` for object "grade_Again" Button`
+    t =    66.55s         Checking existence of `"grade_Again" Button`
+    t =    66.69s Tap "grade_Again" Button
+    t =    66.69s     Wait for net.ankiweb.speedrun to idle
+    t =    66.70s     Find the "grade_Again" Button
+    t =    66.78s     Check for interrupting elements affecting "grade_Again" Button
+    t =    66.80s     Synthesize event
+    t =    67.09s     Wait for net.ankiweb.speedrun to idle
+    t =    67.09s Tear Down
+Test Case '-[SpeedrunAppUITests.ReviewFlowUITests testTwentyReviews]' passed (67.338 seconds).
+Test Suite 'ReviewFlowUITests' passed at 2026-07-03 19:09:48.166.
+	 Executed 1 test, with 0 failures (0 unexpected) in 67.338 (67.339) seconds
+Test Suite 'ScoresScreenUITests' started at 2026-07-03 19:09:48.166.
+Test Case '-[SpeedrunAppUITests.ScoresScreenUITests testThreeScoresShown]' started.
+    t =     0.00s Start Test at 2026-07-03 19:09:48.166
+    t =     0.03s Set Up
+    t =     0.03s Open net.ankiweb.speedrun
+    t =     0.03s     Launch net.ankiweb.speedrun
+    t =     0.03s         Terminate net.ankiweb.speedrun:25964
+2026-07-03 19:09:49.204 xcodebuild[24321:10974993] [MT] IDELaunchParametersSnapshot: The operation couldn’t be completed. (DebuggerLLDB.DebuggerVersionStore.StoreError error 0.)
+2026-07-03 19:09:49.204 xcodebuild[24321:10974993] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =     1.24s         Setting up automation session
+    t =     2.12s         Wait for net.ankiweb.speedrun to idle
+    t =     3.65s Waiting 20.0s for "scores" Any to exist
+    t =     4.67s     Checking `Expect predicate `existsNoRetry == 1` for object "scores" Any`
+    t =     4.67s         Checking existence of `"scores" Any`
+    t =     4.74s Tap "scores" Any
+    t =     4.74s     Wait for net.ankiweb.speedrun to idle
+    t =     4.74s     Find the "scores" Any
+    t =     4.76s     Check for interrupting elements affecting "scores" Other
+    t =     4.84s     Synthesize event
+    t =     5.14s     Wait for net.ankiweb.speedrun to idle
+    t =     5.90s Waiting 20.0s for "Memory" StaticText to exist
+    t =     6.91s     Checking `Expect predicate `existsNoRetry == 1` for object "Memory" StaticText`
+    t =     6.92s         Checking existence of `"Memory" StaticText`
+    t =     6.97s Waiting 20.0s for "Performance" StaticText to exist
+    t =     7.98s     Checking `Expect predicate `existsNoRetry == 1` for object "Performance" StaticText`
+    t =     7.98s         Checking existence of `"Performance" StaticText`
+    t =     8.01s Waiting 20.0s for "Readiness" StaticText to exist
+    t =     9.02s     Checking `Expect predicate `existsNoRetry == 1` for object "Readiness" StaticText`
+    t =     9.02s         Checking existence of `"Readiness" StaticText`
+    t =     9.06s Waiting 20.0s for "memoryScore" Any to exist
+    t =    10.06s     Checking `Expect predicate `existsNoRetry == 1` for object "memoryScore" Any`
+    t =    10.07s         Checking existence of `"memoryScore" Any`
+    t =    10.15s         Capturing element debug description
+    t =    11.07s     Checking `Expect predicate `existsNoRetry == 1` for object "memoryScore" Any`
+    t =    11.07s         Checking existence of `"memoryScore" Any`
+    t =    11.15s         Capturing element debug description
+    t =    12.06s     Checking `Expect predicate `existsNoRetry == 1` for object "memoryScore" Any`
+    t =    12.07s         Checking existence of `"memoryScore" Any`
+    t =    12.15s         Capturing element debug description
+    t =    13.06s     Checking `Expect predicate `existsNoRetry == 1` for object "memoryScore" Any`
+    t =    13.07s         Checking existence of `"memoryScore" Any`
+    t =    13.15s         Capturing element debug description
+    t =    14.07s     Checking `Expect predicate `existsNoRetry == 1` for object "memoryScore" Any`
+    t =    14.07s         Checking existence of `"memoryScore" Any`
+    t =    14.15s         Capturing element debug description
+    t =    15.06s     Checking `Expect predicate `existsNoRetry == 1` for object "memoryScore" Any`
+    t =    15.07s         Checking existence of `"memoryScore" Any`
+    t =    15.15s         Capturing element debug description
+    t =    16.06s     Checking `Expect predicate `existsNoRetry == 1` for object "memoryScore" Any`
+    t =    16.07s         Checking existence of `"memoryScore" Any`
+    t =    16.15s         Capturing element debug description
+    t =    17.07s     Checking `Expect predicate `existsNoRetry == 1` for object "memoryScore" Any`
+    t =    17.07s         Checking existence of `"memoryScore" Any`
+    t =    17.16s         Capturing element debug description
+    t =    18.06s     Checking `Expect predicate `existsNoRetry == 1` for object "memoryScore" Any`
+    t =    18.07s         Checking existence of `"memoryScore" Any`
+    t =    18.15s         Capturing element debug description
+    t =    19.06s     Checking `Expect predicate `existsNoRetry == 1` for object "memoryScore" Any`
+    t =    19.06s         Checking existence of `"memoryScore" Any`
+    t =    19.15s         Capturing element debug description
+    t =    20.06s     Checking `Expect predicate `existsNoRetry == 1` for object "memoryScore" Any`
+    t =    20.06s         Checking existence of `"memoryScore" Any`
+    t =    20.15s         Capturing element debug description
+    t =    21.06s     Checking `Expect predicate `existsNoRetry == 1` for object "memoryScore" Any`
+    t =    21.06s         Checking existence of `"memoryScore" Any`
+    t =    21.14s         Capturing element debug description
+    t =    22.06s     Checking `Expect predicate `existsNoRetry == 1` for object "memoryScore" Any`
+    t =    22.06s         Checking existence of `"memoryScore" Any`
+    t =    22.15s         Capturing element debug description
+    t =    23.16s     Checking `Expect predicate `existsNoRetry == 1` for object "memoryScore" Any`
+    t =    23.16s         Checking existence of `"memoryScore" Any`
+    t =    23.24s         Capturing element debug description
+    t =    24.15s     Checking `Expect predicate `existsNoRetry == 1` for object "memoryScore" Any`
+    t =    24.15s         Checking existence of `"memoryScore" Any`
+    t =    24.23s         Capturing element debug description
+    t =    25.15s     Checking `Expect predicate `existsNoRetry == 1` for object "memoryScore" Any`
+    t =    25.15s         Checking existence of `"memoryScore" Any`
+    t =    25.23s         Capturing element debug description
+    t =    26.15s     Checking `Expect predicate `existsNoRetry == 1` for object "memoryScore" Any`
+    t =    26.15s         Checking existence of `"memoryScore" Any`
+    t =    26.23s         Capturing element debug description
+    t =    27.15s     Checking `Expect predicate `existsNoRetry == 1` for object "memoryScore" Any`
+    t =    27.15s         Checking existence of `"memoryScore" Any`
+    t =    27.23s         Capturing element debug description
+    t =    28.16s     Checking `Expect predicate `existsNoRetry == 1` for object "memoryScore" Any`
+    t =    28.16s         Checking existence of `"memoryScore" Any`
+    t =    28.24s         Capturing element debug description
+    t =    29.06s     Checking `Expect predicate `existsNoRetry == 1` for object "memoryScore" Any`
+    t =    29.07s         Checking existence of `"memoryScore" Any`
+    t =    29.15s         Capturing element debug description
+    t =    29.15s     Checking existence of `"memoryScore" Any`
+    t =    29.20s Collecting debug information to assist test failure triage
+    t =    29.20s     Requesting snapshot of accessibility hierarchy for app with pid 27132
+    t =    29.23s Waiting 1.0s for "memoryAbstain" Any to exist
+    t =    30.23s     Checking `Expect predicate `existsNoRetry == 1` for object "memoryAbstain" Any`
+    t =    30.23s         Checking existence of `"memoryAbstain" Any`
+    t =    30.29s     Checking existence of `"memoryAbstain" Any`
+    t =    30.33s Waiting 20.0s for "performanceScore" Any to exist
+    t =    31.34s     Checking `Expect predicate `existsNoRetry == 1` for object "performanceScore" Any`
+    t =    31.34s         Checking existence of `"performanceScore" Any`
+    t =    31.41s Waiting 20.0s for "readinessScore" Any to exist
+    t =    32.43s     Checking `Expect predicate `existsNoRetry == 1` for object "readinessScore" Any`
+    t =    32.43s         Checking existence of `"readinessScore" Any`
+    t =    32.51s Tear Down
+Test Case '-[SpeedrunAppUITests.ScoresScreenUITests testThreeScoresShown]' passed (32.728 seconds).
+Test Suite 'ScoresScreenUITests' passed at 2026-07-03 19:10:20.895.
+	 Executed 1 test, with 0 failures (0 unexpected) in 32.728 (32.729) seconds
+Test Suite 'SpeedrunAppUITests.xctest' passed at 2026-07-03 19:10:20.896.
+	 Executed 3 tests, with 0 failures (0 unexpected) in 107.233 (107.239) seconds
+Test Suite 'All tests' passed at 2026-07-03 19:10:20.897.
+	 Executed 3 tests, with 0 failures (0 unexpected) in 107.233 (107.241) seconds
+2026-07-03 19:10:21.268 xcodebuild[24321:10974993] [MT] IDETestOperationsObserverDebug: 120.415 elapsed -- Testing started completed.
+2026-07-03 19:10:21.268 xcodebuild[24321:10974993] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
+2026-07-03 19:10:21.268 xcodebuild[24321:10974993] [MT] IDETestOperationsObserverDebug: 120.415 sec, +120.415 sec -- end
+
+Test session results, code coverage, and logs:
+	/Users/gaurav/Library/Developer/Xcode/DerivedData/SpeedrunApp-bvdyoxtrwcmklwbetlfceksxymbo/Logs/Test/Test-SpeedrunApp-2026.07.03_19-08-11--0500.xcresult
+
+** TEST SUCCEEDED **
+
+Testing started

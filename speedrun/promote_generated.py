@@ -80,6 +80,12 @@ def _fix_comp(r: dict) -> dict:
 
 def main() -> None:
     mcqs = [_fix_mcq(q) for q in _read_jsonl(SRC_MCQ)]
+    # Provenance gate: every shipped generated item must trace to a real seed
+    # (non-empty seed_id) and carry a source — never ship an unsourced item.
+    _before = len(mcqs)
+    mcqs = [q for q in mcqs if q.get("seed_id") and q.get("source")]
+    if len(mcqs) < _before:
+        print(f"provenance gate: dropped {_before - len(mcqs)} generated item(s) missing seed_id/source")
     comps = [_fix_comp(r) for r in _read_jsonl(SRC_COMP)]
     if not mcqs:
         raise SystemExit(f"no generated MCQs at {SRC_MCQ}; run gen_eval.py first")

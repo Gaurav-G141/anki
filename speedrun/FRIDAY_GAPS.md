@@ -1,7 +1,8 @@
 # Friday check — status and remaining work (excluding the AI feature)
 
-**Exam:** Physics GRE. **Scale:** 200–990, 10-point increments; three ETS subscores
-(Classical, E&M, Quantum/Atomic).
+**Exam:** Physics GRE. **Scale:** 200–990, 10-point increments; no official ETS
+subscores. (This fork tracks 9 weighted subjects internally for coverage/mastery but
+reports a single 200–990 readiness score — consistent with the README.)
 
 > **Update:** Gaps 1 and 2 below are now **implemented** — Performance and Readiness
 > models exist across proto/Rust/Python/TS with ranges + independent give-up rules,

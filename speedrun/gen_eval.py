@@ -240,7 +240,9 @@ def eval_candidate(client, seed, seed_tokens, real_tokens, accepted_tokens, mode
 # --- reporting ----------------------------------------------------------------
 
 
-def print_report(summary: dict):
+def print_report(summary: dict) -> bool:
+    """Print the report; return True iff the shipped-bad cutoffs were all met.
+    Callers should treat a False return as a hard gate (do not ship)."""
     print("\n" + "=" * 70 + "\nQUESTION GENERATOR — Phase-2 Stage-1 eval\n" + "=" * 70)
     s = summary
     print(f"\n[{s['split']}]  seeds tried={s['seeds']}  candidate slots={s['candidates']}  "
@@ -265,6 +267,7 @@ def print_report(summary: dict):
     print(f"  --> CUTOFFS {'PASS' if passed else 'FAIL'} "
           f"(0 ambiguous / 0 unsound / 0 near-dup / 0 malformed shipped, by construction)")
     print()
+    return passed
 
 
 # --- main ---------------------------------------------------------------------
@@ -380,7 +383,9 @@ def main():
     print(f"\nwrote {len(accepted)} validated MCQs -> {args.out}")
     print(f"wrote {n_companion} companion optimal-approach records -> {companion_path}")
     print(f"(OpenAI calls: {client.calls})")
-    print_report(summary)
+    if not print_report(summary):
+        print("EVAL GATE: generator cutoffs FAILED — the bank must not ship.", file=sys.stderr)
+        sys.exit(1)
 
 
 if __name__ == "__main__":
