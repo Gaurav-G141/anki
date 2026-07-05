@@ -687,12 +687,17 @@ _MANIFOLD_BODY = """
      stage resizes. */
   .cy-center {{
     max-width: none;
-    width: 13%; /* diameter = 2 x 6.5% intersection-point offset */
-    height: 13%;
+    /* Diameter = 13% of the stage (= 2 x the 6.5% throat offset). #cy-stage has
+       no explicit height (its height comes from aspect-ratio), so a percentage
+       HEIGHT here collapses to content height in QtWebEngine's Chromium, giving a
+       wide rounded rectangle instead of a disc. Size BOTH axes in the same
+       absolute unit the stage width resolves to (13% of min(84vmin,820px)) so the
+       box is a guaranteed square -> border-radius makes a true circle. */
+    width: min(10.9vmin, 107px);
+    height: min(10.9vmin, 107px);
+    box-sizing: border-box;
     padding: 0;
-    /* Force a TRUE circle. border-radius:50% was rendering as a rounded square
-       here, so use an absolute pill radius on the square box instead. */
-    border-radius: 9999px;
+    border-radius: 50%;
     /* .cy-point sets backdrop-filter: blur(); QtWebEngine clips that blur to the
        square border-box (ignoring the radius), leaving a square halo behind the
        disc. The core has its own gradient + box-shadow glow, so drop the blur. */

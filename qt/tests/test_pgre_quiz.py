@@ -13,7 +13,13 @@ import os
 import re
 
 from aqt import heuristic_coach
-from aqt.pgre_quiz import QuizSession, load_questions, select_variants, to_mathjax
+from aqt.pgre_quiz import (
+    _QUIZ_PAGE,
+    QuizSession,
+    load_questions,
+    select_variants,
+    to_mathjax,
+)
 
 DATA = os.path.normpath(
     os.path.join(os.path.dirname(__file__), "..", "aqt", "data", "pgre_mcq.json")
@@ -124,6 +130,22 @@ def test_generated_questions_have_resolvable_companions():
 def test_to_mathjax_converts_dollar_delimiters():
     assert to_mathjax(r"momentum $\hbar k$ here") == r"momentum \(\hbar k\) here"
     assert to_mathjax(r"$$\lambda = 2d$$") == r"\[\lambda = 2d\]"
+
+
+def test_quiz_page_wires_explain_with_andy():
+    # The "Explain with Andy" button, its bridge call, the Python->JS callback,
+    # and the animated atom markup are all present in the self-contained page.
+    assert "Explain with Andy" in _QUIZ_PAGE
+    assert "id='andyBtn'" in _QUIZ_PAGE
+    assert "andyExplain(" in _QUIZ_PAGE
+    assert 'pycmd("explain:"' in _QUIZ_PAGE
+    assert "window.showAndySteps" in _QUIZ_PAGE
+    # The atom itself: a nucleus with orbiting electrons + a speech bubble.
+    assert 'class="andy-nuc"' in _QUIZ_PAGE
+    assert "andy-orbit" in _QUIZ_PAGE
+    assert 'id="andyBubble"' in _QUIZ_PAGE
+    # Offline safety net: a client-side fallback script derived from the key.
+    assert "andyFallbackSteps" in _QUIZ_PAGE
 
 
 # --- reworded-variant serving (fluency-illusion fix) ----------------------

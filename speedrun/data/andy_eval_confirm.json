@@ -1,0 +1,391 @@
+{
+    "n": 20,
+    "correct": 18,
+    "concise": 19,
+    "both": 17,
+    "redundancy_rate": 0.05,
+    "median_steps": 3.0,
+    "mean_steps": 3.5,
+    "median_words": 40.0,
+    "passed": false,
+    "results": [
+        {
+            "id": "GR9277#1",
+            "method": "full_solve",
+            "n_steps": 2,
+            "words": 28,
+            "ends_on_answer": false,
+            "correct": true,
+            "concise": true,
+            "minimal": true,
+            "answer_determined_at": 1,
+            "redundant_steps": [],
+            "issues": [],
+            "steps": [
+                "First, I apply the momentum operator to the wave function e to the i times kx minus omega t.",
+                "This gives me h-bar k, which matches choice C."
+            ]
+        },
+        {
+            "id": "GR9277#12",
+            "method": "full_solve",
+            "n_steps": 3,
+            "words": 46,
+            "ends_on_answer": true,
+            "correct": true,
+            "concise": true,
+            "minimal": true,
+            "answer_determined_at": 3,
+            "redundant_steps": [],
+            "issues": [],
+            "steps": [
+                "First, recognize that the potential between the plates is linear in the angle due to boundary conditions.",
+                "The potential should increase with increasing angle, so eliminate choices that decrease with angle.",
+                "The correct form is V equals V0 times phi over alpha, which matches choice B."
+            ]
+        },
+        {
+            "id": "GR9277#17",
+            "method": "full_solve",
+            "n_steps": 3,
+            "words": 31,
+            "ends_on_answer": true,
+            "correct": true,
+            "concise": true,
+            "minimal": true,
+            "answer_determined_at": 2,
+            "redundant_steps": [],
+            "issues": [],
+            "steps": [
+                "First, I'd recognize that a 1:2 frequency ratio between oscillators creates a specific Lissajous figure.",
+                "This ratio typically results in a parabolic-like figure on the oscilloscope.",
+                "So the answer is (A)."
+            ]
+        },
+        {
+            "id": "GR9277#20",
+            "method": "full_solve",
+            "n_steps": 4,
+            "words": 53,
+            "ends_on_answer": true,
+            "correct": true,
+            "concise": true,
+            "minimal": true,
+            "answer_determined_at": 3,
+            "redundant_steps": [],
+            "issues": [],
+            "steps": [
+                "In a double-slit experiment, a missing maximum happens when a diffraction minimum matches an interference maximum.",
+                "This requires the ratio of slit separation to slit width to be a ratio of integers.",
+                "The condition 2d equals 3w gives a ratio of 3 to 2, which satisfies this requirement.",
+                "So the answer is D."
+            ]
+        },
+        {
+            "id": "GR9277#25",
+            "method": "poe",
+            "n_steps": 5,
+            "words": 61,
+            "ends_on_answer": true,
+            "correct": true,
+            "concise": true,
+            "minimal": true,
+            "answer_determined_at": 5,
+            "redundant_steps": [],
+            "issues": [],
+            "steps": [
+                "First, I'd eliminate alpha particles and neutrons because they are absorbed by rock.",
+                "Next, protons and electrons are charged and absorbed by rock, so they can't reach deep underground.",
+                "Iron and carbon nuclei are heavy and also absorbed by rock.",
+                "Positrons and electrons are charged and absorbed by rock.",
+                "That leaves muons and neutrinos, which can penetrate deeply. So it's (D)."
+            ]
+        },
+        {
+            "id": "GR9277#29",
+            "method": "poe",
+            "n_steps": 3,
+            "words": 36,
+            "ends_on_answer": true,
+            "correct": true,
+            "concise": true,
+            "minimal": true,
+            "answer_determined_at": 2,
+            "redundant_steps": [],
+            "issues": [],
+            "steps": [
+                "First, for bound states, the wave function must be continuous and decay outside the well.",
+                "Notice that C is discontinuous at the boundary, which is not allowed.",
+                "So, by process of elimination, the answer is B."
+            ]
+        },
+        {
+            "id": "GR9277#33",
+            "method": "full_solve",
+            "n_steps": 5,
+            "words": 44,
+            "ends_on_answer": true,
+            "correct": true,
+            "concise": true,
+            "minimal": true,
+            "answer_determined_at": 4,
+            "redundant_steps": [],
+            "issues": [],
+            "steps": [
+                "First, I'd simplify the circuit to find the equivalent resistance.",
+                "Next, calculate the total current using Ohm's Law.",
+                "Then, find the voltage across resistor R4 using the current and its resistance.",
+                "The calculated voltage across R4 is 0.4 volts.",
+                "So the answer is A."
+            ]
+        },
+        {
+            "id": "GR9277#37",
+            "method": "symmetry",
+            "n_steps": 3,
+            "words": 28,
+            "ends_on_answer": true,
+            "correct": false,
+            "concise": true,
+            "minimal": true,
+            "answer_determined_at": 2,
+            "redundant_steps": [],
+            "issues": [
+                "The tutor did not consider relativistic effects or energy-momentum conservation.",
+                "The conclusion that the velocity is simply -c is incorrect without proper analysis."
+            ],
+            "steps": [
+                "Photons always travel at the speed of light, c, in any frame.",
+                "Since one photon is emitted backward, its velocity should be negative.",
+                "The correct answer is A."
+            ]
+        },
+        {
+            "id": "GR9277#42",
+            "method": "full_solve",
+            "n_steps": 4,
+            "words": 56,
+            "ends_on_answer": true,
+            "correct": false,
+            "concise": true,
+            "minimal": true,
+            "answer_determined_at": 4,
+            "redundant_steps": [],
+            "issues": [
+                "Moment of inertia not given or assumed",
+                "Torque calculation lacks necessary information"
+            ],
+            "steps": [
+                "First, I calculate the angular acceleration: the speed drops from 80 to 40 rad/s in 10 seconds.",
+                "The change in angular velocity is 40 rad/s, so the acceleration is -4 rad/s\u00b2.",
+                "Now, I multiply the angular acceleration by the moment of inertia to find the torque.",
+                "The torque is 16 N\u00b7m, so the answer is D."
+            ]
+        },
+        {
+            "id": "GR9277#48",
+            "method": "full_solve",
+            "n_steps": 3,
+            "words": 40,
+            "ends_on_answer": true,
+            "correct": true,
+            "concise": true,
+            "minimal": true,
+            "answer_determined_at": 2,
+            "redundant_steps": [],
+            "issues": [],
+            "steps": [
+                "First, I know that for the product of two independent variables, relative uncertainties add in quadrature.",
+                "This means I take the square root of the sum of the squares of the relative uncertainties, which matches choice C.",
+                "So it's C."
+            ]
+        },
+        {
+            "id": "GR9277#52",
+            "method": "full_solve",
+            "n_steps": 2,
+            "words": 16,
+            "ends_on_answer": true,
+            "correct": true,
+            "concise": true,
+            "minimal": true,
+            "answer_determined_at": 1,
+            "redundant_steps": [],
+            "issues": [],
+            "steps": [
+                "First, I recognize the integral condition as the definition of orthonormality.",
+                "So the answer is B."
+            ]
+        },
+        {
+            "id": "GR9277#58",
+            "method": "full_solve",
+            "n_steps": 3,
+            "words": 30,
+            "ends_on_answer": false,
+            "correct": true,
+            "concise": true,
+            "minimal": true,
+            "answer_determined_at": 2,
+            "redundant_steps": [],
+            "issues": [],
+            "steps": [
+                "First, I apply the Aufbau principle to fill orbitals from lowest energy up.",
+                "Sodium has 11 electrons, so I fill 1s2, 2s2, 2p6, and then 3s1.",
+                "This matches choice C."
+            ]
+        },
+        {
+            "id": "GR9277#62",
+            "method": "full_solve",
+            "n_steps": 3,
+            "words": 38,
+            "ends_on_answer": true,
+            "correct": true,
+            "concise": true,
+            "minimal": true,
+            "answer_determined_at": 2,
+            "redundant_steps": [],
+            "issues": [],
+            "steps": [
+                "First, I recognize this is an isothermal expansion of an ideal gas.",
+                "The work done is given by the formula nRT ln of V1 over V0.",
+                "This matches choice E, which is RT0 ln of V1 over V0."
+            ]
+        },
+        {
+            "id": "GR9277#66",
+            "method": "full_solve",
+            "n_steps": 4,
+            "words": 49,
+            "ends_on_answer": true,
+            "correct": true,
+            "concise": true,
+            "minimal": true,
+            "answer_determined_at": 3,
+            "redundant_steps": [],
+            "issues": [],
+            "steps": [
+                "First, calculate the chain's mass: 10 meters times 2 kg per meter gives 20 kg.",
+                "The center of mass rises 5 meters, so work is mass times gravity times height.",
+                "That's 20 kg times 10 meters per second squared times 5 meters, which equals 1000 joules.",
+                "So it's C."
+            ]
+        },
+        {
+            "id": "GR9277#70",
+            "method": "full_solve",
+            "n_steps": 4,
+            "words": 40,
+            "ends_on_answer": true,
+            "correct": true,
+            "concise": true,
+            "minimal": true,
+            "answer_determined_at": 3,
+            "redundant_steps": [],
+            "issues": [],
+            "steps": [
+                "First, I notice the total energy is 100 times the rest energy.",
+                "For ultra-relativistic particles, momentum is approximately total energy divided by c.",
+                "Since total energy is 100 times rest energy, momentum is about 100 times mc.",
+                "So it's D."
+            ]
+        },
+        {
+            "id": "GR9277#75",
+            "method": "symmetry",
+            "n_steps": 3,
+            "words": 33,
+            "ends_on_answer": true,
+            "correct": true,
+            "concise": true,
+            "minimal": true,
+            "answer_determined_at": 2,
+            "redundant_steps": [],
+            "issues": [],
+            "steps": [
+                "First, I'd use momentum conservation: the decay products must have equal and opposite momenta.",
+                "Since helium is lighter than thorium, it must have more kinetic energy to maintain this balance.",
+                "So it's E."
+            ]
+        },
+        {
+            "id": "GR9277#80",
+            "method": "full_solve",
+            "n_steps": 4,
+            "words": 44,
+            "ends_on_answer": true,
+            "correct": true,
+            "concise": true,
+            "minimal": true,
+            "answer_determined_at": 3,
+            "redundant_steps": [],
+            "issues": [],
+            "steps": [
+                "First, I'll use the formula lambda equals hc over E to find the short-wavelength limit.",
+                "Here, hc is approximately 1.24 times 10 to the negative 6 eV meter, and E is 25,000 eV.",
+                "Calculating gives lambda equals 0.5 angstroms.",
+                "So the answer is B."
+            ]
+        },
+        {
+            "id": "GR9277#86",
+            "method": "full_solve",
+            "n_steps": 3,
+            "words": 38,
+            "ends_on_answer": true,
+            "correct": true,
+            "concise": false,
+            "minimal": false,
+            "answer_determined_at": 1,
+            "redundant_steps": [
+                2
+            ],
+            "issues": [],
+            "steps": [
+                "To find capacitance from an oscilloscope trace, I need both resistance R and sweep speed s.",
+                "The sweep speed s gives the time scale, and resistance R is needed for the time constant.",
+                "So the answer is B."
+            ]
+        },
+        {
+            "id": "GR9277#90",
+            "method": "estimation",
+            "n_steps": 5,
+            "words": 55,
+            "ends_on_answer": true,
+            "correct": true,
+            "concise": true,
+            "minimal": true,
+            "answer_determined_at": 4,
+            "redundant_steps": [],
+            "issues": [],
+            "steps": [
+                "First, notice the choices span many orders of magnitude, from tiny to huge.",
+                "Rotational energy levels for molecules like H2 are typically in the milli-electronvolt range.",
+                "Choices C, D, and E are way too large for molecular rotational energies.",
+                "Choice A is too small, leaving B as the best estimate.",
+                "So the answer is B."
+            ]
+        },
+        {
+            "id": "GR9277#95",
+            "method": "full_solve",
+            "n_steps": 4,
+            "words": 56,
+            "ends_on_answer": true,
+            "correct": true,
+            "concise": true,
+            "minimal": true,
+            "answer_determined_at": 3,
+            "redundant_steps": [],
+            "issues": [],
+            "steps": [
+                "First, I use the formula for differential cross section: N_S over N_I times n_T times delta Omega.",
+                "Plug in the values: 10 to the 2 over 10 to the 12 times 10 to the 20 times 10 to the minus 4.",
+                "This simplifies to 10 to the minus 26 square centimeters per steradian.",
+                "So it's C."
+            ]
+        }
+    ]
+}

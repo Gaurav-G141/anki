@@ -1,0 +1,231 @@
+{
+    "n": 12,
+    "correct": 12,
+    "concise": 12,
+    "both": 12,
+    "redundancy_rate": 0.0,
+    "median_steps": 3.0,
+    "mean_steps": 3.1666666666666665,
+    "median_words": 33.5,
+    "passed": true,
+    "results": [
+        {
+            "id": "GR9277#1",
+            "method": "full_solve",
+            "n_steps": 2,
+            "words": 27,
+            "ends_on_answer": false,
+            "correct": true,
+            "concise": true,
+            "minimal": true,
+            "answer_determined_at": 1,
+            "redundant_steps": [],
+            "issues": [],
+            "steps": [
+                "First, I'd apply the momentum operator to the wave function e to the i times kx minus omega t.",
+                "This gives h-bar k, which matches choice C."
+            ]
+        },
+        {
+            "id": "GR9277#15",
+            "method": "full_solve",
+            "n_steps": 3,
+            "words": 43,
+            "ends_on_answer": true,
+            "correct": true,
+            "concise": true,
+            "minimal": true,
+            "answer_determined_at": 2,
+            "redundant_steps": [],
+            "issues": [],
+            "steps": [
+                "First, count the degrees of freedom for a diatomic molecule: 3 translational, 2 rotational, 2 vibrational.",
+                "Each degree of freedom contributes R over 2 to the specific heat, totaling 7R over 2.",
+                "So the answer is 7R over 2, which is choice (C)."
+            ]
+        },
+        {
+            "id": "GR9277#22",
+            "method": "full_solve",
+            "n_steps": 4,
+            "words": 60,
+            "ends_on_answer": true,
+            "correct": true,
+            "concise": true,
+            "minimal": true,
+            "answer_determined_at": 3,
+            "redundant_steps": [],
+            "issues": [],
+            "steps": [
+                "First, I know the telescope's magnification is 10 and the objective focal length is 1.0 m.",
+                "The eyepiece focal length is the objective focal length divided by magnification, so it's 0.1 m.",
+                "Add the objective and eyepiece focal lengths: 1.0 m plus 0.1 m equals 1.1 m.",
+                "So the separation between the lenses is 1.1 m, which is choice (D)."
+            ]
+        },
+        {
+            "id": "GR9277#29",
+            "method": "poe",
+            "n_steps": 5,
+            "words": 53,
+            "ends_on_answer": true,
+            "correct": true,
+            "concise": true,
+            "minimal": true,
+            "answer_determined_at": 4,
+            "redundant_steps": [],
+            "issues": [],
+            "steps": [
+                "First, I'd check if the wave function vanishes at infinity, which A does not.",
+                "Next, I'd see if the wave function is continuous, which C is not.",
+                "Then, I'd look for exponential decay outside the well, which D lacks.",
+                "Finally, I'd ensure no oscillation outside the well, which E has.",
+                "So it's B."
+            ]
+        },
+        {
+            "id": "GR9277#36",
+            "method": "symmetry",
+            "n_steps": 3,
+            "words": 31,
+            "ends_on_answer": true,
+            "correct": true,
+            "concise": true,
+            "minimal": true,
+            "answer_determined_at": 2,
+            "redundant_steps": [],
+            "issues": [],
+            "steps": [
+                "First, I notice that the electric field E must reverse at a perfect conductor.",
+                "The magnetic field B does not reverse because it's related to wave propagation direction.",
+                "So it's (C)."
+            ]
+        },
+        {
+            "id": "GR9277#43",
+            "method": "full_solve",
+            "n_steps": 3,
+            "words": 35,
+            "ends_on_answer": true,
+            "correct": true,
+            "concise": true,
+            "minimal": true,
+            "answer_determined_at": 2,
+            "redundant_steps": [],
+            "issues": [],
+            "steps": [
+                "First, I see the problem states the derivative of the Lagrangian with respect to q_n is zero.",
+                "This means the generalized momentum associated with q_n is conserved, so it's constant.",
+                "So the answer is B."
+            ]
+        },
+        {
+            "id": "GR9277#52",
+            "method": "full_solve",
+            "n_steps": 2,
+            "words": 16,
+            "ends_on_answer": true,
+            "correct": true,
+            "concise": true,
+            "minimal": true,
+            "answer_determined_at": 1,
+            "redundant_steps": [],
+            "issues": [],
+            "steps": [
+                "First, recognize the integral property given is the definition of orthonormality.",
+                "So the answer is B."
+            ]
+        },
+        {
+            "id": "GR9277#60",
+            "method": "estimation",
+            "n_steps": 3,
+            "words": 52,
+            "ends_on_answer": true,
+            "correct": true,
+            "concise": true,
+            "minimal": true,
+            "answer_determined_at": 2,
+            "redundant_steps": [],
+            "issues": [],
+            "steps": [
+                "First, I'll estimate the cyclotron frequency using the formula omega equals qB over m star.",
+                "With q about 1.6 times 10 to the minus 19, B is 1, and m star is 0.1 times m e, omega is about 10 to the 12.",
+                "So the closest choice to our estimate is D."
+            ]
+        },
+        {
+            "id": "GR9277#68",
+            "method": "estimation",
+            "n_steps": 3,
+            "words": 32,
+            "ends_on_answer": true,
+            "correct": true,
+            "concise": true,
+            "minimal": true,
+            "answer_determined_at": 2,
+            "redundant_steps": [],
+            "issues": [],
+            "steps": [
+                "First, I'd estimate using the Rayleigh criterion: d equals lambda over theta.",
+                "With lambda 5500 angstroms and theta 8 microradians, d is about 0.1 meters, which is 10 cm.",
+                "So it's (C)."
+            ]
+        },
+        {
+            "id": "GR9277#75",
+            "method": "symmetry",
+            "n_steps": 3,
+            "words": 29,
+            "ends_on_answer": true,
+            "correct": true,
+            "concise": true,
+            "minimal": true,
+            "answer_determined_at": 2,
+            "redundant_steps": [],
+            "issues": [],
+            "steps": [
+                "First, I use momentum conservation: the decay products must have equal and opposite momenta.",
+                "Since helium is lighter, it must have more kinetic energy than thorium.",
+                "So it's E."
+            ]
+        },
+        {
+            "id": "GR9277#85",
+            "method": "full_solve",
+            "n_steps": 4,
+            "words": 57,
+            "ends_on_answer": true,
+            "correct": true,
+            "concise": true,
+            "minimal": true,
+            "answer_determined_at": 3,
+            "redundant_steps": [],
+            "issues": [],
+            "steps": [
+                "First, I use the energy-momentum relation: E squared equals p squared c squared plus m squared c to the fourth.",
+                "Substitute E as 1.5 MeV and mc squared as 0.5 MeV to solve for momentum.",
+                "Calculate p c equals square root of 1.5 squared minus 0.5 squared, which is about 1.4 MeV per c.",
+                "So it's (C)."
+            ]
+        },
+        {
+            "id": "GR9277#91",
+            "method": "symmetry",
+            "n_steps": 3,
+            "words": 27,
+            "ends_on_answer": true,
+            "correct": true,
+            "concise": true,
+            "minimal": true,
+            "answer_determined_at": 2,
+            "redundant_steps": [],
+            "issues": [],
+            "steps": [
+                "First, recognize that the decay involves a change in strangeness.",
+                "The strong force conserves strangeness, so this must be a weak interaction.",
+                "So the answer is E."
+            ]
+        }
+    ]
+}

@@ -1,0 +1,286 @@
+{
+    "n": 12,
+    "correct": 11,
+    "concise": 3,
+    "both": 2,
+    "redundancy_rate": 0.6666666666666666,
+    "median_steps": 5.5,
+    "mean_steps": 5.416666666666667,
+    "median_words": 69.0,
+    "passed": false,
+    "results": [
+        {
+            "id": "GR9277#1",
+            "method": "full_solve",
+            "n_steps": 5,
+            "words": 60,
+            "ends_on_answer": true,
+            "correct": true,
+            "concise": false,
+            "minimal": false,
+            "answer_determined_at": 3,
+            "redundant_steps": [
+                4
+            ],
+            "issues": [],
+            "steps": [
+                "First, we need to find the momentum of a particle with the given wave function.",
+                "To find the momentum, apply the momentum operator to the wave function.",
+                "The momentum operator gives us h-bar k, which matches choice C.",
+                "Before solving, we can eliminate A, B, D, and E due to incorrect units or interpretations.",
+                "So the correct answer is C."
+            ]
+        },
+        {
+            "id": "GR9277#15",
+            "method": "full_solve",
+            "n_steps": 4,
+            "words": 44,
+            "ends_on_answer": true,
+            "correct": true,
+            "concise": true,
+            "minimal": true,
+            "answer_determined_at": 4,
+            "redundant_steps": [],
+            "issues": [],
+            "steps": [
+                "First, I need to count the degrees of freedom for the diatomic molecule.",
+                "It has 3 translational, 2 rotational, and 2 vibrational modes.",
+                "Each mode contributes R over 2 to the specific heat.",
+                "Adding them gives 7R over 2, so the answer is C."
+            ]
+        },
+        {
+            "id": "GR9277#22",
+            "method": "full_solve",
+            "n_steps": 6,
+            "words": 65,
+            "ends_on_answer": true,
+            "correct": true,
+            "concise": false,
+            "minimal": false,
+            "answer_determined_at": 4,
+            "redundant_steps": [
+                5
+            ],
+            "issues": [],
+            "steps": [
+                "First, I know the telescope's separation is the sum of the focal lengths.",
+                "The angular magnification is 10, so the eyepiece focal length is 0.1 m.",
+                "Add the objective focal length of 1.0 m to the eyepiece focal length of 0.1 m.",
+                "This gives a total separation of 1.1 m.",
+                "Choice E is too large, so it's not possible.",
+                "So the correct answer is D."
+            ]
+        },
+        {
+            "id": "GR9277#29",
+            "method": "poe",
+            "n_steps": 6,
+            "words": 74,
+            "ends_on_answer": true,
+            "correct": true,
+            "concise": false,
+            "minimal": true,
+            "answer_determined_at": 5,
+            "redundant_steps": [],
+            "issues": [],
+            "steps": [
+                "First, I need to find a bound-state wave function for a 1D square well.",
+                "Option A doesn't vanish at infinity, so it's not a bound state.",
+                "Option C is discontinuous at the boundary, which is not allowed.",
+                "Option D is linear outside the well, but bound states must decay exponentially.",
+                "Option E oscillates outside the well, which is impossible for bound states.",
+                "So, the only valid choice is B, which fits all the criteria."
+            ]
+        },
+        {
+            "id": "GR9277#36",
+            "method": "symmetry",
+            "n_steps": 5,
+            "words": 79,
+            "ends_on_answer": true,
+            "correct": true,
+            "concise": false,
+            "minimal": false,
+            "answer_determined_at": 3,
+            "redundant_steps": [
+                4
+            ],
+            "issues": [],
+            "steps": [
+                "First, I notice that when an electromagnetic wave hits a perfect conductor, the electric field E must reverse.",
+                "This means choice B is out because E can't stay the same.",
+                "The magnetic field B is related to the wave's direction and doesn't reverse, so choice A is out.",
+                "Choice D is also out because B doesn't reverse, and choice E is out because E and B don't interchange.",
+                "So, the correct answer is C: E reverses, B does not."
+            ]
+        },
+        {
+            "id": "GR9277#43",
+            "method": "full_solve",
+            "n_steps": 5,
+            "words": 81,
+            "ends_on_answer": true,
+            "correct": true,
+            "concise": false,
+            "minimal": false,
+            "answer_determined_at": 2,
+            "redundant_steps": [
+                3,
+                4
+            ],
+            "issues": [],
+            "steps": [
+                "First, I notice the problem states the partial derivative of the Lagrangian with respect to q_n is zero.",
+                "This means the generalized momentum related to q_n is conserved, so it stays constant over time.",
+                "I can quickly eliminate choice C because momentum is always defined when the Lagrangian is defined.",
+                "Choice E is also out because the Hamiltonian is a different concept from generalized momentum.",
+                "Since a zero derivative implies conservation, the correct answer is B, meaning the momentum is constant."
+            ]
+        },
+        {
+            "id": "GR9277#52",
+            "method": "full_solve",
+            "n_steps": 6,
+            "words": 64,
+            "ends_on_answer": true,
+            "correct": true,
+            "concise": false,
+            "minimal": false,
+            "answer_determined_at": 1,
+            "redundant_steps": [
+                2,
+                3,
+                4,
+                5
+            ],
+            "issues": [],
+            "steps": [
+                "First, I recognize the integral property as the definition of orthonormality.",
+                "The property is not about solutions to the Schrodinger equation, so it's not A.",
+                "Boundedness refers to behavior at infinity, not this property, so it's not C.",
+                "Linearly dependent functions do not satisfy orthonormality, so it's not D.",
+                "Symmetry is unrelated to orthonormality, so it's not E.",
+                "So the answer is B, orthonormal."
+            ]
+        },
+        {
+            "id": "GR9277#60",
+            "method": "estimation",
+            "n_steps": 6,
+            "words": 92,
+            "ends_on_answer": true,
+            "correct": true,
+            "concise": false,
+            "minimal": false,
+            "answer_determined_at": 3,
+            "redundant_steps": [
+                4,
+                5,
+                6
+            ],
+            "issues": [],
+            "steps": [
+                "First, let's estimate the cyclotron frequency using the formula omega equals qB over m star.",
+                "For an electron, q is about 1.6 times 10 to the minus 19 coulombs.",
+                "With B as 1 tesla and m star as 0.1 times the electron mass, omega is roughly 10 to the 12 rad per second.",
+                "Choices A and B are too low for this frequency, so we can eliminate them.",
+                "Choice E is unreasonably high, so we eliminate it too.",
+                "That leaves us with C and D, and D is closest to our estimate."
+            ]
+        },
+        {
+            "id": "GR9277#68",
+            "method": "estimation",
+            "n_steps": 4,
+            "words": 53,
+            "ends_on_answer": false,
+            "correct": false,
+            "concise": true,
+            "minimal": true,
+            "answer_determined_at": 3,
+            "redundant_steps": [],
+            "issues": [],
+            "steps": [
+                "First, I'd notice the problem involves resolving a double star with a telescope.",
+                "The Rayleigh criterion tells us the required diameter is roughly wavelength over angular separation.",
+                "With a wavelength of 5500 angstroms and separation of 8 microradians, the diameter is about 0.1 meters.",
+                "This estimation matches choice C, which is 10 centimeters."
+            ]
+        },
+        {
+            "id": "GR9277#75",
+            "method": "symmetry",
+            "n_steps": 7,
+            "words": 100,
+            "ends_on_answer": true,
+            "correct": true,
+            "concise": false,
+            "minimal": false,
+            "answer_determined_at": 2,
+            "redundant_steps": [
+                3,
+                4,
+                5,
+                6
+            ],
+            "issues": [],
+            "steps": [
+                "First, notice this decay conserves momentum, so the particles have equal and opposite momenta.",
+                "Since helium is lighter, it must have more kinetic energy than thorium to balance momentum.",
+                "Eliminate choice A because heavier thorium must have less kinetic energy than lighter helium.",
+                "Eliminate choice B because heavier thorium must move slower than lighter helium for equal momentum.",
+                "Eliminate choice C because momentum conservation means they move in opposite directions, not the same.",
+                "Eliminate choice D because momentum conservation requires equal and opposite momenta, not more for thorium.",
+                "So, helium has more kinetic energy than thorium, making choice E correct."
+            ]
+        },
+        {
+            "id": "GR9277#85",
+            "method": "full_solve",
+            "n_steps": 5,
+            "words": 63,
+            "ends_on_answer": true,
+            "correct": true,
+            "concise": true,
+            "minimal": true,
+            "answer_determined_at": 4,
+            "redundant_steps": [],
+            "issues": [],
+            "steps": [
+                "First, I need to find the electron's momentum using the energy-momentum relation.",
+                "The total energy is 1.5 MeV, and the rest mass energy is 0.5 MeV.",
+                "Using E squared equals p squared c squared plus m squared c to the fourth, I solve for momentum.",
+                "Substituting the values, I find the momentum to be about 1.4 MeV per c.",
+                "So it's choice C."
+            ]
+        },
+        {
+            "id": "GR9277#91",
+            "method": "symmetry",
+            "n_steps": 6,
+            "words": 73,
+            "ends_on_answer": true,
+            "correct": true,
+            "concise": false,
+            "minimal": false,
+            "answer_determined_at": 1,
+            "redundant_steps": [
+                2,
+                3,
+                4,
+                5
+            ],
+            "issues": [],
+            "steps": [
+                "First, let's recognize that the decay involves a change in strangeness.",
+                "The pion is not a lepton, so choice A is incorrect.",
+                "The lambda particle has spin one-half, not zero, so choice B is wrong.",
+                "The presence or absence of a neutrino doesn't determine the interaction type, eliminating choice C.",
+                "Angular momentum is conserved in this decay, so choice D is incorrect.",
+                "The change in strangeness indicates a weak interaction, confirming choice E."
+            ]
+        }
+    ]
+}

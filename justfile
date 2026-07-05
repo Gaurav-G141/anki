@@ -226,6 +226,10 @@ paraphrase-eval *args:
 ablation *args:
     out/pyenv/bin/python speedrun/ablation.py {{args}}
 
+# Andy explanation eval: scores the "Explain with Andy" tutor for correctness AND conciseness (flags kept-eliminating-after-the-answer). Drives the live app prompt. Needs OpenAI key; --dry-run for offline. (macOS/Linux)
+andy-eval *args:
+    out/pyenv/bin/python speedrun/andy_eval.py {{args}}
+
 # Generate VALIDATED reworded MCQ variants (fluency-illusion fix): same physics/answer, reworded stem; solver-consensus + integrity gated. Writes generated_mcq.jsonl; then run promote_generated.py. Needs OpenAI key; --dry-run for offline. (macOS/Linux)
 reword-variants *args:
     out/pyenv/bin/python speedrun/gen_reword_variants.py {{args}}

@@ -324,3 +324,155 @@ def grade(question: dict, chosen: str, reasoning: str) -> dict:
         "missed": out.get("missed", []) or [],
         "feedback": (out.get("feedback", "") or "").strip(),
     }
+
+
+# ------------------------------------------------------------ Andy (spoken steps)
+#
+# "Explain with Andy": a friendly atom that narrates the fastest correct solution
+# out loud, step by step, in the MCQ quiz. This produces the *script* Andy speaks
+# — a short ordered list of one-sentence steps, each optionally tagged with the
+# choice it is about (so the UI can fly Andy to that choice and highlight it).
+# Grounded in the same validated optimal-approach key as the grader, so Andy never
+# free-styles a wrong method. Degrades exactly like grade(): no key / offline / bad
+# output -> ok=False, and the quiz falls back to narrating the precomputed key.
+
+#: Focus tags a step may carry (which part of the problem Andy points at).
+_FOCUS_OK = {"A", "B", "C", "D", "E", "stem", "answer"}
+
+#: The expert fast-solving heuristics Andy must follow, distilled from *Conquering
+#: the Physics GRE* (Kahn & Anderson, 3rd ed., strategy chapters) + the project
+#: brainlifts — the same toolkit that grounds the Stage-1 optimal-approach key
+#: (see ``speedrun/heuristic_prompts.py``). Kept here as a literal so this module
+#: stays import-light (no dependency on the speedrun package).
+_HEURISTIC_TOOLKIT = """\
+Physics-GRE fast-solving heuristics (an expert rarely solves a problem in full — 70 MCQs,
+~1:43 each, no calculator). Apply IN THIS PRIORITY and narrate the ones that crack it:
+1. Bound / comparison check FIRST — decide what the answer must be relative to a reference,
+   then rule out every choice that violates it (e.g. "final speed can't exceed the initial
+   speed", "this ratio must be < 1", "a wavelength can't exceed 2d"). Highest-value move.
+2. Dimensional analysis — often only one choice has the right units.
+3. Numerical estimation — if choices span orders of magnitude, a rough estimate pins it.
+4. Limiting / special cases — test r->0, r->inf, m1=m2, theta=0; drop choices that misbehave.
+5. Symmetry & conservation laws — use them before grinding algebra.
+6. Process of elimination — cross off the physically impossible / wrong-sign / wrong-units.
+7. Sometimes the fastest route really is a short direct solve or a recalled fact — that's
+   fine; still name any choices you can eliminate up front. A guessed letter is NOT a method."""
+
+
+def _explain_messages(question: dict, ref: dict | None = None) -> list[dict]:
+    # ``ref`` is the validated optimal-approach record; defaults to the bundled
+    # key. (The eval passes it explicitly so it can drive this exact prompt
+    # without importing the app's data layer — see speedrun/andy_eval.py.)
+    if ref is None:
+        ref = optimal_for(question.get("id", "")) or {}
+    choices = "\n".join(f"({l}) {t}" for l, t in question.get("choices", []))
+    ref_block = json.dumps(
+        {
+            "optimal_method": ref.get("optimal_method"),
+            "eliminations": ref.get("eliminations", []),
+            "expert_reasoning": ref.get("expert_reasoning", ""),
+            "student_explanation": ref.get("student_explanation", ""),
+        },
+        ensure_ascii=False,
+    )
+    system = (
+        "You are Andy, a warm, quick physics tutor who is literally a little glowing atom. "
+        "You explain, OUT LOUD and step by step, the FAST expert way to crack one Physics GRE "
+        "multiple-choice problem — thinking aloud right next to the student. You solve the way a "
+        "top scorer does: use whatever is fastest for THIS problem — a shortcut, an elimination, "
+        "or a clean direct solve — following the given optimal method (never force a trick that "
+        "doesn't apply). The INSTANT your reasoning determines the answer, you say it and STOP — "
+        "you never pad with why the other choices are wrong. Ground every step in the validated "
+        "optimal approach you are given; never contradict it. Output ONLY a JSON object."
+    )
+    user = f"""{_HEURISTIC_TOOLKIT}
+
+PROBLEM: {question.get("statement", "")}
+CHOICES:
+{choices}
+CORRECT ANSWER: {question.get("answer", "")}
+
+VALIDATED OPTIMAL APPROACH (your source of truth — do not contradict it):
+{ref_block}
+
+Narrate the fastest correct solution as a SHORT ordered list of steps — the route in the
+reference's `optimal_method` / `student_explanation`, spoken live. Be ruthlessly brief.
+
+THE ONE RULE THAT MATTERS MOST: the instant your reasoning determines the answer, state it and
+STOP. Do NOT then rule out, mention, or comment on the other choices — once you've got the
+answer, explaining why the others are wrong is wasted breath (exactly what a rushed student
+does). Pick the route and stop the moment it lands:
+  • Direct solve / observation / estimate / symmetry / units check (optimal_method full_solve,
+    dimensional_analysis, estimation, limiting_cases, symmetry): give the key move(s) that
+    produce the answer, then state it. Do NOT enumerate the other choices afterward — even if
+    the reference's `eliminations` list them; those were only context, ignore them here.
+  • Process of elimination (optimal_method poe, or a bound/comparison check): here ruling
+    choices out IS how you find the answer — so rule out choices until only ({question.get("answer", "")})
+    is left, THEN name it. Don't jump to the answer after eliminating just one choice while
+    others are still live; but the moment only one remains, stop.
+
+BREVITY vs CORRECTNESS: be brief by cutting wasted breath — post-answer eliminations, restating,
+padding — NEVER by skipping the real work. Always show the decisive step(s) that actually
+produce the answer: the key relation, the number you compute, or the physical reason, so a
+student can FOLLOW it. Take the physics and the numbers straight from the reference's
+`expert_reasoning` / `student_explanation` — do NOT improvise or hand-wave a calculation
+("the voltage is 0.4 V" with no working is a fail; show the relation that gives it). When you
+plug in a given quantity, say its value (e.g. "with I = 4 kg m^2…") so the step can be followed.
+Use only as many steps as that real derivation needs — often 2–4 for a direct route; a genuine
+multi-step computation or a full elimination route may take a few more. Every step must change
+what the student knows. Each step is ONE short sentence Andy SAYS ALOUD (<= 26 words), first
+person and friendly ("First, I'd…", "Notice that…", "So it's (C)."). Write for the EAR: plain
+words and simple unicode only — NO LaTeX, no "$", no backslashes (say "h-bar k").
+
+Set "focus" to point at what each step is about: a choice letter A–E when the step is genuinely
+about that choice, "stem" for reading/setting up, and "answer" for the final line. The LAST
+step states the correct answer letter with focus "answer".
+
+Return ONLY: {{"steps": [{{"say": "...", "focus": "stem"}}, {{"say": "...", "focus": "C"}}]}}"""
+    return [{"role": "system", "content": system}, {"role": "user", "content": user}]
+
+
+def _parse_steps(out: dict) -> list[dict]:
+    """Normalise the model's ``steps`` into ``[{"say", "focus"}]``.
+
+    Accepts steps as objects (``{"say", "focus"}``) or bare strings; drops empty
+    ``say``; keeps ``focus`` only if it is a recognised tag (else ``""``)."""
+    steps: list[dict] = []
+    for raw in out.get("steps", []) or []:
+        if isinstance(raw, dict):
+            say = str(raw.get("say", "")).strip()
+            focus = str(raw.get("focus", "")).strip()
+        else:
+            say, focus = str(raw).strip(), ""
+        if focus not in _FOCUS_OK:
+            focus = ""
+        if say:
+            steps.append({"say": say, "focus": focus})
+    return steps
+
+
+def explain_steps(question: dict) -> dict:
+    """Andy's spoken script for a question. Runs off the UI thread; never raises.
+
+    Returns ``{"ok": bool, "steps": [{"say", "focus"}]}``. ``ok=False`` means the
+    AI script was unavailable (no key / offline / bad output) — the caller then
+    narrates the precomputed optimal-approach key instead."""
+    base = {"ok": False, "steps": []}
+    key = get_api_key()
+    if not key:
+        return base
+    try:
+        out = _chat_json(_explain_messages(question), key)
+    except (
+        urllib.error.URLError,
+        urllib.error.HTTPError,
+        TimeoutError,
+        ValueError,
+        KeyError,
+        OSError,
+    ):
+        return base
+    steps = _parse_steps(out)
+    if not steps:
+        return base
+    return {"ok": True, "steps": steps}
