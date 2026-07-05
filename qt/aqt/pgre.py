@@ -673,93 +673,77 @@ _MANIFOLD_BODY = """
   #cy-classic a:hover {{ color: var(--pg-text); }}
   /* Centre button: launches the real-exam MCQ (Performance) quiz. It carries
      data-cx/cy=50 so the orbit script pivots it about the centre — i.e. it stays
-     put while the manifold spins. This is the ONE glowing cyan core: the single
-     loud element on the screen. */
-  /* The MCQ core is now an ATOM: a glowing cyan nucleus with electrons orbiting
-     it — the one loud, animated element on the screen. The button itself is a
-     transparent 132px stage; nucleus + 3 tilted orbits are procedural CSS. */
+     put while the manifold spins around it. This is the ONE glowing cyan core:
+     the single loud element on the screen.
+
+     It is a plain glowing circle. Its RADIUS is the distance from the manifold's
+     centre of rotation (50,50) to the manifold's visual crossing "throat" — the
+     point where the surface's fold seams converge, which the fixed view rotation
+     places at ~(47.5, 55.5), i.e. ~6.5% of the stage off-centre (NOT at the
+     rotation centre). Sizing the circle so width = 2 x that offset puts the
+     intersection point exactly on the rim; because the button stays centred
+     while the manifold spins, that point rides the rim at every angle. Width is
+     in % of the square #cy-stage so the rim keeps tracking the throat as the
+     stage resizes. */
   .cy-center {{
     max-width: none;
-    width: 132px;
-    height: 132px;
+    width: 13%; /* diameter = 2 x 6.5% intersection-point offset */
+    height: 13%;
     padding: 0;
-    border: none;
-    background: transparent;
-    box-shadow: none;
+    /* Force a TRUE circle. border-radius:50% was rendering as a rounded square
+       here, so use an absolute pill radius on the square box instead. */
+    border-radius: 9999px;
+    /* .cy-point sets backdrop-filter: blur(); QtWebEngine clips that blur to the
+       square border-box (ignoring the radius), leaving a square halo behind the
+       disc. The core has its own gradient + box-shadow glow, so drop the blur. */
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    border: 1.5px solid var(--pg-accent);
+    background: radial-gradient(circle at 50% 38%,
+      color-mix(in srgb, var(--pg-accent) 34%, var(--pg-panel)) 0%,
+      color-mix(in srgb, var(--pg-accent) 14%, var(--pg-panel-2)) 68%,
+      var(--pg-panel-2) 100%);
+    color: var(--pg-text);
+    box-shadow: 0 0 18px var(--pg-accent-glow),
+      inset 0 0 14px color-mix(in srgb, var(--pg-accent) 20%, transparent);
     overflow: visible;
-  }}
-  .cy-center:hover {{ background: transparent; box-shadow: none; }}
-  .cy-center .nucleus {{
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    width: 30px;
-    height: 30px;
-    margin: -15px 0 0 -15px;
-    border-radius: 50%;
-    background: radial-gradient(circle at 34% 30%, #eafcff, var(--pg-accent) 58%,
-                color-mix(in srgb, var(--pg-accent) 45%, transparent));
-    box-shadow: 0 0 16px var(--pg-accent-glow), 0 0 34px var(--pg-accent-glow);
+    display: flex;
+    align-items: center;
+    justify-content: center;
     animation: cy-core-pulse 3.4s ease-in-out infinite;
   }}
-  .cy-center:hover .nucleus {{ box-shadow: 0 0 26px var(--pg-accent), 0 0 48px var(--pg-accent-glow); }}
-  /* Each orbit is tilted (rotate) and flattened (scaleY) into an ellipse; both
-     its static ring and its spinning electron inherit that transform, so the
-     electron rides the ring exactly. */
-  .cy-center .orbit {{
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    width: 118px;
-    height: 118px;
-    margin: -59px 0 0 -59px;
+  .cy-center:hover {{
+    background: radial-gradient(circle at 50% 38%,
+      color-mix(in srgb, var(--pg-accent) 48%, var(--pg-panel)) 0%,
+      color-mix(in srgb, var(--pg-accent) 22%, var(--pg-panel-2)) 68%,
+      var(--pg-panel-2) 100%);
+    box-shadow: 0 0 30px var(--pg-accent), 0 0 52px var(--pg-accent-glow);
+    transform: translate(-50%, -50%) scale(1.05);
+  }}
+  .cy-center-label {{
+    font-family: var(--pg-mono);
+    font-size: 11px;
+    line-height: 1.2;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    text-align: center;
+    color: var(--pg-text);
+    padding: 0 8px;
     pointer-events: none;
   }}
-  .cy-center .orbit .ring {{
-    position: absolute;
-    inset: 0;
-    border-radius: 50%;
-    border: 1px solid color-mix(in srgb, var(--pg-accent) 26%, transparent);
-  }}
-  .cy-center .orbit .electron-wrap {{ position: absolute; inset: 0; }}
-  .cy-center .orbit .electron {{
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    width: 7px;
-    height: 7px;
-    margin: -3.5px 0 0 -3.5px;
-    border-radius: 50%;
-    background: var(--pg-accent);
-    box-shadow: 0 0 8px var(--pg-accent-glow);
-    transform: translateX(59px) scaleY(2.5);
-  }}
-  .cy-center .o1 {{ transform: rotate(0deg) scaleY(0.4); }}
-  .cy-center .o2 {{ transform: rotate(60deg) scaleY(0.4); }}
-  .cy-center .o3 {{ transform: rotate(120deg) scaleY(0.4); }}
-  .cy-center .o1 .electron-wrap {{ animation: cy-orbit 3.1s linear infinite; }}
-  .cy-center .o2 .electron-wrap {{ animation: cy-orbit 4.3s linear infinite reverse; }}
-  .cy-center .o3 .electron-wrap {{ animation: cy-orbit 3.7s linear infinite; }}
-  .cy-center-label {{
-    position: absolute;
-    left: 50%;
-    top: 100%;
-    transform: translate(-50%, 4px);
-    font-family: var(--pg-mono);
-    font-size: 10px;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--pg-text-dim);
-    white-space: nowrap;
-  }}
-  .cy-center:hover .cy-center-label {{ color: var(--pg-accent); }}
-  @keyframes cy-orbit {{ from {{ transform: rotate(0deg); }} to {{ transform: rotate(360deg); }} }}
+  .cy-center:hover .cy-center-label {{ color: #eafcff; }}
   @keyframes cy-core-pulse {{
-    0%, 100% {{ box-shadow: 0 0 16px var(--pg-accent-glow); }}
-    50% {{ box-shadow: 0 0 30px var(--pg-accent-glow), 0 0 46px var(--pg-accent-glow); }}
+    0%, 100% {{
+      box-shadow: 0 0 18px var(--pg-accent-glow),
+        inset 0 0 14px color-mix(in srgb, var(--pg-accent) 20%, transparent);
+    }}
+    50% {{
+      box-shadow: 0 0 30px var(--pg-accent-glow), 0 0 46px var(--pg-accent-glow),
+        inset 0 0 16px color-mix(in srgb, var(--pg-accent) 26%, transparent);
+    }}
   }}
   @media (prefers-reduced-motion: reduce) {{
-    .cy-center .nucleus, .cy-center .electron-wrap {{ animation: none; }}
+    .cy-center {{ animation: none; }}
   }}
 </style>
 <div id="cy-wrap">
@@ -775,10 +759,6 @@ _MANIFOLD_BODY = """
             data-cx="50" data-cy="50" onclick="pycmd('mcq')"
             aria-label="Practice MCQs — real Physics GRE questions with AI coaching"
             title="Practice real Physics GRE exam questions with AI heuristic coaching">
-      <span class="orbit o1" aria-hidden="true"><span class="ring"></span><span class="electron-wrap"><span class="electron"></span></span></span>
-      <span class="orbit o2" aria-hidden="true"><span class="ring"></span><span class="electron-wrap"><span class="electron"></span></span></span>
-      <span class="orbit o3" aria-hidden="true"><span class="ring"></span><span class="electron-wrap"><span class="electron"></span></span></span>
-      <span class="nucleus" aria-hidden="true"></span>
       <span class="cy-center-label">Practice MCQs</span>
     </button>
   </div>

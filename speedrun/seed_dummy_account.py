@@ -20,6 +20,7 @@ from __future__ import annotations
 
 import argparse
 import os
+import random
 import sys
 import time
 
@@ -39,6 +40,53 @@ import taxonomy  # noqa: E402  (fork-specific PGRE subject list)
 anki.lang.set_lang("en")
 
 DAY = 86_400
+
+#: Historic spacing ladder (days between successive reviews of one card, oldest→
+#: newest), roughly FSRS-shaped. Used to lay a card's reviews back through time so
+#: the Stats graphs show real study sessions instead of one "today" spike.
+_SPACING_LADDER = (1, 3, 7, 14, 30, 60, 120, 200)
+
+
+def _review_history(
+    rng: random.Random,
+    mastered: bool,
+    correct_frac: float,
+    reviews_per: int,
+    last_day_ago: int,
+    final_ivl: int,
+) -> list[tuple[int, int, int, int]]:
+    """Synthesize one card's realistic review history (oldest first).
+
+    Returns ``(day_ago, button, ivl_after, revlog_type)`` rows walking a spaced-
+    repetition ladder up to the card's last review (``last_day_ago`` days ago).
+    Mastered cards get more reps and mostly-Good grades; weaker cards fewer and
+    more Again/Hard early on — so reviews/day, the calendar heatmap and the
+    retention graph all look like genuine daily study."""
+    n = reviews_per + (rng.randint(2, 6) if mastered else rng.randint(-1, 1))
+    n = max(1, n)
+    # place reviews backward from the last one, with growing historic gaps
+    days = [last_day_ago]
+    d = last_day_ago
+    for k in range(n - 1):
+        d += _SPACING_LADDER[min(k, len(_SPACING_LADDER) - 1)]
+        days.append(d)
+    days.reverse()  # oldest first
+    n_wrong = n - round(n * correct_frac)
+    rows: list[tuple[int, int, int, int]] = []
+    for i, day_ago in enumerate(days):
+        if i < n_wrong:
+            button = rng.choice([1, 2])  # Again / Hard while still learning
+            rtype = 0 if i == 0 else 2  # first exposure = learn, later miss = relearn
+        else:
+            button = 3 if rng.random() < 0.82 else 4  # mostly Good, some Easy
+            rtype = 1  # review
+        ivl_after = (
+            _SPACING_LADDER[min(i, len(_SPACING_LADDER) - 1)]
+            if i < n - 1
+            else final_ivl
+        )
+        rows.append((day_ago, button, ivl_after, rtype))
+    return rows
 
 
 def _import_bundled_decks(col: Collection, deck_dir: str) -> None:
@@ -66,7 +114,8 @@ def build(path: str, reviews_per: int, deck_dir: str) -> Collection:
     col = Collection(path)
     now = int(time.time())
     today = col.sched.today  # scheduler day number, for review-card due dates
-    rev_id = now * 1000  # unique, increasing revlog ids
+    rng = random.Random(20260705)  # deterministic -> reproducible dummy
+    used_ids: set[int] = set()  # revlog ids must be unique (ms primary key)
 
     _import_bundled_decks(col, deck_dir)
 
@@ -98,37 +147,46 @@ def build(path: str, reviews_per: int, deck_dir: str) -> Collection:
             #  - the card interval (ivl) drives the manifold home-screen red->green
             #    colouring (aqt/pgre._deck_mastery counts cards with ivl >= 21 as
             #    mature). Without ivl the manifold stays all-red despite the scores.
+            # last_review is placed so the *history* below lands on real days:
+            # mastered cards reviewed within the last ~2 weeks (a dense recent
+            # streak, R high); weaker cards a few months back (an older tail that
+            # has since decayed, R low) — this keeps the Memory gradient intact.
             card.type = CARD_TYPE_REV
             card.queue = QUEUE_TYPE_REV
             if mastered:
+                last_day_ago = rng.randint(0, 16)
                 card.memory_state = FSRSMemoryState(stability=200.0, difficulty=4.0)
-                card.last_review_time = now - 10 * DAY  # recent -> R high
                 card.ivl = 90  # mature (>= 21d) -> greens the spike
-                card.due = today + 60
+                card.due = today + rng.randint(5, 90)  # spread -> real forecast
             else:
+                last_day_ago = rng.randint(170, 250)
                 card.memory_state = FSRSMemoryState(stability=20.0, difficulty=7.0)
-                card.last_review_time = now - 220 * DAY  # long ago -> R low
                 card.ivl = 5  # immature (< 21d) -> spike stays red
-                card.due = today
+                card.due = today + rng.randint(0, 3)
+            card.last_review_time = now - last_day_ago * DAY
             col.update_card(card, skip_undo_entry=True)
 
-            # Graded review history: `correct_frac` of reviews answered Good(3),
-            # the rest Again(1). Drives Performance accuracy.
-            n_correct = round(reviews_per * correct_frac)
-            for r in range(reviews_per):
-                rev_id += 1
-                button = 3 if r < n_correct else 1
+            # Spread this card's graded reviews across real days: drives the Stats
+            # reviews/day + calendar + retention graphs, and Performance accuracy.
+            for day_ago, button, ivl_after, rtype in _review_history(
+                rng, mastered, correct_frac, reviews_per, last_day_ago, card.ivl
+            ):
+                secs_ago = day_ago * DAY - rng.randint(0, DAY - 1)  # a time that day
+                rid = (now - secs_ago) * 1000 + rng.randint(0, 999)
+                while rid in used_ids:
+                    rid += 1
+                used_ids.add(rid)
                 revlog_rows.append(
                     (
-                        rev_id,           # id (unique ms)
-                        cid,              # cid
-                        0,                # usn
-                        button,           # ease = grade
-                        0,                # ivl
-                        0,                # lastIvl
-                        0,                # factor
-                        4000 + (r % 5) * 1200,  # time (ms taken)
-                        1,                # type = review
+                        rid,  # id (unique ms = review time)
+                        cid,  # cid
+                        0,  # usn
+                        button,  # ease = grade
+                        ivl_after,  # ivl after this review
+                        0,  # lastIvl
+                        2500,  # factor
+                        3000 + rng.randint(0, 8000),  # time (ms taken)
+                        rtype,  # 0 learn / 1 review / 2 relearn
                     )
                 )
         col.db.executemany(
@@ -150,8 +208,10 @@ def build(path: str, reviews_per: int, deck_dir: str) -> Collection:
 def verify(col: Collection) -> bool:
     r = col.speedrun.topic_mastery()
     print("\n=== Dummy account — three scores ===")
-    print(f"cards={col.card_count()}  reviews={col.db.scalar('select count(*) from revlog')}"
-          f"  coverage={r.coverage * 100:.0f}%")
+    print(
+        f"cards={col.card_count()}  reviews={col.db.scalar('select count(*) from revlog')}"
+        f"  coverage={r.coverage * 100:.0f}%"
+    )
     ok = True
 
     def line(name, abstain, score, low, high, conf, scaled=False):
@@ -162,13 +222,28 @@ def verify(col: Collection) -> bool:
         elif scaled:
             print(f"  {name:12} {score:.0f}   range {low:.0f}–{high:.0f}   ({conf})")
         else:
-            print(f"  {name:12} {score * 100:.0f}%  range {low * 100:.0f}%–{high * 100:.0f}%   ({conf})")
+            print(
+                f"  {name:12} {score * 100:.0f}%  range {low * 100:.0f}%–{high * 100:.0f}%   ({conf})"
+            )
 
     line("Memory", r.abstain, r.memory_score, r.score_low, r.score_high, r.confidence)
-    line("Performance", r.performance_abstain, r.performance_score,
-         r.performance_low, r.performance_high, r.performance_confidence)
-    line("Readiness", r.readiness_abstain, r.readiness_score,
-         r.readiness_low, r.readiness_high, r.readiness_confidence, scaled=True)
+    line(
+        "Performance",
+        r.performance_abstain,
+        r.performance_score,
+        r.performance_low,
+        r.performance_high,
+        r.performance_confidence,
+    )
+    line(
+        "Readiness",
+        r.readiness_abstain,
+        r.readiness_score,
+        r.readiness_low,
+        r.readiness_high,
+        r.readiness_confidence,
+        scaled=True,
+    )
 
     assert not r.abstain, "Memory should not abstain"
     assert not r.performance_abstain, "Performance should not abstain"
@@ -185,10 +260,17 @@ def verify(col: Collection) -> bool:
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--out", required=True, help="collection.anki2 path to create")
-    ap.add_argument("--reviews-per", type=int, default=3,
-                    help="graded reviews to synthesize per card (drives Performance)")
-    ap.add_argument("--deck-dir", default=os.path.join(REPO, "out/qt/_aqt/data/decks"),
-                    help="folder with the bundled *.apkg subject decks")
+    ap.add_argument(
+        "--reviews-per",
+        type=int,
+        default=3,
+        help="graded reviews to synthesize per card (drives Performance)",
+    )
+    ap.add_argument(
+        "--deck-dir",
+        default=os.path.join(REPO, "out/qt/_aqt/data/decks"),
+        help="folder with the bundled *.apkg subject decks",
+    )
     args = ap.parse_args()
 
     os.makedirs(os.path.dirname(os.path.abspath(args.out)), exist_ok=True)

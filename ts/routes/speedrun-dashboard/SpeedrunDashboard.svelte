@@ -381,11 +381,31 @@ License: GNU AGPL, version 3 or later; http://www.gnu.org/licenses/agpl.html
         </thead>
         <tbody>
             {#each view.topics as topic}
+                {@const masteredFrac =
+                    topic.totalCards > 0 ? topic.mastered / topic.totalCards : 0}
                 <tr>
-                    <td>{topic.name}</td>
+                    <td>
+                        <span
+                            class="subj-dot"
+                            style="background: {masteryColor(masteredFrac)};"
+                            aria-hidden="true"
+                        ></span>
+                        {topic.name}
+                    </td>
                     <td class="num">{topic.totalCards}</td>
                     <td class="num">{topic.cardsWithState}</td>
-                    <td class="num">{topic.mastered}</td>
+                    <td class="num">
+                        <div class="mbar" aria-hidden="true">
+                            <div
+                                class="mbar-fill"
+                                style="width: {masteredFrac *
+                                    100}%; background: {masteryColor(masteredFrac)};"
+                            ></div>
+                        </div>
+                        <span class="mbar-val">
+                            {topic.mastered}/{topic.totalCards}
+                        </span>
+                    </td>
                     <td class="num">
                         <div class="mbar" aria-hidden="true">
                             <div
@@ -398,6 +418,10 @@ License: GNU AGPL, version 3 or later; http://www.gnu.org/licenses/agpl.html
                         <span class="mbar-val">{topic.meanRetrievabilityPct}%</span>
                     </td>
                     <td class="num">{topic.medianLatencyMs} ms</td>
+                </tr>
+            {:else}
+                <tr>
+                    <td colspan="6" class="empty-row">No subjects studied yet.</td>
                 </tr>
             {/each}
         </tbody>
@@ -659,6 +683,22 @@ License: GNU AGPL, version 3 or later; http://www.gnu.org/licenses/agpl.html
 
     table.topics .num {
         text-align: right;
+    }
+
+    // Per-subject mastery dot in the name cell — a quick colour cue (same ramp
+    // as the bars) so the table scans visually, not just as numbers.
+    .subj-dot {
+        display: inline-block;
+        width: 0.62em;
+        height: 0.62em;
+        border-radius: 50%;
+        margin-right: 0.55em;
+    }
+
+    .empty-row {
+        text-align: center;
+        color: var(--fg-subtle, inherit);
+        padding: 1em;
     }
 
     // Per-subject mastery mini bar (red → amber → green ramp).
