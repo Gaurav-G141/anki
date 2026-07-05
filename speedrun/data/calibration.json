@@ -1,0 +1,94 @@
+{
+    "n_heldout": 1500,
+    "brier": 0.1409,
+    "log_loss": 0.4453,
+    "ece": 0.0307,
+    "base_recall_rate": 0.806,
+    "mastery_threshold": 0.9,
+    "mastery_precision_at_threshold": 0.9177,
+    "bins": [
+        {
+            "lo": 0.0,
+            "hi": 0.1,
+            "count": 0,
+            "mean_predicted": 0.05,
+            "observed": null
+        },
+        {
+            "lo": 0.1,
+            "hi": 0.2,
+            "count": 0,
+            "mean_predicted": 0.15,
+            "observed": null
+        },
+        {
+            "lo": 0.2,
+            "hi": 0.3,
+            "count": 2,
+            "mean_predicted": 0.2608,
+            "observed": 0.0
+        },
+        {
+            "lo": 0.3,
+            "hi": 0.4,
+            "count": 12,
+            "mean_predicted": 0.3557,
+            "observed": 0.4167
+        },
+        {
+            "lo": 0.4,
+            "hi": 0.5,
+            "count": 30,
+            "mean_predicted": 0.4548,
+            "observed": 0.3667
+        },
+        {
+            "lo": 0.5,
+            "hi": 0.6,
+            "count": 61,
+            "mean_predicted": 0.5496,
+            "observed": 0.5246
+        },
+        {
+            "lo": 0.6,
+            "hi": 0.7,
+            "count": 97,
+            "mean_predicted": 0.6556,
+            "observed": 0.6701
+        },
+        {
+            "lo": 0.7,
+            "hi": 0.8,
+            "count": 236,
+            "mean_predicted": 0.7558,
+            "observed": 0.7415
+        },
+        {
+            "lo": 0.8,
+            "hi": 0.9,
+            "count": 491,
+            "mean_predicted": 0.8552,
+            "observed": 0.8086
+        },
+        {
+            "lo": 0.9,
+            "hi": 1.0,
+            "count": 571,
+            "mean_predicted": 0.9404,
+            "observed": 0.9177
+        }
+    ],
+    "config": {
+        "cards": 1500,
+        "reviews_per": 6,
+        "heldout_frac": 0.2,
+        "seed": 1729,
+        "decay": 0.5,
+        "engine_parity_verified": true
+    },
+    "targets": {
+        "brier_max": 0.2,
+        "log_loss_max": 0.6,
+        "ece_max": 0.1
+    }
+}

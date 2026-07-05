@@ -77,7 +77,8 @@ def get_briefcase_sources_path(out_dir: Path) -> Path:
             / "anki"
             / "macos"
             / "app"
-            / "Anki.app"
+            # matches formal_name in qt/installer/app/pyproject.toml
+            / "Ankimatter.app"
             / "Contents"
             / "Resources"
         )

@@ -27,7 +27,7 @@ struct DeckListView: View {
                 deckList
             }
         }
-        .navigationTitle("Decks")
+        .navigationTitle("Ankimatter")
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
                 if store.isSyncing {

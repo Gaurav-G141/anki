@@ -14,6 +14,37 @@
 import SwiftUI
 import WebKit
 
+/// Reduce the MCQ pool to ONE surface variant per concept, rotating the choice
+/// across calls (the fluency-illusion fix — mirrors desktop
+/// `pgre_quiz.select_variants`). A `source:"reworded"` item groups with its seed
+/// via `seed_id`; a real seed and any *novel* generated item stay independent
+/// (keyed by their own `id`). Within a group the seed is first (the real bank
+/// precedes the generated bank), so rotation 0 serves the original and later
+/// sessions cycle the rewordings. Rotation persists in `defaults`. Top-level (not
+/// nested) so the test target reaches it via `@testable import`.
+func selectMCQVariants(_ questions: [[String: Any]], defaults: UserDefaults) -> [[String: Any]] {
+    var groups: [String: [[String: Any]]] = [:]
+    var order: [String] = []
+    for q in questions {
+        let source = q["source"] as? String
+        let key = ((source == "reworded" ? q["seed_id"] as? String : q["id"] as? String)
+            ?? q["id"] as? String) ?? ""
+        if groups[key] == nil { groups[key] = []; order.append(key) }
+        groups[key]?.append(q)
+    }
+    var rotation = (defaults.dictionary(forKey: "pgreRewordRotation") as? [String: Int]) ?? [:]
+    var selected: [[String: Any]] = []
+    for key in order {
+        guard let members = groups[key] else { continue }
+        if members.count == 1 { selected.append(members[0]); continue }
+        let idx = (rotation[key] ?? 0) % members.count
+        selected.append(members[idx])
+        rotation[key] = (rotation[key] ?? 0) + 1
+    }
+    defaults.set(rotation, forKey: "pgreRewordRotation")
+    return selected
+}
+
 struct MCQView: View {
     var body: some View {
         MCQWebView()
@@ -91,6 +122,9 @@ private struct MCQWebView: UIViewRepresentable {
             var questions = Self.rawQuestions(resource: "pgre_mcq")
                 + Self.rawQuestions(resource: "pgre_mcq_generated")
             if questions.isEmpty { return fallback }
+            // Fluency-illusion fix: serve one surface variant per concept, rotating
+            // across sessions so a repeated question returns reworded.
+            questions = selectMCQVariants(questions, defaults: .standard)
             for i in questions.indices {
                 if let id = questions[i]["id"] as? String,
                    let expl = coach.optimalFor(id)?.studentExplanation, !expl.isEmpty {
@@ -189,6 +223,7 @@ private struct MCQWebView: UIViewRepresentable {
           // question whose 1-5 difficulty is closest to a running ability estimate
           // that rises on a correct answer and falls (faster) on a wrong one.
           var ability = 3.0, served = 0, cur = -1, used = {};
+          var coachTimeout = null;  // safety net if AI grading never calls back
           function diffOf(q){ var d = q && q.difficulty; return (typeof d === "number" && d >= 1) ? d : 3; }
           function pickNext(){
             var best = 1e9, cands = [];
@@ -272,13 +307,26 @@ private struct MCQWebView: UIViewRepresentable {
             typeset(fb);
             if (AI_ON && reasoning) {
               window.webkit.messageHandlers.grade.postMessage({ id: q.id, chosen: letter, reasoning: reasoning });
+              // Safety net: if grading never calls back (hang/offline), show the fallback.
+              coachTimeout = setTimeout(function(){ window.showCoach({ ok: false }); }, 25000);
             }
           }
           // Called from Swift (HeuristicCoach.grade) with the coaching result.
           window.showCoach = function(res){
             var coach = document.getElementById("coach");
             if (!coach) { return; }
-            if (!res || !res.ok) { coach.parentNode.removeChild(coach); return; }
+            if (coachTimeout) { clearTimeout(coachTimeout); coachTimeout = null; }
+            if (!res || !res.ok) {
+              // AI coaching unavailable (no key / offline / error / timed out): keep the
+              // card but explain, and point to the always-present fastest-approach fallback.
+              var hasFast = !!document.getElementById("fast");
+              coach.innerHTML =
+                "<div class='t'>🧠 Your approach</div>" +
+                "<div class='muted'>AI coaching isn't available right now" +
+                (hasFast ? " — see the ⚡ Fastest approach above for the quickest route." : ".") +
+                "</div>";
+              return;
+            }
             var badges = {
               optimal:      ["⚡ Optimal approach", "var(--pg-ok)"],
               valid_slower: ["✅ Valid — a faster route exists", "var(--pg-info)"],

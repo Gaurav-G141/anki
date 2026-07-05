@@ -45,6 +45,23 @@ class Manifold:
         self._refresh_needed = False
         #: Current pagination depth: depth n shows decks 9n..9n+8 on the spikes.
         self.depth = 0
+        # Belt-and-suspenders for the spike colouring so it is NEVER left showing
+        # a stale (e.g. all-red) colour. The red→green mastery is recomputed live
+        # from card intervals in build_manifold_html, so we force a recompute
+        # after every event that can change those intervals or swap the
+        # collection out from under us:
+        #   - profile_did_open   : startup + switching profiles.
+        #   - collection_did_load: initial open AND the collection reopen that
+        #                          follows a full-sync *download* (new intervals).
+        #   - sync_did_finish    : any sync — incremental or full up/download.
+        # Deck edits, reviews and reschedules arrive via op_executed (below).
+        # Each recompute is cheap (a couple of SQL counts) and idempotent.
+        for _hook in (
+            gui_hooks.profile_did_open,
+            gui_hooks.collection_did_load,
+            gui_hooks.sync_did_finish,
+        ):
+            _hook.append(self._on_collection_changed)
 
     def show(self) -> None:
         av_player.stop_and_clear_queue()
@@ -73,12 +90,28 @@ class Manifold:
         if self._refresh_needed:
             self.refresh()
 
+    def _on_collection_changed(self, *_args: Any) -> None:
+        """Force the spike colours to be recomputed after a sync or a fresh
+        collection load. Unlike ``op_executed`` this reshows even when the
+        manifold isn't focused, so the red→green mastery colouring is never
+        left stale after a full-sync download rewrites card intervals. When the
+        manifold isn't the current screen we only mark it dirty; ``show()``
+        rebuilds from scratch when it's next entered."""
+        self._refresh_needed = True
+        if self.mw.state == "manifold" and self.mw.col is not None:
+            self.refresh()
+
     def op_executed(
         self, changes: OpChanges, handler: object | None, focused: bool
     ) -> bool:
-        # A deck being added/removed changes which points are live, so refresh
-        # on any deck/study-queue change originating elsewhere.
-        if (changes.deck or changes.study_queues) and handler is not self:
+        # Recompute the spike colours on anything that can move a card's interval
+        # (and thus its mastery) or change which spikes exist:
+        #   - card         : an edit / bulk reschedule / FSRS change to intervals.
+        #   - deck         : a deck added/removed changes which points are live.
+        #   - study_queues : a review just answered a card (interval changed).
+        if (
+            changes.card or changes.deck or changes.study_queues
+        ) and handler is not self:
             self._refresh_needed = True
         if focused:
             self.refresh_if_needed()

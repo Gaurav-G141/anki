@@ -29,8 +29,10 @@ final class ReviewFlowUITests: XCTestCase {
         // identifier is set on the NavigationLink; match any element type.
         let deckRow = app.descendants(matching: .any)
             .matching(identifier: "deck_Speed Recall").firstMatch
+        // The row can sit below the fold once all subject decks seed; scroll to it.
+        app.revealElement(deckRow, firstWait: stepTimeout)
         XCTAssertTrue(
-            deckRow.waitForExistence(timeout: stepTimeout),
+            deckRow.exists,
             "Speed Recall deck row never appeared on the deck list"
         )
         deckRow.tap()

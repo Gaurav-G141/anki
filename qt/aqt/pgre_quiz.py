@@ -63,6 +63,42 @@ def load_questions(path: str | None = None) -> list[dict[str, Any]]:
     return questions
 
 
+def select_variants(
+    questions: list[dict[str, Any]], rotation: dict[str, int]
+) -> tuple[list[dict[str, Any]], dict[str, int]]:
+    """Reduce the pool to ONE surface variant per concept, rotating across calls
+    (the fluency-illusion fix: a repeated question comes back *reworded* so the
+    student retrieves the concept instead of pattern-matching a memorized card).
+
+    A ``source:"reworded"`` item groups with its seed via ``seed_id``; a real seed
+    and any *novel* generated item are independent (keyed by their own ``id``), so
+    novel variants stay in the pool alongside the seed. Within a group the seed is
+    first (real bank loads before the generated bank), so rotation 0 serves the
+    original and later sessions cycle the rewordings. Returns
+    ``(selected_questions, updated_rotation)``; pure — no I/O, safe on any list."""
+    groups: dict[str, list[dict[str, Any]]] = {}
+    order: list[str] = []
+    for q in questions:
+        key = q.get("seed_id") if q.get("source") == "reworded" else q.get("id")
+        key = key or q.get("id") or ""
+        if key not in groups:
+            groups[key] = []
+            order.append(key)
+        groups[key].append(q)
+
+    rot = dict(rotation or {})
+    selected: list[dict[str, Any]] = []
+    for key in order:
+        members = groups[key]
+        if len(members) == 1:
+            selected.append(members[0])
+            continue
+        idx = rot.get(key, 0) % len(members)
+        selected.append(members[idx])
+        rot[key] = rot.get(key, 0) + 1
+    return selected, rot
+
+
 class QuizSession:
     """Tracks progress through a fixed list of MCQs: the current question, the
     per-question record, and the running accuracy. Pure logic, no Qt.
@@ -153,7 +189,7 @@ class MCQQuiz(QDialog):
         mw.garbage_collect_on_dialog_finish(self)
         self.mw = mw
         self.name = "pgreMcqQuiz"
-        self.setWindowTitle("Practice MCQs — Physics GRE")
+        self.setWindowTitle("Ankimatter — Practice MCQs")
         disable_help_button(self)
         self.setMinimumSize(600, 560)
         restoreGeom(self, self.name, default_size=(860, 780))
@@ -162,6 +198,19 @@ class MCQQuiz(QDialog):
             questions = load_questions()
         except Exception:
             questions = []
+
+        # Fluency-illusion fix: serve one surface variant per concept, rotating the
+        # choice across sessions so a repeated question returns reworded. Rotation
+        # state persists in the collection config (per-concept counter).
+        try:
+            rotation = dict(self.mw.col.get_config("pgreRewordRotation", {}) or {})
+        except Exception:
+            rotation = {}
+        questions, rotation = select_variants(questions, rotation)
+        try:
+            self.mw.col.set_config("pgreRewordRotation", rotation)
+        except Exception:
+            pass
 
         from aqt import heuristic_coach
 
@@ -196,6 +245,7 @@ class MCQQuiz(QDialog):
                 "solution": to_mathjax(q.get("solution", "")),
                 "subject": q.get("topic") or q.get("subject", ""),
                 "source": q.get("source", ""),
+                "seed_id": q.get("seed_id", ""),
                 "difficulty": q.get("difficulty", 3),
                 "optimal": optimal(q),
             }
@@ -376,6 +426,7 @@ _QUIZ_PAGE = """
   // question whose 1-5 difficulty is closest to a running ability estimate that
   // rises on a correct answer and falls (faster) on a wrong one.
   var ability = 3.0, served = 0, cur = -1, used = {};
+  var coachTimeout = null;  // safety net if AI grading never calls back
   function diffOf(q) { var d = q && q.difficulty; return (typeof d === "number" && d >= 1) ? d : 3; }
   function pickNext() {
     var best = 1e9, cands = [];
@@ -468,14 +519,24 @@ _QUIZ_PAGE = """
     typeset(fb);
     if (AI_ON && reasoning) {
       pycmd("grade:" + JSON.stringify({ id: q.id, chosen: letter, reasoning: reasoning }));
+      // Safety net: if grading never calls back (hang/offline), show the fallback.
+      coachTimeout = setTimeout(function () { window.showCoach({ ok: false }); }, 25000);
     }
   }
   // Called from Python (heuristic_coach.grade) with the coaching result.
   window.showCoach = function (res) {
     var coach = document.getElementById("coach");
     if (!coach) { return; }
+    if (coachTimeout) { clearTimeout(coachTimeout); coachTimeout = null; }
     if (!res || !res.ok) {
-      coach.parentNode.removeChild(coach);  // fall back to the fastest-approach card above
+      // AI coaching unavailable (no key / offline / error / timed out): keep the
+      // card but explain, and point to the always-present fastest-approach fallback.
+      var hasFast = !!document.getElementById("fast");
+      coach.innerHTML =
+        "<div class='t'>🧠 Your approach</div>" +
+        "<div class='muted'>AI coaching isn't available right now" +
+        (hasFast ? " — see the ⚡ Fastest approach above for the quickest route." : ".") +
+        "</div>";
       return;
     }
     var badges = {

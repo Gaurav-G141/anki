@@ -83,6 +83,39 @@ def test_invalid_rating():
         sr.next_interval_hours(5, 1.0)
 
 
+def test_latency_aware_off_ignores_recall_time():
+    # Feature OFF: a slow recall earns the SAME full interval as a fast one.
+    for rating in (2, 3, 4):
+        fast = sr.next_interval_hours(rating, 3.0, latency_aware=False)
+        slow = sr.next_interval_hours(rating, 90.0, latency_aware=False)
+        assert fast == slow == sr.BASE_HOURS[rating]
+
+
+# --- latency-enabled config toggle ---------------------------------------
+
+
+def test_latency_toggle_default_on_and_persists():
+    col = _empty_col()
+    assert sr.latency_enabled(col) is True  # default on
+    sr.set_latency_enabled(col, False)
+    assert sr.latency_enabled(col) is False
+    sr.set_latency_enabled(col, True)
+    assert sr.latency_enabled(col) is True
+
+
+def test_record_answer_respects_toggle():
+    col = _empty_col()
+    cid = _add_cards(col, "PGRE::Thermodynamics & Statistical Mechanics", 1)[0]
+    # Toggle OFF → a slow Easy still earns the full 1-week interval.
+    sr.set_latency_enabled(col, False)
+    ivl_off = sr.record_answer(col, cid, 4, 90.0, now=1000.0)
+    assert ivl_off == pytest.approx(sr.BASE_HOURS[4])
+    # Toggle ON → the same slow recall is shrunk toward the floor.
+    sr.set_latency_enabled(col, True)
+    ivl_on = sr.record_answer(col, cid, 4, 90.0, now=1000.0)
+    assert ivl_on < ivl_off
+
+
 def test_format_interval():
     assert sr.format_interval(1 / 6) == "10m"
     assert sr.format_interval(12) == "12h"

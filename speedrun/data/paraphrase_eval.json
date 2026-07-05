@@ -1,0 +1,670 @@
+{
+    "orig_correct": 19,
+    "orig_n": 24,
+    "reword_correct": 39,
+    "reword_n": 48,
+    "orig_acc": 0.7916666666666666,
+    "reword_acc": 0.8125,
+    "integrity_issues": [],
+    "per_problem": [
+        {
+            "id": "GR9277#46",
+            "answer": "B",
+            "subject": "thermo_stat_mech",
+            "original": {
+                "solver": "C",
+                "correct": false
+            },
+            "rewords": [
+                {
+                    "variant": 0,
+                    "issues": [],
+                    "jaccard": 0.45,
+                    "solver": "C",
+                    "correct": false,
+                    "statement": "Which labeled curve represents the critical isotherm on a diagram plotting $p$ against $V$ for isotherms?"
+                },
+                {
+                    "variant": 1,
+                    "issues": [],
+                    "jaccard": 0.429,
+                    "solver": "C",
+                    "correct": false,
+                    "statement": "Which of the labeled paths on a pressure-volume ($pV$) diagram of isothermal processes corresponds to the critical isotherm?"
+                }
+            ]
+        },
+        {
+            "id": "GR9277#48",
+            "answer": "C",
+            "subject": "lab_methods",
+            "original": {
+                "solver": "C",
+                "correct": true
+            },
+            "rewords": [
+                {
+                    "variant": 0,
+                    "issues": [],
+                    "jaccard": 0.167,
+                    "solver": "C",
+                    "correct": true,
+                    "statement": "In a scenario where $F = ma$ and the measurements are independent and follow a normal distribution, determine the value of $\\sigma_F/F$."
+                },
+                {
+                    "variant": 1,
+                    "issues": [],
+                    "jaccard": 0.389,
+                    "solver": "C",
+                    "correct": true,
+                    "statement": "Given measurements of $F = ma$ that are normally distributed and uncorrelated, determine the value of $\\sigma_F / F$."
+                }
+            ]
+        },
+        {
+            "id": "GR9277#49",
+            "answer": "B",
+            "subject": "special_relativity",
+            "original": {
+                "solver": "B",
+                "correct": true
+            },
+            "rewords": [
+                {
+                    "variant": 0,
+                    "issues": [],
+                    "jaccard": 0.3,
+                    "solver": "B",
+                    "correct": true,
+                    "statement": "Imagine two scintillation detectors separated by a vertical distance of 3.0 m. Determine the maximum resolving time capable of differentiating between relativistic muons traveling downward and those moving upward."
+                },
+                {
+                    "variant": 1,
+                    "issues": [],
+                    "jaccard": 0.385,
+                    "solver": "B",
+                    "correct": true,
+                    "statement": "Consider two scintillation counters, positioned vertically with a separation of 3.0 m. Determine the maximum resolving time that allows for differentiation between relativistic muons traveling downward and those moving upward."
+                }
+            ]
+        },
+        {
+            "id": "GR9277#50",
+            "answer": "B",
+            "subject": "quantum_mechanics",
+            "original": {
+                "solver": "B",
+                "correct": true
+            },
+            "rewords": [
+                {
+                    "variant": 0,
+                    "issues": [],
+                    "jaccard": 0.385,
+                    "solver": "B",
+                    "correct": true,
+                    "statement": "Under what circumstances can every wave function be expressed as a combination of simultaneous eigenfunctions corresponding to the observables $A$ and $B$?"
+                },
+                {
+                    "variant": 1,
+                    "issues": [],
+                    "jaccard": 0.417,
+                    "solver": "B",
+                    "correct": true,
+                    "statement": "Under what conditions can every wave function be represented as a combination of simultaneous eigenfunctions of two observables, $A$ and $B$?"
+                }
+            ]
+        },
+        {
+            "id": "GR9277#51",
+            "answer": "A",
+            "subject": "quantum_mechanics",
+            "original": {
+                "solver": "A",
+                "correct": true
+            },
+            "rewords": [
+                {
+                    "variant": 0,
+                    "issues": [],
+                    "jaccard": 0.515,
+                    "solver": "A",
+                    "correct": true,
+                    "statement": "Determine the expectation value of momentum, $\\langle p \\rangle$, for any quantum state $n$ in an infinite potential well characterized by the wave function $\\psi_n = \\sqrt{2/a}\\sin(n\\pi x/a)$."
+                },
+                {
+                    "variant": 1,
+                    "issues": [],
+                    "jaccard": 0.5,
+                    "solver": "A",
+                    "correct": true,
+                    "statement": "In the context of an infinite square well, where the wave function is given by $\\psi_n = \\sqrt{2/a}\\sin(n\\pi x/a)$, determine the expectation value of the momentum, $\\langle p \\rangle$, for any quantum state indexed by $n$."
+                }
+            ]
+        },
+        {
+            "id": "GR9277#52",
+            "answer": "B",
+            "subject": "quantum_mechanics",
+            "original": {
+                "solver": "B",
+                "correct": true
+            },
+            "rewords": [
+                {
+                    "variant": 0,
+                    "issues": [],
+                    "jaccard": 0.692,
+                    "solver": "B",
+                    "correct": true,
+                    "statement": "In the context of the infinite square well, the eigenfunctions fulfill the relation $\\int_0^a \\psi_n^* \\psi_l\\,dx = \\delta_{nl}$. What is the name of this property?"
+                },
+                {
+                    "variant": 1,
+                    "issues": [],
+                    "jaccard": 0.621,
+                    "solver": "B",
+                    "correct": true,
+                    "statement": "Consider the eigenfunctions of an infinite square well, which are characterized by the relation $\\int_0^a \\psi_n^* \\psi_l\\,dx = \\delta_{nl}$. What is the name of this property?"
+                }
+            ]
+        },
+        {
+            "id": "GR9277#54",
+            "answer": "E",
+            "subject": "electromagnetism",
+            "original": {
+                "solver": "E",
+                "correct": true
+            },
+            "rewords": [
+                {
+                    "variant": 0,
+                    "issues": [],
+                    "jaccard": 0.429,
+                    "solver": "E",
+                    "correct": true,
+                    "statement": "Consider a rectangular loop that is in the same plane as a long, straight wire carrying current. The loop is being moved to the right, increasing its distance from the wire. Determine the direction of the current induced in the loop and describe the forces acting on the loop's left and right sections."
+                },
+                {
+                    "variant": 1,
+                    "issues": [],
+                    "jaccard": 0.475,
+                    "solver": "E",
+                    "correct": true,
+                    "statement": "Imagine a rectangular loop positioned in the same plane as a long wire that carries a steady current. The loop is being moved to the right, away from the wire. Determine the direction of the induced current in the loop and the forces acting on both its left and right sides."
+                }
+            ]
+        },
+        {
+            "id": "GR9277#56",
+            "answer": "C",
+            "subject": "quantum_mechanics",
+            "original": {
+                "solver": "C",
+                "correct": true
+            },
+            "rewords": [
+                {
+                    "variant": 0,
+                    "issues": [],
+                    "jaccard": 0.611,
+                    "solver": "C",
+                    "correct": true,
+                    "statement": "Determine the energy of the ground state for a one-dimensional quantum harmonic oscillator with frequency $\\nu$."
+                },
+                {
+                    "variant": 1,
+                    "issues": [],
+                    "jaccard": 0.579,
+                    "solver": "C",
+                    "correct": true,
+                    "statement": "Determine the energy of the ground state for a one-dimensional quantum harmonic oscillator operating at a frequency of $\\nu$."
+                }
+            ]
+        },
+        {
+            "id": "GR9277#57",
+            "answer": "A",
+            "subject": "electromagnetism",
+            "original": {
+                "solver": "B",
+                "correct": false
+            },
+            "rewords": [
+                {
+                    "variant": 0,
+                    "issues": [],
+                    "jaccard": 0.372,
+                    "solver": "C",
+                    "correct": false,
+                    "statement": "Consider a wire loop bent into a half-circle shape, rotating steadily with a constant angular speed at the edge of an area with a uniform magnetic field. Which graph correctly illustrates the relationship between the induced electromotive force (emf) and time?"
+                },
+                {
+                    "variant": 1,
+                    "issues": [],
+                    "jaccard": 0.375,
+                    "solver": "C",
+                    "correct": false,
+                    "statement": "Consider a semicircular loop of wire that is rotating with a uniform angular velocity at the boundary of a region where a magnetic field is present. What graph accurately depicts the variation of the induced electromotive force with respect to time?"
+                }
+            ]
+        },
+        {
+            "id": "GR9277#58",
+            "answer": "C",
+            "subject": "atomic_physics",
+            "original": {
+                "solver": "C",
+                "correct": true
+            },
+            "rewords": [
+                {
+                    "variant": 0,
+                    "issues": [],
+                    "jaccard": 0.333,
+                    "solver": "C",
+                    "correct": true,
+                    "statement": "Identify the electron configuration for a neutral sodium atom, which has an atomic number $Z=11$, when it is in its ground state."
+                },
+                {
+                    "variant": 1,
+                    "issues": [],
+                    "jaccard": 0.381,
+                    "solver": "C",
+                    "correct": true,
+                    "statement": "Determine the electron configuration in its ground state for a neutral sodium atom, which has an atomic number $Z = 11$."
+                }
+            ]
+        },
+        {
+            "id": "GR9277#59",
+            "answer": "A",
+            "subject": "atomic_physics",
+            "original": {
+                "solver": "A",
+                "correct": true
+            },
+            "rewords": [
+                {
+                    "variant": 0,
+                    "issues": [],
+                    "jaccard": 0.545,
+                    "solver": "A",
+                    "correct": true,
+                    "statement": "What is the nature of the helium atom's ground state?"
+                },
+                {
+                    "variant": 1,
+                    "issues": [],
+                    "jaccard": 0.5,
+                    "solver": "A",
+                    "correct": true,
+                    "statement": "Identify the nature of helium's ground state:"
+                }
+            ]
+        },
+        {
+            "id": "GR9277#60",
+            "answer": "D",
+            "subject": "electromagnetism",
+            "original": {
+                "solver": "C",
+                "correct": false
+            },
+            "rewords": [
+                {
+                    "variant": 0,
+                    "issues": [],
+                    "jaccard": 0.625,
+                    "solver": "C",
+                    "correct": false,
+                    "statement": "Consider an electron in a metal with an effective mass of $m^* = 0.1 m_e$. Determine the cyclotron resonance frequency $\\omega_c$ when this electron is subjected to a magnetic field of 1 T."
+                },
+                {
+                    "variant": 1,
+                    "issues": [],
+                    "jaccard": 0.472,
+                    "solver": "C",
+                    "correct": false,
+                    "statement": "Consider an electron within a metallic material, characterized by an effective mass $m^* = 0.1 m_e$. Determine the cyclotron resonance frequency $\\omega_c$ when subjected to a magnetic field of strength 1 T."
+                }
+            ]
+        },
+        {
+            "id": "GR9277#61",
+            "answer": "A",
+            "subject": "classical_mechanics",
+            "original": {
+                "solver": "A",
+                "correct": true
+            },
+            "rewords": [
+                {
+                    "variant": 0,
+                    "issues": [],
+                    "jaccard": 0.419,
+                    "solver": "A",
+                    "correct": true,
+                    "statement": "Consider a rod with no mass that pivots around one end in a vertical plane. In the first configuration, there are two masses located at the rod's free end. In the second configuration, one of these masses is relocated to the midpoint of the rod. Determine the ratio $\\omega_{II}/\\omega_I$."
+                },
+                {
+                    "variant": 1,
+                    "issues": [],
+                    "jaccard": 0.26,
+                    "solver": "A",
+                    "correct": true,
+                    "statement": "Consider a rod with no mass that rotates vertically around one of its ends. In the first configuration, two masses are attached to the opposite end. In the second configuration, one of these masses is relocated to the midpoint of the rod. Determine the ratio of the angular velocities $\\omega_{II}/\\omega_I$ for the two configurations."
+                }
+            ]
+        },
+        {
+            "id": "GR9277#62",
+            "answer": "E",
+            "subject": "thermo_stat_mech",
+            "original": {
+                "solver": "E",
+                "correct": true
+            },
+            "rewords": [
+                {
+                    "variant": 0,
+                    "issues": [],
+                    "jaccard": 0.404,
+                    "solver": "E",
+                    "correct": true,
+                    "statement": "Consider one mole of an ideal gas initially at a temperature $T_0$ and volume $V_0$. The gas undergoes a reversible isothermal expansion until it reaches a final volume $V_1$. If the ratio of specific heats is given by $c_p/c_v = \\gamma$, determine the work done by the gas during this process."
+                },
+                {
+                    "variant": 1,
+                    "issues": [],
+                    "jaccard": 0.333,
+                    "solver": "E",
+                    "correct": true,
+                    "statement": "Consider a sample containing one mole of an ideal gas initially at temperature $T_0$ and volume $V_0$. The gas undergoes a reversible isothermal expansion process until it reaches a volume $V_1$. If the ratio of specific heats $c_p/c_v$ is denoted as $\\gamma$, determine the work performed by the gas during this expansion."
+                }
+            ]
+        },
+        {
+            "id": "GR9277#63",
+            "answer": "D",
+            "subject": "thermo_stat_mech",
+            "original": {
+                "solver": "D",
+                "correct": true
+            },
+            "rewords": [
+                {
+                    "variant": 0,
+                    "issues": [],
+                    "jaccard": 0.214,
+                    "solver": "D",
+                    "correct": true,
+                    "statement": "Consider an isolated thermodynamic system that has reached the configuration with the highest likelihood. Which statement is accurate regarding this situation?"
+                },
+                {
+                    "variant": 1,
+                    "issues": [],
+                    "jaccard": 0.32,
+                    "solver": "D",
+                    "correct": true,
+                    "statement": "Consider an isolated thermodynamic system that has reached its most probable configuration. Which statement is correct in this scenario?"
+                }
+            ]
+        },
+        {
+            "id": "GR9277#64",
+            "answer": "B",
+            "subject": "electromagnetism",
+            "original": {
+                "solver": "B",
+                "correct": true
+            },
+            "rewords": [
+                {
+                    "variant": 0,
+                    "issues": [],
+                    "jaccard": 0.545,
+                    "solver": "B",
+                    "correct": true,
+                    "statement": "Consider an electric field described by $E_x = 0$, $E_y = 0$, and $E_z = kz$, where $k \\ne 0$. What statement is accurate?"
+                },
+                {
+                    "variant": 1,
+                    "issues": [],
+                    "jaccard": 0.458,
+                    "solver": "B",
+                    "correct": true,
+                    "statement": "Consider an electric field where $E_x = 0$, $E_y = 0$, and $E_z = kz$ with $k \\ne 0$. What statement accurately describes this scenario?"
+                }
+            ]
+        },
+        {
+            "id": "GR9277#65",
+            "answer": "E",
+            "subject": "electromagnetism",
+            "original": {
+                "solver": "B",
+                "correct": false
+            },
+            "rewords": [
+                {
+                    "variant": 0,
+                    "issues": [],
+                    "jaccard": 0.408,
+                    "solver": "D",
+                    "correct": false,
+                    "statement": "On the x-axis, there are two stationary charges each with a magnitude of $+Q$, positioned $2R$ apart. A particle, having mass $m$ and charge $-q$, is located at the center between these charges. Determine the angular frequency $\\omega$ for its small oscillatory motion in the y-direction."
+                },
+                {
+                    "variant": 1,
+                    "issues": [],
+                    "jaccard": 0.571,
+                    "solver": "D",
+                    "correct": false,
+                    "statement": "Consider two stationary charges, each with a charge of $+Q$, positioned on the x-axis and separated by a distance of $2R$. A particle with a mass $m$ and a charge $-q$ is placed at the midpoint between these two charges. Determine the angular frequency $\\omega$ for small oscillations of this particle along the y-axis."
+                }
+            ]
+        },
+        {
+            "id": "GR9277#66",
+            "answer": "C",
+            "subject": "classical_mechanics",
+            "original": {
+                "solver": "C",
+                "correct": true
+            },
+            "rewords": [
+                {
+                    "variant": 0,
+                    "issues": [],
+                    "jaccard": 0.548,
+                    "solver": "C",
+                    "correct": true,
+                    "statement": "Consider a 10 m chain with a linear density of 2 kg/m, suspended vertically and attached to an axle. Determine the work required to completely wind the chain onto the axle."
+                },
+                {
+                    "variant": 1,
+                    "issues": [],
+                    "jaccard": 0.576,
+                    "solver": "C",
+                    "correct": true,
+                    "statement": "Consider a 10 m long uniform chain with a linear mass density of 2 kg/m that is suspended vertically from an axle. Determine the work required to completely wind the chain onto the axle."
+                }
+            ]
+        },
+        {
+            "id": "GR9277#67",
+            "answer": "C",
+            "subject": "optics_waves",
+            "original": {
+                "solver": "C",
+                "correct": true
+            },
+            "rewords": [
+                {
+                    "variant": 0,
+                    "issues": [],
+                    "jaccard": 0.414,
+                    "solver": "C",
+                    "correct": true,
+                    "statement": "The intensity of light passing through a rotating polarizer can be described by the expression $A + B\\cos(2\\theta)$, where $A > B > 0$. Determine the nature of the incident light."
+                },
+                {
+                    "variant": 1,
+                    "issues": [],
+                    "jaccard": 0.467,
+                    "solver": "C",
+                    "correct": true,
+                    "statement": "The intensity of light passing through a rotating polaroid is given by the expression $A + B\\cos(2\\theta)$, where $A > B > 0$. What can be inferred about the nature of the incident light?"
+                }
+            ]
+        },
+        {
+            "id": "GR9277#68",
+            "answer": "C",
+            "subject": "optics_waves",
+            "original": {
+                "solver": "C",
+                "correct": true
+            },
+            "rewords": [
+                {
+                    "variant": 0,
+                    "issues": [],
+                    "jaccard": 0.441,
+                    "solver": "C",
+                    "correct": true,
+                    "statement": "Determine the minimum diameter of a telescope mirror required to resolve a binary star system with an angular separation of 8 $\\mu$rad, given that the light wavelength is 5500 Å."
+                },
+                {
+                    "variant": 1,
+                    "issues": [],
+                    "jaccard": 0.31,
+                    "solver": "C",
+                    "correct": true,
+                    "statement": "Consider a binary star system with an angular distance of 8 $\\mu$rad between its components. The stars emit light at a wavelength of 5500 Å. Determine the minimum diameter of a telescope mirror that can distinctly resolve the two stars."
+                }
+            ]
+        },
+        {
+            "id": "GR9277#69",
+            "answer": "D",
+            "subject": "special_relativity",
+            "original": {
+                "solver": "D",
+                "correct": true
+            },
+            "rewords": [
+                {
+                    "variant": 0,
+                    "issues": [],
+                    "jaccard": 0.344,
+                    "solver": "D",
+                    "correct": true,
+                    "statement": "Consider a swiftly moving charged particle traversing glass, where the refractive index is $n = 1.5$, and light is emitted during its passage. Determine the least speed required."
+                },
+                {
+                    "variant": 1,
+                    "issues": [],
+                    "jaccard": 0.265,
+                    "solver": "D",
+                    "correct": true,
+                    "statement": "Determine the lowest velocity at which a swift charged particle can traverse a medium of glass, characterized by an index of refraction $n = 1.5$, while emitting light."
+                }
+            ]
+        },
+        {
+            "id": "GR9277#70",
+            "answer": "D",
+            "subject": "special_relativity",
+            "original": {
+                "solver": "D",
+                "correct": true
+            },
+            "rewords": [
+                {
+                    "variant": 0,
+                    "issues": [],
+                    "jaccard": 0.44,
+                    "solver": "D",
+                    "correct": true,
+                    "statement": "Consider particles that are unstable, each possessing a total energy that is 100 times their rest energy, where the rest mass is $m$. Determine the momentum of these particles."
+                },
+                {
+                    "variant": 1,
+                    "issues": [],
+                    "jaccard": 0.379,
+                    "solver": "D",
+                    "correct": true,
+                    "statement": "Consider particles that are unstable and possess a total energy equal to 100 times their rest energy, where the rest mass is denoted by $m$. Determine the momentum of these particles."
+                }
+            ]
+        },
+        {
+            "id": "GR9277#71",
+            "answer": "B",
+            "subject": "thermo_stat_mech",
+            "original": {
+                "solver": "D",
+                "correct": false
+            },
+            "rewords": [
+                {
+                    "variant": 0,
+                    "issues": [],
+                    "jaccard": 0.424,
+                    "solver": "B",
+                    "correct": true,
+                    "statement": "Consider $N_0$ systems, each having two possible energy states, $E_1$ and $E_2$, where $E_2 - E_1 = \\epsilon > 0$. At temperature $T$, determine the mean number of systems occupying the state with energy $E_1$."
+                },
+                {
+                    "variant": 1,
+                    "issues": [],
+                    "jaccard": 0.441,
+                    "solver": "D",
+                    "correct": false,
+                    "statement": "Consider $N_0$ systems, each having two distinct energy levels $E_1$ and $E_2$, with the difference $E_2 - E_1 = \\epsilon > 0$. At a temperature $T$, determine the average number of subsystems occupying the energy level $E_1$."
+                }
+            ]
+        },
+        {
+            "id": "GR9277#73",
+            "answer": "C",
+            "subject": "thermo_stat_mech",
+            "original": {
+                "solver": "C",
+                "correct": true
+            },
+            "rewords": [
+                {
+                    "variant": 0,
+                    "issues": [],
+                    "jaccard": 0.5,
+                    "solver": "C",
+                    "correct": true,
+                    "statement": "What describes the entropy behavior for a system with two possible states?"
+                },
+                {
+                    "variant": 1,
+                    "issues": [],
+                    "jaccard": 0.333,
+                    "solver": "C",
+                    "correct": true,
+                    "statement": "In a system characterized by two distinct states, what describes the behavior of its entropy?"
+                }
+            ]
+        }
+    ],
+    "cutoffs": {
+        "reworded_accuracy_min": 0.5,
+        "max_accuracy_drop": 0.2
+    },
+    "config": {
+        "dev_max_num": 45,
+        "rewords_per": 2,
+        "reword_max_sim": 0.75,
+        "reword_min_sim": 0.15,
+        "model": "gpt-4o"
+    }
+}

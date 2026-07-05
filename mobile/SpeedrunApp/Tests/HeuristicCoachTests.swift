@@ -103,3 +103,49 @@ final class HeuristicCoachTests: XCTestCase {
         XCTAssertTrue(msgs.contains { $0["role"] == "system" })
     }
 }
+
+/// Reworded-variant serving (fluency-illusion fix): one surface variant per concept,
+/// rotating across sessions. Mirrors the desktop `test_pgre_quiz.select_variants` tests.
+final class MCQVariantTests: XCTestCase {
+    private func fixture() -> [[String: Any]] {
+        [
+            ["id": "GR9277#1", "answer": "A", "statement": "seed"],
+            ["id": "RW#GR9277.1-1", "seed_id": "GR9277#1", "source": "reworded",
+             "answer": "A", "statement": "reword one"],
+            ["id": "RW#GR9277.1-2", "seed_id": "GR9277#1", "source": "reworded",
+             "answer": "A", "statement": "reword two"],
+            ["id": "GEN#GR9277.1-1", "seed_id": "GR9277#1", "source": "generated",
+             "answer": "B", "statement": "novel variant"],
+            ["id": "GR9277#2", "answer": "C", "statement": "other"],
+        ]
+    }
+
+    private func freshDefaults() -> UserDefaults {
+        let d = UserDefaults(suiteName: "reword-variant-test")!
+        d.removePersistentDomain(forName: "reword-variant-test")
+        return d
+    }
+
+    func testOneReworderdVariantPerSeed() {
+        let sel = selectMCQVariants(fixture(), defaults: freshDefaults())
+        let ids = sel.compactMap { $0["id"] as? String }
+        // Novel GEN item + the unrelated seed stay in the pool…
+        XCTAssertTrue(ids.contains("GEN#GR9277.1-1"))
+        XCTAssertTrue(ids.contains("GR9277#2"))
+        // …but the seed concept group collapses to exactly one variant, the original first.
+        let group = ids.filter { $0 == "GR9277#1" || $0.hasPrefix("RW#GR9277.1") }
+        XCTAssertEqual(group, ["GR9277#1"])
+    }
+
+    func testRotatesAcrossSessions() {
+        let d = freshDefaults()
+        let qs = fixture()
+        var served: [String] = []
+        for _ in 0..<4 {
+            let sel = selectMCQVariants(qs, defaults: d)
+            let ids = sel.compactMap { $0["id"] as? String }
+            served.append(ids.first { $0 == "GR9277#1" || $0.hasPrefix("RW#GR9277.1") } ?? "?")
+        }
+        XCTAssertEqual(served, ["GR9277#1", "RW#GR9277.1-1", "RW#GR9277.1-2", "GR9277#1"])
+    }
+}

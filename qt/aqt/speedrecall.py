@@ -56,6 +56,11 @@ BASE_HOURS: dict[int, float] = {
     4: 168.0,  # Easy   → 1 week (fast) … ~12 h (slow)
 }
 
+#: Collection-config flag: is latency-modulated scheduling ON? When off, a grade
+#: earns its full :data:`BASE_HOURS` interval regardless of how long recall took
+#: (i.e. plain grade-only spacing). Default on. This is the exact knob the Sunday
+#: ablation (``speedrun/ablation.py``) toggles to isolate the feature's effect.
+LATENCY_ENABLED_KEY = "speedRecallLatencyEnabled"
 #: Legacy collection-config key: the old single-JSON-blob schedule (still read
 #: for backward compatibility / migration-on-read).
 SCHED_KEY = "speedRecallSched"
@@ -84,15 +89,19 @@ def latency_factor(seconds: float) -> float:
     return 1.0 - frac * (1.0 - SLOW_FLOOR)
 
 
-def next_interval_hours(rating: int, seconds: float) -> float:
+def next_interval_hours(
+    rating: int, seconds: float, latency_aware: bool = True
+) -> float:
     """Next interval (hours) for a grade given how long recall took.
 
-    ``rating`` is 1=Again, 2=Hard, 3=Good, 4=Easy. Again ignores latency.
+    ``rating`` is 1=Again, 2=Hard, 3=Good, 4=Easy. Again ignores latency. When
+    ``latency_aware`` is False the grade earns its full :data:`BASE_HOURS` interval
+    regardless of recall time (the feature-OFF arm of the ablation).
     """
     if rating not in BASE_HOURS:
         raise ValueError(f"rating must be 1..4, got {rating!r}")
-    if rating == 1:
-        return BASE_HOURS[1]
+    if rating == 1 or not latency_aware:
+        return BASE_HOURS[rating]
     return BASE_HOURS[rating] * latency_factor(seconds)
 
 
@@ -109,6 +118,16 @@ def format_interval(hours: float) -> str:
 # ---------------------------------------------------------------------------
 # Schedule store (per-collection, in config; independent of FSRS)
 # ---------------------------------------------------------------------------
+
+
+def latency_enabled(col: Collection) -> bool:
+    """Is latency-modulated scheduling turned on for this collection? (default True)."""
+    return bool(col.get_config(LATENCY_ENABLED_KEY, True))
+
+
+def set_latency_enabled(col: Collection, on: bool) -> None:
+    """Turn latency-modulated scheduling on/off (persists in collection config)."""
+    col.set_config(LATENCY_ENABLED_KEY, bool(on))
 
 
 def _card_key(card_id: int) -> str:
@@ -153,7 +172,7 @@ def record_answer(
     JSON blob, so recording N answers is O(N), not O(N^2).
     """
     now = time.time() if now is None else now
-    ivl_h = next_interval_hours(rating, seconds)
+    ivl_h = next_interval_hours(rating, seconds, latency_aware=latency_enabled(col))
     col.set_config(_card_key(card_id), {"due": now + ivl_h * 3600.0, "ivl_h": ivl_h})
     return ivl_h
 
@@ -315,8 +334,10 @@ class SpeedRecall:
         seconds = max(0.0, elapsed_ms / 1000.0)
         card = self._current.card
         a = self.mw.prepare_card_text_for_display(card.answer())
+        aware = latency_enabled(self.mw.col)
         labels = {
-            r: format_interval(next_interval_hours(r, seconds)) for r in (1, 2, 3, 4)
+            r: format_interval(next_interval_hours(r, seconds, latency_aware=aware))
+            for r in (1, 2, 3, 4)
         }
         self.web.eval(f"speedShowBack({json.dumps(a)}, {json.dumps(labels)});")
 

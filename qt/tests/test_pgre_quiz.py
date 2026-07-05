@@ -13,7 +13,7 @@ import os
 import re
 
 from aqt import heuristic_coach
-from aqt.pgre_quiz import QuizSession, load_questions, to_mathjax
+from aqt.pgre_quiz import QuizSession, load_questions, select_variants, to_mathjax
 
 DATA = os.path.normpath(
     os.path.join(os.path.dirname(__file__), "..", "aqt", "data", "pgre_mcq.json")
@@ -124,3 +124,112 @@ def test_generated_questions_have_resolvable_companions():
 def test_to_mathjax_converts_dollar_delimiters():
     assert to_mathjax(r"momentum $\hbar k$ here") == r"momentum \(\hbar k\) here"
     assert to_mathjax(r"$$\lambda = 2d$$") == r"\[\lambda = 2d\]"
+
+
+# --- reworded-variant serving (fluency-illusion fix) ----------------------
+
+
+def _fixture_with_rewords():
+    """A seed + 2 rewordings, a novel generated variant of the same seed, and an
+    unrelated question — the shapes select_variants must group correctly."""
+    return [
+        {"id": "GR9277#1", "answer": "A", "choices": [["A", "a"]], "statement": "seed"},
+        {
+            "id": "RW#GR9277.1-1",
+            "seed_id": "GR9277#1",
+            "source": "reworded",
+            "answer": "A",
+            "choices": [["A", "a"]],
+            "statement": "reword one",
+        },
+        {
+            "id": "RW#GR9277.1-2",
+            "seed_id": "GR9277#1",
+            "source": "reworded",
+            "answer": "A",
+            "choices": [["A", "a"]],
+            "statement": "reword two",
+        },
+        {
+            "id": "GEN#GR9277.1-1",
+            "seed_id": "GR9277#1",
+            "source": "generated",
+            "answer": "B",
+            "choices": [["B", "b"]],
+            "statement": "novel variant",
+        },
+        {
+            "id": "GR9277#2",
+            "answer": "C",
+            "choices": [["C", "c"]],
+            "statement": "other",
+        },
+    ]
+
+
+def test_select_variants_one_reworded_variant_per_seed():
+    qs = _fixture_with_rewords()
+    sel, rot = select_variants(qs, {})
+    ids = [q["id"] for q in sel]
+    # One item for the GR9277#1 concept group (seed+rewords), the novel GEN item
+    # stays independent, and the unrelated seed passes through.
+    assert "GEN#GR9277.1-1" in ids and "GR9277#2" in ids
+    seed_group = [i for i in ids if i == "GR9277#1" or i.startswith("RW#GR9277.1")]
+    assert len(seed_group) == 1, (
+        f"expected exactly one variant of the seed, got {seed_group}"
+    )
+    # First session serves the original seed (rotation 0 -> members[0]).
+    assert seed_group[0] == "GR9277#1"
+
+
+def test_select_variants_rotates_across_sessions():
+    qs = _fixture_with_rewords()
+    served = []
+    rot: dict[str, int] = {}
+    for _ in range(4):
+        sel, rot = select_variants(qs, rot)
+        served.append(
+            next(
+                q["id"]
+                for q in sel
+                if q["id"].startswith(("GR9277#1", "RW#GR9277.1"))
+                and q["id"] != "GR9277#2"
+            )
+        )
+    # 3 variants (seed + 2 rewords) cycle: seed, rw-1, rw-2, seed, …
+    assert served == ["GR9277#1", "RW#GR9277.1-1", "RW#GR9277.1-2", "GR9277#1"], served
+
+
+def test_select_variants_noop_without_rewords():
+    qs = _questions()  # the shipped bank may or may not carry rewords
+    sel, _ = select_variants(qs, {})
+    # Every concept appears once; total shrinks only by the number of extra variants.
+    keys = {
+        (q.get("seed_id") if q.get("source") == "reworded" else q["id"]) for q in qs
+    }
+    assert len(sel) == len(keys)
+
+
+def test_reworded_variants_are_wellformed_and_resolvable():
+    # Any shipped reworded item must be gradeable (5 A–E choices, answer among them),
+    # keep its seed's answer, and resolve an optimal-approach companion. Vacuous (and
+    # fine) until the reworded bank is generated + promoted. (Self-containment + the
+    # reword similarity band are enforced separately by speedrun/gen_leakage_check.py.)
+    qs = _questions()
+    by_id = {q["id"]: q for q in qs}
+    rewords = [q for q in qs if q.get("source") == "reworded"]
+    for q in rewords:
+        letters = {c[0] for c in q["choices"]}
+        assert letters == set("ABCDE") and len(q["choices"]) == 5, (
+            f"{q['id']} not 5 A–E choices"
+        )
+        assert q["answer"] in letters, f"{q['id']} answer not among choices"
+        seed = by_id.get(q.get("seed_id", ""))
+        if seed is not None:
+            assert q["answer"] == seed["answer"], (
+                f"{q['id']} answer differs from its seed"
+            )
+        rec = heuristic_coach.optimal_for(q["id"])
+        assert rec is not None and rec.get("student_explanation", "").strip(), (
+            f"{q['id']} has no resolvable optimal-approach companion"
+        )

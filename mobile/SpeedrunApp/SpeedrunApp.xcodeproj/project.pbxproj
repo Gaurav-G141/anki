@@ -34,6 +34,7 @@
 		70CE61277F9154AB7DAFD712 /* SwiftProtobuf in Frameworks */ = {isa = PBXBuildFile; productRef = 58F1D384620E30C99EF63CCD /* SwiftProtobuf */; };
 		75D44CA7F1D1ABE2C9A08E23 /* notetypes.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3209D8DE6896FF4E7E8F092F /* notetypes.pb.swift */; };
 		7A3D7BF9B460A1000803010B /* ReviewFlowUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA402D7CC58F59A635BDE545 /* ReviewFlowUITests.swift */; };
+		7A94CA75BE1D3A6E367DFE4C /* UITestSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 114046A733976DCD40CB5050 /* UITestSupport.swift */; };
 		7F16A8A50607A48DE707D6FF /* 02_Electromagnetism.apkg in Resources */ = {isa = PBXBuildFile; fileRef = 6D6B72218D3B4055E20459BB /* 02_Electromagnetism.apkg */; };
 		85D38E7787A0B79AD3589E16 /* AnkiCore.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 130AD1BE49642DBFD31D1BF9 /* AnkiCore.xcframework */; };
 		93DEB3D8EFEC8E48E4A354F2 /* pgre_mcq.json in Resources */ = {isa = PBXBuildFile; fileRef = 0DE319773B6C5E8D73B5F7F4 /* pgre_mcq.json */; };
@@ -80,6 +81,7 @@
 		09427C715141E991F74A158C /* 05_Thermodynamics_Statistical_Mechanics.apkg */ = {isa = PBXFileReference; path = 05_Thermodynamics_Statistical_Mechanics.apkg; sourceTree = "<group>"; };
 		0DCEA94F2B106B11504FF7EF /* cards.pb.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = cards.pb.swift; sourceTree = "<group>"; };
 		0DE319773B6C5E8D73B5F7F4 /* pgre_mcq.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = pgre_mcq.json; sourceTree = "<group>"; };
+		114046A733976DCD40CB5050 /* UITestSupport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITestSupport.swift; sourceTree = "<group>"; };
 		130AD1BE49642DBFD31D1BF9 /* AnkiCore.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = AnkiCore.xcframework; path = ../AnkiCore.xcframework; sourceTree = "<group>"; };
 		3209D8DE6896FF4E7E8F092F /* notetypes.pb.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = notetypes.pb.swift; sourceTree = "<group>"; };
 		39D593BF6ED38C725329CA3B /* 04_Atomic_Physics.apkg */ = {isa = PBXFileReference; path = 04_Atomic_Physics.apkg; sourceTree = "<group>"; };
@@ -196,6 +198,7 @@
 				B56D509D5FC59879A5FD73B6 /* MCQScreenUITests.swift */,
 				BA402D7CC58F59A635BDE545 /* ReviewFlowUITests.swift */,
 				D2C7D5F9AF0D2C233C012ACA /* ScoresScreenUITests.swift */,
+				114046A733976DCD40CB5050 /* UITestSupport.swift */,
 			);
 			path = UITests;
 			sourceTree = "<group>";
@@ -434,6 +437,7 @@
 				FA738114A7073D37D0863709 /* MCQScreenUITests.swift in Sources */,
 				7A3D7BF9B460A1000803010B /* ReviewFlowUITests.swift in Sources */,
 				97B289CFB519FC020D895522 /* ScoresScreenUITests.swift in Sources */,
+				7A94CA75BE1D3A6E367DFE4C /* UITestSupport.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -553,7 +557,7 @@
 		436B932645BB7B47FDE7E5DC /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = "";
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGNING_ALLOWED = NO;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -564,7 +568,7 @@
 					"\"..\"",
 				);
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = Speedrun;
+				INFOPLIST_KEY_CFBundleDisplayName = Ankimatter;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -631,7 +635,7 @@
 		97CF92C451CB451D38ECBB11 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = "";
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGNING_ALLOWED = NO;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -642,7 +646,7 @@
 					"\"..\"",
 				);
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = Speedrun;
+				INFOPLIST_KEY_CFBundleDisplayName = Ankimatter;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (

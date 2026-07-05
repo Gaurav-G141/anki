@@ -6,7 +6,17 @@ Anki.pdf`. **Exam: Physics GRE.** Legend: ✅ PASS · 🟡 PARTIAL · ⏭️ DEF
 not code).
 
 Evidence commands assume `$HOME/.cargo/bin` on PATH. Everything is green as of
-the last `just check` (`558 tests run: 558 passed`, exit 0).
+the last `just check` (`570 tests run: 570 passed`, exit 0).
+
+> **Update 2026-07-05 (Sunday build):** the ⏭️-Sunday rows below are now **BUILT +
+> verified** — held-out **memory calibration** (`just calibrate`: Brier 0.141 / ECE
+> 0.031), the **7d paraphrase** generalization test (`just paraphrase-eval`: 79%→81%,
+> ~0 gap), and the study-feature **ablation** (`just ablation`: honest null, full −0.7%
+> vs feature-off with CI spanning 0). 7e leakage + 7f AI-card checks ship as
+> `leakage_check.py`/`gen_leakage_check.py` + the `gen_eval.py` single-correct/soundness
+> verifiers (all CLEAN). Full results: `COMPREHENSIVE_TEST_REPORT.md` §13 +
+> `MODEL_DESCRIPTIONS.md`. The rows keep their original Wednesday-snapshot marks for
+> the record.
 
 ## §6 — Due Wednesday checklist
 

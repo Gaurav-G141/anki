@@ -140,7 +140,7 @@ License: GNU AGPL, version 3 or later; http://www.gnu.org/licenses/agpl.html
 {/snippet}
 
 <div class="speedrun-dashboard">
-    <h1>Speedrun dashboard</h1>
+    <h1>Ankimatter</h1>
 
     <div class="cards">
         <!-- Memory score (or honest abstain) -->

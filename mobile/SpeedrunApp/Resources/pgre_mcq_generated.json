@@ -32,8 +32,7 @@
             "answer": "C",
             "solution": "The expectation value of the momentum for a wave function $\\psi(x, t) = e^{i(qx - \\nu t)}$ is found by applying the momentum operator $\\hat{p}_x = -i\\hbar \\frac{\\partial}{\\partial x}$ to the wave function. Applying the operator, we have $$\\hat{p}_x \\psi(x, t) = -i\\hbar \\frac{\\partial}{\\partial x} e^{i(qx - \\nu t)} = -i\\hbar (iq) e^{i(qx - \\nu t)} = \\hbar q e^{i(qx - \\nu t)}.$$ Therefore, the expected value of the momentum $p_x$ is $\\hbar q$ .",
             "source": "generated",
-            "seed_id": "GR9277#1",
-            "difficulty": 5
+            "seed_id": "GR9277#1"
         },
         {
             "id": "GEN#GR9277.5-1",
@@ -65,8 +64,7 @@
             "answer": "A",
             "solution": "Inside the cavity, the gravitational force on a mass $m$ is zero at any point because the gravitational effect of the spherical shell outside the cavity cancels out due to symmetry (Gauss's Law for gravity). Thus, $F(0) = 0$ . At any point $r/3$ within the cavity, including the center, this remains true. Therefore, the ratio $F(0)/F(r) = 0/\\text{anything} = 0$ . Hence, the correct answer is $0$ , corresponding to choice A.",
             "source": "generated",
-            "seed_id": "GR9277#5",
-            "difficulty": 4
+            "seed_id": "GR9277#5"
         },
         {
             "id": "GEN#GR9277.9-1",
@@ -98,8 +96,7 @@
             "answer": "A",
             "solution": "By using Ampère's Law, the line integral of the magnetic field around a closed loop is equal to $\\mu_0$ times the enclosed current. Consider a loop at radius $r > b$ . The current in the wire is $I$ and the current in the cylinder is $-I$ (since they are in opposite directions). Thus, the net enclosed current is $I - I = 0$ . Therefore, the magnetic field at $r > b$ is zero.",
             "source": "generated",
-            "seed_id": "GR9277#9",
-            "difficulty": 4
+            "seed_id": "GR9277#9"
         },
         {
             "id": "GEN#GR9277.10-1",
@@ -131,8 +128,7 @@
             "answer": "C",
             "solution": "To solve this, we use the method of image charges. For a grounded conducting plane at $z=0$ , the image charge of $q$ at $(0, 0, 0.2a)$ is $-q$ at $(0, 0, -0.2a)$ . The image charge of $-2q$ at $(0, 0, 0.8a)$ is $2q$ at $(0, 0, -0.8a)$ . \n\nThe force on $q$ due to its image is given by:\n\\[ F_{qq'} = \\frac{1}{4\\pi\\epsilon_0} \\frac{q^2}{(0.4a)^2} = \\frac{1}{4\\pi\\epsilon_0} \\frac{q^2}{0.16a^2}. \\]\n\nThe force on $q$ due to the image of $-2q$ is:\n\\[ F_{q(-2q)'} = \\frac{1}{4\\pi\\epsilon_0} \\frac{2q^2}{(1.0a)^2} = \\frac{1}{4\\pi\\epsilon_0} \\frac{2q^2}{a^2}. \\]\n\nThe total force is the sum of these forces:\n\\[ F_{net} = \\frac{1}{4\\pi\\epsilon_0} \\left( \\frac{q^2}{0.16a^2} + \\frac{2q^2}{a^2} \\right) = \\frac{1}{4\\pi\\epsilon_0} \\left( \\frac{6.25q^2}{a^2} + \\frac{2q^2}{a^2} \\right) = \\frac{1}{4\\pi\\epsilon_0} \\frac{7q^2}{4a^2}. \\]\nThus, the correct choice is C.",
             "source": "generated",
-            "seed_id": "GR9277#10",
-            "difficulty": 5
+            "seed_id": "GR9277#10"
         },
         {
             "id": "GEN#GR9277.11-1",
@@ -164,8 +160,7 @@
             "answer": "E",
             "solution": "The voltage across a discharging capacitor is given by $V(t) = V_0 e^{-t/(RC)}$ . We need to find the time $t$ when $V(t) = V_0/2$ . Setting $V_0/2 = V_0 e^{-t/(RC)}$ and solving for $t$ , we get:\n$$\\frac{1}{2} = e^{-t/(RC)}$$\nTaking the natural logarithm of both sides:\n$$\\ln(1/2) = -t/(RC)$$\nThus, $$t = -RC \\ln(1/2) = RC \\ln(2)$$\nTherefore, the correct answer is $RC\\ln(2)$ .",
             "source": "generated",
-            "seed_id": "GR9277#11",
-            "difficulty": 5
+            "seed_id": "GR9277#11"
         },
         {
             "id": "GEN#GR9277.12-1",
@@ -197,8 +192,7 @@
             "answer": "A",
             "solution": "The potential between two conducting planes intersecting at an angle $\\beta$ , with boundary conditions $V(0) = V_1$ and $V(\\beta) = V_2$ , can be found using the method of separation of variables for Laplace's equation in polar coordinates. The potential $V(\\theta)$ is linear in $\\theta$ due to the constant boundary conditions and the absence of $r$ and $z$ dependence. Thus, we hypothesize $V(\\theta) = A + B\\theta$ . Applying the boundary conditions: $$ \\begin{align*} V(0) &= A = V_1, \\\\ V(\\beta) &= A + B\\beta = V_2. \\end{align*} $$ Solving these equations, we find $A = V_1$ and $B = \\frac{(V_2 - V_1)}{\\beta}$ . Therefore, $$ V(\\theta) = V_1 + \\frac{(V_2 - V_1)\\theta}{\\beta}. $$",
             "source": "generated",
-            "seed_id": "GR9277#12",
-            "difficulty": 5
+            "seed_id": "GR9277#12"
         },
         {
             "id": "GEN#GR9277.13-1",
@@ -230,8 +224,7 @@
             "answer": "A",
             "solution": "In the standard form of Maxwell's equations, Gauss's Law for Electricity ( $\\nabla \\cdot \\mathbf{E} = \\frac{\\rho}{\\varepsilon_0}$ ) describes how electric charges produce an electric field. If electric dipoles were the fundamental entities instead of charges, this law would need modification because it is based on the concept of point charges producing fields. The other equations either involve magnetic fields or changes in magnetic/electric fields over time, and these would remain unchanged in their structure.",
             "source": "generated",
-            "seed_id": "GR9277#13",
-            "difficulty": 4
+            "seed_id": "GR9277#13"
         },
         {
             "id": "GEN#GR9277.16-1",
@@ -263,8 +256,7 @@
             "answer": "A",
             "solution": "The efficiency $\\eta$ of a Carnot engine is given by $\\eta = 1 - \\frac{T_C}{T_H}$ , where $T_H$ is the temperature of the hot reservoir and $T_C$ is the temperature of the cold reservoir. Here, $T_H = 600 \\text{ K}$ and $T_C = 300 \\text{ K}$ . Thus, $$\\eta = 1 - \\frac{300}{600} = 1 - 0.5 = 0.5.$$ The work done by the engine is the product of the efficiency and the heat absorbed: $$W = \\eta Q_H = 0.5 \\times 1500 \\text{ J} = 750 \\text{ J}.$$ Therefore, the work performed by the engine is 750 J.",
             "source": "generated",
-            "seed_id": "GR9277#16",
-            "difficulty": 5
+            "seed_id": "GR9277#16"
         },
         {
             "id": "GEN#GR9277.17-1",
@@ -296,8 +288,7 @@
             "answer": "B",
             "solution": "When the oscilloscope is in X-Y mode, the pattern seen is determined by the ratio of the frequencies of the signals connected to the X and Y inputs. The figure formed is a Lissajous figure, which depends on the frequency ratio $f_Y/f_X$ . If $f_Y = 3f_X$ , the pattern will complete a cycle every time the Y oscillator completes three cycles while the X oscillator completes one cycle. This results in a figure with three humps. Thus, the correct answer is B.",
             "source": "generated",
-            "seed_id": "GR9277#17",
-            "difficulty": 5
+            "seed_id": "GR9277#17"
         },
         {
             "id": "GEN#GR9277.18-1",
@@ -329,8 +320,7 @@
             "answer": "C",
             "solution": "To ensure maximum power transfer and avoid reflections at the end of a transmission line, the line should be terminated with its characteristic impedance. In this case, the twisted pair cable has a characteristic impedance of $100\\, \\Omega$ . Hence, it should be terminated with a $100\\, \\Omega$ resistor to match the impedance and prevent signal reflection.",
             "source": "generated",
-            "seed_id": "GR9277#18",
-            "difficulty": 3
+            "seed_id": "GR9277#18"
         },
         {
             "id": "GEN#GR9277.19-1",
@@ -362,8 +352,7 @@
             "answer": "A",
             "solution": "Using the gravitational field formula $g = \\frac{G M}{r^2}$ , where $g = 24.8 \\text{ m/s}^2$ , $r = 7.1 \\times 10^7 \\text{ m}$ , and $G = 6.67 \\times 10^{-11} \\text{ N m}^2/\\text{kg}^2$ . Solving for $M$ , we have:\n$$ M = \\frac{g r^2}{G} = \\frac{24.8 \\times (7.1 \\times 10^7)^2}{6.67 \\times 10^{-11}} $$\nCalculating the above gives:\n$$ M \\approx 1.9 \\times 10^{27} \\text{ kg} $$\nThus, the mass of Jupiter is most nearly $1.9 \\times 10^{27}$ kg.",
             "source": "generated",
-            "seed_id": "GR9277#19",
-            "difficulty": 5
+            "seed_id": "GR9277#19"
         },
         {
             "id": "GEN#GR9277.24-1",
@@ -395,8 +384,7 @@
             "answer": "E",
             "solution": "Solid xenon, like other noble gases, forms a lattice structure at low temperatures due to weak intermolecular forces. Since xenon atoms are non-polar and do not form bonds like ionic or covalent, the primary force responsible for the cohesion of solid xenon is the van der Waals force, which is due to temporary dipoles and induced dipoles in the atoms.",
             "source": "generated",
-            "seed_id": "GR9277#24",
-            "difficulty": 2
+            "seed_id": "GR9277#24"
         },
         {
             "id": "GEN#GR9277.25-1",
@@ -428,8 +416,7 @@
             "answer": "D",
             "solution": "Cosmic rays interact with the atmosphere, producing a variety of secondary particles. Among these, muons and neutrinos are known for their high penetrating power. Muons can travel through significant amounts of matter before decaying, while neutrinos interact very rarely with matter. Therefore, these two types of particles are the most likely to be detected at ground level in a balloon experiment.",
             "source": "generated",
-            "seed_id": "GR9277#25",
-            "difficulty": 3
+            "seed_id": "GR9277#25"
         },
         {
             "id": "GEN#GR9277.26-1",
@@ -461,8 +448,7 @@
             "answer": "A",
             "solution": "The half-life $T_{1/2}$ is related to the decay constant $\\lambda$ by the equation $T_{1/2} = \\frac{\\ln(2)}{\\lambda}$ . Substituting $\\lambda = 0.1 \\, \\text{min}^{-1}$ , we have:\n$$ T_{1/2} = \\frac{\\ln(2)}{0.1} \\approx \\frac{0.693}{0.1} = 6.93 \\, \\text{min}. $$\nThus, the half-life is approximately $6.9 \\, \\text{min}$ .",
             "source": "generated",
-            "seed_id": "GR9277#26",
-            "difficulty": 5
+            "seed_id": "GR9277#26"
         },
         {
             "id": "GEN#GR9277.27-1",
@@ -494,8 +480,167 @@
             "answer": "B",
             "solution": "The uncertainty principle for wave packets states that the product of the uncertainties in position $\\Delta y_0$ and wave number $\\Delta k$ is approximately constant: $\\Delta y_0 \\Delta k \\approx 1$ . Solving for $\\Delta k$ , we get $\\Delta k = 1 / \\Delta y_0$ . Thus, the width of the peak in $k$ is most nearly $\\Delta k = 1 / \\Delta y_0$ .",
             "source": "generated",
-            "seed_id": "GR9277#27",
-            "difficulty": 5
+            "seed_id": "GR9277#27"
+        },
+        {
+            "id": "RW#GR9277.1-1",
+            "subject": "quantum_mechanics",
+            "topic": "Quantum Mechanics → Momentum Operator",
+            "statement": "Consider a particle described by the wave function $e^{i(kx - \\omega t)}$ , where $x$ represents distance, $t$ denotes time, and $k$ and $\\omega$ are both positive real numbers. Determine the momentum's x-component.",
+            "choices": [
+                [
+                    "A",
+                    "0"
+                ],
+                [
+                    "B",
+                    "$\\hbar\\omega$"
+                ],
+                [
+                    "C",
+                    "$\\hbar k$"
+                ],
+                [
+                    "D",
+                    "$\\frac{\\hbar\\omega}{c}$"
+                ],
+                [
+                    "E",
+                    "$\\frac{\\hbar k}{\\omega}$"
+                ]
+            ],
+            "answer": "C",
+            "solution": "The momentum operator is $\\hat{p}_x = \\frac{\\hbar}{i}\\frac{\\partial}{\\partial x}$ . Applying it:\n$$p_x\\psi = \\frac{\\hbar}{i}\\frac{\\partial}{\\partial x}e^{i(kx-\\omega t)} = \\frac{\\hbar}{i}(ik)e^{i(kx-\\omega t)} = \\hbar k\\,\\psi$$The eigenvalue (momentum) is $\\hbar k$ .",
+            "source": "reworded",
+            "seed_id": "GR9277#1"
+        },
+        {
+            "id": "RW#GR9277.1-2",
+            "subject": "quantum_mechanics",
+            "topic": "Quantum Mechanics → Momentum Operator",
+            "statement": "Consider a particle with a wave function given by $e^{i(kx - \\omega t)}$ , where $x$ represents the distance, $t$ is the time, and $k$ and $\\omega$ are positive real constants. Determine the momentum component along the x-direction.",
+            "choices": [
+                [
+                    "A",
+                    "0"
+                ],
+                [
+                    "B",
+                    "$\\hbar\\omega$"
+                ],
+                [
+                    "C",
+                    "$\\hbar k$"
+                ],
+                [
+                    "D",
+                    "$\\frac{\\hbar\\omega}{c}$"
+                ],
+                [
+                    "E",
+                    "$\\frac{\\hbar k}{\\omega}$"
+                ]
+            ],
+            "answer": "C",
+            "solution": "The momentum operator is $\\hat{p}_x = \\frac{\\hbar}{i}\\frac{\\partial}{\\partial x}$ . Applying it:\n$$p_x\\psi = \\frac{\\hbar}{i}\\frac{\\partial}{\\partial x}e^{i(kx-\\omega t)} = \\frac{\\hbar}{i}(ik)e^{i(kx-\\omega t)} = \\hbar k\\,\\psi$$The eigenvalue (momentum) is $\\hbar k$ .",
+            "source": "reworded",
+            "seed_id": "GR9277#1"
+        },
+        {
+            "id": "RW#GR9277.3-2",
+            "subject": "quantum_mechanics",
+            "topic": "Quantum Mechanics → Bohr Theory",
+            "statement": "What is the ratio of the characteristic K x-ray energies for an element with atomic number $Z=6$ , such as carbon, compared to an element with atomic number $Z=12$ , like magnesium?",
+            "choices": [
+                [
+                    "A",
+                    "1/4"
+                ],
+                [
+                    "B",
+                    "1/2"
+                ],
+                [
+                    "C",
+                    "1"
+                ],
+                [
+                    "D",
+                    "2"
+                ],
+                [
+                    "E",
+                    "4"
+                ]
+            ],
+            "answer": "A",
+            "solution": "For hydrogen-like atoms, characteristic K x-ray energy $\\propto Z^2$ . Therefore:\n$$\\frac{E_C}{E_{Mg}} = \\frac{Z_C^2}{Z_{Mg}^2} = \\frac{6^2}{12^2} = \\frac{36}{144} = \\frac{1}{4}$$(Moseley's law with $(Z-1)^2$ gives $\\approx 25/121 \\approx 1/5$ , still closest to 1/4.)",
+            "source": "reworded",
+            "seed_id": "GR9277#3"
+        },
+        {
+            "id": "RW#GR9277.4-1",
+            "subject": "classical_mechanics",
+            "topic": "Mechanics → Gravitational Law",
+            "statement": "Consider a homogeneous sphere representing the Earth, with a radius of $R$ . The gravitational attraction that this sphere exerts on a point mass located at a distance $r$ from its center is given by $F(r)$ . Determine the value of $F(R) / F(2R)$ .",
+            "choices": [
+                [
+                    "A",
+                    "32"
+                ],
+                [
+                    "B",
+                    "8"
+                ],
+                [
+                    "C",
+                    "4"
+                ],
+                [
+                    "D",
+                    "2"
+                ],
+                [
+                    "E",
+                    "1"
+                ]
+            ],
+            "answer": "C",
+            "solution": "Outside the sphere, $F = k/r^2$ , so\n$$\\frac{F(R)}{F(2R)} = \\frac{(2R)^2}{R^2} = 4$$",
+            "source": "reworded",
+            "seed_id": "GR9277#4"
+        },
+        {
+            "id": "RW#GR9277.4-2",
+            "subject": "classical_mechanics",
+            "topic": "Mechanics → Gravitational Law",
+            "statement": "Consider a point mass subject to the Earth's gravitational force $F(r)$ , given that $r$ is its distance from the Earth's center. With the Earth modeled as a uniform sphere with radius $R$ , determine the ratio $F(R)/F(2R)$ .",
+            "choices": [
+                [
+                    "A",
+                    "32"
+                ],
+                [
+                    "B",
+                    "8"
+                ],
+                [
+                    "C",
+                    "4"
+                ],
+                [
+                    "D",
+                    "2"
+                ],
+                [
+                    "E",
+                    "1"
+                ]
+            ],
+            "answer": "C",
+            "solution": "Outside the sphere, $F = k/r^2$ , so\n$$\\frac{F(R)}{F(2R)} = \\frac{(2R)^2}{R^2} = 4$$",
+            "source": "reworded",
+            "seed_id": "GR9277#4"
         }
     ]
 }

@@ -214,6 +214,22 @@ bench:
 baseline-eval *args:
     out/pyenv/bin/python speedrun/baseline_eval.py {{args}}
 
+# Memory-model calibration (Sunday §9 Step 1): Brier / log-loss / ECE + reliability chart on held-out reviews. Deterministic sim, engine-validated curve, no key needed. (macOS/Linux)
+calibrate *args:
+    out/pyenv/bin/python speedrun/calibration_eval.py {{args}}
+
+# Held-out paraphrase eval (Sunday §7d): AI solver accuracy on ORIGINAL vs reworded held-out questions (generalization, not memorization). Add --dry-run for offline. (macOS/Linux)
+paraphrase-eval *args:
+    out/pyenv/bin/python speedrun/paraphrase_eval.py {{args}}
+
+# Three-arm ablation of the Speed-Recall study feature (Sunday §8): full vs feature-off vs plain-Anki, equal study time, mastered-per-minute ± range. Deterministic sim, no key. (macOS/Linux)
+ablation *args:
+    out/pyenv/bin/python speedrun/ablation.py {{args}}
+
+# Generate VALIDATED reworded MCQ variants (fluency-illusion fix): same physics/answer, reworded stem; solver-consensus + integrity gated. Writes generated_mcq.jsonl; then run promote_generated.py. Needs OpenAI key; --dry-run for offline. (macOS/Linux)
+reword-variants *args:
+    out/pyenv/bin/python speedrun/gen_reword_variants.py {{args}}
+
 # Refresh the grader dummy: seed a real-content collection from the CURRENT build's decks and upload it to the throwaway AnkiWeb account in .env (ANKIWEB_USER/PASS). Re-run after any app update so the login-based dummy stays current. (macOS/Linux)
 dummy-ankiweb:
     {{ ninja }} pylib qt

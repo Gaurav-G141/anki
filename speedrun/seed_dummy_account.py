@@ -30,6 +30,7 @@ sys.path.insert(0, os.path.join(REPO, "out/pylib"))
 import anki.collection  # noqa: E402
 from anki.collection import Collection  # noqa: E402
 from anki.cards import FSRSMemoryState  # noqa: E402
+from anki.consts import CARD_TYPE_REV, QUEUE_TYPE_REV  # noqa: E402
 import anki.lang  # noqa: E402
 
 sys.path.insert(0, os.path.join(REPO, "speedrun"))
@@ -64,6 +65,7 @@ def build(path: str, reviews_per: int, deck_dir: str) -> Collection:
             os.remove(path + suffix)
     col = Collection(path)
     now = int(time.time())
+    today = col.sched.today  # scheduler day number, for review-card due dates
     rev_id = now * 1000  # unique, increasing revlog ids
 
     _import_bundled_decks(col, deck_dir)
@@ -77,8 +79,12 @@ def build(path: str, reviews_per: int, deck_dir: str) -> Collection:
         mastered_frac = 0.72 - 0.22 * frac  # 0.72 -> 0.50
         correct_frac = 0.88 - 0.20 * frac  # 0.88 -> 0.68
 
-        # Real, pgre-tagged cards imported from the bundled deck for this subject.
-        cids = list(col.find_cards(f'tag:{subject.tag}'))
+        # Cards in this subject's bundled deck (incl. subdecks). Seeding by DECK
+        # (not tag) keeps the manifold gradient exact: aqt/pgre._deck_mastery counts
+        # ivl-mature cards per deck, so the mastered fraction we set here == the
+        # mastery the home screen colours with. The deck cards are pgre-tagged, so
+        # the tag-scanning mastery RPC (dashboard) sees the same set.
+        cids = list(col.find_cards(f'deck:"PGRE::{subject.name}"'))
         if not cids:
             continue
 
@@ -87,12 +93,23 @@ def build(path: str, reviews_per: int, deck_dir: str) -> Collection:
         for idx, cid in enumerate(cids):
             mastered = idx < n_mastered
             card = col.get_card(cid)
+            # A real reviewed card, so BOTH mastery signals light up:
+            #  - FSRS memory_state drives the dashboard Memory/mastery score;
+            #  - the card interval (ivl) drives the manifold home-screen red->green
+            #    colouring (aqt/pgre._deck_mastery counts cards with ivl >= 21 as
+            #    mature). Without ivl the manifold stays all-red despite the scores.
+            card.type = CARD_TYPE_REV
+            card.queue = QUEUE_TYPE_REV
             if mastered:
                 card.memory_state = FSRSMemoryState(stability=200.0, difficulty=4.0)
                 card.last_review_time = now - 10 * DAY  # recent -> R high
+                card.ivl = 90  # mature (>= 21d) -> greens the spike
+                card.due = today + 60
             else:
                 card.memory_state = FSRSMemoryState(stability=20.0, difficulty=7.0)
                 card.last_review_time = now - 220 * DAY  # long ago -> R low
+                card.ivl = 5  # immature (< 21d) -> spike stays red
+                card.due = today
             col.update_card(card, skip_undo_entry=True)
 
             # Graded review history: `correct_frac` of reviews answered Good(3),

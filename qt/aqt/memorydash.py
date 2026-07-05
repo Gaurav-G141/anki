@@ -32,7 +32,7 @@ class MemoryDashboard(QDialog):
         mw.garbage_collect_on_dialog_finish(self)
         self.mw = mw
         self.name = "memoryDashboard"
-        self.setWindowTitle("Memory")
+        self.setWindowTitle("Ankimatter — Scores")
         disable_help_button(self)
         self.setMinimumSize(600, 500)
         restoreGeom(self, self.name, default_size=(840, 760))

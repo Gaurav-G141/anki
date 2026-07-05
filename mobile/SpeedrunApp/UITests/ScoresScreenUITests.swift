@@ -28,24 +28,25 @@ final class ScoresScreenUITests: XCTestCase {
         )
         scoresButton.tap()
 
-        // All three score titles must be present.
-        for title in ["Memory", "Performance", "Readiness"] {
+        // Traverse the three cards top-to-bottom (the list scrolls; a card below
+        // the fold isn't in the tree until scrolled near). Each title must be
+        // present AND resolve to EITHER a real score or an honest abstain — a card
+        // showing neither would be a bug.
+        _ = app.staticTexts["Memory"].waitForExistence(timeout: timeout)
+        for (title, name) in [("Memory", "memory"), ("Performance", "performance"), ("Readiness", "readiness")] {
+            app.scrollUp(to: app.staticTexts[title])
             XCTAssertTrue(
-                app.staticTexts[title].waitForExistence(timeout: timeout),
+                app.staticTexts[title].exists,
                 "\(title) card never appeared on the Scores screen"
             )
-        }
-
-        // Each score must resolve to EITHER a real score or an honest abstain —
-        // both acceptable; a card that shows neither would be a bug.
-        for name in ["memory", "performance", "readiness"] {
             let score = app.descendants(matching: .any)
                 .matching(identifier: "\(name)Score").firstMatch
             let abstain = app.descendants(matching: .any)
                 .matching(identifier: "\(name)Abstain").firstMatch
-            let shown = score.waitForExistence(timeout: timeout)
-                || abstain.waitForExistence(timeout: 1)
-            XCTAssertTrue(shown, "\(name) card showed neither a score nor an abstain")
+            XCTAssertTrue(
+                score.exists || abstain.exists,
+                "\(name) card showed neither a score nor an abstain"
+            )
         }
 
         XCTAssertEqual(app.state, .runningForeground)
