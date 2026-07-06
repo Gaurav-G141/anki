@@ -1,5 +1,7 @@
 # Friday check — status and remaining work (excluding the AI feature)
 
+_Last updated 2026-07-05._
+
 **Exam:** Physics GRE. **Scale:** 200–990, 10-point increments; no official ETS
 subscores. (This fork tracks 9 weighted subjects internally for coverage/mastery but
 reports a single 200–990 readiness score — consistent with the README.)
@@ -26,16 +28,17 @@ Friday builds on Wednesday. The non-AI requirements are:
 
 ## Status summary
 
-| Requirement                                | Status      | Notes                                                                                                                   |
-| ------------------------------------------ | ----------- | ----------------------------------------------------------------------------------------------------------------------- |
-| Fork builds; AGPL; Anki credited           | ✅          | `LICENSE`, root `README.md`; per-file headers intact                                                                    |
-| Real Rust change (20% of grade)            | ✅          | `SpeedrunService.TopicMastery` in `rslib/src/speedrun/`; ~18 Rust tests, 6 Python tests; read-only/undo/integrity proof |
-| Review loop on exam deck (desktop + phone) | ✅          | Desktop review UI; iOS `testTwentyReviews` XCUITest                                                                     |
-| Memory model, honest (range + give-up)     | ✅          | Wilson 95% + abstain rule                                                                                               |
-| Two apps, one engine + two-way sync        | ✅          | iOS C-FFI over `rslib`; USN sync; Rust merge test; NWPathMonitor auto-sync                                              |
-| Desktop installer                          | ✅          | `.dmg` builds; `just check` passes                                                                                      |
-| **Three scores, each with a range**        | ✅ (was ❌) | Memory + Performance + Readiness, each with range + independent abstain                                                 |
-| **Phone shows the three scores**           | ✅ (was ❌) | `ScoresView` calls TopicMastery RPC, renders all three with ranges + give-up                                            |
+| Requirement                                | Status      | Notes                                                                                                                                     |
+| ------------------------------------------ | ----------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| Fork builds; AGPL; Anki credited           | ✅          | `LICENSE`, root `README.md`; per-file headers intact                                                                                      |
+| Real Rust change (20% of grade)            | ✅          | `SpeedrunService.TopicMastery` in `rslib/src/speedrun/`; ~18 Rust tests, 6 Python tests; read-only/undo/integrity proof                   |
+| Review loop on exam deck (desktop + phone) | ✅          | Desktop review UI; iOS `testTwentyReviews` XCUITest                                                                                       |
+| Memory model, honest (range + give-up)     | ✅          | Wilson 95% + abstain rule                                                                                                                 |
+| Two apps, one engine + two-way sync        | ✅          | iOS C-FFI over `rslib`; USN sync; Rust merge test; NWPathMonitor auto-sync                                                                |
+| Desktop installer                          | ✅          | `.dmg` builds (`out/installer/dist/anki-26.05-mac-apple.dmg`, Apple-Silicon); `just check` passes                                         |
+| iOS device build                           | ✅ (new)    | `installers/SpeedrunApp-iOS-device-unsigned.ipa` (~22 MB, real arm64 iphoneos, PGRE deck bundled) — **UNSIGNED sideload**, not TestFlight |
+| **Three scores, each with a range**        | ✅ (was ❌) | Memory + Performance + Readiness, each with range + independent abstain                                                                   |
+| **Phone shows the three scores**           | ✅ (was ❌) | `ScoresView` calls TopicMastery RPC, renders all three with ranges + give-up                                                              |
 
 ## What is already solid — do NOT rebuild
 
@@ -102,10 +105,23 @@ logic from `lib.ts` and renders Memory + Performance + Readiness with ranges + g
 messages; `DeckListView` has a toolbar `chart.bar` link to it. No Rust/FFI changes were
 needed beyond Gap 1.
 
-## Gap 3 — Proof artifact (clean-device install + sync round-trip)
+## Gaps STILL OPEN (honest)
 
-Record: (a) `.dmg` clean-install + launch, and (b) the phone→desktop sync round-trip.
-Build steps: `BUILD_INSTALLERS.md`. (Documentation task, not code.)
+These are the only Friday-scope items not closed. They are proof/packaging tasks, not
+engine defects:
+
+- **Demo video (3–5 min): NOT recorded.**
+- **Proof screen-recordings: NOT recorded** — (a) clean-build, (b) clean-machine `.dmg`
+  install + launch, (c) a phone review, (d) the phone→desktop sync round-trip. Build steps
+  are in `BUILD_INSTALLERS.md`; this is a recording task, not code.
+- **Automated two-device sync-conflict harness: NOT committed.** Conflict handling is
+  documented (`speedrun/SYNC.md`), engine-inherited via USN, and manually reproduced, and the
+  Rust merge test (`revlogs_are_never_lost_or_double_counted`) proves both directions +
+  offline-both-sides merge — but that test inserts revlog rows directly rather than via
+  `answer_card`, so an end-to-end automated two-device conflict harness is still owed.
+- **iOS build is an UNSIGNED sideload IPA** (`SpeedrunApp-iOS-device-unsigned.ipa`), not
+  TestFlight — no paid Apple account on the build machine. Sideload via Sideloadly/AltStore
+  (re-sign with the user's Apple ID) or re-export signed once a team is added.
 
 ## Verification
 

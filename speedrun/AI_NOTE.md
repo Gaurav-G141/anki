@@ -2,7 +2,7 @@
 
 _(Friday deliverable: "a short note on what AI you built, why, and what you skipped."
 Consolidates what was previously spread across `heuristic_coach.py`,
-`HUMAN_MADE_Ai_plan.md`, and `PRD.md`.)_
+`HUMAN_MADE_Ai_plan.md`, and `PRD.md`. Last updated 2026-07-05.)_
 
 ## What the AI is
 
@@ -15,6 +15,15 @@ Consolidates what was previously spread across `heuristic_coach.py`,
    empty/off-topic text so it's never graded as physics.
    Code: `qt/aqt/heuristic_coach.py`, `mobile/SpeedrunApp/Sources/HeuristicCoach.swift`.
 
+   **Grader calibration fix (2026-07-05).** The coach was over-returning `flawed`
+   ("⚠️ Reasoning slip") on answers that were _correct with valid core reasoning_, and it
+   flipped run-to-run. Fixed with a rubric guard — **a correct pick with valid core reasoning
+   can never be graded `flawed`** (at most `valid_slower` / `overcomputed`) — plus **grading
+   temperature set to 0** for determinism (was 0.2), and a copied `missed` example removed. The
+   fix is synced across desktop (`heuristic_coach.py`) and iOS (`HeuristicCoach.swift`). The
+   Andy tutor stays at temperature **0.2** (temperature is parameterized per call). Verified:
+   correct→optimal (3/3), wrong+error→flawed (3/3).
+
 2. **Optimal-approach key (Stage 1, offline eval).** `speedrun/heuristic_eval.py`
    built the key the coach grades against: for each real GR9277 problem it produced a
    fast expert approach, **answer-gated deterministically** (the model is given the
@@ -22,11 +31,20 @@ Consolidates what was previously spread across `heuristic_coach.py`,
    judged **equal-or-better than the community solution**, with an elimination
    _verifier-as-filter_ (bad eliminations are stripped, 0 shipped) and a clarity check.
 
-3. **Question generator (Phase 2, offline).** `speedrun/gen_eval.py` generates new
-   PGRE MCQs as variants of real seeds, validated by **blind solver-consensus**
-   (3 independent GPT-4o solves must agree with the claimed answer) plus single-correct,
-   soundness, novelty, and self-containment gates. Ships **0 bad items by
-   construction**; the validated bank is bundled into both apps (`pgre_mcq_generated.json`).
+3. **Question generator / AI card check (Phase 2 / §7f, offline).** `speedrun/gen_eval.py`
+   regenerates and re-validates the PGRE MCQ bank: each item passes a **3-solver blind
+   consensus** (3 independent GPT-4o solves must agree with the claimed answer) plus
+   single-correct, soundness, novelty, and self-containment gates against pre-declared
+   `CUTOFFS`; any item that fails is dropped. It ships **0 ambiguous / 0 unsound by
+   construction**. Current bank: **46 items (15 novel + 31 reworded)**, re-run clean
+   2026-07-05; bundled into both apps (`pgre_mcq_generated.json`).
+
+   **Honest limitation:** "correctness" here is **consensus-substituted** — the 3-solver
+   agreement stands in for a ground-truth key. It is **not** validated against a 50-item
+   human gold set, so we deliberately do **not** state a card-correctness accuracy %. What we
+   can claim is the by-construction guarantee (0 ambiguous / 0 unsound) and that generation is
+   leakage-free (`gen_leakage_check.py`: novel items <0.6 Jaccard vs 399 real problems;
+   reworded within [0.15, 0.75) of their seed).
 
 ## Why
 
@@ -44,6 +62,13 @@ generator widens the practice pool past the finite set of real problems.
 - **Scraped GR9277 problems + community solutions** (grephysics.net) — the answer key
   and the baseline the Stage-1 approaches must equal-or-beat.
   Nothing the coach shows is ungrounded: with AI off it shows the precomputed key entry.
+
+**Source-traceability status (2026-07-05):** every coach judgment is grounded in the
+`HEURISTIC_TOOLKIT` (Kahn/Anderson/Reece) and every graded item traces to a scraped GR9277
+problem + community solution; grounding is enforced at the prompt/key layer and re-run clean this
+session. Not yet done: a machine-checkable per-output citation trail (each shown tip linked to a
+specific toolkit section, surfaced as a UI click-through) — grounding is currently at the
+prompt/key level, not exposed as a citation.
 
 ## How it's checked
 

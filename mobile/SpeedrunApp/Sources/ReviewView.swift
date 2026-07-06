@@ -122,12 +122,14 @@ struct ReviewView: View {
             .accessibilityIdentifier("cardWeb")
     }
 
-    /// The one focal CTA — glowing cyan, prominent.
+    /// The one focal CTA — glowing cyan, prominent. Disabled for the first
+    /// couple of seconds a card is shown (anti-spam), so answers can't be
+    /// blitzed through without reading the question.
     private var showAnswerButton: some View {
         Button {
             session.reveal()
         } label: {
-            Text("Show Answer")
+            Text(session.canReveal ? "Show Answer" : "Read the question…")
                 .font(.pgMono(15, weight: .bold))
                 .tracking(1)
                 .frame(maxWidth: .infinity)
@@ -135,9 +137,10 @@ struct ReviewView: View {
         }
         .background(
             RoundedRectangle(cornerRadius: 12, style: .continuous)
-                .fill(Palette.accent))
+                .fill(session.canReveal ? Palette.accent : Palette.accent.opacity(0.28)))
         .foregroundColor(Palette.space)
-        .shadow(color: Palette.accent.opacity(0.5), radius: 16)
+        .shadow(color: Palette.accent.opacity(session.canReveal ? 0.5 : 0), radius: 16)
+        .disabled(!session.canReveal)
         .accessibilityIdentifier("showAnswer")
     }
 

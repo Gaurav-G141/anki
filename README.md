@@ -16,10 +16,18 @@
 > [speedrun/RUST_CHANGE.md](./speedrun/RUST_CHANGE.md), and
 > [speedrun/MANUAL_TEST.md](./speedrun/MANUAL_TEST.md).
 >
+> **Honest scoring (the give-up / abstain rule):** the app shows **no score** until
+> there's enough data to justify one. A topic (and the overall score) **abstains** —
+> "Not enough data yet, here's what's missing" — when reviews are below the floor,
+> **or** topic coverage is below **40%**, **or** any subject weighted **≥10%** has
+> **0 cards**. When it does show a score it shows all of it: estimate, range,
+> coverage, confidence, "last updated", and reasons.
+>
 > **Building the apps yourself:** see
 > [BUILD_INSTALLERS.md](./BUILD_INSTALLERS.md) for step-by-step instructions to
-> build the macOS `.dmg` installer and the iOS Simulator app from source
-> (including how to run the iOS app in the emulator).
+> build **both apps** from source — the macOS `.dmg` desktop installer, the iOS
+> **Simulator** app (with how to run it in the emulator), and the iOS **device**
+> build (an **unsigned** `.ipa` for sideloading onto a physical iPhone).
 >
 > **See the full app with realistic progress:** [dummy_account.md](./dummy_account.md)
 > loads a pre-seeded "moderate progress" learner so all three scores (Memory /

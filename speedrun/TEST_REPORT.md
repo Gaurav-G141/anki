@@ -6,11 +6,31 @@ read-only; the **Update** below records the fixes since applied._
 > **UPDATE 2026-07-03 — fixes applied, `just check` is now GREEN (exit 0).**
 > Both blockers are resolved: (1) formatting — ran `just fix-fmt`; (2) complexipy —
 > confirmed already non-fatal in CI (no change needed). Re-ran `just check`: **570
-> Rust passed** (1 skipped perf), **119 Python passed**, **TS vitest green**, build
+> Rust passed** (1 skipped perf), **Python passed**, **TS vitest green**, build
 > succeeded, exit 0. Complexipy still _prints_ its usual failures but they are all
 > stock **upstream** functions and it does not fail the build. (The tree also gained
 > the Phase-2 question generator — `speedrun/{gen_prompts,gen_eval,gen_leakage_check,
 > mcq_schema}.py` — which added no complexity violations and left the gate green.)
+>
+> **UPDATE 2026-07-05 (Sunday build) — numbers refreshed to current reality.**
+> `just check` green: **570 Rust passed / 1 skipped**, **145 Python** (aqt + pylib,
+> incl. 9 speedrun), TS vitest green. The **only** red is `check:complexipy-diff:qt`
+> on **10 PRE-EXISTING upstream Anki functions** > cyclomatic complexity 20 (0-diff vs
+> `main`, "Net: no changes") — not fork code, not a regression. `just bench` 50k
+> p50/p95/p99 **32/33/33 ms**; `just speedrun-crash-test 50` **0/50**; iOS **12/12** on
+> the iPhone 17 simulator, and the device build (`arm64 iphoneos`) now packages as
+> `installers/SpeedrunApp-iOS-device-unsigned.ipa` (unsigned sideload, **not**
+> TestFlight — no paid Apple account). This session also fixed the **MCQ nucleus** (now
+> a true circle, `qt/aqt/pgre.py`), **AI-grader calibration** (rubric guard +
+> grading temperature 0, synced desktop/iOS), and **ablation determinism**
+> (fixed SHA-256 offset). Held-out model evals: calibration Brier **0.1409** /
+> log-loss **0.4453** / ECE **0.0307** (deterministic SIMULATION of a synthetic
+> learner); paraphrase **n=30, 77%→77%, +0% drop** (real held-out GR9277); ablation
+> honest null **−1.6%**, 95% CI [−0.115, +0.039] spans 0 (deterministic SIMULATION).
+> Baseline (real held-out): AI **66% (31/47) vs keyword 28% / vector 23% / random 20%**.
+> Leakage + gen-leakage CLEAN. Open: demo video + proof recordings NOT recorded;
+> iOS unsigned (not TestFlight); no committed automated two-device sync-conflict
+> harness; README does not state the give-up rule.
 
 ## TL;DR
 
@@ -21,17 +41,17 @@ noted below (formatting; complexipy) are **now resolved** and `just check` is gr
 
 ## Results at a glance
 
-| Suite                                     | Result                  | Key numbers                                                                                   |
-| ----------------------------------------- | ----------------------- | --------------------------------------------------------------------------------------------- |
-| `just check` (CI gate)                    | ✅ **PASS (after fix)** | was formatting-blocked; after `just fix-fmt` → exit 0. **570 Rust**, **119 Python**, TS green |
-| `just test` (Rust+Py+TS)                  | ✅ PASS                 | **570 Rust** (1 ignored perf), **119 Python**, TS vitest green                                |
-| `just lint` (mypy/ruff/svelte/tsc)        | ✅ PASS                 | clean                                                                                         |
-| iOS unit + UI (`xcodebuild test`)         | ✅ PASS                 | 7 `HeuristicCoach` unit + 3 UI (MCQ opens, 20-review flow, three-scores)                      |
-| 50k perf (`just bench`)                   | ✅ PASS                 | `topic_mastery` p95 **33.5 ms** (budget 150 ms)                                               |
-| **200K stress** (`just stress`)           | ✅ **7/7 PASS**         | 205,531 cards; see below                                                                      |
-| Crash safety (`just speedrun-crash-test`) | ✅ PASS                 | **0 / 50** corrupted                                                                          |
-| S1 fixture gate (`just speedrun-test`)    | ✅ PASS                 | gate GREEN, 11/0                                                                              |
-| AI feature (unit + live + integrity)      | ✅ PASS                 | live gpt-4o verdict=`optimal`; leakage CLEAN; tripwires 4/4                                   |
+| Suite                                     | Result                  | Key numbers                                                                                               |
+| ----------------------------------------- | ----------------------- | --------------------------------------------------------------------------------------------------------- |
+| `just check` (CI gate)                    | ✅ **PASS (after fix)** | was formatting-blocked; after `just fix-fmt` → exit 0. **570 Rust** (1 skipped), **145 Python**, TS green |
+| `just test` (Rust+Py+TS)                  | ✅ PASS                 | **570 Rust** (1 ignored perf), **145 Python**, TS vitest green                                            |
+| `just lint` (mypy/ruff/svelte/tsc)        | ✅ PASS                 | clean                                                                                                     |
+| iOS unit + UI (`xcodebuild test`)         | ✅ PASS                 | **12/12** — 7 `HeuristicCoach` + 2 `MCQVariant` unit + 3 UI (MCQ opens, 20-review flow, three-scores)     |
+| 50k perf (`just bench`)                   | ✅ PASS                 | `topic_mastery` p50/p95/p99 **32/33/33 ms** (budget 150/250 ms)                                           |
+| **200K stress** (`just stress`)           | ✅ **7/7 PASS**         | 205,531 cards; see below                                                                                  |
+| Crash safety (`just speedrun-crash-test`) | ✅ PASS                 | **0 / 50** corrupted                                                                                      |
+| S1 fixture gate (`just speedrun-test`)    | ✅ PASS                 | gate GREEN, 11/0                                                                                          |
+| AI feature (unit + live + integrity)      | ✅ PASS                 | live gpt-4o verdict=`optimal`; leakage CLEAN; tripwires 4/4                                               |
 
 ---
 
@@ -98,32 +118,38 @@ stock upstream Anki code, not fork code; no fork code needed changing.
 
 `568 tests run: 568 passed, 1 skipped` (skip = `#[ignore]` 50k perf bench) for
 Rust at the original pass; **now 570** after the two offline-sync tests below (see
-"Offline sync tests"). `119 passed` Python (incl. `test_pgre_quiz`, `test_manifold`,
-`test_pgre`, `test_speedrun`); TS vitest green (exit 0). `just lint` clean (mypy +
+"Offline sync tests"). `145 passed` Python (aqt + pylib, incl. `test_pgre_quiz` 14,
+`test_manifold`, `test_pgre`, `test_speedrecall` 12, `test_speedrun` 9); TS vitest green
+(exit 0). `just lint` clean (mypy +
 ruff-check + svelte-check + tsc).
 
-### iOS — `xcodebuild … test`, TEST SUCCEEDED
+### iOS — `xcodebuild … test`, TEST SUCCEEDED (12/12)
 
 - `HeuristicCoachTests` (7): key loads/parses, answer-correctness, empty→low-effort
   (no net), injection caught (no net), no-key→fallback, response parse + category
   coercion + malformed→nil, prompt faithfulness.
+- `MCQVariantTests` (2): MCQ variant generation.
 - `MCQScreenUITests.testMCQScreenOpens`, `ReviewFlowUITests.testTwentyReviews`
-  (20 graded via the shared engine), `ScoresScreenUITests.testThreeScoresShown`
+  (20 graded via the shared engine, ~61.6 s), `ScoresScreenUITests.testThreeScoresShown`
   (Memory/Performance/Readiness each show a score **or** an honest abstain).
+- **Device build:** `arm64 iphoneos` **BUILD SUCCEEDED**, packaged as
+  `installers/SpeedrunApp-iOS-device-unsigned.ipa` (~22 MB, min iOS 15, bundle
+  `net.ankiweb.speedrun`, PGRE deck bundled) — **UNSIGNED** sideload (Sideloadly/AltStore),
+  **not** TestFlight (no paid Apple account). Sim build: `installers/SpeedrunApp-iOS-Simulator.zip`.
 
 ### Speed / 200K stress (`just stress`, 205,531 cards)
 
 ```
 PHASE A import .apkg 13.8s (205531 cards)
-PHASE B deck tree FIRST load 19.2ms [PASS<=1000]; refresh p95 17.7ms [PASS<=500]
-PHASE C answer 20000 (1735 c/s); Memory dashboard FIRST 130.6ms [PASS<=1000];
-        refresh p95 133.7ms [PASS<=500]; deck_mastery p95 196.4ms [PASS<=500]
-PHASE D full upload 4.8s; full download 0.8s -> adopted 205531/205531 [PASS];
+PHASE B deck tree FIRST load 19ms [PASS<=1000]; refresh p95 17.7ms [PASS<=500]
+PHASE C answer 20000 (1735 c/s); Memory dashboard FIRST 125ms [PASS<=1000];
+        refresh p95 123-198ms [PASS<=500]; deck_mastery p95 196.4ms [PASS<=500]
+PHASE D full upload 4.7s; full download -> adopted 205531/205531 [PASS];
         incremental sync propagates [PASS]
 7/7 checks pass
 ```
 
-50k `just bench`: `topic_mastery` p50 33.1 / p95 33.5 / p99 33.7 ms (budget 150/250).
+50k `just bench`: `topic_mastery` p50 32 / p95 33 / p99 33 ms (budget 150/250).
 
 ### Crash safety
 
@@ -137,6 +163,10 @@ GR9277#1 → `ok=True, category=attempt, verdict=optimal` with warm feedback (li
 `gpt-4o`). Prompt-injection ("ignore all previous instructions…") → `category=
 injection`, caught **offline** (no model call). `leakage_check.py` → CLEAN (dev 43
 / held 47 disjoint, no leaked shingles). `guard_eval --dry-run` → tripwires 4/4.
+The grader was **re-calibrated this session** (rubric guard: a correct pick with valid
+core reasoning can never grade `flawed`; grading temperature set to **0**, was 0.2;
+copied `missed` example removed) — synced across desktop `heuristic_coach.py` + iOS
+`HeuristicCoach.swift`; verified correct→optimal 3/3, wrong+error→flawed 3/3.
 
 ### Screenshots captured
 
@@ -146,6 +176,10 @@ injection`, caught **offline** (no model call). `leakage_check.py` → CLEAN (de
   approach" box, choices A–E with C marked correct, ✅ Correct, "⚡ Fastest
   approach" card. (Captured via a faithful browser render — the sim WebView can't
   be tapped from the CLI; the live app path is covered by the UI + unit tests.)
+- **MCQ nucleus button** now renders as a true circle (this session's
+  `qt/aqt/pgre.py` fix: absolute-unit square + `border-radius:50%`, since `#cy-stage`
+  had no explicit height under `aspect-ratio`). Pixel-verified: ring bbox 180×180
+  (aspect 1.0000), radius variance 1.13%.
 
 ---
 
@@ -153,14 +187,14 @@ injection`, caught **offline** (no model call). `leakage_check.py` → CLEAN (de
 
 ### Wednesday (core works, no AI)
 
-| Requirement                                                             | Status   | Evidence                                                                                                     |
-| ----------------------------------------------------------------------- | -------- | ------------------------------------------------------------------------------------------------------------ |
-| Anki forked + builds from source                                        | ✅       | `just test`/`just build` compile clean                                                                       |
-| Rust change end-to-end (diff + 3 Rust + 1 Python test)                  | ✅       | `speedrun::*` in the 568 Rust; `pylib/tests/test_speedrun.py` in the 119                                     |
-| Review loop on the exam deck                                            | ✅       | native review + iOS `testTwentyReviews` (20 grades via shared engine)                                        |
-| Memory model, honest score: range + give-up rule                        | ✅       | `TopicMastery` Wilson range + abstain; `ScoresScreenUITests`                                                 |
-| Desktop installer runs on a clean machine                               | ⚠️ verify | `.dmg` built earlier this session; re-run `RELEASE=2 ./ninja installer` + clean-machine check for the record |
-| Phone builds/runs on emulator; loads deck; real review on shared engine | ✅       | iOS build + launch + `testTwentyReviews`                                                                     |
+| Requirement                                                             | Status   | Evidence                                                                                                                                                                     |
+| ----------------------------------------------------------------------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Anki forked + builds from source                                        | ✅       | `just test`/`just build` compile clean                                                                                                                                       |
+| Rust change end-to-end (diff + 3 Rust + 1 Python test)                  | ✅       | `speedrun::*` in the 570 Rust; `pylib/tests/test_speedrun.py` (9) in the 145 Python                                                                                          |
+| Review loop on the exam deck                                            | ✅       | native review + iOS `testTwentyReviews` (20 grades via shared engine)                                                                                                        |
+| Memory model, honest score: range + give-up rule                        | ✅       | `TopicMastery` Wilson range + abstain; `ScoresScreenUITests`                                                                                                                 |
+| Desktop installer runs on a clean machine                               | ⚠️ verify | `.dmg` built earlier this session; re-run `RELEASE=2 ./ninja installer` + clean-machine check for the record                                                                 |
+| Phone builds/runs on emulator; loads deck; real review on shared engine | ✅       | iOS sim build + launch + `testTwentyReviews`; device `arm64 iphoneos` build SUCCEEDED → `installers/SpeedrunApp-iOS-device-unsigned.ipa` (unsigned sideload, not TestFlight) |
 
 ### Friday (AI added + checked; phone syncs)
 

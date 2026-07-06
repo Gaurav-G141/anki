@@ -1,422 +1,422 @@
 {
     "summary": {
         "full": {
-            "mastered_per_min_mean": 2.2869,
-            "mastered_per_min_min": 1.9782,
-            "mastered_per_min_max": 2.5166,
-            "mastered_per_min_stdev": 0.1535,
-            "mastered_frac_mean": 0.5712,
-            "avg_reviews": 248.2,
-            "avg_study_minutes": 44.96
+            "mastered_per_min_mean": 2.2734,
+            "mastered_per_min_min": 2.0695,
+            "mastered_per_min_max": 2.7364,
+            "mastered_per_min_stdev": 0.1554,
+            "mastered_frac_mean": 0.5677,
+            "avg_reviews": 246.9,
+            "avg_study_minutes": 44.95
         },
         "feature-off": {
-            "mastered_per_min_mean": 2.3141,
-            "mastered_per_min_min": 2.0945,
-            "mastered_per_min_max": 2.6693,
-            "mastered_per_min_stdev": 0.1519,
-            "mastered_frac_mean": 0.5774,
-            "avg_reviews": 248.9,
+            "mastered_per_min_mean": 2.3115,
+            "mastered_per_min_min": 1.9392,
+            "mastered_per_min_max": 2.6775,
+            "mastered_per_min_stdev": 0.2036,
+            "mastered_frac_mean": 0.5767,
+            "avg_reviews": 248.1,
             "avg_study_minutes": 44.91
         },
         "plain-anki": {
-            "mastered_per_min_mean": 2.2062,
-            "mastered_per_min_min": 1.9136,
-            "mastered_per_min_max": 2.5365,
-            "mastered_per_min_stdev": 0.1635,
-            "mastered_frac_mean": 0.5497,
-            "avg_reviews": 264.4,
-            "avg_study_minutes": 44.84
+            "mastered_per_min_mean": 2.2241,
+            "mastered_per_min_min": 1.8891,
+            "mastered_per_min_max": 2.5608,
+            "mastered_per_min_stdev": 0.1749,
+            "mastered_frac_mean": 0.5545,
+            "avg_reviews": 260.1,
+            "avg_study_minutes": 44.88
         }
     },
     "per_seed": {
         "full": [
             {
                 "arm": "full",
+                "mastered": 104,
+                "mastered_frac": 0.5777777777777777,
+                "reviews": 248,
+                "study_minutes": 44.91,
+                "mastered_per_min": 2.3156
+            },
+            {
+                "arm": "full",
                 "mastered": 105,
                 "mastered_frac": 0.5833333333333334,
-                "reviews": 253,
-                "study_minutes": 44.99,
-                "mastered_per_min": 2.3336
-            },
-            {
-                "arm": "full",
-                "mastered": 109,
-                "mastered_frac": 0.6055555555555555,
-                "reviews": 251,
-                "study_minutes": 44.99,
-                "mastered_per_min": 2.4229
-            },
-            {
-                "arm": "full",
-                "mastered": 106,
-                "mastered_frac": 0.5888888888888889,
-                "reviews": 250,
-                "study_minutes": 44.93,
-                "mastered_per_min": 2.359
-            },
-            {
-                "arm": "full",
-                "mastered": 90,
-                "mastered_frac": 0.5,
-                "reviews": 230,
-                "study_minutes": 44.96,
-                "mastered_per_min": 2.0018
-            },
-            {
-                "arm": "full",
-                "mastered": 104,
-                "mastered_frac": 0.5777777777777777,
-                "reviews": 249,
-                "study_minutes": 44.97,
-                "mastered_per_min": 2.3124
-            },
-            {
-                "arm": "full",
-                "mastered": 104,
-                "mastered_frac": 0.5777777777777777,
-                "reviews": 249,
-                "study_minutes": 44.96,
-                "mastered_per_min": 2.313
-            },
-            {
-                "arm": "full",
-                "mastered": 113,
-                "mastered_frac": 0.6277777777777778,
-                "reviews": 258,
-                "study_minutes": 44.9,
-                "mastered_per_min": 2.5166
-            },
-            {
-                "arm": "full",
-                "mastered": 95,
-                "mastered_frac": 0.5277777777777778,
-                "reviews": 251,
-                "study_minutes": 44.88,
-                "mastered_per_min": 2.1167
-            },
-            {
-                "arm": "full",
-                "mastered": 100,
-                "mastered_frac": 0.5555555555555556,
-                "reviews": 251,
-                "study_minutes": 44.9,
-                "mastered_per_min": 2.2271
-            },
-            {
-                "arm": "full",
-                "mastered": 108,
-                "mastered_frac": 0.6,
-                "reviews": 261,
-                "study_minutes": 44.99,
-                "mastered_per_min": 2.4006
-            },
-            {
-                "arm": "full",
-                "mastered": 113,
-                "mastered_frac": 0.6277777777777778,
-                "reviews": 268,
-                "study_minutes": 44.95,
-                "mastered_per_min": 2.5138
-            },
-            {
-                "arm": "full",
-                "mastered": 106,
-                "mastered_frac": 0.5888888888888889,
-                "reviews": 252,
-                "study_minutes": 44.95,
-                "mastered_per_min": 2.3584
-            },
-            {
-                "arm": "full",
-                "mastered": 104,
-                "mastered_frac": 0.5777777777777777,
-                "reviews": 236,
-                "study_minutes": 44.96,
-                "mastered_per_min": 2.3132
-            },
-            {
-                "arm": "full",
-                "mastered": 89,
-                "mastered_frac": 0.49444444444444446,
-                "reviews": 235,
-                "study_minutes": 44.99,
-                "mastered_per_min": 1.9782
-            },
-            {
-                "arm": "full",
-                "mastered": 97,
-                "mastered_frac": 0.5388888888888889,
                 "reviews": 237,
-                "study_minutes": 44.98,
-                "mastered_per_min": 2.1563
+                "study_minutes": 44.93,
+                "mastered_per_min": 2.3368
             },
             {
                 "arm": "full",
-                "mastered": 102,
-                "mastered_frac": 0.5666666666666667,
-                "reviews": 240,
+                "mastered": 101,
+                "mastered_frac": 0.5611111111111111,
+                "reviews": 232,
+                "study_minutes": 44.89,
+                "mastered_per_min": 2.25
+            },
+            {
+                "arm": "full",
+                "mastered": 98,
+                "mastered_frac": 0.5444444444444444,
+                "reviews": 239,
+                "study_minutes": 44.94,
+                "mastered_per_min": 2.1808
+            },
+            {
+                "arm": "full",
+                "mastered": 94,
+                "mastered_frac": 0.5222222222222223,
+                "reviews": 252,
+                "study_minutes": 44.96,
+                "mastered_per_min": 2.0906
+            },
+            {
+                "arm": "full",
+                "mastered": 101,
+                "mastered_frac": 0.5611111111111111,
+                "reviews": 252,
                 "study_minutes": 44.99,
-                "mastered_per_min": 2.267
+                "mastered_per_min": 2.2449
+            },
+            {
+                "arm": "full",
+                "mastered": 111,
+                "mastered_frac": 0.6166666666666667,
+                "reviews": 262,
+                "study_minutes": 44.98,
+                "mastered_per_min": 2.4677
+            },
+            {
+                "arm": "full",
+                "mastered": 93,
+                "mastered_frac": 0.5166666666666667,
+                "reviews": 240,
+                "study_minutes": 44.94,
+                "mastered_per_min": 2.0695
+            },
+            {
+                "arm": "full",
+                "mastered": 101,
+                "mastered_frac": 0.5611111111111111,
+                "reviews": 250,
+                "study_minutes": 44.99,
+                "mastered_per_min": 2.2451
+            },
+            {
+                "arm": "full",
+                "mastered": 104,
+                "mastered_frac": 0.5777777777777777,
+                "reviews": 250,
+                "study_minutes": 44.97,
+                "mastered_per_min": 2.3129
+            },
+            {
+                "arm": "full",
+                "mastered": 123,
+                "mastered_frac": 0.6833333333333333,
+                "reviews": 249,
+                "study_minutes": 44.95,
+                "mastered_per_min": 2.7364
+            },
+            {
+                "arm": "full",
+                "mastered": 101,
+                "mastered_frac": 0.5611111111111111,
+                "reviews": 237,
+                "study_minutes": 44.94,
+                "mastered_per_min": 2.2473
+            },
+            {
+                "arm": "full",
+                "mastered": 103,
+                "mastered_frac": 0.5722222222222222,
+                "reviews": 244,
+                "study_minutes": 44.92,
+                "mastered_per_min": 2.2928
+            },
+            {
+                "arm": "full",
+                "mastered": 96,
+                "mastered_frac": 0.5333333333333333,
+                "reviews": 242,
+                "study_minutes": 44.99,
+                "mastered_per_min": 2.134
+            },
+            {
+                "arm": "full",
+                "mastered": 96,
+                "mastered_frac": 0.5333333333333333,
+                "reviews": 245,
+                "study_minutes": 44.95,
+                "mastered_per_min": 2.1358
+            },
+            {
+                "arm": "full",
+                "mastered": 104,
+                "mastered_frac": 0.5777777777777777,
+                "reviews": 271,
+                "study_minutes": 44.94,
+                "mastered_per_min": 2.3142
             }
         ],
         "feature-off": [
             {
                 "arm": "feature-off",
-                "mastered": 110,
-                "mastered_frac": 0.6111111111111112,
-                "reviews": 256,
+                "mastered": 112,
+                "mastered_frac": 0.6222222222222222,
+                "reviews": 255,
+                "study_minutes": 44.85,
+                "mastered_per_min": 2.4972
+            },
+            {
+                "arm": "feature-off",
+                "mastered": 103,
+                "mastered_frac": 0.5722222222222222,
+                "reviews": 250,
                 "study_minutes": 44.98,
-                "mastered_per_min": 2.4454
+                "mastered_per_min": 2.29
             },
             {
                 "arm": "feature-off",
-                "mastered": 106,
-                "mastered_frac": 0.5888888888888889,
-                "reviews": 251,
-                "study_minutes": 44.94,
-                "mastered_per_min": 2.3586
-            },
-            {
-                "arm": "feature-off",
-                "mastered": 99,
-                "mastered_frac": 0.55,
-                "reviews": 248,
-                "study_minutes": 44.83,
-                "mastered_per_min": 2.2085
-            },
-            {
-                "arm": "feature-off",
-                "mastered": 94,
-                "mastered_frac": 0.5222222222222223,
-                "reviews": 221,
-                "study_minutes": 44.88,
-                "mastered_per_min": 2.0945
-            },
-            {
-                "arm": "feature-off",
-                "mastered": 105,
-                "mastered_frac": 0.5833333333333334,
-                "reviews": 260,
-                "study_minutes": 44.94,
-                "mastered_per_min": 2.3364
-            },
-            {
-                "arm": "feature-off",
-                "mastered": 99,
-                "mastered_frac": 0.55,
-                "reviews": 241,
-                "study_minutes": 44.8,
-                "mastered_per_min": 2.2097
-            },
-            {
-                "arm": "feature-off",
-                "mastered": 108,
-                "mastered_frac": 0.6,
-                "reviews": 264,
-                "study_minutes": 44.94,
-                "mastered_per_min": 2.4032
+                "mastered": 101,
+                "mastered_frac": 0.5611111111111111,
+                "reviews": 254,
+                "study_minutes": 44.91,
+                "mastered_per_min": 2.2491
             },
             {
                 "arm": "feature-off",
                 "mastered": 100,
                 "mastered_frac": 0.5555555555555556,
-                "reviews": 244,
-                "study_minutes": 44.95,
-                "mastered_per_min": 2.2246
-            },
-            {
-                "arm": "feature-off",
-                "mastered": 99,
-                "mastered_frac": 0.55,
-                "reviews": 238,
-                "study_minutes": 44.88,
-                "mastered_per_min": 2.206
-            },
-            {
-                "arm": "feature-off",
-                "mastered": 113,
-                "mastered_frac": 0.6277777777777778,
-                "reviews": 252,
-                "study_minutes": 44.89,
-                "mastered_per_min": 2.5171
-            },
-            {
-                "arm": "feature-off",
-                "mastered": 120,
-                "mastered_frac": 0.6666666666666666,
-                "reviews": 259,
-                "study_minutes": 44.95,
-                "mastered_per_min": 2.6693
+                "reviews": 239,
+                "study_minutes": 44.94,
+                "mastered_per_min": 2.2254
             },
             {
                 "arm": "feature-off",
                 "mastered": 108,
                 "mastered_frac": 0.6,
-                "reviews": 255,
-                "study_minutes": 44.88,
-                "mastered_per_min": 2.4063
+                "reviews": 267,
+                "study_minutes": 44.86,
+                "mastered_per_min": 2.4075
             },
             {
                 "arm": "feature-off",
                 "mastered": 104,
                 "mastered_frac": 0.5777777777777777,
-                "reviews": 241,
-                "study_minutes": 44.93,
-                "mastered_per_min": 2.3149
+                "reviews": 240,
+                "study_minutes": 44.94,
+                "mastered_per_min": 2.3143
             },
             {
                 "arm": "feature-off",
-                "mastered": 95,
-                "mastered_frac": 0.5277777777777778,
+                "mastered": 111,
+                "mastered_frac": 0.6166666666666667,
+                "reviews": 249,
+                "study_minutes": 44.96,
+                "mastered_per_min": 2.4687
+            },
+            {
+                "arm": "feature-off",
+                "mastered": 92,
+                "mastered_frac": 0.5111111111111111,
+                "reviews": 246,
+                "study_minutes": 44.93,
+                "mastered_per_min": 2.0475
+            },
+            {
+                "arm": "feature-off",
+                "mastered": 103,
+                "mastered_frac": 0.5722222222222222,
+                "reviews": 238,
+                "study_minutes": 44.86,
+                "mastered_per_min": 2.2961
+            },
+            {
+                "arm": "feature-off",
+                "mastered": 120,
+                "mastered_frac": 0.6666666666666666,
+                "reviews": 246,
+                "study_minutes": 44.82,
+                "mastered_per_min": 2.6775
+            },
+            {
+                "arm": "feature-off",
+                "mastered": 118,
+                "mastered_frac": 0.6555555555555556,
+                "reviews": 265,
+                "study_minutes": 44.92,
+                "mastered_per_min": 2.6272
+            },
+            {
+                "arm": "feature-off",
+                "mastered": 110,
+                "mastered_frac": 0.6111111111111112,
+                "reviews": 238,
+                "study_minutes": 44.94,
+                "mastered_per_min": 2.4479
+            },
+            {
+                "arm": "feature-off",
+                "mastered": 104,
+                "mastered_frac": 0.5777777777777777,
+                "reviews": 246,
+                "study_minutes": 44.93,
+                "mastered_per_min": 2.3147
+            },
+            {
+                "arm": "feature-off",
+                "mastered": 87,
+                "mastered_frac": 0.48333333333333334,
+                "reviews": 235,
+                "study_minutes": 44.86,
+                "mastered_per_min": 1.9392
+            },
+            {
+                "arm": "feature-off",
+                "mastered": 89,
+                "mastered_frac": 0.49444444444444446,
                 "reviews": 242,
                 "study_minutes": 44.96,
-                "mastered_per_min": 2.1131
+                "mastered_per_min": 1.9794
             },
             {
                 "arm": "feature-off",
-                "mastered": 96,
-                "mastered_frac": 0.5333333333333333,
-                "reviews": 253,
-                "study_minutes": 44.9,
-                "mastered_per_min": 2.1379
-            },
-            {
-                "arm": "feature-off",
-                "mastered": 107,
-                "mastered_frac": 0.5944444444444444,
-                "reviews": 258,
-                "study_minutes": 44.96,
-                "mastered_per_min": 2.3797
+                "mastered": 99,
+                "mastered_frac": 0.55,
+                "reviews": 259,
+                "study_minutes": 44.94,
+                "mastered_per_min": 2.2028
             }
         ],
         "plain-anki": [
             {
                 "arm": "plain-anki",
-                "mastered": 105,
-                "mastered_frac": 0.5833333333333334,
-                "reviews": 269,
-                "study_minutes": 44.68,
-                "mastered_per_min": 2.35
+                "mastered": 107,
+                "mastered_frac": 0.5944444444444444,
+                "reviews": 259,
+                "study_minutes": 44.61,
+                "mastered_per_min": 2.3985
             },
             {
                 "arm": "plain-anki",
-                "mastered": 97,
-                "mastered_frac": 0.5388888888888889,
+                "mastered": 103,
+                "mastered_frac": 0.5722222222222222,
                 "reviews": 270,
-                "study_minutes": 44.72,
-                "mastered_per_min": 2.169
+                "study_minutes": 44.78,
+                "mastered_per_min": 2.3001
             },
             {
                 "arm": "plain-anki",
-                "mastered": 95,
-                "mastered_frac": 0.5277777777777778,
-                "reviews": 250,
-                "study_minutes": 44.89,
-                "mastered_per_min": 2.1161
+                "mastered": 98,
+                "mastered_frac": 0.5444444444444444,
+                "reviews": 259,
+                "study_minutes": 44.9,
+                "mastered_per_min": 2.1827
+            },
+            {
+                "arm": "plain-anki",
+                "mastered": 94,
+                "mastered_frac": 0.5222222222222223,
+                "reviews": 247,
+                "study_minutes": 44.8,
+                "mastered_per_min": 2.0984
             },
             {
                 "arm": "plain-anki",
                 "mastered": 99,
                 "mastered_frac": 0.55,
-                "reviews": 259,
-                "study_minutes": 44.86,
-                "mastered_per_min": 2.2069
-            },
-            {
-                "arm": "plain-anki",
-                "mastered": 104,
-                "mastered_frac": 0.5777777777777777,
-                "reviews": 262,
-                "study_minutes": 44.78,
-                "mastered_per_min": 2.3223
-            },
-            {
-                "arm": "plain-anki",
-                "mastered": 101,
-                "mastered_frac": 0.5611111111111111,
-                "reviews": 263,
-                "study_minutes": 44.73,
-                "mastered_per_min": 2.2582
-            },
-            {
-                "arm": "plain-anki",
-                "mastered": 114,
-                "mastered_frac": 0.6333333333333333,
-                "reviews": 266,
-                "study_minutes": 44.94,
-                "mastered_per_min": 2.5365
-            },
-            {
-                "arm": "plain-anki",
-                "mastered": 92,
-                "mastered_frac": 0.5111111111111111,
-                "reviews": 260,
+                "reviews": 264,
                 "study_minutes": 44.89,
-                "mastered_per_min": 2.0494
+                "mastered_per_min": 2.2052
             },
             {
                 "arm": "plain-anki",
-                "mastered": 87,
-                "mastered_frac": 0.48333333333333334,
-                "reviews": 272,
-                "study_minutes": 44.85,
-                "mastered_per_min": 1.9398
+                "mastered": 95,
+                "mastered_frac": 0.5277777777777778,
+                "reviews": 264,
+                "study_minutes": 44.81,
+                "mastered_per_min": 2.1199
             },
             {
                 "arm": "plain-anki",
-                "mastered": 104,
-                "mastered_frac": 0.5777777777777777,
-                "reviews": 272,
-                "study_minutes": 44.86,
-                "mastered_per_min": 2.3185
+                "mastered": 115,
+                "mastered_frac": 0.6388888888888888,
+                "reviews": 258,
+                "study_minutes": 44.91,
+                "mastered_per_min": 2.5608
             },
             {
                 "arm": "plain-anki",
-                "mastered": 104,
-                "mastered_frac": 0.5777777777777777,
-                "reviews": 273,
-                "study_minutes": 44.99,
-                "mastered_per_min": 2.3114
+                "mastered": 93,
+                "mastered_frac": 0.5166666666666667,
+                "reviews": 271,
+                "study_minutes": 44.91,
+                "mastered_per_min": 2.071
             },
             {
                 "arm": "plain-anki",
-                "mastered": 97,
-                "mastered_frac": 0.5388888888888889,
-                "reviews": 257,
-                "study_minutes": 44.93,
-                "mastered_per_min": 2.1591
+                "mastered": 95,
+                "mastered_frac": 0.5277777777777778,
+                "reviews": 256,
+                "study_minutes": 44.98,
+                "mastered_per_min": 2.1123
             },
             {
                 "arm": "plain-anki",
                 "mastered": 106,
                 "mastered_frac": 0.5888888888888889,
+                "reviews": 265,
+                "study_minutes": 44.96,
+                "mastered_per_min": 2.3579
+            },
+            {
+                "arm": "plain-anki",
+                "mastered": 110,
+                "mastered_frac": 0.6111111111111112,
+                "reviews": 262,
+                "study_minutes": 44.97,
+                "mastered_per_min": 2.446
+            },
+            {
+                "arm": "plain-anki",
+                "mastered": 94,
+                "mastered_frac": 0.5222222222222223,
+                "reviews": 262,
+                "study_minutes": 44.95,
+                "mastered_per_min": 2.0912
+            },
+            {
+                "arm": "plain-anki",
+                "mastered": 107,
+                "mastered_frac": 0.5944444444444444,
+                "reviews": 259,
+                "study_minutes": 44.92,
+                "mastered_per_min": 2.3819
+            },
+            {
+                "arm": "plain-anki",
+                "mastered": 91,
+                "mastered_frac": 0.5055555555555555,
+                "reviews": 245,
+                "study_minutes": 44.89,
+                "mastered_per_min": 2.0271
+            },
+            {
+                "arm": "plain-anki",
+                "mastered": 85,
+                "mastered_frac": 0.4722222222222222,
+                "reviews": 257,
+                "study_minutes": 45.0,
+                "mastered_per_min": 1.8891
+            },
+            {
+                "arm": "plain-anki",
+                "mastered": 105,
+                "mastered_frac": 0.5833333333333334,
                 "reviews": 263,
-                "study_minutes": 44.94,
-                "mastered_per_min": 2.3589
-            },
-            {
-                "arm": "plain-anki",
-                "mastered": 90,
-                "mastered_frac": 0.5,
-                "reviews": 268,
-                "study_minutes": 44.7,
-                "mastered_per_min": 2.0135
-            },
-            {
-                "arm": "plain-anki",
-                "mastered": 86,
-                "mastered_frac": 0.4777777777777778,
-                "reviews": 261,
-                "study_minutes": 44.94,
-                "mastered_per_min": 1.9136
-            },
-            {
-                "arm": "plain-anki",
-                "mastered": 102,
-                "mastered_frac": 0.5666666666666667,
-                "reviews": 266,
-                "study_minutes": 44.81,
-                "mastered_per_min": 2.2762
+                "study_minutes": 44.79,
+                "mastered_per_min": 2.3442
             }
         ]
     },

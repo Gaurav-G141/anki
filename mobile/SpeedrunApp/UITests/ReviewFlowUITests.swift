@@ -16,6 +16,9 @@ final class ReviewFlowUITests: XCTestCase {
 
     func testTwentyReviews() throws {
         let app = XCUIApplication()
+        // Skip the anti-spam minimum-reveal delay so the 20-card flow isn't
+        // throttled to 2s/card (the delay itself is covered by unit tests).
+        app.launchEnvironment["SPEEDRUN_NO_REVEAL_DELAY"] = "1"
         app.launch()
 
         let target = 20

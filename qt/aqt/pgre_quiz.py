@@ -581,8 +581,21 @@ _QUIZ_PAGE = r"""
   }
   function render() {
     andyStop();
+    var prevId = (cur >= 0 && DATA[cur]) ? DATA[cur].id : null;
     cur = pickNext();
-    if (cur < 0) { return done(); }
+    if (cur < 0) {
+      // Endless mode: the bank is exhausted — reshuffle and keep going forever
+      // instead of showing a "Finished" screen. Don't repeat the just-shown Q.
+      shuffle(DATA); used = {};
+      if (prevId && DATA.length > 1) {
+        for (var i = 0; i < DATA.length; i++) {
+          if (DATA[i].id === prevId) { used[i] = true; break; }
+        }
+      }
+      cur = pickNext();
+      used = {};  // release the temporary block; the served set restarts this lap
+    }
+    if (cur < 0) { return; }  // empty bank — nothing to render
     used[cur] = true; served++;
     locked = false;
     var q = DATA[cur];
@@ -594,9 +607,12 @@ _QUIZ_PAGE = r"""
             : "How would you solve this? (jot your approach, then check it against the fastest route)";
     var ta = document.getElementById("reason");
     ta.value = ""; ta.disabled = false;
-    document.getElementById("progress").textContent = "Q " + served + " / " + DATA.length;
+    var lap = DATA.length ? Math.floor((served - 1) / DATA.length) : 0;
+    var pos = DATA.length ? ((served - 1) % DATA.length) + 1 : served;
+    document.getElementById("progress").textContent =
+      "Q " + pos + " / " + DATA.length + (lap > 0 ? " · lap " + (lap + 1) : "");
     var pf = document.getElementById("progressFill");
-    if (pf) { pf.style.width = (DATA.length ? (served / DATA.length) * 100 : 0) + "%"; }
+    if (pf) { pf.style.width = (DATA.length ? (pos / DATA.length) * 100 : 0) + "%"; }
     score();
     document.getElementById("subjectText").textContent = q.subject || "";
     // Badge AI-generated items only (real released questions have no pill).

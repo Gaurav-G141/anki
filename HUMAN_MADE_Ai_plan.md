@@ -17,5 +17,7 @@ Importanly, this does not mean that the student always needs tricks. In some pro
 
 - You can use the tricks in "Conquering the Physics GRE" and see if any can reasonably apply, as well as concepts seen in the brainlift
 
+Grader calibration (as of 2026-07-05): a **correct** pick backed by valid core reasoning must **never** be graded as a "reasoning slip" (`flawed`) — at most `valid_slower`/`overcomputed` when a faster path existed. The grader had been over-flagging correct, well-reasoned answers and flipping run-to-run; it now runs at **temperature 0** (deterministic) with a rubric guard enforcing this, synced across desktop and iOS. (The Andy tutor stays at 0.2, parameterized per call.)
+
 Stage 1: Eval
 Using the scraped problems, solutions, explanations, and techniques in the GRE textbook, come up with prompts for GPT-4o (API Key to be given) toi give the "optimal" solutions for the problems. Then check against the standards listed above (did GPT use optimal tricks, did it do something incorrect, etc). Go thru several rounds of prompting and checking until GPT-4o gives satsifying explanations for all of the problems (Note: For any problems with listed solutions, compare them to see if GPT-4o gives an equal or better response than the student-made one)

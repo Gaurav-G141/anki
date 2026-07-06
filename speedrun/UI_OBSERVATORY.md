@@ -168,7 +168,11 @@ Keep it **dim**. The stars must never compete with content; they set mood only.
 watermark behind. Manifold centered with a soft **bloom** halo; spikes become luminous
 nodes — dim by default, the **hovered/active** one lights cyan with a halo; draw faint
 **constellation hairlines** between mastered (green) subjects. Center "⚛ Practice MCQs"
-is the glowing cyan **core** (the one loud element). Bottom bar → translucent glass
+is the glowing cyan **core** (the one loud element) — a **true circle** (fixed
+2026-07-05: it had collapsed to a rounded rectangle because `#cy-stage` has no explicit
+height under `aspect-ratio`; the core now pins an absolute-unit square + `border-radius:
+50%`. Pixel-verified: ring bbox 180×180, aspect 1.0000, radius variance 1.13%,
+diag/axis 0.9998). Bottom bar → translucent glass
 (`ManifoldBottomBar`; the buttons keep their `pycmd` cmds and emoji). Preserve drag-rotate.
 
 **MCQ** (`pgre_quiz.py` `_QUIZ_PAGE`): dark glass **console**. `#hdr` progress becomes a

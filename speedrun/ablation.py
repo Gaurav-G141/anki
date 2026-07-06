@@ -32,6 +32,7 @@ so the harness needs no Qt). Pure/offline, seeded, no non-stdlib deps.
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import math
 import os
@@ -54,16 +55,18 @@ SLOW_SECONDS = 60.0
 SLOW_FLOOR = 0.07
 BASE_HOURS = {1: 1.0 / 6.0, 2: 24.0, 3: 72.0, 4: 168.0}
 
-HORIZON_DAYS = 21.0        # study period simulated
-BUDGET_MINUTES = 45.0      # equal study-time budget per arm across the horizon
-DURABILITY_DAYS = 7.0      # "mastered" = memory durable enough to stay recalled this long
+HORIZON_DAYS = 21.0  # study period simulated
+BUDGET_MINUTES = 45.0  # equal study-time budget per arm across the horizon
+DURABILITY_DAYS = 7.0  # "mastered" = memory durable enough to stay recalled this long
 N_CARDS = 180
 N_SEEDS = 16
 
 ARMS = ("full", "feature-off", "plain-anki")
 
 
-def power_forgetting_curve(days: float, stability: float, decay: float = FSRS5_DEFAULT_DECAY) -> float:
+def power_forgetting_curve(
+    days: float, stability: float, decay: float = FSRS5_DEFAULT_DECAY
+) -> float:
     factor = 0.9 ** (1.0 / -decay) - 1.0
     return (days / stability * factor + 1.0) ** (-decay)
 
@@ -89,11 +92,11 @@ class Card:
     __slots__ = ("true_stability", "last_day", "due_day", "ivl_days", "ef")
 
     def __init__(self, true_stability: float) -> None:
-        self.true_stability = true_stability   # ground-truth memory stability (days)
+        self.true_stability = true_stability  # ground-truth memory stability (days)
         self.last_day = 0.0
         self.due_day = 0.0
-        self.ivl_days = 1.0                    # plain-anki interval bookkeeping
-        self.ef = 2.5                          # plain-anki ease factor
+        self.ivl_days = 1.0  # plain-anki interval bookkeeping
+        self.ef = 2.5  # plain-anki ease factor
 
 
 def _answer_latency(rng: random.Random, r_true: float) -> float:
@@ -105,7 +108,7 @@ def _answer_latency(rng: random.Random, r_true: float) -> float:
 
 def _grade(recalled: bool, seconds: float) -> int:
     if not recalled:
-        return 1                      # Again
+        return 1  # Again
     return 4 if seconds <= 8.0 else 3  # fast → Easy, slower-but-correct → Good
 
 
@@ -113,11 +116,15 @@ def _schedule(arm: str, card: Card, grade: int, seconds: float, now: float) -> f
     """Return the next due day for `card` under `arm`'s policy."""
     if arm == "plain-anki":
         if grade == 1:
-            card.ivl_days = 10.0 / (24.0 * 60.0)   # ~10 min relearn
+            card.ivl_days = 10.0 / (24.0 * 60.0)  # ~10 min relearn
             card.ef = max(1.3, card.ef - 0.2)
         else:
             mult = card.ef * (1.3 if grade == 4 else 1.0)
-            card.ivl_days = max(1.0, card.ivl_days * mult) if card.last_day > 0 else (4.0 if grade == 4 else 1.0)
+            card.ivl_days = (
+                max(1.0, card.ivl_days * mult)
+                if card.last_day > 0
+                else (4.0 if grade == 4 else 1.0)
+            )
         return now + card.ivl_days
     # speed-recall arms (hour-scale, optionally latency-modulated)
     latency_aware = arm == "full"
@@ -127,7 +134,11 @@ def _schedule(arm: str, card: Card, grade: int, seconds: float, now: float) -> f
 def run_arm(arm: str, seeds_cards: list[float], seed: int) -> dict:
     """Simulate one arm on a fixed card set + seed. Equal study-time budget.
     Event-driven: always study the earliest-due card until time or horizon runs out."""
-    rng = random.Random(seed * 1_000 + hash(arm) % 997)
+    # Stable per-arm offset: Python's built-in hash() of a str is randomized per
+    # process (PYTHONHASHSEED), which made runs non-reproducible. Use a fixed
+    # deterministic hash so `just ablation` yields identical numbers every run.
+    arm_offset = int(hashlib.sha256(arm.encode()).hexdigest(), 16) % 997
+    rng = random.Random(seed * 1_000 + arm_offset)
     cards = [Card(s) for s in seeds_cards]
     budget_s = BUDGET_MINUTES * 60.0
     spent_s = 0.0
@@ -158,7 +169,7 @@ def run_arm(arm: str, seeds_cards: list[float], seed: int) -> dict:
         # costly (stability collapses). This is the tension the feature bets on:
         # shorter intervals reduce lapses but earn smaller per-rep gains.
         if recalled:
-            gain = 1.0 + 2.2 * (1.0 - r_true)   # r=0.9 → ×1.22 · r=0.5 → ×2.10
+            gain = 1.0 + 2.2 * (1.0 - r_true)  # r=0.9 → ×1.22 · r=0.5 → ×2.10
             c.true_stability *= gain
         else:
             c.true_stability = max(0.5, c.true_stability * 0.40)
@@ -173,8 +184,11 @@ def run_arm(arm: str, seeds_cards: list[float], seed: int) -> dict:
     mastered = sum(1 for c in cards if c.true_stability >= DURABILITY_DAYS)
     minutes = spent_s / 60.0
     return {
-        "arm": arm, "mastered": mastered, "mastered_frac": mastered / len(cards),
-        "reviews": reviews, "study_minutes": round(minutes, 2),
+        "arm": arm,
+        "mastered": mastered,
+        "mastered_frac": mastered / len(cards),
+        "reviews": reviews,
+        "study_minutes": round(minutes, 2),
         "mastered_per_min": round(mastered / minutes, 4) if minutes > 0 else 0.0,
     }
 
@@ -198,8 +212,12 @@ def run(n_cards: int, n_seeds: int) -> dict:
             "mastered_per_min_max": round(max(vals), 4),
             "mastered_per_min_stdev": round(statistics.pstdev(vals), 4),
             "mastered_frac_mean": round(statistics.mean(fracs), 4),
-            "avg_reviews": round(statistics.mean([r["reviews"] for r in per_arm[arm]]), 1),
-            "avg_study_minutes": round(statistics.mean([r["study_minutes"] for r in per_arm[arm]]), 2),
+            "avg_reviews": round(
+                statistics.mean([r["reviews"] for r in per_arm[arm]]), 1
+            ),
+            "avg_study_minutes": round(
+                statistics.mean([r["study_minutes"] for r in per_arm[arm]]), 2
+            ),
         }
     return {"summary": summary, "per_seed": per_arm}
 
@@ -207,15 +225,26 @@ def run(n_cards: int, n_seeds: int) -> dict:
 def print_report(res: dict) -> bool:
     s = res["summary"]
     cfg = res.get("config", {})
-    print("\n" + "=" * 74 + "\nSPEED-RECALL ABLATION — mastered per study-minute (equal time budget)\n" + "=" * 74)
-    print(f"  horizon={HORIZON_DAYS:.0f}d · budget={BUDGET_MINUTES:.0f} min/arm · "
-          f"{cfg.get('cards', '?')} cards · seeds={cfg.get('seeds', '?')}")
-    print("\n  arm            mastered/min (mean)   range[min,max]    mastered%   avg reviews")
+    print(
+        "\n"
+        + "=" * 74
+        + "\nSPEED-RECALL ABLATION — mastered per study-minute (equal time budget)\n"
+        + "=" * 74
+    )
+    print(
+        f"  horizon={HORIZON_DAYS:.0f}d · budget={BUDGET_MINUTES:.0f} min/arm · "
+        f"{cfg.get('cards', '?')} cards · seeds={cfg.get('seeds', '?')}"
+    )
+    print(
+        "\n  arm            mastered/min (mean)   range[min,max]    mastered%   avg reviews"
+    )
     for arm in ARMS:
         a = s[arm]
-        print(f"  {arm:13}  {a['mastered_per_min_mean']:>10.3f}          "
-              f"[{a['mastered_per_min_min']:.3f}, {a['mastered_per_min_max']:.3f}]     "
-              f"{a['mastered_frac_mean']*100:>5.1f}%      {a['avg_reviews']:>5.1f}")
+        print(
+            f"  {arm:13}  {a['mastered_per_min_mean']:>10.3f}          "
+            f"[{a['mastered_per_min_min']:.3f}, {a['mastered_per_min_max']:.3f}]     "
+            f"{a['mastered_frac_mean'] * 100:>5.1f}%      {a['avg_reviews']:>5.1f}"
+        )
 
     full = s["full"]["mastered_per_min_mean"]
     off = s["feature-off"]["mastered_per_min_mean"]
@@ -234,16 +263,20 @@ def print_report(res: dict) -> bool:
     dstderr = (statistics.pstdev(deltas) / math.sqrt(n)) if n > 1 else 0.0
     ci_lo, ci_hi = dmean - 2 * dstderr, dmean + 2 * dstderr
     significant = ci_lo > 0 or ci_hi < 0
-    print(f"\n  latency-aware vs feature-off: {lift_off:+.1f}%   "
-          f"(paired Δ={dmean:+.3f}/min, 95% CI [{ci_lo:+.3f}, {ci_hi:+.3f}])")
+    print(
+        f"\n  latency-aware vs feature-off: {lift_off:+.1f}%   "
+        f"(paired Δ={dmean:+.3f}/min, 95% CI [{ci_lo:+.3f}, {ci_hi:+.3f}])"
+    )
     print(f"  latency-aware vs plain Anki : {lift_plain:+.1f}%")
     if significant and dmean > 0:
         verdict = "latency-modulated scheduling MASTERS MORE per minute (CI excludes 0)"
     elif significant and dmean < 0:
         verdict = "latency-modulated scheduling is WORSE per minute (negative result — reported honestly)"
     else:
-        verdict = ("NO significant difference vs feature-off at equal study time "
-                   "(null result — reported honestly; CI spans 0)")
+        verdict = (
+            "NO significant difference vs feature-off at equal study time "
+            "(null result — reported honestly; CI spans 0)"
+        )
     print(f"  --> {verdict}")
     print()
     # harness sanity: every arm actually studied and produced finite numbers
@@ -255,13 +288,18 @@ def main():
     ap.add_argument("--cards", type=int, default=N_CARDS)
     ap.add_argument("--seeds", type=int, default=N_SEEDS)
     ap.add_argument("--out", default=OUT_JSON)
-    ap.add_argument("--strict", action="store_true", help="exit non-zero if any arm failed to run")
+    ap.add_argument(
+        "--strict", action="store_true", help="exit non-zero if any arm failed to run"
+    )
     args = ap.parse_args()
 
     res = run(args.cards, args.seeds)
     res["config"] = {
-        "cards": args.cards, "seeds": args.seeds, "horizon_days": HORIZON_DAYS,
-        "budget_minutes": BUDGET_MINUTES, "mastered_threshold": MASTERED_THRESHOLD,
+        "cards": args.cards,
+        "seeds": args.seeds,
+        "horizon_days": HORIZON_DAYS,
+        "budget_minutes": BUDGET_MINUTES,
+        "mastered_threshold": MASTERED_THRESHOLD,
         "main_metric": "cards mastered per study-minute (mean over seeds, [min,max] range)",
     }
     os.makedirs(DATA_DIR, exist_ok=True)

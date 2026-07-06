@@ -9,27 +9,46 @@ Evidence commands assume `$HOME/.cargo/bin` on PATH. Everything is green as of
 the last `just check` (`570 tests run: 570 passed`, exit 0).
 
 > **Update 2026-07-05 (Sunday build):** the ⏭️-Sunday rows below are now **BUILT +
-> verified** — held-out **memory calibration** (`just calibrate`: Brier 0.141 / ECE
-> 0.031), the **7d paraphrase** generalization test (`just paraphrase-eval`: 79%→81%,
-> ~0 gap), and the study-feature **ablation** (`just ablation`: honest null, full −0.7%
-> vs feature-off with CI spanning 0). 7e leakage + 7f AI-card checks ship as
+> verified** — held-out **memory calibration** (`just calibrate`: Brier 0.1409 /
+> log-loss 0.4453 / ECE 0.0307), the **7d paraphrase** generalization test
+> (`just paraphrase-eval`: n=30, 77%→77%, +0% drop), and the study-feature **ablation**
+> (`just ablation`: honest null, full −1.6% vs feature-off with 95% CI [−0.115, +0.039]
+> spanning 0). 7e leakage + 7f AI-card checks ship as
 > `leakage_check.py`/`gen_leakage_check.py` + the `gen_eval.py` single-correct/soundness
 > verifiers (all CLEAN). Full results: `COMPREHENSIVE_TEST_REPORT.md` §13 +
 > `MODEL_DESCRIPTIONS.md`. The rows keep their original Wednesday-snapshot marks for
 > the record.
+>
+> **Nature-of-evidence honesty:** calibration and ablation are **deterministic
+> simulations of a synthetic learner** (no multi-month real-user logs exist yet) — they
+> validate the _shipped_ model/feature reproducibly, but are not "measured on real
+> users." The performance/paraphrase and baseline evals use **real held-out GR9277
+> items** and are genuinely measured.
+>
+> **iOS packaging (Sunday):** a real-device build now exists —
+> `installers/SpeedrunApp-iOS-device-unsigned.ipa` (~22 MB, `arm64` iphoneos, min iOS 15,
+> bundle id `net.ankiweb.speedrun`, PGRE deck bundled). It is **UNSIGNED** → sideload via
+> Sideloadly/AltStore (re-sign with the user's Apple ID). **Not TestFlight** (no paid
+> Apple account on the build machine). The simulator build ships as
+> `installers/SpeedrunApp-iOS-Simulator.zip`; the desktop `.dmg` as
+> `out/installer/dist/anki-26.05-mac-apple.dmg`.
+>
+> **Known non-blocker (`just check`):** the only red is `check:complexipy-diff:qt`,
+> which flags **10 pre-existing upstream Anki functions** over cyclomatic complexity 20
+> (0-diff vs `main`, "Net: no changes") — not fork code, not a regression.
 
 ## §6 — Due Wednesday checklist
 
-| Item                                                                       | Status | Evidence                                                                                                                                                                               |
-| -------------------------------------------------------------------------- | ------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Anki forked & building from source                                         | ✅     | `just check` exits 0; `just run` launches; headless smoke opened a collection.                                                                                                         |
-| Rust change end-to-end (diff + ≥3 Rust unit tests + 1 Python test)         | ✅     | `SpeedrunService.TopicMastery`; `cargo test -p anki speedrun` = 17 tests; `pytest pylib/tests/test_speedrun.py` = 5. Diff/why-Rust: [RUST_CHANGE.md](RUST_CHANGE.md).                  |
-| Review loop on the exam deck                                               | ✅     | Anki's review loop on the imported PGRE deck (desktop); iOS runs it too (S7).                                                                                                          |
-| Memory model with an honest score: range + give-up rule                    | ✅     | mastered-fraction + **Wilson 95%** range, `abstain` give-up rule; `just speedrun-mastery`; tested in `tests_correctness.rs` (honesty contract, boundaries).                            |
-| Installer that runs on a clean machine                                     | 🟡     | Installer **builds** — `pytest qt/tests/test_installer.py` = 2 pass (needs `git submodule update --init qt/installer/mac-template` + Xcode). Packaged `.dmg` + clean-machine run = 📹. |
-| Phone app builds & runs on device/emulator                                 | ✅     | `mobile/SpeedrunApp`; `xcodebuild … 'platform=iOS Simulator,name=iPhone 17' build` = **BUILD SUCCEEDED**; launched in the sim, rendered a real card.                                   |
-| Phone loads the exam deck + real review session on the shared engine       | ✅     | XCUITest `testTwentyReviews` = **TEST SUCCEEDED**; revlog 27→47 (+20) with nonzero `taken_millis`; same engine (buildhash parity, S6). Two-way sync not required Wednesday.            |
-| Proof: commit hash, clean-build / install / phone recordings, test results | 🟡     | Test results: this doc + the suites. Commit hash + screen recordings + `.dmg` install = 📹 (to record).                                                                                |
+| Item                                                                       | Status | Evidence                                                                                                                                                                                                                                                                              |
+| -------------------------------------------------------------------------- | ------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Anki forked & building from source                                         | ✅     | `just check` exits 0; `just run` launches; headless smoke opened a collection.                                                                                                                                                                                                        |
+| Rust change end-to-end (diff + ≥3 Rust unit tests + 1 Python test)         | ✅     | `SpeedrunService.TopicMastery`; `cargo test -p anki speedrun` = 26 tests (1 ignored); `pytest pylib/tests/test_speedrun.py` = 9. Diff/why-Rust: [RUST_CHANGE.md](RUST_CHANGE.md).                                                                                                     |
+| Review loop on the exam deck                                               | ✅     | Anki's review loop on the imported PGRE deck (desktop); iOS runs it too (S7).                                                                                                                                                                                                         |
+| Memory model with an honest score: range + give-up rule                    | ✅     | mastered-fraction + **Wilson 95%** range, `abstain` give-up rule; `just speedrun-mastery`; tested in `tests_correctness.rs` (honesty contract, boundaries).                                                                                                                           |
+| Installer that runs on a clean machine                                     | 🟡     | Installer **builds** — `pytest qt/tests/test_installer.py` = 2 pass (needs `git submodule update --init qt/installer/mac-template` + Xcode). Packaged `.dmg` + clean-machine run = 📹.                                                                                                |
+| Phone app builds & runs on device/emulator                                 | ✅     | `mobile/SpeedrunApp`; sim `xcodebuild … 'platform=iOS Simulator,name=iPhone 17' build` = **BUILD SUCCEEDED** (rendered a real card); device `arm64 iphoneos` = **BUILD SUCCEEDED**, packaged as `installers/SpeedrunApp-iOS-device-unsigned.ipa` (unsigned sideload, not TestFlight). |
+| Phone loads the exam deck + real review session on the shared engine       | ✅     | XCUITest `testTwentyReviews` = **TEST SUCCEEDED**; revlog 27→47 (+20) with nonzero `taken_millis`; same engine (buildhash parity, S6). Two-way sync not required Wednesday.                                                                                                           |
+| Proof: commit hash, clean-build / install / phone recordings, test results | 🟡     | Test results: this doc + the suites. Commit hash + screen recordings + `.dmg` install = 📹 (to record).                                                                                                                                                                               |
 
 ## §2 — Rules you cannot break
 
@@ -66,8 +85,8 @@ intent); a debug build is ~2-3× slower.
 
 | Target                                       | Status | Measured                                                                                                                                                                                                                          |
 | -------------------------------------------- | ------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Dashboard first load p95 < 1 s               | ✅     | data RPC `topic_mastery` **p95 ≈ 51 ms** release on 50k (`just bench`); page mount adds <~100 ms.                                                                                                                                 |
-| Dashboard refresh p95 < 500 ms               | ✅     | same RPC, ≈ 51 ms.                                                                                                                                                                                                                |
+| Dashboard first load p95 < 1 s               | ✅     | data RPC `topic_mastery` **p95 ≈ 33 ms** release on 50k (`just bench`: p50 32 / p95 33 / p99 33); page mount adds <~100 ms.                                                                                                       |
+| Dashboard refresh p95 < 500 ms               | ✅     | same RPC, ≈ 33 ms.                                                                                                                                                                                                                |
 | Zero corrupted collections in crash test     | ✅     | 0 / 50 (`just speedrun-crash-test`).                                                                                                                                                                                              |
 | Button press ack p95 < 50 ms                 | 🟡     | Inherited from Anki's review UI (no scheduler/input change by us); not separately re-benchmarked.                                                                                                                                 |
 | Next card after grading p95 < 100 ms         | 🟡     | Inherited (`get_queued_cards`/`answer_card` unchanged); used by the iOS loop, not separately p95-profiled.                                                                                                                        |

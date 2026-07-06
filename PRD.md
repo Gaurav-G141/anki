@@ -3,7 +3,14 @@
 > **Status:** Draft for review. This is the Wednesday-MVP PRD for _Speedrun_, an
 > Anki fork targeting the **Physics GRE**. Edit freely — the **Open Assumptions**
 > section (§11) lists every default I chose. A Wednesday task checklist is at the
-> end (§13). Implementation has **not** started.
+> end (§13).
+>
+> _Status as of 2026-07-05:_ this remains the historical planning doc, but the MVP
+> (and the Friday/Sunday work) has since been **built and shipped** — desktop +
+> iOS on one shared Rust engine, the honest three-score model, the AI Heuristic
+> Coach, calibration/ablation/baseline evals, installers, and an unsigned iOS
+> device build. See `speedrun/MANUAL_TEST.md` for current results. The plan below
+> is preserved as originally written.
 
 ---
 
@@ -34,9 +41,11 @@ for rapid recall, heuristics, interleaving, and — our chosen study feature —
 
 - **Format (post-Sept-2023):** 70 multiple-choice questions, 2 hours, no
   calculator, no wrong-answer penalty. Computer-based.
-- **Scoring:** total scaled score **200–990**; ~60/70 correct ≈ 990. Three
-  official **subscores**: (1) Classical Mechanics, (2) Electromagnetism,
-  (3) Quantum Mechanics & Atomic Physics.
+- **Scoring:** total scaled score **200–990** (10-point increments); ~60/70
+  correct ≈ 990. _Status as of 2026-07-05:_ the current PGRE reports **no official
+  subscores** — the three buckets (1) Classical Mechanics, (2) Electromagnetism,
+  (3) Quantum Mechanics & Atomic Physics are kept only as our own internal
+  grouping, not an ETS-reported number.
 - **Content weights** (ETS standard — _verify against the ETS fact sheet before
   finalizing_): Classical Mechanics 20%, Electromagnetism 18%, Quantum Mechanics
   12%, Atomic Physics 10%, Thermodynamics & Statistical Mechanics 10%, Optics &
@@ -357,7 +366,10 @@ clean-machine install recording, phone-review screen recording.
 3. Content weights in §2 are the ETS-standard split — verify exact numbers against
    the ETS fact sheet (Brainlift only firmly cites CM 20% / E&M 18% / QM 12%).
 4. Tag scheme `pgre::<subject>` and the 9-subject taxonomy.
-5. iOS target = Simulator for Wednesday; device/TestFlight deferred.
+5. iOS target = Simulator for Wednesday; device/TestFlight deferred. _(Status as of
+   2026-07-05: an unsigned real-device build now also exists —
+   `installers/SpeedrunApp-iOS-device-unsigned.ipa`, arm64/iphoneos, min iOS 15,
+   sideload via Sideloadly/AltStore. Still not TestFlight — no paid Apple account.)_
 6. Solo build, and this repo is your AGPL fork (push remote TBD).
 7. The Memory-score "range" method (interquartile vs Wilson interval) — pick one.
 

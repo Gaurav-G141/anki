@@ -9,6 +9,28 @@ the doc's schedule · 🚧 **deferred to your official iOS build** (not run here
 
 Date of run: 2026-07-01. Machine: local dev (macOS, debug unless noted).
 
+> **UPDATE 2026-07-05 (Sunday build) — the 🚧/⏭️ items below are now resolved; this
+> section records the Wednesday snapshot for the record.** Current state (see
+> `COMPREHENSIVE_TEST_REPORT.md`): `just check` green — **570 Rust / 1 skipped**,
+> **145 Python**, TS vitest green; the only red is the non-blocking
+> `check:complexipy-diff:qt` on **10 pre-existing upstream Anki functions** (0-diff vs
+> `main`, not fork code, not a regression). `just bench` 50k p50/p95/p99 **32/33/33 ms**
+> (runs 32–104 ms under load, always << budget); `just speedrun-crash-test 50` **0/50**;
+> 200K stress **7/7** (205,531 cards). **iOS (W6/W7) is now built**: 12/12 on the
+> iPhone 17 simulator, and the device build (`arm64 iphoneos`) packages as
+> `installers/SpeedrunApp-iOS-device-unsigned.ipa` — **UNSIGNED** sideload
+> (Sideloadly/AltStore), **not** TestFlight (no paid Apple account). This session also
+> fixed the **MCQ nucleus** (now a true circle, `qt/aqt/pgre.py`), **AI-grader
+> calibration** (rubric guard + grading temperature 0, synced desktop/iOS), and
+> **ablation determinism** (fixed SHA-256 offset). Fri/Sun evals (also in the
+> comprehensive report): baseline AI **66% (31/47) vs 28%/23%/20%** and paraphrase
+> **n=30, 77%→77%, +0% drop** are **real held-out GR9277** measurements; calibration
+> (Brier **0.1409** / log-loss **0.4453** / ECE **0.0307**) and the ablation (honest
+> null **−1.6%**, 95% CI [−0.115, +0.039] spans 0) are **deterministic SIMULATIONS of a
+> synthetic learner** (not real users). Leakage + gen-leakage CLEAN. Still open (honest):
+> demo video + proof recordings NOT recorded; iOS unsigned (not TestFlight); no committed
+> automated two-device sync-conflict harness; README does not state the give-up rule.
+
 ## Commands run + results
 
 | Suite                        | Command                                            | Result                                                                                   |
@@ -26,16 +48,16 @@ Date of run: 2026-07-01. Machine: local dev (macOS, debug unless noted).
 
 ## MVP requirement matrix (§6 "Due Wednesday")
 
-| #  | Requirement                                            | Verdict | Evidence (this run)                                                                                                                                                              |
-| -- | ------------------------------------------------------ | ------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| W1 | Anki fork builds from source                           | ✅      | pylib+qt built; every suite above ran against the built engine; installer test builds wheels                                                                                     |
-| W2 | Rust change end-to-end: diff + ≥3 Rust + 1 Python test | ✅      | 18 Rust + 6 Python passed; `SpeedrunService.TopicMastery`; diff/why-Rust in [RUST_CHANGE.md](RUST_CHANGE.md)                                                                     |
-| W3 | Review loop on the exam deck                           | ✅      | PGRE decks import (1,212 notes live); Anki's review loop is the (unchanged) engine path; qt pgre first-run import tested                                                         |
-| W4 | Memory model, honest score: range + give-up rule       | ✅      | `speedrun-demo` shows abstain→Wilson-range score; `scored_response_satisfies_honesty_contract`, `give_up_review_floor_boundary`, `missing_high_weight_subject_abstains` all pass |
-| W5 | Installer runs on a clean machine                      | 🟡      | Installer **builds** (27 tests pass). Packaged `.dmg` + clean-machine launch = manual recording                                                                                  |
-| W6 | Phone app builds & runs on device/emulator             | 🚧      | Artifacts present (`mobile/SpeedrunApp` Xcode project, xcframework w/ device+sim slices). **Xcode build/run not executed here — your official build**                            |
-| W7 | Phone loads deck + real review on shared engine        | 🚧      | `anki-ffi` crate compiles; xcframework built from same `rslib`; XCUITest claimed green in compliance doc. Not re-run here                                                        |
-| W8 | Proof (commit hash, recordings, test results)          | 🟡      | Test results = this report. Recordings/commit-hash = manual                                                                                                                      |
+| #  | Requirement                                            | Verdict | Evidence (this run)                                                                                                                                                                |
+| -- | ------------------------------------------------------ | ------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| W1 | Anki fork builds from source                           | ✅      | pylib+qt built; every suite above ran against the built engine; installer test builds wheels                                                                                       |
+| W2 | Rust change end-to-end: diff + ≥3 Rust + 1 Python test | ✅      | 18 Rust + 6 Python passed; `SpeedrunService.TopicMastery`; diff/why-Rust in [RUST_CHANGE.md](RUST_CHANGE.md)                                                                       |
+| W3 | Review loop on the exam deck                           | ✅      | PGRE decks import (1,212 notes live); Anki's review loop is the (unchanged) engine path; qt pgre first-run import tested                                                           |
+| W4 | Memory model, honest score: range + give-up rule       | ✅      | `speedrun-demo` shows abstain→Wilson-range score; `scored_response_satisfies_honesty_contract`, `give_up_review_floor_boundary`, `missing_high_weight_subject_abstains` all pass   |
+| W5 | Installer runs on a clean machine                      | 🟡      | Installer **builds** (27 tests pass). Packaged `.dmg` + clean-machine launch = manual recording                                                                                    |
+| W6 | Phone app builds & runs on device/emulator             | 🚧 → ✅ | Not run here on 07-01. **Sunday:** sim 12/12 + device `arm64 iphoneos` build SUCCEEDED → `installers/SpeedrunApp-iOS-device-unsigned.ipa` (unsigned sideload, **not** TestFlight). |
+| W7 | Phone loads deck + real review on shared engine        | 🚧 → ✅ | `anki-ffi` compiles; xcframework from same `rslib`. **Sunday:** `testTwentyReviews` (20 grades via shared engine) TEST SUCCEEDED on iPhone 17 sim.                                 |
+| W8 | Proof (commit hash, recordings, test results)          | 🟡      | Test results = this report. Recordings/commit-hash = manual                                                                                                                        |
 
 ## Cross-cutting rules (§2) & challenges (§7, §10) relevant to MVP
 
@@ -55,16 +77,19 @@ Date of run: 2026-07-01. Machine: local dev (macOS, debug unless noted).
 
 ## Honest gaps / not verified here
 
-- **iOS build & on-device/simulator review (W6, W7): NOT run in this session.** Only
-  static checks — the Xcode project, prebuilt `AnkiCore.xcframework` (device +
-  simulator), and a clean `cargo check -p anki-ffi`. You are building iOS
-  officially; run `xcodebuild … build` + the `testTwentyReviews` XCUITest to
-  close these.
+- **iOS build & on-device/simulator review (W6, W7): NOT run in this 07-01 session.**
+  Only static checks here — the Xcode project, prebuilt `AnkiCore.xcframework` (device +
+  simulator), and a clean `cargo check -p anki-ffi`. **Closed on 2026-07-05:** sim
+  12/12 (incl. `testTwentyReviews`), device `arm64 iphoneos` build SUCCEEDED →
+  `installers/SpeedrunApp-iOS-device-unsigned.ipa` (unsigned sideload, not TestFlight —
+  no paid Apple account).
 - **Installer (W5): builds, not packaged/installed here.** A `.dmg` on a clean
   machine is a manual/recording artifact.
-- **Full `just check` (≈558 tests) not re-run** this session — I ran the
-  targeted MVP suites instead (all green). Run `just check` for the whole-repo
-  regression gate before the demo.
+- **Full `just check` not re-run in the 07-01 session** — I ran the targeted MVP
+  suites instead (all green). **On 2026-07-05 `just check` is green** (570 Rust / 1
+  skipped, 145 Python, TS vitest green); its only red is the non-blocking
+  `check:complexipy-diff:qt` on 10 pre-existing upstream Anki functions (0-diff vs
+  `main`, not fork code).
 - **Button-press ack & next-card p95 (§10)** not separately profiled — those are
   Anki's unchanged review path; only the new dashboard RPC was benchmarked.
 - Fri/Sun items — two-way sync (§7b), AI + its checks (§7d/e/f), the ablation

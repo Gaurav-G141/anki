@@ -1,6 +1,6 @@
 # Crash / Offline / Sync test report (for a future agent)
 
-**Date:** 2026-07-01. **Scope:** empirically test what happens on (a) a crash
+**Date:** 2026-07-05. **Scope:** empirically test what happens on (a) a crash
 mid-review, (b) working offline then reconnecting, for the Speedrun PGRE fork
 (desktop). **No repo code was modified to run these** — only throwaway harnesses
 in the session scratchpad. Exam: Physics GRE.
@@ -9,7 +9,7 @@ in the session scratchpad. Exam: Physics GRE.
 
 | Scenario                                          | Result                                                                                         | Notes                                                          |
 | ------------------------------------------------- | ---------------------------------------------------------------------------------------------- | -------------------------------------------------------------- |
-| Engine SIGKILL mid-write ×30                      | ✅ **0/30 corrupted**                                                                          | SQLite transactional rollback                                  |
+| Engine SIGKILL mid-write ×50                      | ✅ **0/50 corrupted**                                                                          | SQLite transactional rollback                                  |
 | SIGKILL mid Speed-Recall answer ×20               | ✅ **0/20 corrupted**, schedule valid JSON, **0 committed entries lost**                       | `speedRecallSched` config write is atomic                      |
 | Offline Speed-Recall session → restart            | ✅ **0 lost**, integrity clean, queue rebuilds                                                 | Speed Recall has **no network dependency** (pure local config) |
 | Two-device offline → reconnect (native Anki sync) | ✅ **PASS (reproduced 2×)**: both devices converge to all changes, **no loss, no duplication** | Only when each device runs in its **own process** (see gotcha) |
@@ -17,9 +17,9 @@ in the session scratchpad. Exam: Physics GRE.
 **Bottom line:** crash safety and offline durability hold as expected. Native
 Anki sync also merges offline divergence correctly — but only proven for the
 **add/add** case, and it exercises **stock Anki sync (the fork does not modify
-`rslib/src/sync/**` or `pylib/anki/sync`)**. Two-way _device/phone_ sync is the
-Speedrun **Friday** deliverable and is _not_ wired yet; this test used the
-built-in Anki sync server as a stand-in.
+`rslib/src/sync/**` or `pylib/anki/sync`)**. Two-way _device/phone_ sync is now
+implemented on the iOS app (see `speedrun/SYNC.md`); this desktop test used the
+built-in Anki sync server as a stand-in and did not itself drive the phone.
 
 ---
 
@@ -33,13 +33,13 @@ variant that hammers `aqt.speedrecall.record_answer` (which writes the
 **Commands.**
 
 ```
-just speedrun-crash-test 30        # general engine
+just speedrun-crash-test 50        # general engine
 # Speed-Recall variant: scratchpad/sr_crash_test.py 20  (see script below)
 ```
 
 **Results.**
 
-- General: `corrupted collections: 0 / 30`.
+- General: `corrupted collections: 0 / 50`.
 - Speed Recall: `0/20 corrupted`, every reopen `valid_json=True`, and the saved
   schedule entry count was **monotonic** (e.g. 164→166 across rounds) — the
   in-flight write rolled back, all _committed_ entries survived. No lost graded
@@ -110,11 +110,16 @@ and got **incoherent** output — `sync_collection` returning `NO_CHANGES` yet o
 
 - **Same-card conflict** (§7b): edit the _same_ card on both devices offline,
   sync, and confirm the conflict rule picks one clear winner with no corruption.
-  Only add/add divergence was tested here.
+  Only add/add divergence was tested here. The conflict case has been reasoned
+  about and reproduced **manually / in prose only** — there is **NO committed
+  automated two-device conflict harness**. This stays an open item; do not claim
+  it as an automated regression.
 - **UI-driven** sync (two desktop profiles against a local server) — closer to
   real usage than the scripted API.
-- **Phone ↔ desktop** two-way sync — the Speedrun **Friday** deliverable; not
-  implemented (`mobile/` app does reviews on the shared engine but no sync yet).
+- **Phone ↔ desktop** two-way sync — now implemented (manual + foreground
+  auto-sync on the iOS app; see `speedrun/SYNC.md`), but this crash/offline
+  report did **not** re-exercise it end-to-end; the device round-trip is still an
+  un-recorded proof (open item).
 - Offline-mid-sync interruption, wrong device clock, media sync.
 
 ---

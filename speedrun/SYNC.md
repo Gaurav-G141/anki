@@ -1,5 +1,7 @@
 # Speedrun sync — self-hosted server, desktop setup, and the no-loss guarantee
 
+_Last updated: 2026-07-05._
+
 This documents two-way sync between the desktop and the iOS Speedrun app. Both
 apps drive the **same Rust engine** (`rslib`), which already implements Anki's
 USN-based, transactional sync — so "no lost or double-counted reviews" and
@@ -14,6 +16,12 @@ Status:
   (`CollectionStore.login/sync`, `DeckListView`), full-sync bootstrap
   (`fullSyncLocked`), and **offline auto-sync on reconnect/foreground**
   (`NWPathMonitor` + `needsSync` + `autoSyncIfNeeded`; §6). Call sequence in §5.
+  Runs on both the Simulator build and the **new iOS device build** (§7).
+- ⚠️ **Same-card conflict harness** — still open. The USN incremental merge
+  handles conflicts at the engine level (last-writer-wins per object, no
+  corruption), and add/add divergence is covered by §4, but there is **no
+  committed automated two-device same-card conflict test** — that case has only
+  been reasoned about / reproduced manually.
 
 ## 1. How it works (why reviews are never lost or doubled)
 
@@ -138,6 +146,24 @@ online → sync."
 5. Sync the desktop → it shows exactly those reviews, none lost or duplicated;
    review on the desktop, Sync, then foreground the phone → the phone auto-syncs
    them back.
+
+## 7. Syncing from a real iPhone (new device build)
+
+There is now an **iOS device build** in addition to the Simulator build, so the
+sync flow can be exercised on real hardware:
+
+- **Artifact:** `installers/SpeedrunApp-iOS-device-unsigned.ipa` (~22 MB). Real
+  `arm64` `platform IOS` Mach-O (min iOS 15), bundle id `net.ankiweb.speedrun`,
+  PGRE deck bundled. Simulator build stays at
+  `installers/SpeedrunApp-iOS-Simulator.zip`.
+- **UNSIGNED:** sideload via Sideloadly / AltStore (re-sign with your Apple ID),
+  or re-export signed once an Apple ID/team is added. **Not TestFlight** (no paid
+  Apple account on the build machine).
+- **Endpoint on device:** unlike the Simulator (which shares the Mac's loopback,
+  so `127.0.0.1` works), a physical iPhone must point at the **Mac's LAN IP**
+  (the self-hosted server already binds `0.0.0.0`), or use a real AnkiWeb
+  account. Everything else in §5–§6 is identical — same USN merge, same
+  foreground-only auto-sync.
 
 ## Notes / gotchas
 

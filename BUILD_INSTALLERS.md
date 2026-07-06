@@ -1,4 +1,4 @@
-# Building the installers (macOS desktop + iOS simulator)
+# Building the installers (macOS desktop + iOS simulator + iOS device)
 
 This fork ships two apps:
 
@@ -9,7 +9,8 @@ This fork ships two apps:
   core over a C-FFI (the `AnkiCore.xcframework` is `rslib`, identical to the engine
   the desktop uses). It opens on a **deck list** (like AnkiMobile): tap a deck to
   run a deck-scoped review, or use **"+"** to create a new empty deck or import a
-  bundled PGRE subject deck. Built for the **iOS Simulator**.
+  bundled PGRE subject deck. Buildable for both the **iOS Simulator** and a
+  **physical device** (an unsigned `.ipa` for sideloading — see §3').
 
 The prebuilt binaries are **not** committed to the repo (they're large and land
 in git-ignored folders). Follow the steps below to build them from source. All
@@ -126,9 +127,9 @@ out/ios/Build/Products/Release-iphonesimulator/SpeedrunApp.app
 
 > If you edit `mobile/SpeedrunApp/project.yml` (e.g. adding files/resources),
 > regenerate the project first with `brew install xcodegen` then
-> `cd mobile/SpeedrunApp && xcodegen generate`. The build is unsigned
-> (`CODE_SIGNING_ALLOWED = NO`) — it runs on the **Simulator only**, not a
-> physical device.
+> `cd mobile/SpeedrunApp && xcodegen generate`. This **Simulator** build is
+> unsigned (`CODE_SIGNING_ALLOWED = NO`) and runs on the Simulator only; for a
+> physical iPhone use the unsigned device `.ipa` in the section below.
 >
 > The Swift protobuf types under `mobile/SpeedrunApp/Generated/anki/` are
 > committed. If you need to (re)generate one from a `.proto` — e.g. after a proto
@@ -186,6 +187,72 @@ To take a screenshot of the running simulator:
 ```bash
 xcrun simctl io booted screenshot speedrun.png
 ```
+
+---
+
+## 3'. iOS device build (unsigned `.ipa` for sideloading)
+
+The Simulator build above runs `arm64` for the **simulator** SDK. To run on a
+**physical iPhone** you need a real `iphoneos` build. Because there's **no Apple
+Developer account** on the build machine, it's produced **unsigned** and
+sideloaded (re-signed) on the user's own Apple ID.
+
+### 3'a. Build the Rust core for the device
+
+The `mobile/build-xcframework.sh` step from §2a already compiles the
+`aarch64-apple-ios` (device) slice into `mobile/AnkiCore.xcframework`, so the same
+xcframework covers both Simulator and device — no separate core build needed.
+
+### 3'b. Build the app for the device SDK (unsigned)
+
+```bash
+xcodebuild \
+  -project mobile/SpeedrunApp/SpeedrunApp.xcodeproj \
+  -scheme SpeedrunApp \
+  -configuration Release \
+  -sdk iphoneos \
+  -destination 'generic/platform=iOS' \
+  -derivedDataPath out/ios-device \
+  CODE_SIGNING_ALLOWED=NO \
+  build
+```
+
+`CODE_SIGNING_ALLOWED=NO` skips code signing (no Developer ID/team required). The
+result is a real `arm64` `platform IOS` Mach-O (min iOS 15).
+
+### 3'c. Package it into a `.ipa`
+
+An `.ipa` is just a zip with the `.app` under a top-level `Payload/` folder:
+
+```bash
+APP=out/ios-device/Build/Products/Release-iphoneos/SpeedrunApp.app
+rm -rf out/ios-device/Payload && mkdir -p out/ios-device/Payload
+cp -R "$APP" out/ios-device/Payload/
+(cd out/ios-device && zip -qry SpeedrunApp-iOS-device-unsigned.ipa Payload)
+cp out/ios-device/SpeedrunApp-iOS-device-unsigned.ipa \
+   installers/SpeedrunApp-iOS-device-unsigned.ipa
+```
+
+Artifact (~22 MB), bundle id `net.ankiweb.speedrun`, PGRE deck bundled:
+
+```
+installers/SpeedrunApp-iOS-device-unsigned.ipa
+```
+
+### Install it on a phone (sideload)
+
+The `.ipa` is **UNSIGNED**, so it can't be installed as-is — it must be **re-signed
+with your own Apple ID**. Use a sideloading tool:
+
+- **[Sideloadly](https://sideloadly.io)** or **[AltStore](https://altstore.io)** —
+  plug in the iPhone, drop in the `.ipa`, sign in with a free Apple ID; it re-signs
+  and installs. (Free-account apps expire after 7 days and must be re-installed.)
+- Once an Apple Developer ID/team is available, the same project can instead be
+  **exported signed** (set a team + `CODE_SIGN_IDENTITY` / provisioning profile).
+
+> **Not on TestFlight.** TestFlight distribution requires a **paid** Apple
+> Developer account, which the build machine doesn't have — hence the unsigned
+> sideload `.ipa` rather than a TestFlight link.
 
 ---
 

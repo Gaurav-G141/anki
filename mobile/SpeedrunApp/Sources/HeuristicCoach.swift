@@ -80,6 +80,21 @@ struct GradeResult {
     }
 }
 
+/// Andy's spoken script handed to the quiz page. `ok == false` ⇒ no AI script —
+/// the page narrates the precomputed key or, if there's nothing, excuses Andy.
+struct AndyScript {
+    var ok: Bool
+    var steps: [[String: String]]  // ordered [{"say","focus"}]
+
+    /// JSON the page's `window.showAndySteps(res)` consumes.
+    func jsPayload() -> String {
+        let obj: [String: Any] = ["ok": ok, "steps": steps]
+        guard let data = try? JSONSerialization.data(withJSONObject: obj),
+              let s = String(data: data, encoding: .utf8) else { return "{\"ok\":false,\"steps\":[]}" }
+        return s
+    }
+}
+
 enum CoachError: Error { case http, parse }
 
 // MARK: - Coach
@@ -213,14 +228,23 @@ final class HeuristicCoach {
                                elimination/estimate/units check would settle it.
              "guessed"       = no real justification: a guess, a bare assertion, or reasoning that never
                                actually connects to the answer — EVEN IF the letter is correct.
-             "flawed"        = the reasoning contains a physics error, OR invokes irrelevant/incorrect
-                               concepts (nonsense / word-salad, e.g. citing unrelated theorems), OR the
-                               pick is wrong. A correct letter does NOT rescue invalid reasoning.
-          Decision order (stop at the first that applies): reasoning invalid/irrelevant/nonsensical -> "flawed";
-          else no genuine justification -> "guessed"; else CORRECT pick but slower/over-computed ->
-          "valid_slower"/"overcomputed"; else "optimal". Use "optimal"/"valid_slower"/"overcomputed" ONLY when
-          the pick is CORRECT and the reasoning is genuinely sound and relevant.
-          "missed": array of concrete fast moves they could have used (e.g. "cross off (E): a speed can't exceed c"). [] if none.
+             "flawed"        = the pick is WRONG, OR the reasoning contains a real physics ERROR that breaks
+                               the argument, OR it is genuine nonsense / word-salad that does not justify the
+                               answer at all. A correct letter does NOT rescue reasoning that is actually wrong.
+          Decision order (stop at the FIRST that applies):
+            1. pick WRONG, or a physics ERROR breaks the argument, or the reasoning is genuine nonsense -> "flawed".
+            2. pick CORRECT but no genuine justification (a bare guess/assertion) -> "guessed".
+            3. pick CORRECT and the core reasoning validly justifies it, but slower / fully computed when a
+               shortcut exists -> "valid_slower" / "overcomputed".
+            4. pick CORRECT, reasoning valid and relevant, via the fastest sound route -> "optimal".
+          CRUCIAL anti-harshness rule: if the pick is CORRECT and the student's CORE reasoning is physically
+          valid and genuinely justifies the answer, you MUST NOT return "flawed" just because a step was
+          unnecessary, tangential, terse, informal, or slightly imprecise — that is at most
+          "valid_slower"/"overcomputed" (or still "optimal"). Reserve "flawed" for a real physics error or a
+          wrong / unjustified pick.
+          "missed": array of concrete fast moves that genuinely apply to THIS problem (a specific elimination,
+          a units/limit check, a symmetry argument). Never copy an example verbatim; use [] if the approach
+          was already efficient.
 
         Step 3 — write "feedback": a concise, honest, second-person message shown directly to the student.
         Rules: <=110 words, plain language (no jargon codes). Be supportive but TRUTHFUL — credit ONLY what
@@ -252,6 +276,135 @@ final class HeuristicCoach {
         )
     }
 
+    // MARK: Andy — spoken step-by-step explanation (mirrors desktop `explain_steps`)
+
+    /// Which part of the problem a step points at (used by the UI to highlight it).
+    static let focusOK: Set<String> = ["A", "B", "C", "D", "E", "stem", "answer"]
+
+    /// The expert fast-solving heuristics Andy follows, distilled from *Conquering
+    /// the Physics GRE* + the project brainlifts (same toolkit that grounds the
+    /// optimal-approach key). Kept in sync with the desktop `_HEURISTIC_TOOLKIT`.
+    static let heuristicToolkit = """
+    Physics-GRE fast-solving heuristics (an expert rarely solves a problem in full — 70 MCQs,
+    ~1:43 each, no calculator). Apply IN THIS PRIORITY and narrate the ones that crack it:
+    1. Bound / comparison check FIRST — decide what the answer must be relative to a reference,
+       then rule out every choice that violates it (e.g. "final speed can't exceed the initial
+       speed", "this ratio must be < 1", "a wavelength can't exceed 2d"). Highest-value move.
+    2. Dimensional analysis — often only one choice has the right units.
+    3. Numerical estimation — if choices span orders of magnitude, a rough estimate pins it.
+    4. Limiting / special cases — test r->0, r->inf, m1=m2, theta=0; drop choices that misbehave.
+    5. Symmetry & conservation laws — use them before grinding algebra.
+    6. Process of elimination — cross off the physically impossible / wrong-sign / wrong-units.
+    7. Sometimes the fastest route really is a short direct solve or a recalled fact — that's
+       fine; still name any choices you can eliminate up front. A guessed letter is NOT a method.
+    """
+
+    /// System+user messages for Andy's spoken script (mirrors desktop `_explain_messages`).
+    func explainMessages(question: QuizQuestion) -> [[String: String]] {
+        let ref = optimalFor(question.id)
+        let choices = question.choices.map { "(\($0.first ?? ""))\u{20}\($0.count > 1 ? $0[1] : "")" }
+            .joined(separator: "\n")
+        let refObj: [String: Any] = [
+            "optimal_method": ref?.optimalMethod ?? "",
+            "eliminations": (ref?.eliminations ?? []).map { ["choice": $0.choice, "reason": $0.reason] },
+            "expert_reasoning": ref?.expertReasoning ?? "",
+            "student_explanation": ref?.studentExplanation ?? "",
+        ]
+        let refBlock = (try? JSONSerialization.data(withJSONObject: refObj))
+            .flatMap { String(data: $0, encoding: .utf8) } ?? "{}"
+
+        let system = "You are Andy, a warm, quick physics tutor who is literally a little glowing atom. "
+            + "You explain, OUT LOUD and step by step, the FAST expert way to crack one Physics GRE "
+            + "multiple-choice problem — thinking aloud right next to the student. You solve the way a "
+            + "top scorer does: use whatever is fastest for THIS problem — a shortcut, an elimination, "
+            + "or a clean direct solve — following the given optimal method (never force a trick that "
+            + "doesn't apply). The INSTANT your reasoning determines the answer, you say it and STOP — "
+            + "you never pad with why the other choices are wrong. Ground every step in the validated "
+            + "optimal approach you are given; never contradict it. Output ONLY a JSON object."
+
+        let user = """
+        \(Self.heuristicToolkit)
+
+        PROBLEM: \(question.statement)
+        CHOICES:
+        \(choices)
+        CORRECT ANSWER: \(question.answer)
+
+        VALIDATED OPTIMAL APPROACH (your source of truth — do not contradict it):
+        \(refBlock)
+
+        Narrate the fastest correct solution as a SHORT ordered list of steps — the route in the
+        reference's `optimal_method` / `student_explanation`, spoken live. Be ruthlessly brief.
+
+        THE ONE RULE THAT MATTERS MOST: the instant your reasoning determines the answer, state it and
+        STOP. Do NOT then rule out, mention, or comment on the other choices — once you've got the
+        answer, explaining why the others are wrong is wasted breath (exactly what a rushed student
+        does). Pick the route and stop the moment it lands:
+          • Direct solve / observation / estimate / symmetry / units check (optimal_method full_solve,
+            dimensional_analysis, estimation, limiting_cases, symmetry): give the key move(s) that
+            produce the answer, then state it. Do NOT enumerate the other choices afterward — even if
+            the reference's eliminations list them; those were only context, ignore them here.
+          • Process of elimination (optimal_method poe, or a bound/comparison check): here ruling
+            choices out IS how you find the answer — so rule out choices until only (\(question.answer))
+            is left, THEN name it. Don't jump to the answer after eliminating just one choice while
+            others are still live; but the moment only one remains, stop.
+
+        BREVITY vs CORRECTNESS: be brief by cutting wasted breath — post-answer eliminations, restating,
+        padding — NEVER by skipping the real work. Always show the decisive step(s) that actually
+        produce the answer: the key relation, the number you compute, or the physical reason, so a
+        student can FOLLOW it. Take the physics and the numbers straight from the reference's
+        expert_reasoning / student_explanation — do NOT improvise or hand-wave a calculation
+        ("the voltage is 0.4 V" with no working is a fail; show the relation that gives it). When you
+        plug in a given quantity, say its value (e.g. "with I = 4 kg m^2…") so the step can be followed.
+        Use only as many steps as that real derivation needs — often 2–4 for a direct route; a genuine
+        multi-step computation or a full elimination route may take a few more. Every step must change
+        what the student knows. Each step is ONE short sentence Andy SAYS ALOUD (<= 26 words), first
+        person and friendly ("First, I'd…", "Notice that…", "So it's (C)."). Write for the EAR: plain
+        words and simple unicode only — NO LaTeX, no "$", no backslashes (say "h-bar k").
+
+        Set "focus" to point at what each step is about: a choice letter A–E when the step is genuinely
+        about that choice, "stem" for reading/setting up, and "answer" for the final line. The LAST
+        step states the correct answer letter with focus "answer".
+
+        Return ONLY: {"steps": [{"say": "...", "focus": "stem"}, {"say": "...", "focus": "C"}]}
+        """
+        return [["role": "system", "content": system], ["role": "user", "content": user]]
+    }
+
+    /// Normalise the model's `steps` into `[{"say","focus"}]` (mirrors `_parse_steps`):
+    /// accepts step objects or bare strings, drops empty `say`, clamps `focus`.
+    static func parseSteps(_ contentJSON: String) -> [[String: String]] {
+        guard let data = contentJSON.data(using: .utf8),
+              let obj = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
+              let raw = obj["steps"] as? [Any] else { return [] }
+        var steps: [[String: String]] = []
+        for item in raw {
+            var say = "", focus = ""
+            if let d = item as? [String: Any] {
+                say = ((d["say"] as? String) ?? "").trimmingCharacters(in: .whitespacesAndNewlines)
+                focus = ((d["focus"] as? String) ?? "").trimmingCharacters(in: .whitespaces)
+            } else if let s = item as? String {
+                say = s.trimmingCharacters(in: .whitespacesAndNewlines)
+            }
+            if !focusOK.contains(focus) { focus = "" }
+            if !say.isEmpty { steps.append(["say": say, "focus": focus]) }
+        }
+        return steps
+    }
+
+    /// Andy's spoken script for a question. `ok == false` ⇒ unavailable (no key /
+    /// offline / bad output); the page then narrates the baked key or excuses him.
+    func explainSteps(question: QuizQuestion) async -> AndyScript {
+        guard aiAvailable else { return AndyScript(ok: false, steps: []) }
+        do {
+            let content = try await chatJSON(messages: explainMessages(question: question), temperature: 0.2)
+            let steps = Self.parseSteps(content)
+            return steps.isEmpty ? AndyScript(ok: false, steps: []) : AndyScript(ok: true, steps: steps)
+        } catch {
+            return AndyScript(ok: false, steps: [])
+        }
+    }
+
     // MARK: grading (async; mirrors desktop `grade`)
 
     func grade(question: QuizQuestion, chosen: String, reasoning: String) async -> GradeResult {
@@ -277,7 +430,8 @@ final class HeuristicCoach {
 
         let messages = gradeMessages(question: question, chosen: chosen, reasoning: text, correct: correct)
         do {
-            let content = try await chatJSON(messages: messages)
+            // temperature 0: grading must be deterministic (no optimal/flawed flip on reruns).
+            let content = try await chatJSON(messages: messages, temperature: 0)
             return Self.parseGradeResponse(content, answerCorrect: correct) ?? base
         } catch {
             return base  // network/parse failure -> AI-off fallback
@@ -286,7 +440,7 @@ final class HeuristicCoach {
 
     /// POSTs the chat request and returns the assistant message content (which is
     /// itself a JSON object string). Mirrors desktop `_chat_json`.
-    private func chatJSON(messages: [[String: String]]) async throws -> String {
+    private func chatJSON(messages: [[String: String]], temperature: Double = 0.2) async throws -> String {
         var req = URLRequest(url: URL(string: "https://api.openai.com/v1/chat/completions")!)
         req.httpMethod = "POST"
         req.timeoutInterval = 30
@@ -295,7 +449,7 @@ final class HeuristicCoach {
         let payload: [String: Any] = [
             "model": Self.model,
             "messages": messages,
-            "temperature": 0.2,
+            "temperature": temperature,
             "response_format": ["type": "json_object"],
         ]
         req.httpBody = try JSONSerialization.data(withJSONObject: payload)

@@ -159,11 +159,13 @@ def optimal_for(qid: str) -> dict | None:
 # ------------------------------------------------------------------ OpenAI (urllib)
 
 
-def _chat_json(messages: list[dict], api_key: str, timeout: int = 30) -> dict:
+def _chat_json(
+    messages: list[dict], api_key: str, timeout: int = 30, temperature: float = 0.2
+) -> dict:
     payload = {
         "model": MODEL,
         "messages": messages,
-        "temperature": 0.2,
+        "temperature": temperature,
         "response_format": {"type": "json_object"},
     }
     req = urllib.request.Request(
@@ -240,14 +242,23 @@ genuinely JUSTIFIES the chosen answer. Only then pick "verdict":
                        elimination/estimate/units check would settle it.
      "guessed"       = no real justification: a guess, a bare assertion, or reasoning that never
                        actually connects to the answer — EVEN IF the letter is correct.
-     "flawed"        = the reasoning contains a physics error, OR invokes irrelevant/incorrect
-                       concepts (nonsense / word-salad, e.g. citing unrelated theorems), OR the
-                       pick is wrong. A correct letter does NOT rescue invalid reasoning.
-  Decision order (stop at the first that applies): reasoning invalid/irrelevant/nonsensical -> "flawed";
-  else no genuine justification -> "guessed"; else CORRECT pick but slower/over-computed ->
-  "valid_slower"/"overcomputed"; else "optimal". Use "optimal"/"valid_slower"/"overcomputed" ONLY when
-  the pick is CORRECT and the reasoning is genuinely sound and relevant.
-  "missed": array of concrete fast moves they could have used (e.g. "cross off (E): a speed can't exceed c"). [] if none.
+     "flawed"        = the pick is WRONG, OR the reasoning contains a real physics ERROR that breaks
+                       the argument, OR it is genuine nonsense / word-salad that does not justify the
+                       answer at all. A correct letter does NOT rescue reasoning that is actually wrong.
+  Decision order (stop at the FIRST that applies):
+    1. pick WRONG, or a physics ERROR breaks the argument, or the reasoning is genuine nonsense -> "flawed".
+    2. pick CORRECT but no genuine justification (a bare guess/assertion) -> "guessed".
+    3. pick CORRECT and the core reasoning validly justifies it, but slower / fully computed when a
+       shortcut exists -> "valid_slower" / "overcomputed".
+    4. pick CORRECT, reasoning valid and relevant, via the fastest sound route -> "optimal".
+  CRUCIAL anti-harshness rule: if the pick is CORRECT and the student's CORE reasoning is physically
+  valid and genuinely justifies the answer, you MUST NOT return "flawed" just because a step was
+  unnecessary, tangential, terse, informal, or slightly imprecise — that is at most
+  "valid_slower"/"overcomputed" (or still "optimal"). Reserve "flawed" for a real physics error or a
+  wrong / unjustified pick.
+  "missed": array of concrete fast moves that genuinely apply to THIS problem (a specific elimination,
+  a units/limit check, a symmetry argument). Never copy an example verbatim; use [] if the approach
+  was already efficient.
 
 Step 3 — write "feedback": a concise, honest, second-person message shown directly to the student.
 Rules: <=110 words, plain language (no jargon codes). Be supportive but TRUTHFUL — credit ONLY what
@@ -302,7 +313,11 @@ def grade(question: dict, chosen: str, reasoning: str) -> dict:
         return base  # ok=False -> caller shows the reference approach
 
     try:
-        out = _chat_json(_grade_messages(question, chosen, text, answer_correct), key)
+        # temperature 0: an identical approach must always grade the same way — the
+        # grader must not flip a correct answer between "optimal" and "flawed" on reruns.
+        out = _chat_json(
+            _grade_messages(question, chosen, text, answer_correct), key, temperature=0
+        )
     except (
         urllib.error.URLError,
         urllib.error.HTTPError,

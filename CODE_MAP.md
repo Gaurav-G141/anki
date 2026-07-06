@@ -25,7 +25,7 @@ flowchart TD
     end
     subgraph FFI["FFI hosts"]
         RB["PyO3: pylib/rsbridge/lib.rs :: command() / open_backend()"]
-        IOS["iOS C-ABI (PLANNED): mobile/anki-ffi/"]
+        IOS["iOS C-ABI: mobile/anki-ffi/ → AnkiCore.xcframework<br/>(aarch64-apple-ios-sim + aarch64-apple-ios device)"]
     end
     subgraph RS["Rust core — rslib/"]
         BK["dispatch: rslib/rust_interface.rs :: run_service_method()<br/>included by rslib/src/services.rs<br/>backend: rslib/src/backend/mod.rs"]
@@ -218,25 +218,27 @@ flowchart LR
 
 ---
 
-## 8. PLANNED — where Speedrun additions will live (not yet code)
+## 8. Speedrun additions — where the fork's code lives (shipped)
 
-From [PRD.md](PRD.md) / [SPECS.md](SPECS.md). Shown so agents know the target
-locations; **these files do not exist yet.**
+From [PRD.md](PRD.md) / [SPECS.md](SPECS.md). These files now **exist** (the
+diagram originally listed them as planned target locations).
 
 ```mermaid
 flowchart TD
-    NPROTO["proto/anki/speedrun.proto :: SpeedrunService.TopicMastery (NEW)"]
-    NMOD["rslib/src/speedrun/{mod.rs, service.rs} (NEW)<br/>reuses: search_cards, FsrsMemoryState, current_retrievability_seconds, revlog.taken_millis"]
-    REG["register: rslib/src/lib.rs (pub mod speedrun) + dispatch (EDIT, serialized)"]
-    NPY["pylib/anki/speedrun.py wrapper (NEW)"]
-    NTS["ts/routes/speedrun-dashboard/ (NEW Svelte page)"]
-    NFFI["mobile/anki-ffi/ (NEW staticlib C-ABI) → xcframework"]
-    NIOS["mobile/SpeedrunApp/ (NEW SwiftUI app)"]
+    NPROTO["proto/anki/speedrun.proto :: SpeedrunService.TopicMastery"]
+    NMOD["rslib/src/speedrun/{mod.rs, service.rs}<br/>reuses: search_cards, FsrsMemoryState, current_retrievability_seconds, revlog.taken_millis"]
+    REG["register: rslib/src/lib.rs (pub mod speedrun) + dispatch"]
+    NPY["pylib/anki/speedrun.py wrapper"]
+    NTS["ts/routes/speedrun-dashboard/ (Svelte page)"]
+    NFFI["mobile/anki-ffi/ (staticlib C-ABI) → AnkiCore.xcframework<br/>(sim + device slices; device slice → unsigned .ipa, see BUILD_INSTALLERS.md §3')"]
+    NIOS["mobile/SpeedrunApp/ (SwiftUI app)<br/>AI grader: HeuristicCoach.swift"]
+    NCOACH["AI Heuristic Coach (MCQ grader)<br/>desktop: qt/aqt/heuristic_coach.py (used by qt/aqt/pgre.py)<br/>iOS: mobile/SpeedrunApp/.../HeuristicCoach.swift"]
 
     NPROTO --> NMOD --> REG
     NMOD --> NPY --> NTS
     NFFI --> NIOS
     NMOD -.->|"same RPC, two hosts"| NFFI
+    NIOS -.-> NCOACH
 ```
 
 ---
@@ -271,6 +273,8 @@ flowchart TD
 | Sync (collection/media)            | `rslib/src/sync/{collection,media,http_client,http_server}/`                                                                                                                                             |
 | Reviewer UI (desktop)              | `qt/aqt/reviewer.py :: Reviewer`; web `ts/reviewer/index.ts`                                                                                                                                             |
 | Manifold home screen (Speedrun)    | `qt/aqt/manifold.py :: Manifold`; HTML `qt/aqt/pgre.py :: build_manifold_html`; state `qt/aqt/main.py :: "manifold"` (`setupManifold`/`_manifoldState`)                                                  |
+| AI Heuristic Coach (MCQ grader)    | desktop `qt/aqt/heuristic_coach.py` (used by `qt/aqt/pgre.py`); iOS `mobile/SpeedrunApp/Sources/HeuristicCoach.swift`                                                                                    |
+| iOS C-FFI / xcframework / device   | `mobile/anki-ffi/` → `mobile/AnkiCore.xcframework` (sim + `aarch64-apple-ios` device); unsigned `.ipa` per `BUILD_INSTALLERS.md` §3'                                                                     |
 | First-run default-deck import      | `qt/aqt/pgre.py :: import_default_decks`/`maybe_import_default_decks` (flag `pgreDefaultDecksImported`); `qt/aqt/main.py :: _seed_default_decks`; build rule `build/configure/src/aqt.rs :: build_decks` |
 | Test helpers (Rust)                | `rslib/src/tests.rs :: NoteAdder, CardAdder`; `Collection::new()`                                                                                                                                        |
 | Test helpers (Python)              | `pylib/tests/shared.py :: getEmptyCol`; review via `col.sched.answerCard(card, ease)`                                                                                                                    |

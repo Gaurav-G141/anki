@@ -25,7 +25,7 @@ that grounds the Heuristic Coach and powers the Phase-2 generator's consensus ga
     that neighbour's answer letter.
   - **Random** — 1/5 = 20%, for reference.
 
-## Result (2026-07-03, gpt-4o, held-out n=47)
+## Result (2026-07-05, gpt-4o, held-out GR9277 num>45, n=47)
 
 | Method                       | Accuracy        |
 | ---------------------------- | --------------- |

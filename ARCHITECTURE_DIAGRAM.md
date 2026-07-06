@@ -27,8 +27,8 @@ flowchart TB
             MANI["🟩 Manifold home screen (landing)<br/>qt/aqt/manifold.py · pgre.py<br/>Calabi-Yau + 9 PGRE points<br/>+ first-run default-deck import"]
             QT["🟦 PyQt shell + WebView<br/>qt/aqt/main.py · webview.py<br/>state 'manifold'"]
         end
-        subgraph IOS["🟩 iOS app (planned)"]
-            SWIFT["🟩 SwiftUI review screen<br/>mobile/SpeedrunApp/"]
+        subgraph IOS["🟩 iOS app (Simulator + device .ipa)"]
+            SWIFT["🟩 SwiftUI review + Scores + MCQ screens<br/>mobile/SpeedrunApp/<br/>AI grader: HeuristicCoach.swift"]
         end
     end
 
@@ -36,7 +36,7 @@ flowchart TB
         direction LR
         HTTP["🟦 HTTP POST /_anki/{method}<br/>ts/lib/generated/post.ts :: postProto()<br/>→ qt/aqt/mediasrv.py :: handle_request()"]
         PYO3["🟦 PyO3 FFI<br/>pylib/rsbridge/lib.rs :: command()"]
-        CFFI["🟩 C-ABI FFI (new staticlib)<br/>mobile/anki-ffi/ :: anki_command()<br/>→ .xcframework (aarch64-apple-ios-sim)"]
+        CFFI["🟩 C-ABI FFI (new staticlib)<br/>mobile/anki-ffi/ :: anki_command()<br/>→ .xcframework (aarch64-apple-ios-sim<br/>+ aarch64-apple-ios device slice → unsigned .ipa)"]
     end
 
     PYLIB["🟦 Python library<br/>pylib/anki/collection.py · _backend.py<br/>🟩 pylib/anki/speedrun.py (wrapper)"]
@@ -153,9 +153,9 @@ flowchart LR
 flowchart TD
     REV["🟦 Reviews on shared engine<br/>(desktop + iOS) → revlog<br/>FSRS memory_state + taken_millis"]
 
-    REV --> MEM["🟩 MEMORY<br/>recall of a taught fact<br/>FSRS-derived · MVP: LIVE"]
-    REV -.-> PERF["🟩 PERFORMANCE<br/>P(correct on NEW exam-style Q)<br/>Fri/Sun · MVP: stub"]
-    REV -.-> READY["🟩 READINESS<br/>projected 200–990 + range<br/>Fri/Sun · MVP: stub"]
+    REV --> MEM["🟩 MEMORY<br/>recall of a taught fact<br/>FSRS-derived · LIVE"]
+    REV -.-> PERF["🟩 PERFORMANCE<br/>P(correct on NEW exam-style Q)<br/>LIVE · MCQ practice graded by<br/>AI Heuristic Coach<br/>(qt/aqt/heuristic_coach.py ·<br/>HeuristicCoach.swift)"]
+    REV -.-> READY["🟩 READINESS<br/>projected 200–990 + range · LIVE"]
 
     MEM --> HON{{"Honesty rule —<br/>show all 7 or ABSTAIN:<br/>estimate · range · coverage ·<br/>confidence · updated_at · reasons · give-up rule"}}
     HON -->|enough data| SHOW["🟩 Dashboard renders score card"]

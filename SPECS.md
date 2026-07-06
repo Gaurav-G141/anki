@@ -7,9 +7,15 @@ cases** (deliberately stricter than the Speedrun doc). Source docs:
 `./Speedrun_ A Desktop + Mobile Study App Built on Anki.pdf` and
 `./PGRE Brainlift (2).pdf`.
 
-> **Status:** specs + test cases only. No app code has been written. Test cases
+> **Status:** specs + test cases only (as originally written). Test cases
 > may be implemented against the current (unmodified) tree to capture baselines
 > — see §G6.
+>
+> _Status as of 2026-07-05:_ these specs have since been **implemented and are
+> passing** — Rust nextest 570 passed / 1 skipped; `cargo test -p anki speedrun`
+> 26 passed (1 perf ignored); `just bench` p50/p95/p99 ≈ 32/33/33 ms; crash test
+> 0/50; `just stress` 205,531 cards, 7/7 checks; iOS 12/12 sim tests. This doc is
+> kept as the historical spec; current results live in `speedrun/MANUAL_TEST.md`.
 
 ---
 

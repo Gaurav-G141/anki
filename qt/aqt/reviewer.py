@@ -168,6 +168,9 @@ class Reviewer:
         self._reps: int | None = None
         self._show_question_timer: QTimer | None = None
         self._show_answer_timer: QTimer | None = None
+        # Anti-spam: the answer cannot be revealed until this many ms have
+        # elapsed since the question was shown (stops mindless space-mashing).
+        self._min_reveal_timer: QTimer | None = None
         self.auto_advance_enabled = False
         gui_hooks.av_player_did_end_playing.append(self._on_av_player_did_end_playing)
 
@@ -459,6 +462,24 @@ class Reviewer:
     # Showing the answer
     ##########################################################################
 
+    #: Anti-spam: minimum time (ms) a card's question must be visible before its
+    #: answer can be revealed. 0 disables the gate.
+    MIN_REVEAL_MS = 2000
+
+    def _reveal_blocked(self) -> bool:
+        """True while the current card is still inside the minimum-reveal window."""
+        return bool(
+            self.MIN_REVEAL_MS
+            and self.card is not None
+            and self.card.time_taken() < self.MIN_REVEAL_MS
+        )
+
+    def _enable_show_answer(self) -> None:
+        self.bottom.web.eval(
+            "(function(){var b=document.getElementById('ansbut');"
+            "if(b){b.disabled=false;b.classList.remove('min-reveal-wait');}})();"
+        )
+
     def _showAnswer(self) -> None:
         if self.mw.state != "review":
             # showing resetRequired screen; ignore space
@@ -609,9 +630,14 @@ class Reviewer:
 
         return [
             ("e", self.mw.onEditCurrent),
-            (" ", self.onEnterKey),
+            # Space is intentionally NOT bound: it used to reveal the answer and
+            # then rate it "Good", which let cards be mindlessly mashed through.
             (Qt.Key.Key_Return, self.onEnterKey),
             (Qt.Key.Key_Enter, self.onEnterKey),
+            # Arrow navigation: ← steps back to the previous card (undo), → moves
+            # forward (reveal the answer). Grading stays deliberate (buttons/1-4).
+            (Qt.Key.Key_Left, self._on_left_arrow),
+            (Qt.Key.Key_Right, self._on_right_arrow),
             ("m", self.showContextMenu),
             ("r", self.replayAudio),
             (Qt.Key.Key_F5, self.replayAudio),
@@ -663,6 +689,15 @@ class Reviewer:
             self.bottom.web.evalWithCallback(
                 "selectedAnswerButton()", self._onAnswerButton
             )
+
+    def _on_left_arrow(self) -> None:
+        """← : go back to the previous card (undo the last answer)."""
+        self.mw.undo()
+
+    def _on_right_arrow(self) -> None:
+        """→ : move forward — reveal the answer (subject to the reveal delay)."""
+        if self.state == "question":
+            self._getTypedAnswer()
 
     def _onAnswerButton(self, val: str) -> None:
         # button selected?
@@ -800,6 +835,10 @@ class Reviewer:
         return self.mw.col.extract_cloze_for_typing(txt, idx) or None
 
     def _getTypedAnswer(self) -> None:
+        # Anti-spam: ignore reveal requests (button, Enter, →) during the
+        # minimum-reveal window so cards can't be blitzed through.
+        if self.state == "question" and self._reveal_blocked():
+            return
         self.web.evalWithCallback("getTypedAnswer();", self._onTypedAnswer)
 
     def _onTypedAnswer(self, val: None) -> None:
@@ -843,7 +882,7 @@ timerStopped = false;
     def _showAnswerButton(self) -> None:
         middle = """
 <button title="{}" id="ansbut" onclick='pycmd("ans");'>{}<span class=stattxt>{}</span></button>""".format(
-            tr.actions_shortcut_key(val=tr.studying_space()),
+            tr.actions_shortcut_key(val="Enter"),
             tr.studying_show_answer(),
             self._remaining(),
         )
@@ -857,6 +896,19 @@ timerStopped = false;
         else:
             maxTime = 0
         self.bottom.web.eval("showQuestion(%s,%d);" % (json.dumps(middle), maxTime))
+        # Anti-spam: keep "Show Answer" disabled until MIN_REVEAL_MS has elapsed.
+        if self.MIN_REVEAL_MS:
+            self._clear_min_reveal_timer()
+            self.bottom.web.eval(
+                "(function(){var b=document.getElementById('ansbut');"
+                "if(b){b.disabled=true;b.classList.add('min-reveal-wait');}})();"
+            )
+            self._min_reveal_timer = self.mw.progress.timer(
+                self.MIN_REVEAL_MS,
+                self._enable_show_answer,
+                repeat=False,
+                parent=self.mw,
+            )
 
     def _showEaseButtons(self) -> None:
         if not self._states_mutated:
@@ -1210,6 +1262,11 @@ timerStopped = false;
         if self._show_question_timer:
             self._show_question_timer.deleteLater()
             self._show_question_timer = None
+
+    def _clear_min_reveal_timer(self) -> None:
+        if self._min_reveal_timer:
+            self._min_reveal_timer.deleteLater()
+            self._min_reveal_timer = None
 
     def toggle_auto_advance(self) -> None:
         self.auto_advance_enabled = not self.auto_advance_enabled

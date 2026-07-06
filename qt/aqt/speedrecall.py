@@ -350,6 +350,19 @@ class SpeedRecall:
         self._current = None
         self._next_card()
 
+    def _prev_card(self) -> None:
+        """Step back to the previously shown card and re-display its front.
+
+        ``_pos`` points just past the current card, so we rewind two slots and
+        let ``_next_card`` re-show the previous one. No-op at the start.
+        """
+        target = self._pos - 2
+        if target < 0:
+            return
+        self._pos = target
+        self._current = None
+        self._next_card()
+
     def _finish(self) -> None:
         self.web.eval(f"speedFinish({json.dumps(self._done)});")
 
@@ -367,6 +380,8 @@ class SpeedRecall:
             self._rate(int(rating_s), float(ms_s or 0))
         elif cmd == "again":
             self._next_card()
+        elif cmd == "prev":
+            self._prev_card()
         elif cmd == "close":
             self._close()
         return False
@@ -481,16 +496,25 @@ function speedShowFront(p) {
   document.getElementById('sr-subject').textContent = p.subject;
   document.getElementById('sr-card').innerHTML = '<div class="card">' + p.front + '</div>';
   document.getElementById('sr-controls').innerHTML =
-      '<button class="pg-btn pg-btn--primary" onclick="srReveal()">Show Answer <small>(space)</small></button>';
+      '<button id="sr-reveal-btn" class="pg-btn pg-btn--primary" disabled onclick="srReveal()">Show Answer <small>(wait…)</small></button>';
   srSetRing(0);
   srTypeset();
   srStart = performance.now();
   srStopTimer();
   srTimerId = setInterval(srTick, 100);
+  // Anti-spam: keep the reveal disabled until the minimum viewing time passes.
+  setTimeout(function () {
+    var b = document.getElementById('sr-reveal-btn');
+    if (b && !srRevealed) { b.disabled = false; b.innerHTML = 'Show Answer <small>(Enter)</small>'; }
+  }, SR_MIN_REVEAL_MS);
 }
+
+var SR_MIN_REVEAL_MS = 2000;
 
 function srReveal() {
   if (srRevealed) return;
+  // Anti-spam: refuse to reveal until the card has been visible long enough.
+  if (performance.now() - srStart < SR_MIN_REVEAL_MS) return;
   srRevealed = true;
   srElapsedMs = performance.now() - srStart;
   srStopTimer();
@@ -532,12 +556,17 @@ function speedFinish(done) {
 
 document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') { pycmd('close'); return; }
+  // ← goes back to the previous card.
+  if (e.key === 'ArrowLeft') { e.preventDefault(); pycmd('prev'); return; }
+  // Space is intentionally disabled (it used to reveal + rate "Good").
+  if (e.code === 'Space') { e.preventDefault(); return; }
   if (!srRevealed) {
-    if (e.code === 'Space' || e.key === 'Enter') { e.preventDefault(); srReveal(); }
+    // Enter or → reveals (only after the minimum-view delay).
+    if (e.key === 'Enter' || e.key === 'ArrowRight') { e.preventDefault(); srReveal(); }
     return;
   }
-  if (e.key === ' ' || e.code === 'Space') { e.preventDefault(); srRate(3); }
-  else if (['1','2','3','4'].includes(e.key)) { e.preventDefault(); srRate(parseInt(e.key)); }
+  // After reveal, grade only via explicit number keys — no space-to-Good.
+  if (['1','2','3','4'].includes(e.key)) { e.preventDefault(); srRate(parseInt(e.key)); }
 });
 </script>
 """

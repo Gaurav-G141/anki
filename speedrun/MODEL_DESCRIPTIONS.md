@@ -1,5 +1,7 @@
 # Model descriptions (Speedrun §10 — one page per model, with the give-up rule)
 
+_Last updated 2026-07-05._
+
 This fork reports **three** honest scores from one read-only Rust RPC
 (`SpeedrunService.TopicMastery`, [rslib/src/speedrun/mod.rs](../rslib/src/speedrun/mod.rs)),
 served identically to the desktop (PyO3) and iOS (C-FFI) apps. Every score ships with a
@@ -13,6 +15,13 @@ Held-out evidence for these models lives in:
 - **Performance generalization** — [`paraphrase_eval.py`](paraphrase_eval.py) → solver accuracy
   on original vs reworded held-out questions.
 - **Feature value** — [`ablation.py`](ablation.py) → three-arm study-feature ablation.
+
+**Nature of the evidence (read this first).** The **memory calibration** and the **ablation**
+are **deterministic simulations of a synthetic learner** — no real multi-month user study logs
+exist yet, so both replay a seeded synthetic learner against the _shipped_ forgetting-curve math
+(reproducible run-to-run). The **performance / paraphrase / baseline** evals, by contrast, are
+**genuinely measured on real held-out GR9277 items** (blind GPT-4o solver, answers withheld). Docs
+here phrase the first group as SIMULATED and the second as measured; do not conflate them.
 
 ---
 
@@ -31,13 +40,14 @@ Held-out evidence for these models lives in:
   (`DEFAULT_REVIEW_FLOOR`); subject **coverage < 0.40** (`DEFAULT_COVERAGE_FLOOR`); a
   high-weight subject has **no** cards; or **no** cards carry FSRS state. On abstain it returns
   reasons, not a number.
-- **Calibration (held-out evidence):** the recall probabilities the model emits are calibrated —
-  on a held-out review slice, **Brier 0.141**, **log-loss 0.445**, **ECE 0.031** (target
-  Brier ≤ 0.20, ECE ≤ 0.10; all met). Reliability curve tracks the diagonal with mild
-  mid-range overconfidence. The eval's forgetting-curve is asserted to match the engine's own
-  `fsrs-5.2.0` test vectors to 1e-4, so it calibrates the _shipped_ model. (`calibration_eval.py`;
-  no real multi-month logs exist yet, so this runs a deterministic learner simulation — see that
-  file's header for the two anti-circularity safeguards.)
+- **Calibration (simulated evidence):** the recall probabilities the model emits are calibrated —
+  **Brier 0.1409**, **log-loss 0.4453**, **ECE 0.0307**, **precision@R≥0.9 91.8%** (targets
+  Brier ≤ 0.20, log-loss ≤ 0.60, ECE ≤ 0.10; all met). Reliability curve tracks the diagonal with
+  mild mid-range overconfidence. The eval's forgetting-curve is asserted to match the engine's own
+  `fsrs-5.2.0` test vectors to 1e-4, so it calibrates the _shipped_ model. **This is a DETERMINISTIC
+  SIMULATION of a synthetic learner** — no real multi-month user logs exist yet, so `calibration_eval.py`
+  replays a seeded synthetic learner (reproducible run-to-run) rather than measuring real users; see
+  that file's header for the two anti-circularity safeguards.
 
 ## 2. Performance model
 
@@ -48,12 +58,14 @@ Held-out evidence for these models lives in:
 - **Range:** **Wilson 95%** interval on that accuracy.
 - **Give-up rule:** independent of Memory — needs graded reviews **and** coverage, but **not**
   FSRS state (so Performance can score when Memory abstains, and vice-versa).
-- **Scope honesty (held-out evidence):** Performance is accuracy on _reviewed_ material — **not**
-  a held-out generalization guarantee. The generalization proof is the **paraphrase eval**: a
-  blind GPT-4o solver scores **79% on original** held-out GR9277 items (19/24) vs **81% on
-  reworded** versions (39/48; same physics, changed surface) — a **~0-point** gap, i.e. it solves
-  the physics rather than recalling seen items. Integrity-gated (rewords must actually differ; no
-  answer leakage). (`paraphrase_eval.py`.)
+- **Scope honesty (real held-out evidence):** Performance is accuracy on _reviewed_ material —
+  **not** a held-out generalization guarantee. The generalization proof is the **paraphrase eval**,
+  measured on **real held-out GR9277 items**: a blind GPT-4o solver scores **77% on original**
+  (23/30) vs **77% on reworded** versions (46/60; same physics, changed surface) — a **+0-point**
+  gap, i.e. it solves the physics rather than recalling seen items. Full **n=30** (150 GPT-4o calls;
+  closes the earlier n=24 shortfall), integrity CLEAN (rewords must actually differ; no answer
+  leakage). For reference the same blind solver beats the retrieval baselines **66% vs 28%** on the
+  held-out split (see [BASELINE_COMPARISON.md](BASELINE_COMPARISON.md)). (`paraphrase_eval.py`.)
 
 ## 3. Readiness model
 

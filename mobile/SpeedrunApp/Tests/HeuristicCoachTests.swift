@@ -104,6 +104,77 @@ final class HeuristicCoachTests: XCTestCase {
     }
 }
 
+/// "Explain with Andy" — the spoken step-by-step tutor. Network-free paths:
+/// step parsing and prompt faithfulness (mirrors the desktop
+/// `test_heuristic_coach` tests). No live calls (test build has no key).
+final class AndyExplainTests: XCTestCase {
+    private func sampleQuestion() -> QuizQuestion {
+        QuizQuestion(
+            id: "GR9277#1",
+            statement: "A particle moves in a circle of radius R at speed v.",
+            choices: [["A", "0"], ["B", "v^2/R"], ["C", "v/R"], ["D", "mv^2/R"], ["E", "mvR"]],
+            answer: "B",
+            solution: nil, subject: nil, topic: nil, source: nil, seedId: nil
+        )
+    }
+
+    // Step objects and bare strings both parse; focus is preserved.
+    func testParseStepsObjectsAndStrings() {
+        let json = #"""
+        {"steps": [
+          {"say": "First, check the units.", "focus": "stem"},
+          {"say": "Only (B) has units of acceleration.", "focus": "B"},
+          "So it's (B)."
+        ]}
+        """#
+        let steps = HeuristicCoach.parseSteps(json)
+        XCTAssertEqual(steps.map { $0["say"] },
+                       ["First, check the units.", "Only (B) has units of acceleration.", "So it's (B)."])
+        XCTAssertEqual(steps.map { $0["focus"] }, ["stem", "B", ""])
+    }
+
+    // Empty `say` is dropped; an unknown focus is coerced to "".
+    func testParseStepsDropsEmptyAndBadFocus() {
+        let json = #"""
+        {"steps": [
+          {"say": "   ", "focus": "stem"},
+          {"say": "Real step.", "focus": "Z"},
+          {"say": "Answer.", "focus": "answer"}
+        ]}
+        """#
+        let steps = HeuristicCoach.parseSteps(json)
+        XCTAssertEqual(steps.count, 2)
+        XCTAssertEqual(steps[0], ["say": "Real step.", "focus": ""])
+        XCTAssertEqual(steps[1]["focus"], "answer")
+    }
+
+    func testParseStepsEmptyWhenMissing() {
+        XCTAssertTrue(HeuristicCoach.parseSteps("{}").isEmpty)
+        XCTAssertTrue(HeuristicCoach.parseSteps("not json").isEmpty)
+    }
+
+    // The prompt carries the problem, the answer, the grounding key, and the
+    // brevity rule that keeps Andy from over-explaining.
+    func testExplainMessagesAreFaithful() {
+        let msgs = HeuristicCoach().explainMessages(question: sampleQuestion())
+        let system = msgs.first(where: { $0["role"] == "system" })?["content"] ?? ""
+        let user = msgs.first(where: { $0["role"] == "user" })?["content"] ?? ""
+        XCTAssertTrue(system.contains("Andy"))
+        XCTAssertTrue(user.contains("A particle moves in a circle"))
+        XCTAssertTrue(user.contains("(B) v^2/R"))
+        XCTAssertTrue(user.contains("CORRECT ANSWER: B"))
+        XCTAssertTrue(user.contains("OPTIMAL APPROACH"))
+        XCTAssertTrue(user.contains("THE ONE RULE THAT MATTERS MOST"))
+    }
+
+    // AndyScript serialises to the shape the page's showAndySteps expects.
+    func testAndyScriptPayload() {
+        let payload = AndyScript(ok: true, steps: [["say": "Hi", "focus": "stem"]]).jsPayload()
+        XCTAssertTrue(payload.contains("\"ok\":true") || payload.contains("\"ok\": true"))
+        XCTAssertTrue(payload.contains("\"say\""))
+    }
+}
+
 /// Reworded-variant serving (fluency-illusion fix): one surface variant per concept,
 /// rotating across sessions. Mirrors the desktop `test_pgre_quiz.select_variants` tests.
 final class MCQVariantTests: XCTestCase {

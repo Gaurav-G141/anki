@@ -61,6 +61,14 @@ final class ReviewSession: ObservableObject {
     @Published private(set) var phase: Phase = .loading
     @Published private(set) var questionHTML: String = ""
     @Published private(set) var answerHTML: String = ""
+    /// Anti-spam: false for the first `minRevealSeconds` a question is shown, so
+    /// the answer can't be blitzed to. Drives the disabled Show Answer button.
+    @Published private(set) var canReveal: Bool = false
+    /// Minimum time a question must be visible before its answer can be revealed.
+    static let minRevealSeconds: Double = 2.0
+    /// Bumped each time a new question is shown, so a stale reveal-timer from a
+    /// previous card can't enable the button early.
+    private var revealGeneration = 0
     /// Count of answers graded and persisted this session.
     @Published private(set) var reviewedCount: Int = 0
     /// Remaining queue counts, for a small status line.
@@ -108,9 +116,10 @@ final class ReviewSession: ObservableObject {
         }
     }
 
-    /// Reveals the answer; records nothing yet (timing continues).
+    /// Reveals the answer; records nothing yet (timing continues). Blocked until
+    /// the minimum-reveal window has elapsed (anti-spam).
     func reveal() {
-        guard phase == .question else { return }
+        guard phase == .question, canReveal else { return }
         phase = .answer
     }
 
@@ -211,7 +220,26 @@ final class ReviewSession: ObservableObject {
             self.questionHTML = q
             self.answerHTML = a
             self.shownAt = CACurrentMediaTime()
-            self.phase = autoReveal ? .answer : .question
+            let noDelay = ProcessInfo.processInfo.environment["SPEEDRUN_NO_REVEAL_DELAY"] == "1"
+            if autoReveal {
+                self.canReveal = true
+                self.phase = .answer
+            } else if noDelay {
+                self.canReveal = true
+                self.phase = .question
+            } else {
+                self.canReveal = false
+                self.phase = .question
+                // Enable revealing only after the minimum viewing time; a
+                // generation token guards against a stale timer firing early.
+                self.revealGeneration += 1
+                let gen = self.revealGeneration
+                DispatchQueue.main.asyncAfter(deadline: .now() + Self.minRevealSeconds) {
+                    if self.revealGeneration == gen, self.phase == .question {
+                        self.canReveal = true
+                    }
+                }
+            }
         }
     }
 
